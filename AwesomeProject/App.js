@@ -7,6 +7,8 @@
  */
 
 import React from 'react';
+
+
 import {
   SafeAreaView,
   ScrollView,
@@ -25,8 +27,6 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
 
 
 const App =()=> {
