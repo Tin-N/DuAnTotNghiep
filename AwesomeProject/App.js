@@ -28,32 +28,15 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 
-
+import { StyleLogin } from './src/css/Styles';
 const App =()=> {
   return(
     <SafeAreaView>
-      <Text>Dcm ao that day </Text>
+      <Text style={StyleLogin.header}>Dcm ao that day </Text>
     </SafeAreaView>
   )
 }
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+
 
 export default App;
