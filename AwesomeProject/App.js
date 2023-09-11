@@ -32,7 +32,7 @@ import {
 const App =()=> {
   return(
     <SafeAreaView>
-      <Text>Cecj</Text>
+      <Text>Dcm ao that day </Text>
     </SafeAreaView>
   )
 }
