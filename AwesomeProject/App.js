@@ -7,8 +7,6 @@
  */
 
 import React from 'react';
-
-
 import {
   SafeAreaView,
   ScrollView,
@@ -19,18 +17,10 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
 
 import { StyleLogin } from './src/css/Styles';
-const App =()=> {
-  return(
+const App = () => {
+  return (
     <SafeAreaView>
       <Text style={StyleLogin.header}>Dcm ao that day </Text>
     </SafeAreaView>
