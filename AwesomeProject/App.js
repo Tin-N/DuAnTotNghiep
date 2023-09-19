@@ -22,7 +22,7 @@ import { StyleLogin } from './src/css/Styles';
 const App = () => {
   return (
     <SafeAreaView>
-      <Text style={StyleLogin.header}>TinNguyen</Text>
+      <Text style={StyleLogin.header}>nhat-commit</Text>
     </SafeAreaView>
   )
 }
