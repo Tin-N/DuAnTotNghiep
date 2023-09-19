@@ -32,7 +32,7 @@ import { StyleLogin } from './src/css/Styles';
 const App =()=> {
   return(
     <SafeAreaView>
-      <Text style={StyleLogin.header}>Dcm ao that day </Text>
+      <Text style={StyleLogin.header}>awdawdawd</Text>
     </SafeAreaView>
   )
 }
