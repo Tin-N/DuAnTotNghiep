@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 
 import React from 'react';
 import {
@@ -17,13 +10,25 @@ import {
   View,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/Ionicons';
+import { NavigationContainer } from '@react-navigation/native';
 
 import { StyleLogin } from './src/css/Styles';
+import Home from './src/screens/Home';
+import Search from './src/screens/Search';
+import Order from './src/screens/Order';
+import Login from './src/screens/Login';
+import { AppContextProvider } from './src/utils/AppContext';
+import AppNavigator from './src/utils/AppNavigator';
+
 const App = () => {
   return (
-    <SafeAreaView>
-      <Text style={StyleLogin.header}>TIN</Text>
-    </SafeAreaView>
+    <AppContextProvider>
+      <NavigationContainer>
+        <AppNavigator/>
+      </NavigationContainer>
+    </AppContextProvider>
+
   )
 }
 
