@@ -5,6 +5,7 @@ const TinNguyen = () => {
   return (
     <View>
       <Text>MinhNhat</Text>
+      <Text>DucQuy</Text>
     </View>
   )
 }
