@@ -20,14 +20,15 @@ import Order from './src/screens/Order';
 import Login from './src/screens/Login';
 import { AppContextProvider } from './src/utils/AppContext';
 import AppNavigator from './src/utils/AppNavigator';
-
+import Slideshow from './src/component/Slideshow/Slideshow';
 const App = () => {
   return (
-    <AppContextProvider>
-      <NavigationContainer>
-        <AppNavigator/>
-      </NavigationContainer>
-    </AppContextProvider>
+    // <AppContextProvider>
+    //   <NavigationContainer>
+    //     <AppNavigator/>
+    //   </NavigationContainer>
+    // </AppContextProvider>
+    <Slideshow/>
 
   )
 }
