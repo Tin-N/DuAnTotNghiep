@@ -23,11 +23,13 @@ import AppNavigator from './src/utils/AppNavigator';
 
 const App = () => {
   return (
+
     <AppContextProvider>
       <NavigationContainer>
         <AppNavigator/>
       </NavigationContainer>
     </AppContextProvider>
+
 
   )
 }
