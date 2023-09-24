@@ -20,12 +20,14 @@ import Order from './src/screens/Order';
 import Login from './src/screens/Login';
 import { AppContextProvider } from './src/utils/AppContext';
 import AppNavigator from './src/utils/AppNavigator';
+import Category from './src/screens/Category';
 
 const App = () => {
   return (
     <AppContextProvider>
       <NavigationContainer>
         <AppNavigator/>
+        {/* <Category/> */}
       </NavigationContainer>
     </AppContextProvider>
   )

@@ -61,6 +61,26 @@ export const StyleOrder = StyleSheet.create({
         height: 226, 
         width: 219,
     },
+    imageFlatList:{
+        height: 80, 
+        width: 59,
+    },
+    textNameFlatList:{
+        fontSize: 20,
+        fontStyle: 'bold',
+        color: 'black',
+        marginLeft: 5,
+    },
+    textInfoFlatList:{
+        fontSize: 12,
+        fontStyle: 'bold',
+        color: '#AEAEAE',
+        marginLeft: 5,
+    },
+    function:{
+        width: 100,
+        alignItems: 'center'
+    },
 })
 
 export const StyleCategory = StyleSheet.create({
@@ -97,11 +117,39 @@ export const StyleCategory = StyleSheet.create({
         padding: 15,
         borderWidth: 1,
         alignSelf: 'center',
-        position: 'relative',
-        top: '70%',
     },
     textPressable:{
         fontSize: 14,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: 'black'
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+      },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        padding: 35,
+        elevation: 5,
+    },
+    filterSorting:{
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        width: width*0.25,
+    },
+    pressableModal:{
+        borderRadius: 10,
+        height: 52,
+        width: width*0.3,
+        padding: 15,
+        borderWidth: 1,
+        alignSelf: 'center',
+    },
+    textRang:{
+        fontSize: 14,
+        color: 'black',
+        marginTop: 10,
+        marginBottom: 10,
     }
 })

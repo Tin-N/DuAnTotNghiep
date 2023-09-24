@@ -7,6 +7,7 @@ import Search from '../screens/Search'
 import Order from '../screens/Order'
 import Login from '../screens/Login'
 import { AppContext } from './AppContext';
+import Category from '../screens/Category';
 
 const Tab = createBottomTabNavigator();
 
