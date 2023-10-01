@@ -14,9 +14,7 @@ import {Image} from 'react-native';
 const windowWIdth = Dimensions.get('window').width;
 import {StyleSheet} from 'react-native';
 
-const SignIn = () => {
-  const [text, onChangeText] = React.useState('Useless Text');
-  const [number, onChangeNumber] = React.useState('');
+const SignUp = () => {
   return (
     <View
       style={{
@@ -51,7 +49,7 @@ const SignIn = () => {
           justifyContent: 'space-between',
           marginHorizontal: 16,
         }}>
-        Welcome back!
+        Sign Up
       </Text>
 
       {/* TextInput Email */}
@@ -68,12 +66,12 @@ const SignIn = () => {
         </Text>
         <TextInput
           style={styles.input}
-          onChangeText={onChangeNumber}
-          value={number}
           placeholder="Clavi@gmail.com"
           keyboardType="numeric"
         />
       </View>
+      {/* TextInput Email */}
+
       {/* TextInput Password */}
       <View>
         <Text
@@ -102,17 +100,39 @@ const SignIn = () => {
           underlineColorAndroid="transparent"
           secureTextEntry={true}
         />
+        {/* TextInput Password */}
+        
+
+        {/* TextInput Confirm Password */}
         <Text
           style={{
-            textAlign: 'right',
-            marginHorizontal: 20,
-            color: COLOR.Blue,
-            fontSize: 15,
-            fontWeight: 'bold',
-            marginTop: 20,
+            color: COLOR.TextHint,
+            fontSize: 17,
+            marginTop: 15,
+            justifyContent: 'space-between',
+            marginHorizontal: 16,
           }}>
-          Forgot password
+          Confirm Password
         </Text>
+        <TextInput
+          style={{
+            marginTop: 15,
+            height: 55,
+            pading: 10,
+            borderRadius: 5,
+            width: '94%',
+            borderColor: COLOR.TextPlaceHolder,
+            borderWidth: 1,
+            marginHorizontal: 10,
+          }}
+          // onChangeText={onChangeNumber}
+          // value={password}
+          placeholder="Enter your password"
+          underlineColorAndroid="transparent"
+          secureTextEntry={true}
+        />
+         {/* TextInput Confirm Password */}
+
 
         <TouchableOpacity
           style={{
@@ -123,7 +143,7 @@ const SignIn = () => {
             height: 55,
             width: '94%',
             marginHorizontal: 10,
-            marginTop: 20,
+            marginTop: 40,
             borderRadius: 30,
             // marginHorizontal: 10,
           }}>
@@ -138,61 +158,9 @@ const SignIn = () => {
             Sign In
           </Text>
         </TouchableOpacity>
-        <Text
-          style={{
-            color: COLOR.TextHint,
-            fontSize: 17,
-            justifyContent: 'space-between',
-            marginHorizontal: 16,
-            marginTop: 15,
-            // backgroundColor: 'red',
-            textAlign: 'center',
-          }}>
-          Or
-        </Text>
         <View
           style={{
-            flexDirection: 'row',
-            width: '94%',
-            marginHorizontal: 10,
-            marginTop: 10,
-            justifyContent: 'space-around',
-          }}>
-          <TouchableOpacity
-            style={{
-              alignItems: 'center',
-              backgroundColor: COLOR.Blue,
-              padding: 10,
-              height: 55,
-              width: '46%',
-              borderRadius: 10,
-              marginHorizontal: 0,
-            }}>
-            <Image
-              source={require('../images/icon/Facebook.png')}
-              style={{width: 35, height: 35, tintColor: COLOR.title}}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              alignItems: 'center',
-              borderColor: COLOR.borderColor,
-              borderWidth: 1,
-              padding: 10,
-              height: 55,
-              width: '46%',
-              borderRadius: 10,
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../images/icon/Google.png')}
-              style={{width: 35, height: 35, tintColor: COLOR.title}}
-            />
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            marginTop: "20%",
+            marginTop: "30%",
             flexDirection: 'row',
             justifyContent: 'center',
             width: '94%',
@@ -215,7 +183,7 @@ const SignIn = () => {
               // backgroundColor: 'blue',
               textDecorationLine: 'underline',
             }}>
-            SignUp
+            SignIp
           </Text>
         </View>
       </View>
@@ -236,4 +204,4 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
-export default SignIn;
+export default SignUp;
