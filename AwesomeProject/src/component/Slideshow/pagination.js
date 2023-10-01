@@ -1,7 +1,8 @@
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 
-const Pagination = ({data, indexP, setNewIndex}) => {
+const Pagination = (props) => {
+  const {data, indexP, setNewIndex,enablePagination}= props;
   const onHandlePress = index => {
     setNewIndex(index); // Gọi hàm callback để truyền dữ liệu lên cha
   };
@@ -11,9 +12,10 @@ const Pagination = ({data, indexP, setNewIndex}) => {
       {data.map((_, index) => {
         return (
           <TouchableOpacity
+
             key={index.toString()}
             style={[
-              styles.dot,
+              enablePagination==true?styles.dot:{display: 'none'},
               {backgroundColor: index === indexP ? '#333' : '#ccc'},
             ]}
             onPress={() => onHandlePress(index)} // Gọi hàm khi TouchableOpacity được nhấn (Truyền vị trí dots)

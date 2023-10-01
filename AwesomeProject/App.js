@@ -19,11 +19,10 @@ import {
 
 
 import { StyleLogin } from './src/css/Styles';
+import TestScreen from './src/screens/TestScreen';
 const App = () => {
   return (
-    <SafeAreaView>
-      <Text style={StyleLogin.header}>NHAT</Text>
-    </SafeAreaView>
+  <TestScreen/>
   )
 }
 
