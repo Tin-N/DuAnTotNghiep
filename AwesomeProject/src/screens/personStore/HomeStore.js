@@ -1,11 +1,15 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { StyleHomeStore, StyleLogin } from '../../css/Styles'
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList } from 'react-native';
 import ItemHomeStore from './ItemHomeStore';
+import { ScrollView } from 'react-native';
+
 const HomeStore = (props) => {
-    const {navigation} = props;
+    const { navigation } = props;
     const [dataProduct, setDataProduct] = useState([]);
+    const [columns, setColumns] = useState(2);
+    
     return (
         <View>
             <View style={StyleHomeStore.menu}>
@@ -21,6 +25,9 @@ const HomeStore = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={StyleHomeStore.line}></View>
+            <ScrollView 
+            style={{marginBottom:90}}
+            showsVerticalScrollIndicator={false}>
             <View style={StyleHomeStore.boxSeller}>
                 <View>
                     <Image source={require('../../images/avatarPersonStore.png')} />
@@ -45,7 +52,7 @@ const HomeStore = (props) => {
             </View>
             <View style={StyleHomeStore.boxLocate}>
                 <Image source={require('../../images/locate.png')} />
-                <Text style={{ marginLeft: 20, color: 'black' }}>
+                <Text style={{ marginLeft: 20, color: 'black'}}>
                     Natar, Selatan (Jam Buka 08:00-21:00)
                 </Text>
             </View>
@@ -84,8 +91,20 @@ const HomeStore = (props) => {
             </View>
             <View style={StyleHomeStore.boxSelling}>
                 
+                    <FlatList
+                    showsVerticalScrollIndicator
+                    data={dataProduct00}
+                    numColumns={columns}
+                    nestedScrollEnabled={true}
+                    renderItem={({ item }) => <ItemHomeStore dulieu={item} />}
+                    keyExtractor={item => item._idProduct}
+                />
+               
                 
             </View>
+            </ScrollView>
+            
+
         </View>
     )
 }
@@ -100,10 +119,52 @@ const dataProduct00 = [
         reviewsProduct: 86
     },
     {
-        _idProduct: 1,
+        _idProduct: 2,
         nameProduct: "Bánh gạo",
         priceProduct: 30000,
         rationProduct: 4.6,
-        reviewsProduct: 86
+        reviewsProduct: 44
+    },
+    {
+        _idProduct: 3,
+        nameProduct: "Bánh gạo",
+        priceProduct: 30000,
+        rationProduct: 4.6,
+        reviewsProduct: 22
+    },
+    {
+        _idProduct: 4,
+        nameProduct: "Bánh gạo",
+        priceProduct: 30000,
+        rationProduct: 4.6,
+        reviewsProduct: 22
+    },
+    {
+        _idProduct: 5,
+        nameProduct: "Bánh gạo",
+        priceProduct: 30000,
+        rationProduct: 4.6,
+        reviewsProduct: 22
+    },
+    {
+        _idProduct: 5,
+        nameProduct: "Bánh gạo",
+        priceProduct: 30000,
+        rationProduct: 4.6,
+        reviewsProduct: 22
+    },
+    {
+        _idProduct: 5,
+        nameProduct: "Bánh gạo",
+        priceProduct: 30000,
+        rationProduct: 4.6,
+        reviewsProduct: 22
+    },
+    {
+        _idProduct: 5,
+        nameProduct: "Bánh gạo",
+        priceProduct: 30000,
+        rationProduct: 4.6,
+        reviewsProduct: 22
     }
 ]
