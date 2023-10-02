@@ -3,8 +3,6 @@ import React from 'react'
 import { COLOR } from './Theme'
 import { useFonts, DMSans_400Regular } from '@expo-google-fonts/dm-sans'
 
-    
-
 export const StyleLogin = StyleSheet.create({
     header: {
         color: COLOR.primary,

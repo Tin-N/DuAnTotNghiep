@@ -23,6 +23,7 @@ import AppNavigator from './src/utils/AppNavigator';
 import HomeStore from './src/screens/personStore/HomeStore';
 import Shipper from './src/screens/personStore/Shipper';
 import SearchStore from './src/screens/personStore/SearchStore';
+
 const App = () => {
   return (
     // <AppContextProvider>
@@ -30,7 +31,7 @@ const App = () => {
     //     <AppNavigator/>
     //   </NavigationContainer>
     // </AppContextProvider>
-    <SearchStore/>
+    <HomeStore/>
     
   )
 }

@@ -4,12 +4,10 @@ import { StyleHomeStore, StyleLogin } from '../../css/Styles'
 import { FlatList } from 'react-native';
 import ItemHomeStore from './ItemHomeStore';
 import { ScrollView } from 'react-native';
-
 const HomeStore = (props) => {
     const { navigation } = props;
     const [dataProduct, setDataProduct] = useState([]);
-    const [columns, setColumns] = useState(2);
-    
+    const [columns, setColumns] = useState(2);   
     return (
         <View>
             <View style={StyleHomeStore.menu}>
@@ -89,8 +87,7 @@ const HomeStore = (props) => {
                     Sản phẩm đang bán
                 </Text>
             </View>
-            <View style={StyleHomeStore.boxSelling}>
-                
+            <View style={StyleHomeStore.boxSelling}>               
                     <FlatList
                     showsVerticalScrollIndicator
                     data={dataProduct00}
@@ -98,13 +95,9 @@ const HomeStore = (props) => {
                     nestedScrollEnabled={true}
                     renderItem={({ item }) => <ItemHomeStore dulieu={item} />}
                     keyExtractor={item => item._idProduct}
-                />
-               
-                
+                />           
             </View>
             </ScrollView>
-            
-
         </View>
     )
 }
