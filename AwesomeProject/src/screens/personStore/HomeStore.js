@@ -24,6 +24,7 @@ const HomeStore = (props) => {
             </View>
             <View style={StyleHomeStore.line}></View>
             <ScrollView 
+            
             style={{marginBottom:90}}
             showsVerticalScrollIndicator={false}>
             <View style={StyleHomeStore.boxSeller}>
