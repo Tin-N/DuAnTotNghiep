@@ -5,6 +5,9 @@ import SearchSuggestion from '../component/SearchSuggestions/SearchSuggestions';
 import NoResult from '../component/SearchSuggestions/NoResult';
 import { FetchData } from '../component/ProductList/data';
 import ProductList from '../component/ProductList/ProductList';
+import Searchbar from '../component/Seachbar/Searchbar';
+import Item from '../component/CategoryList/Item';
+import CategoryList from '../component/CategoryList/CategoryList';
 const TestScreen = () => {
   const [column, setcolumn] = useState(2)
   return (
@@ -27,7 +30,8 @@ const TestScreen = () => {
       showsHorizontalScrollIndicator={false}
            
       /> */}
-      
+      {/* <Searchbar/> */}
+      <CategoryList/>
     </View>
   );
 };

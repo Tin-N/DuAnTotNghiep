@@ -159,3 +159,124 @@ export const StyleHomeStore = StyleSheet.create({
       marginTop:5
   }
 })
+
+export const StyleSearch = StyleSheet.create({
+    menu: {
+        paddingTop: 50,
+        flexDirection: 'row',
+        marginLeft: 30,
+        marginRight: 30,
+    },
+    textTitle: {
+        textAlign: 'center',
+        color: 'black',
+        fontSize: 20,
+        paddingLeft: 90,
+        marginTop: -6
+    },
+    images: {
+        marginLeft: 80
+    },
+    touchOpa: {
+        marginLeft: 75
+    },
+    line: {
+        borderWidth: 1,
+        opacity: 0.03,
+        marginTop: 20
+    },
+    inputSearch: {
+        paddingLeft:30,
+        paddingRight:30,
+        paddingTop:30,
+        flexDirection:'row',
+        alignItems:'center',       
+    },
+    viewSearchbar:{
+        backgroundColor: '#c0c0c03c',
+        alignSelf: 'center', 
+        width: '90%', 
+        flexDirection: 'row',
+        height:50,
+        marginLeft:30,
+        borderRadius:10,
+        marginRight:30,
+        marginTop:30,
+      }
+    ,
+    textInput: {
+        padding:10,
+        width:'90%',
+        borderRadius:10,
+        fontSize:15
+
+    },
+    iconSearch: {
+        alignSelf:'center'
+    },
+    boxSeller: {
+        marginTop: 30,
+        paddingLeft: 30,
+        paddingRight: 30,
+        flexDirection: 'row'
+    },
+    infoSeller: {
+        flexDirection: 'row',
+    },
+    boxNameSeller: {
+        width: 218,
+        marginLeft: 20
+    },
+    boxRate: {
+        flexDirection: 'row',
+        paddingTop: 10
+    },
+    textRate: {
+        fontSize: 20,
+        color: 'black',
+        marginTop: -5,
+        paddingLeft: 5
+    },
+    boxProductStore: {
+        flexDirection: 'row',
+        marginTop: 20,
+        marginLeft: 30,
+        justifyContent: 'space-between',
+        marginRight: 30
+    },
+    textTitleProduct: {
+        fontSize: 15
+    },
+    textCountProduct: {
+        color: 'black',
+        fontSize: 13
+    },
+    textitleProductSelling: {
+        fontSize: 20,
+        color: 'black'
+    },
+    productSelling: {
+        marginTop: 15,
+        marginLeft: 30,
+        marginRight: 30
+    },
+    boxSelling: {
+        backgroundColor: 'FAFAFA',
+        paddingLeft: 30,
+        paddingRight: 30,
+    },
+    boxProduct: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 10,
+        margin: 3,
+    },
+    reviewsProduct: {
+        flexDirection:'row',
+        alignItems:'center',
+        marginTop:5
+    },
+    flatlistHistory: {
+        marginTop:30
+    }
+})

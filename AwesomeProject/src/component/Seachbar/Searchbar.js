@@ -1,12 +1,13 @@
-import { View, Text, TextInput,Image } from 'react-native'
+import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-
+import { StyleSearch } from '../../css/Styles'
 const Searchbar = () => {
   return (
-    <View>
-      <TextInput/>
-      <Image
-      source={require('../../images/Searchbar/search.png')}/>
+    <View style={StyleSearch.viewSearchbar}>
+      <TextInput style={StyleSearch.textInput} placeholder='Searching for...'>
+      </TextInput>
+      <Image style={StyleSearch.iconSearch} source={require('../../images/Searchbar/search.png')} />
+
     </View>
   )
 }
