@@ -24,7 +24,8 @@ const HomeStore = (props) => {
             </View>
             <View style={StyleHomeStore.line}></View>
             <ScrollView 
-            
+            alwaysBounceVertical={false}
+            bounces={false}
             style={{marginBottom:90}}
             showsVerticalScrollIndicator={false}>
             <View style={StyleHomeStore.boxSeller}>
@@ -90,9 +91,10 @@ const HomeStore = (props) => {
             </View>
             <View style={StyleHomeStore.boxSelling}>               
                     <FlatList
-                    showsVerticalScrollIndicator
+            
                     data={dataProduct00}
                     numColumns={columns}
+                    bounces={false}
                     nestedScrollEnabled={true}
                     renderItem={({ item }) => <ItemHomeStore dulieu={item} />}
                     keyExtractor={item => item._idProduct}
