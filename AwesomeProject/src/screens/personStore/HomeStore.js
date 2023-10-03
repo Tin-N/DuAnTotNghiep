@@ -90,8 +90,7 @@ const HomeStore = (props) => {
                 </Text>
             </View>
             <View style={StyleHomeStore.boxSelling}>               
-                    <FlatList
-            
+                    <FlatList      
                     data={dataProduct00}
                     numColumns={columns}
                     bounces={false}

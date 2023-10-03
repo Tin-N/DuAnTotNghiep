@@ -23,7 +23,8 @@ import AppNavigator from './src/utils/AppNavigator';
 import HomeStore from './src/screens/personStore/HomeStore';
 import Shipper from './src/screens/personStore/Shipper';
 import SearchStore from './src/screens/personStore/SearchStore';
-
+import DetailFeedback from './src/screens/personStore/DetailFeedback';
+import ItemFeedBack from './src/screens/personStore/ItemFeedBack';
 const App = () => {
   return (
     // <AppContextProvider>
@@ -31,7 +32,7 @@ const App = () => {
     //     <AppNavigator/>
     //   </NavigationContainer>
     // </AppContextProvider>
-    <HomeStore/>
+    <DetailFeedback/>
     
   )
 }

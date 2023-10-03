@@ -257,3 +257,46 @@ export const StyleSearch = StyleSheet.create({
         marginTop:30
     }
 })
+export const StyleDetailFeedback = StyleSheet.create({
+    menu: {
+        paddingTop: 50,
+        flexDirection: 'row',
+        marginLeft: 30,
+        marginRight: 30,
+    },
+    textTitle: {
+        textAlign: 'center',
+        color: 'black',
+        fontSize: 20,
+        paddingLeft: 110,
+        marginTop: -6
+    },
+    images: {
+        marginLeft: 80
+    },
+    touchOpa: {
+        marginLeft: 75
+    },
+    line: {
+        borderWidth: 1,
+        opacity: 0.03,
+        marginTop: 20
+    },
+    boxRate: {
+        flexDirection:'row',
+        marginLeft:30,
+        marginRight:30,
+        marginTop:25,
+        
+    },
+    boxTextRate: {
+        marginTop:28,
+        width:75
+    },
+    boxStarRate: {
+        marginLeft:15
+    },
+    boxPercentRate: {
+
+    }
+})
