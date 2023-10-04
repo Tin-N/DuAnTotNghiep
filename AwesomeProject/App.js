@@ -25,6 +25,7 @@ import AppNavigator from './src/utils/AppNavigator';
 import Slideshow from './src/component/Slideshow/Slideshow';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import ProductDetail from './src/screens/ProductDetail';
+import DetailFeedback from './src/screens/personStore/DetailFeedback';
 const App = () => {
   return (
     // <AppContextProvider>
@@ -32,7 +33,7 @@ const App = () => {
     //     <AppNavigator/>
     //   </NavigationContainer>
     // </AppContextProvider>
-    <WelcomeScreen/>
+    <DetailFeedback/>
   )}
 
 
