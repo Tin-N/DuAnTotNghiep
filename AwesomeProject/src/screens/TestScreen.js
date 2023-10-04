@@ -8,6 +8,7 @@ import ProductList from '../component/ProductList/ProductList';
 import Searchbar from '../component/Seachbar/Searchbar';
 import Item from '../component/CategoryList/Item';
 import CategoryList from '../component/CategoryList/CategoryList';
+import Banner from '../component/Banner/Banner';
 const TestScreen = () => {
   const [column, setcolumn] = useState(2)
   return (
@@ -31,7 +32,8 @@ const TestScreen = () => {
            
       /> */}
       {/* <Searchbar/> */}
-      <CategoryList/>
+      {/* <CategoryList/> */}
+      <Banner/>
     </View>
   );
 };

@@ -15,9 +15,10 @@ const Pagination = (props) => {
 
             key={index.toString()}
             style={[
-              enablePagination==true?styles.dot:{display: 'none'},
-              {backgroundColor: index === indexP ? '#333' : '#ccc'},
+              enablePagination == true ? styles.dot : { display: 'none' },
+              { opacity: index === indexP ? 1 : 0.5 },
             ]}
+            
             onPress={() => onHandlePress(index)} // Gọi hàm khi TouchableOpacity được nhấn (Truyền vị trí dots)
           ></TouchableOpacity>
         );
@@ -30,15 +31,17 @@ export default Pagination;
 
 const styles = {
   dot: {
+    backgroundColor: '#ffffff',
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: '#ccc',
     marginHorizontal: 5,
   },
   container: {
-    position: 'absolute',
-    bottom: 35,
+    // Looix 
+    marginTop:-130,
+    marginBottom:50,
+    // 
     flexDirection: 'row',
     width: '100%',
     alignItems: 'center',

@@ -279,4 +279,65 @@ export const StyleSearch = StyleSheet.create({
     flatlistHistory: {
         marginTop:30
     }
-})
+});
+export const StyleBanner =  StyleSheet.create({
+    secondText:{
+                fontFamily: 'DMSans-VariableFont_opsz,wght',
+    },
+    title:{
+        fontFamily: 'DMSans-VariableFont_opsz,wght',
+        fontWeight:'700',
+        fontSize:25,
+        lineHeight:35
+    },WholeView:{
+        borderRadius:15,
+        flexDirection:'row',
+        width:'86%',
+        alignSelf:'center',
+        padding:10,
+        marginLeft:30,
+        marginRight:30,
+        marginTop:30,
+        marginBottom:30,
+
+
+
+    },icon:{
+        marginLeft:5
+    },image:{
+        alignSelf:'flex-end'
+    }
+
+ });
+
+ export const styleWelcome = StyleSheet.create({
+    view:{
+        backgroundColor:'#3669C9',
+        height:'100%',
+        width:'100%',
+    },
+    text:{
+        width:'83%',
+        fontFamily:'DMSans-VariableFont_opsz,wght',
+        fontSize:43,
+        fontWeight:'bold',
+        color:'white',
+        margin:20
+    },
+    TextInput:{
+        backgroundColor:'white',
+        width:'80%',
+        alignSelf:'center',
+        justifyContent:'center',
+        height:50,
+        marginBottom:50,
+        borderRadius:30
+    },
+    MiniTextInput:{
+        // color : '#EE2624',
+        color : '#3669C9',
+        textAlign:'center',
+        fontSize:25,
+        fontWeight:'bold'
+    }
+ });

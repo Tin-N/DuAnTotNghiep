@@ -11,8 +11,10 @@ import Pagination from './pagination';
 const Slideshow = (props) => {
   // Props 
   const { width, flex, heightRate, widthRate, paginationEnabled } = props;
-
+  // Vị trí trong flatlist
+  const [index, setIndex] = useState(0);
   // useState
+  const [autoScroll, setAutoScroll] = useState(true);
   const [widthR, setWidthR] = useState('80%');
   const [flexH, setflexH] = useState(0.8);
   const [hRate, sethRate] = useState(0.4);
@@ -59,8 +61,36 @@ const Slideshow = (props) => {
     // }
   }, [width, flex, heightRate, widthRate, paginationEnabled])
 
-  // Vị trí trong flatlist
-  const [index, setIndex] = useState(0);
+
+  // slide by time 
+  const [running, setrunning] = useState(false)
+
+  useEffect(() => {
+      if(autoScroll)
+      {
+        const timeoutId = setTimeout(() => {
+
+          if (index < images.length - 1) {
+
+            setIndex((prevIndex) => prevIndex + 1);
+            flatListRef.current.scrollToIndex({ animated: true, index: index + 1 });
+          
+          } else {
+
+            setIndex(0);
+            flatListRef.current.scrollToIndex({ animated: true, index: 0 });
+          
+          }
+          setrunning(!running)
+        }, 3000); // Thời gian đặt trong milliseconds (ở đây là 3 giây)
+    
+        return () => {
+          clearTimeout(timeoutId);
+        };
+      }
+     
+  }, [running]); 
+
 
   // Lấy vị trí hiện tại của phần tử trong flatlist
   const handleOnViewableItemsChanged = useRef(({ viewableItems }) => {
@@ -70,6 +100,8 @@ const Slideshow = (props) => {
   const flatListRef = useRef(null);
   // Hàm ref cuộn flatlist tới vị trí được chọn từ pagination
   const scrollToIndex = index => {
+
+  
     // Sử dụng flatListRef để cuộn đến mục ở vị trí cụ thể
     flatListRef.current.scrollToIndex({ index, animated: true });
   };

@@ -18,11 +18,13 @@ import {
 } from 'react-native';
 
 
+
 import { StyleLogin } from './src/css/Styles';
 import TestScreen from './src/screens/TestScreen';
+import WelcomeScreen from './src/screens/WelcomeScreen';
 const App = () => {
   return (
-  <TestScreen/>
+  <WelcomeScreen/>
   )
 }
 
