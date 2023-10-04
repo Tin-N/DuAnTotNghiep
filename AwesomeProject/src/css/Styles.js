@@ -447,7 +447,6 @@ export const styleWelcome = StyleSheet.create({
         color: 'white',
         margin: 20
     },
-<<<<<<< HEAD
     TextInput: {
         backgroundColor: 'white',
         width: '80%',
@@ -470,7 +469,4 @@ export const Stylexx = StyleSheet.create({
     
 });
 
-=======
     
-})
->>>>>>> devTin
