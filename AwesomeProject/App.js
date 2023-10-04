@@ -13,7 +13,9 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 
+
 import { StyleLogin } from './src/css/Styles';
+<<<<<<< HEAD
 import Home from './src/screens/Home';
 import Search from './src/screens/Search';
 import Order from './src/screens/Order';
@@ -30,6 +32,13 @@ const App = () => {
     // </AppContextProvider>
     <Slideshow/>
 
+=======
+import TestScreen from './src/screens/TestScreen';
+import WelcomeScreen from './src/screens/WelcomeScreen';
+const App = () => {
+  return (
+  <WelcomeScreen/>
+>>>>>>> devNhat
   )
 }
 
