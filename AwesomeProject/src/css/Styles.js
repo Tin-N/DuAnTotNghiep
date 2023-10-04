@@ -282,7 +282,6 @@ export const StyleShipper = StyleSheet.create({
     }
 
 });
-
 export const StyleSearch = StyleSheet.create({
     menu: {
         paddingTop: 50,
@@ -432,7 +431,6 @@ export const StyleBanner = StyleSheet.create({
     }
 
 });
-
 export const styleWelcome = StyleSheet.create({
     view: {
         backgroundColor: '#3669C9',
