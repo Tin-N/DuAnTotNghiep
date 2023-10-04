@@ -321,6 +321,3 @@ export const StyleDialogShopping = StyleSheet.create({
     },
     
 })
-export const Stylexx = StyleSheet.create({
-    
-})
