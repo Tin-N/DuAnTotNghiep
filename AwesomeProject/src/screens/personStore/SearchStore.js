@@ -83,7 +83,7 @@ const SearchStore = () => {
                 }}>
                     Lịch sử tìm kiếm
                 </Text>
-                <FlatList
+                {/* <FlatList
                     horizontal
                     data={dataHistorySearch}
                     scrollEnabled={true}
@@ -94,7 +94,67 @@ const SearchStore = () => {
                         <Text>{item.title}</Text>
                     </View>}
                     keyExtractor={item => item.title}
-                />
+                /> */}
+
+                <View style={{ flexWrap: 'wrap', 
+                flexDirection: 'row', 
+                paddingLeft: 28,
+                marginTop:15 }}>
+                    {dataHistorySearch.map(item => (
+                        <View>
+                            <TouchableOpacity>
+                                <Text style={{
+                                    padding: 8,
+                                    backgroundColor: '#EEEEEE',
+                                    margin: 2,
+                                    borderRadius: 10,
+                                    marginTop:6
+                                }}>{item.title}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ))}
+                </View>
+            </View>
+            <View style={StyleSearch.flatlistHistory}>
+                <Text style={{
+                    fontSize: 20,
+                    fontWeight: '500',
+                    color: 'black',
+                    marginLeft: 30
+                }}>
+                    Đề xuất tìm kiếm
+                </Text>
+                {/* <FlatList
+                    horizontal
+                    data={dataHistorySearch}
+                    scrollEnabled={true}
+                    style={{ paddingLeft: 30 }}
+                    bouncesZoom={false} // Tắt hiệu ứng zoom khi vuốt
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({ item }) => <View style={styles.item}>
+                        <Text>{item.title}</Text>
+                    </View>}
+                    keyExtractor={item => item.title}
+                /> */}
+
+                <View style={{ flexWrap: 'wrap', 
+                flexDirection: 'row', 
+                paddingLeft: 28,
+                marginTop:15 }}>
+                    {dataRemindSearch.map(item => (
+                        <View>
+                            <TouchableOpacity>
+                                <Text style={{
+                                    padding: 8,
+                                    backgroundColor: '#EEEEEE',
+                                    margin: 2,
+                                    borderRadius: 10,
+                                    marginTop:6
+                                }}>{item.title}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ))}
+                </View>
             </View>
         </View>
     )
@@ -168,7 +228,36 @@ const dataHistorySearch = [
     },
     {
         title: 'Lót chuột'
+    },
+    {
+        title: 'Lót chuột'
+    },
+    {
+        title: 'Máy tính Gaming'
+    },
+    {
+        title: 'Máy tính Gaming'
     }
+]
+const dataRemindSearch = [
+    {
+        title: 'Bàn phím cơ gaming'
+    },
+    {
+        title: 'Chuột không dây múp rụp'
+    },
+    {
+        title: 'Thức ăn nhanh'
+    },
+    {
+        title: 'Chuột không dây'
+    },
+    {
+        title: 'Laptop gaming Asus'
+    },
+    {
+        title: 'Lót chuột LOL'
+    },
 ]
 const ITEM_WIDTH = 100;
 const styles = StyleSheet.create({

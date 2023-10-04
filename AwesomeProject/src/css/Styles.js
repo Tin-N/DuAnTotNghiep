@@ -12,7 +12,7 @@ export const StyleHomeStore = StyleSheet.create({
     container: {
     },
     menu: {
-        paddingTop: 50,
+        paddingTop: 30,
         flexDirection: 'row',
         marginLeft: 30,
         marginRight: 30,
@@ -142,7 +142,7 @@ export const StyleShipper = StyleSheet.create({
 })
 export const StyleSearch = StyleSheet.create({
     menu: {
-        paddingTop: 50,
+        paddingTop: 30,
         flexDirection: 'row',
         marginLeft: 30,
         marginRight: 30,
