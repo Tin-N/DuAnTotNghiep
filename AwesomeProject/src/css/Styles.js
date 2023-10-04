@@ -243,7 +243,7 @@ export const StyleHomeStore = StyleSheet.create({
         alignItems: 'center',
         marginTop: 5
     }
-})
+});
 export const StyleShipper = StyleSheet.create({
     line: {
         borderWidth: 1,
@@ -281,7 +281,7 @@ export const StyleShipper = StyleSheet.create({
         marginLeft: 30
     }
 
-})
+});
 
 export const StyleSearch = StyleSheet.create({
     menu: {
@@ -447,7 +447,6 @@ export const styleWelcome = StyleSheet.create({
         color: 'white',
         margin: 20
     },
-<<<<<<< HEAD
     TextInput: {
         backgroundColor: 'white',
         width: '80%',
@@ -465,10 +464,8 @@ export const styleWelcome = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
-=======
-    
-})
+
 export const Stylexx = StyleSheet.create({
     
-})
->>>>>>> devTin
+});
+
