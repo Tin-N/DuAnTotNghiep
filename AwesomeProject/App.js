@@ -15,7 +15,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 
 import { StyleLogin } from './src/css/Styles';
-<<<<<<< HEAD
+
 import Home from './src/screens/Home';
 import Search from './src/screens/Search';
 import Order from './src/screens/Order';
@@ -23,6 +23,8 @@ import Login from './src/screens/Login';
 import { AppContextProvider } from './src/utils/AppContext';
 import AppNavigator from './src/utils/AppNavigator';
 import Slideshow from './src/component/Slideshow/Slideshow';
+import WelcomeScreen from './src/screens/WelcomeScreen';
+import ProductDetail from './src/screens/ProductDetail';
 const App = () => {
   return (
     // <AppContextProvider>
@@ -30,17 +32,12 @@ const App = () => {
     //     <AppNavigator/>
     //   </NavigationContainer>
     // </AppContextProvider>
-    <Slideshow/>
+    <WelcomeScreen/>
+  )}
 
-=======
-import TestScreen from './src/screens/TestScreen';
-import WelcomeScreen from './src/screens/WelcomeScreen';
-const App = () => {
-  return (
-  <WelcomeScreen/>
->>>>>>> devNhat
-  )
-}
+
+
+
 
 
 
