@@ -7,12 +7,6 @@ import { FlatList } from 'react-native';
 import ItemFeedBack from './ItemFeedBack';
 import { ScrollView } from 'react-native';
 const DetailFeedback = (props) => {
-    const convertDecimal=(num)=>
-    {
-        let result = num.toString();
-        let newDecimal= result.slice(0,3);
-        return newDecimal;
-    }
     const { navigation } = props;
     const [star11, setStar11] = useState(0);
     const [star22, setStar22] = useState(0);
@@ -52,8 +46,11 @@ const DetailFeedback = (props) => {
                     setStar55(star5);
                 }
             }
+            /*
+            Thuật toán tính tổng số lượng feedBack, phần trăm sao đánh giá theo từng loại
+            */
             isrealRating = (star1 * 1 + star2 * 2 + star3 * 3 + star4 * 4 + star5 * 5)
-            setpercentRating((isrealRating / (dataFeedback.length * 5)) * 5)
+            setpercentRating(((isrealRating / (dataFeedback.length * 5)) * 5).toFixed(1))
             setpercentRating1(star1 / dataFeedback.length)
             setpercentRating2(star2 / dataFeedback.length)
             setpercentRating3(star3 / dataFeedback.length)
@@ -79,11 +76,16 @@ const DetailFeedback = (props) => {
             <View style={StyleDetailFeedback.menu}>
                 <Image source={require('../../images/backic.png')} />
                 <Text style={StyleDetailFeedback.textTitle}>
-                    Đánh giá
+                    Đánh Giá
+                </Text>
+                <Image style={{marginLeft:80}} source={require('../../images/star.png')}/>
+                <Text>
+                    {percentRating}
                 </Text>
             </View>
             <View style={StyleDetailFeedback.line}></View>
-            <ScrollView>
+            <ScrollView showsHorizontalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}>
                 <View style={StyleDetailFeedback.boxRate}>
                     <View style={StyleDetailFeedback.boxTextRate}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -135,11 +137,18 @@ const DetailFeedback = (props) => {
                         </Text>
                     </View>
                 </View>
-                <View>
+                <View  style={{paddingBottom:90}}>
                     <FlatList
                         data={dataFeedback}
+                        showsHorizontalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
                         renderItem={({ item }) => <ItemFeedBack dataFeedback={item} />}
                         keyExtractor={item => item.userID} />
+                    <TouchableOpacity style={StyleDetailFeedback.touchOpa}>
+                        <Text style={{fontWeight:'bold'}}>
+                            See more
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
 
@@ -184,7 +193,7 @@ const dataFeedback = [
         userID: 6,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         rating: 2
-    }, {
+    },{
         productID: 1,
         userID: 7,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
@@ -193,6 +202,36 @@ const dataFeedback = [
     {
         productID: 1,
         userID: 8,
+        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        rating: 5
+    },
+    {
+        productID: 1,
+        userID: 9,
+        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        rating: 5
+    },
+    {
+        productID: 1,
+        userID: 10,
+        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        rating: 3
+    },
+    {
+        productID: 1,
+        userID: 11,
+        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        rating: 3
+    },
+    {
+        productID: 1,
+        userID: 12,
+        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        rating: 5
+    },
+    {
+        productID: 1,
+        userID: 13,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         rating: 5
     }

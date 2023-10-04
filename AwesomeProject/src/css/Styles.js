@@ -98,46 +98,46 @@ export const StyleHomeStore = StyleSheet.create({
         margin: 3,
     },
     reviewsProduct: {
-        flexDirection:'row',
-        alignItems:'center',
-        marginTop:5
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5
     }
 })
 export const StyleShipper = StyleSheet.create({
     line: {
         borderWidth: 1,
-        opacity: 0.03,       
+        opacity: 0.03,
     },
     menu: {
-        flexDirection:'row',
-        alignItems:'center',
-        height:80,
-        marginLeft:30, 
-        marginRight:30,
-        justifyContent:'space-between'
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: 80,
+        marginLeft: 30,
+        marginRight: 30,
+        justifyContent: 'space-between'
     },
     boxShipper: {
-        flexDirection:'row',
-        alignItems:'center',
-        marginTop:20,
-        marginBottom:20
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 20,
+        marginBottom: 20
     },
     textTitle: {
-        fontSize:20,
-        fontWeight:'bold',
-        color:'black',
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'black',
         fontFamily: "DMSans_400Regular"
     },
     listShipper: {
-        marginLeft:30,
-        marginRight:30
+        marginLeft: 30,
+        marginRight: 30
     },
     images: {
-        height:35,
-        width:80
+        height: 35,
+        width: 80
     },
     textShippe: {
-        marginLeft:30
+        marginLeft: 30
     }
 })
 export const StyleSearch = StyleSheet.create({
@@ -166,30 +166,30 @@ export const StyleSearch = StyleSheet.create({
         marginTop: 20
     },
     inputSearch: {
-        paddingLeft:30,
-        paddingRight:30,
-        paddingTop:30,
-        flexDirection:'row',
-        alignItems:'center',       
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 30,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     textInput: {
-        height:45,
-        paddingLeft:20,
-        width:220,
-        borderRadius:30,
-        borderWidth:1.2,
-        borderColor:'#3669C9'
+        height: 45,
+        paddingLeft: 20,
+        width: 220,
+        borderRadius: 30,
+        borderWidth: 1.2,
+        borderColor: '#3669C9'
     },
     searchButton: {
-        height:45,
-        backgroundColor:'#3669C9',
-        alignItems:'center',
-        paddingTop:12,
-        marginLeft:15,
-        borderRadius:30,
+        height: 45,
+        backgroundColor: '#3669C9',
+        alignItems: 'center',
+        paddingTop: 12,
+        marginLeft: 15,
+        borderRadius: 30,
     },
     iconSearch: {
-        marginLeft:-40
+        marginLeft: -40
     },
     boxSeller: {
         marginTop: 30,
@@ -249,17 +249,17 @@ export const StyleSearch = StyleSheet.create({
         margin: 3,
     },
     reviewsProduct: {
-        flexDirection:'row',
-        alignItems:'center',
-        marginTop:5
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5
     },
     flatlistHistory: {
-        marginTop:30
+        marginTop: 30
     }
 })
 export const StyleDetailFeedback = StyleSheet.create({
     menu: {
-        paddingTop: 50,
+        paddingTop: 30,
         flexDirection: 'row',
         marginLeft: 30,
         marginRight: 30,
@@ -269,13 +269,19 @@ export const StyleDetailFeedback = StyleSheet.create({
         color: 'black',
         fontSize: 20,
         paddingLeft: 110,
-        marginTop: -6
+        marginTop: -6,
+        width:220
     },
     images: {
         marginLeft: 80
     },
     touchOpa: {
-        marginLeft: 75
+        alignItems:'center',
+        width:300,
+        padding:5,
+        marginLeft:48,
+        borderWidth:0.4,
+        borderRadius:5
     },
     line: {
         borderWidth: 1,
@@ -283,20 +289,35 @@ export const StyleDetailFeedback = StyleSheet.create({
         marginTop: 20
     },
     boxRate: {
-        flexDirection:'row',
-        marginLeft:30,
-        marginRight:30,
-        marginTop:25,
-        
+        flexDirection: 'row',
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 25,
+
     },
     boxTextRate: {
-        marginTop:28,
-        width:75
+        marginTop: 28,
+        width: 75
     },
     boxStarRate: {
-        marginLeft:15
+        marginLeft: 15
     },
     boxPercentRate: {
 
     }
+})
+export const StyleDialogShopping = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'white', 
+        marginTop: 200, 
+        marginBottom: 30,
+        borderRadius:5,
+    },
+    line: {
+        borderWidth: 1,
+        opacity: 0.03,
+        marginTop: 20
+    },
+    
 })

@@ -6,37 +6,37 @@ const ItemFeedBack = (props) => {
     const [imageStar, setimageStar] = useState(require('../../images/close.png'))
     useEffect(() => {
         const starImage = () => {
-            if(dataFeedback.rating == 1) {
-                 setimageStar(require('../../images/1star.png'))
-                 return
-            }
-            if(dataFeedback.rating == 2){
-                 setimageStar(require('../../images/2star.png'))
+            if (dataFeedback.rating == 1) {
+                setimageStar(require('../../images/1star.png'))
                 return
-            } if(dataFeedback.rating == 3){
-                 setimageStar(require('../../images/3star.png'))
-                 return
-            } if(dataFeedback.rating == 4){
-                 setimageStar(require('../../images/4star.png'))
-                 return
-            } if(dataFeedback.rating == 5){
-                 setimageStar(require('../../images/5star.png'))
-                 return
+            }
+            if (dataFeedback.rating == 2) {
+                setimageStar(require('../../images/2star.png'))
+                return
+            } if (dataFeedback.rating == 3) {
+                setimageStar(require('../../images/3star.png'))
+                return
+            } if (dataFeedback.rating == 4) {
+                setimageStar(require('../../images/4star.png'))
+                return
+            } if (dataFeedback.rating == 5) {
+                setimageStar(require('../../images/5star.png'))
+                return
             }
         }
         starImage();
         return () => {
         }
     }, [])
-    
-    
+
+
     return (
         <View style={{ margin: 20 }}>
             <View style={{ flexDirection: 'row' }}>
                 <Image source={require('../../images/avatarPersonStore.png')} />
                 <View style={{ marginLeft: 10 }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ color: 'black', width:100}}>
+                        <Text style={{ color: 'black', width: 100 }}>
                             Nguyễn Văn Tin
                         </Text>
                         <Text style={{ marginLeft: 50 }}>
