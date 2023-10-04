@@ -22,7 +22,7 @@ export const StyleHomeStore = StyleSheet.create({
         color: 'black',
         fontSize: 20,
         paddingLeft: 110,
-        marginTop: -6
+        marginTop: -6,
     },
     images: {
         marginLeft: 80
