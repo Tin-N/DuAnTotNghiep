@@ -464,9 +464,69 @@ export const styleWelcome = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
+export const StyleDetailFeedback = StyleSheet.create({
+    menu: {
+        paddingTop: 30,
+        flexDirection: 'row',
+        marginLeft: 30,
+        marginRight: 30,
+    },
+    textTitle: {
+        textAlign: 'center',
+        color: 'black',
+        fontSize: 20,
+        paddingLeft: 110,
+        marginTop: -6,
+        width:220
+    },
+    images: {
+        marginLeft: 80
+    },
+    touchOpa: {
+        alignItems:'center',
+        width:300,
+        padding:5,
+        marginLeft:48,
+        borderWidth:0.4,
+        borderRadius:5
+    },
+    line: {
+        borderWidth: 1,
+        opacity: 0.03,
+        marginTop: 20
+    },
+    boxRate: {
+        flexDirection: 'row',
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 25,
 
-export const Stylexx = StyleSheet.create({
+    },
+    boxTextRate: {
+        marginTop: 28,
+        width: 75
+    },
+    boxStarRate: {
+        marginLeft: 15
+    },
+    boxPercentRate: {
+
+    }
+})
+export const StyleDialogShopping = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'white', 
+        marginTop: 200, 
+        marginBottom: 30,
+        borderRadius:5,
+    },
+    line: {
+        borderWidth: 1,
+        opacity: 0.03,
+        marginTop: 20
+    },
     
-});
+})
 
     
