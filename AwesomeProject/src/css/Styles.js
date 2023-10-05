@@ -17,7 +17,7 @@ export const StyleLogin = StyleSheet.create({
 export const stylesNoResult = StyleSheet.create({
     view: {
         margin:10,
-        height: '90%',
+        height: '70%',
         justifyContent:'center',
         alignItems:'center'
     },
@@ -148,6 +148,7 @@ export const StyleHomeStore = StyleSheet.create({
       paddingRight: 30,
   },
   boxProduct: {
+    width:170,
       backgroundColor: 'white',
       borderRadius: 10,
       padding: 10,
@@ -201,7 +202,7 @@ export const StyleSearch = StyleSheet.create({
         marginLeft:30,
         borderRadius:10,
         marginRight:30,
-        marginTop:20,
+        marginTop:10,
       }
     ,
     textInput: {
@@ -359,16 +360,17 @@ export const StyleBanner =  StyleSheet.create({
         fontSize:20,
         fontWeight:'700',
         textAlign:'right',
-        width:'55%',
+        width:'66%',
         justifyContent:'flex-end',
     },
     viewIcons:{
-        width:'45%',
+        width:'34%',
         justifyContent:'flex-end',
         flexDirection:'row',
+        marginRight:10,
     },
     icons:{
-        marginLeft:9
+        marginRight:10
     },
 
         // Category
@@ -379,7 +381,7 @@ export const StyleBanner =  StyleSheet.create({
         marginTop:0,
         marginLeft:20,
         marginRight:20,
-        marginBottom:0,
+        marginBottom:8,
 
         alignItems:'center'
     },
@@ -393,4 +395,24 @@ export const StyleBanner =  StyleSheet.create({
     },
 
 
+ });
+ export const styleSearchScreen = StyleSheet.create({
+    topBarView:{
+        // backgroundColor:'red',
+        flexDirection:'row',
+        height:50,
+        alignItems:'center',
+        justifyContent:'flex-start',
+    },
+    icons:{
+        marginLeft:15
+    },
+    title:{
+        fontWeight:'bold',
+        fontSize:20,
+        color:'black',
+        marginLeft:145,
+        width:'50%',
+        // backgroundColor:'blue'
+    }
  })

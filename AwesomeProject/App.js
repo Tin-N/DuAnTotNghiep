@@ -23,10 +23,12 @@ import { StyleLogin } from './src/css/Styles';
 import TestScreen from './src/screens/TestScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import SearchScreen from './src/screens/SearchScreen';
 const App = () => {
   return (
   // <WelcomeScreen/>
   <HomeScreen/>
+  // <SearchScreen/>
   )
 }
 

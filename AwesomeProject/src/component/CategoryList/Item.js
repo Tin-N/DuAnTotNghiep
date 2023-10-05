@@ -25,8 +25,8 @@ const Item = props => {
       style={{
         margin: 5,
         borderColor: 'black',
-        borderWidth: 1.5,
-        padding: 2,
+        borderWidth: 0.8,
+        padding: 2.5,
         borderRadius: 5,
         backgroundColor: 'white',
       }}>
@@ -35,13 +35,12 @@ const Item = props => {
           onHandlePress(data.id);
         }}
         style={{
+          height:23,
           color: 'black',
-          fontWeight: 'bold',
           padding: 1,
-          width: viewWidth * 11,
+          width: viewWidth * 10.5,
           textAlign: 'center',
-          alignContent: 'center',
-          justifyContent: 'center',
+          textAlignVertical:'center',
           fontSize: 15,
         }}>
         {data.name}

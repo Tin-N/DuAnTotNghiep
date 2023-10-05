@@ -13,7 +13,7 @@ const HomeScreen = () => {
       <ScrollView>
         {/* Top bar View */}
         <View style={styleHome.topBarView}>
-          <Text style={styleHome.title}>Savvy</Text>
+          <Text style={styleHome.title}>Savvy shopping</Text>
           <View style={styleHome.viewIcons}>
             <Image
               style={styleHome.icons}
@@ -50,28 +50,28 @@ const HomeScreen = () => {
 
         {/* Feature product */}
         <View>
-          <View style={styleHome.CategoryView}>
-            <Text style={styleHome.titleCategory}>Featured Product</Text>
-            <Text style={styleHome.text}>See all</Text>
-          </View>
-          <Banner
-            BackgroundColor={'#FD4E28'}
-            Text1={'Giảm giá \nBao gạo 5kg'}
-            Source={require('../images/Banner/rice-bag.png')}
-            PrimaryTextColor={'white'}
-            SecondTextColor={'white'}
-            OpacitySecondText={0.5}
-          />
-          <ProductList
-            data={FetchData()}
-            styleView={{
-              width: '100%',
-              padding: 10,
-              margin: 10,
-            }}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          />
+                <View style={styleHome.CategoryView}>
+                    <Text style={styleHome.titleCategory}>Featured Product</Text>
+                    <Text style={styleHome.text}>See all</Text>
+                </View>
+                <Banner
+                    BackgroundColor={'#3669C9'}
+                    Text1={'Giảm giá \nBao gạo 5kg'}
+                    Source={require('../images/Banner/rice-bag.png')}
+                    PrimaryTextColor={'white'}
+                    SecondTextColor={'white'}
+                    OpacitySecondText={0.5}
+                />
+                <ProductList
+                    data={FetchData()}
+                    styleView={{
+                    width: '100%',
+                    padding: 10,
+                    margin: 10,
+                    }}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                />
         </View>
         <View>
           {/* BestSeller View */}
@@ -80,7 +80,7 @@ const HomeScreen = () => {
             <Text style={styleHome.text}>See all</Text>
           </View>
           <Banner
-            BackgroundColor={'#FD4E28'}
+            BackgroundColor={'#3669C9'}
             Text1={'Chuối sấy \nCao cấp'}
             Source={require('../images/Banner/banana-chips.png')}
             PrimaryTextColor={'white'}
