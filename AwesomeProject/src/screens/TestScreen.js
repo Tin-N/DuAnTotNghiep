@@ -33,7 +33,8 @@ const TestScreen = () => {
       /> */}
       {/* <Searchbar/> */}
       {/* <CategoryList/> */}
-      <Banner/>
+{/* <Banner/> */}
+
     </View>
   );
 };
