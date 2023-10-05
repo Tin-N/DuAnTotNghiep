@@ -201,7 +201,7 @@ export const StyleSearch = StyleSheet.create({
         marginLeft:30,
         borderRadius:10,
         marginRight:30,
-        marginTop:30,
+        marginTop:20,
       }
     ,
     textInput: {
@@ -294,11 +294,11 @@ export const StyleBanner =  StyleSheet.create({
         flexDirection:'row',
         width:'86%',
         alignSelf:'center',
-        padding:10,
+        padding:25,
         marginLeft:30,
         marginRight:30,
-        marginTop:30,
-        marginBottom:30,
+        marginTop:10,
+        marginBottom:10,
 
 
 
@@ -341,3 +341,56 @@ export const StyleBanner =  StyleSheet.create({
         fontWeight:'bold'
     }
  });
+ export const styleHome=StyleSheet.create({
+    // Top bar
+
+        // View
+    topBarView:{
+        
+        height:50,
+        padding:10,
+        paddingLeft:30,
+        flexDirection:'row',
+        alignItems:'center',
+        // backgroundColor:'red'
+    },
+    title:{
+        color:'#EE2624',
+        fontSize:20,
+        fontWeight:'700',
+        textAlign:'right',
+        width:'55%',
+        justifyContent:'flex-end',
+    },
+    viewIcons:{
+        width:'45%',
+        justifyContent:'flex-end',
+        flexDirection:'row',
+    },
+    icons:{
+        marginLeft:9
+    },
+
+        // Category
+        
+    CategoryView:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        marginTop:0,
+        marginLeft:20,
+        marginRight:20,
+        marginBottom:0,
+
+        alignItems:'center'
+    },
+    text:{
+        color:'#3669C9'
+    },
+    titleCategory:{
+        color:'black',
+        fontWeight:'700',
+        fontSize:15
+    },
+
+
+ })

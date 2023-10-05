@@ -4,10 +4,9 @@ import { StyleSearch } from '../../css/Styles'
 const Searchbar = () => {
   return (
     <View style={StyleSearch.viewSearchbar}>
-      <TextInput style={StyleSearch.textInput} placeholder='Searching for...'>
+      <TextInput style={StyleSearch.textInput} placeholder='Tìm kiếm bằng tên thực phẩm'>
       </TextInput>
       <Image style={StyleSearch.iconSearch} source={require('../../images/Searchbar/search.png')} />
-
     </View>
   )
 }

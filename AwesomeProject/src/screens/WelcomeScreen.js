@@ -7,6 +7,7 @@ const WelcomeScreen = () => {
     <View style={styleWelcome.view}>
       <Text style={styleWelcome.text}>Buy everything what you want</Text>
          <Slideshow
+        isAutoSroll={true}
         width={'80%'}
         flex={0.8}
         heightRate={0.7}

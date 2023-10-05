@@ -6,7 +6,7 @@ const ItemList = (props) => {
   return (
     <View style={StyleHomeStore.boxProduct}>
       <Image source={require('../../images/ProductList/food.png')} />
-      <Text style={{color:'black', fontWeight:'bold', fontFamily:'DM Sans'}}>
+      <Text style={{color:'black', fontWeight:'bold', fontSize:13,letterSpacing:0.5,lineHeight:17}}>
         {data.nameProduct}
       </Text>
       <Text style={{marginTop:5}}>

@@ -9,8 +9,8 @@ const ProductList = (props) => {
       <FlatList
       {...customSetting}
       data={data}
-      
       renderItem={({item})=>(<ItemList data={item}/>)}
+      
       />
     </View>
   )

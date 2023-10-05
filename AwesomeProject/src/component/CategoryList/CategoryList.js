@@ -19,7 +19,7 @@ const scrollToIndex = index => {
 };
 
   return (
-    <View style={{marginTop:20, width:'100%'}}>
+    <View style={{marginTop:5, width:'100%',margin:10,padding:5}}>
         <FlatList
             showsHorizontalScrollIndicator={false}
             ref={flatListRef}
@@ -35,4 +35,3 @@ const scrollToIndex = index => {
 
 export default CategoryList
 
-const styles = StyleSheet.create({})
