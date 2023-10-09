@@ -245,7 +245,6 @@ export const StyleHomeStore = StyleSheet.create({
         alignItems: 'center',
         marginTop: 5
     }
-<<<<<<< HEAD
 });
 export const StyleShipper = StyleSheet.create({
     line: {
