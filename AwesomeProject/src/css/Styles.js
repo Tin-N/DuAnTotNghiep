@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { COLOR } from './Theme';
@@ -685,3 +686,281 @@ export const StyleCategory = StyleSheet.create({
     }
 })
 >>>>>>> devQuy
+=======
+import {View, Text, StyleSheet} from 'react-native';
+import React from 'react';
+import {COLOR} from './Theme';
+export const StyleLogin = StyleSheet.create({
+  header: {
+    color: COLOR.primary,
+  },
+  HeadingText: {
+    color: COLOR.background,
+    fontSize: 80,
+    fontWeight: 'bold',
+    marginTop: "2%",
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+    // Tạo bóng chữ
+    textShadowColor: 'black',
+    textShadowOffset: {width: -3, height: 5},
+    textShadowRadius: 1,
+  },
+  extraText: {
+    color: 'black',
+    fontSize: 30,
+    fontWeight: 'bold',
+    justifyContent: 'space-between',
+    marginHorizontal: 16,
+  },
+  textHint: {
+    color: COLOR.TextHint,
+    fontSize: 15,
+    marginTop: "1%",
+    justifyContent: 'space-between',
+    marginHorizontal: 16,
+  },
+  fgPass: {
+    textAlign: 'right',
+    marginHorizontal: 20,
+    color: COLOR.Blue,
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  input: {
+    placeholderTextColor: COLOR.TextPlaceHolder,
+    height: 30,
+    margin: 12,
+    borderWidth: 1,
+    borderColor: COLOR.borderColor,
+    padding: 15,
+    height: 55,
+    justifyContent: 'space-between',
+    borderRadius: 5,
+  },
+  buttonShape: {
+    alignItems: 'center',
+    jussifyContent: 'center',
+    backgroundColor: COLOR.background,
+    padding: 10,
+    height: 55,
+    width: '95%',
+    marginHorizontal: 10,
+    marginTop: 20,
+    borderRadius: 30,
+    // marginHorizontal: 10
+  },
+  TextButton: {
+    fontSize: 20,
+    paddingTop: 2,
+    fontWeight: 'bold',
+    height: 55,
+    color: 'white',
+  },
+  text: {
+    color: COLOR.TextHint,
+    fontSize: 17,
+    justifyContent: 'space-between',
+    marginHorizontal: 16,
+    marginTop: 15,
+    // backgroundColor: 'red',
+    textAlign: 'center',
+  },
+  FGcontainer: {
+    flexDirection: 'row',
+    width: '94%',
+    marginHorizontal: 10,
+    marginTop: 10,
+    justifyContent: 'space-around',
+  },
+  FButton: {
+    alignItems: 'center',
+    backgroundColor: COLOR.Blue,
+    padding: 10,
+    height: 55,
+    width: '46%',
+    borderRadius: 10,
+    marginHorizontal: 0,
+  },
+  GButton: {
+    alignItems: 'center',
+    borderWidth: 0.5,
+    padding: 10,
+    height: 55,
+    width: '46%',
+    borderRadius: 10,
+    marginHorizontal: 0,
+  },
+  CbuttomText: {
+    marginTop: '20%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '94%',
+    marginHorizontal: 10,
+  },
+  CSbuttomText: {
+    marginTop: '10%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '94%',
+    marginHorizontal: 10,
+  },
+  ButtomText1: {
+    fontSize: 20,
+    fontWight: 'bold',
+    // backgroundColor: 'red',
+  },
+  ButtomText2: {
+    color: COLOR.Blue,
+    fontSize: 20,
+    fontWight: 'bold',
+    fontStyle: 'italic',
+    // backgroundColor: 'blue',
+    textDecorationLine: 'underline',
+  },
+  SButtonShape: {
+    alignItems: 'center',
+    jussifyContent: 'center',
+    backgroundColor: COLOR.background,
+    padding: 10,
+    height: 55,
+    width: '94%',
+    marginHorizontal: 10,
+    marginTop: 20,
+    borderRadius: 30,
+  },
+  RPBottomText:{
+    textAlign: 'center',
+    marginTop: "60%",
+    fontSize: 20,
+    color: 'black',
+    fontWeight: 'bold',
+    // backgroundColor: 'red',
+  },
+  RSPassInput:{
+      placeholderTextColor: COLOR.TextPlaceHolder,
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      borderColor: COLOR.borderColor,
+      padding: 15,
+      height: 55,
+      justifyContent: 'space-between',
+      borderRadius: 25,
+  },
+
+  //Welcome 
+  HeadingTextWelcome: {
+      paddingTop: "2%",
+      fontWeight: 'bold',
+      paddingHorizontal: 20,
+      color: 'white',
+      fontFamily: 'INter-Black',
+      fontSize: 39,
+  },
+  ButtonWelcome: {
+    alignItems: 'center',
+          backgroundColor: 'white',
+          padding: 10,
+          height: 55,
+          margin: 75,
+          borderRadius: 30,
+          marginHorizontal : 20,
+  },
+  TextWelcome:{
+    fontSize: 20,
+    paddingTop: 2,
+    fontWeight: 'bold',
+    height: 55,
+    color: COLOR.background,
+    },
+
+    // Confirm Pass
+    HeadingTextCP: {
+      color: COLOR.background,
+      fontSize: 30,
+      fontWeight: 'bold',
+      marginTop: "20%",
+      justifyContent: 'space-between',
+      marginHorizontal: 20,
+    },
+    HintText:
+      {
+        color: 'black',
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginTop: 30,
+        color: COLOR.TextHint,
+        justifyContent: 'space-between',
+        marginHorizontal: 16,
+      
+    },
+    inputCP: {
+      placeholderTextColor: COLOR.TextPlaceHolder,
+      height: 40,
+      width: '20%',
+      margin: 12,
+      borderWidth: 1,
+      borderColor: COLOR.borderColor,
+      padding: 15,
+      height: 55,
+      justifyContent: 'space-between',
+      borderRadius: 25,
+      textAlign : 'center',
+    },
+    Resent:{
+      color: COLOR.Blue,
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginHorizontal: 15,
+    },
+    ContainerSentCode:{
+      flexDirection: 'row',
+      marginTop: 15,
+      width: '90%',
+      marginHorizontal: 15,
+      // backgroundColor: COLOR.background,
+    },
+    SCText1:{
+      color: COLOR.TextHint,
+      fontSize: 14,
+      flex: 5,
+    },
+    SCText2:{
+      color: COLOR.TextHint,
+      fontSize: 14,
+      flex: 1,
+    },
+
+    //UPdate Password
+    UPContainerWarning:{
+      marginTop: '2%',
+      marginHorizontal: '6%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      // backgroundColor: 'green',
+    },
+    iconWarning:{
+      width: 20,
+      height: 20,
+      // justifyContent: 'space-between',
+      alignItems: 'center',
+
+      // backgroundColor: 'yellow',
+    },
+    TextWarning:{
+      color: COLOR.TextHint,
+      width: '85%',
+      fontSize: 15,
+      // backgroundColor: 'red',
+      alignItems: 'center',
+      // color: COLOR.TextHint,
+      justifyContent: 'space-between',
+      marginHorizontal: '2%',
+    },
+    ButtonUP:{
+      marginTop: '20%',
+      marginHorizontal: '1%',
+    },
+});
+>>>>>>> devThuan
