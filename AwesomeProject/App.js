@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 
-<<<<<<< HEAD
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -27,28 +27,18 @@ import Slideshow from './src/component/Slideshow/Slideshow';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import ProductDetail from './src/screens/ProductDetail';
 import DetailFeedback from './src/screens/personStore/DetailFeedback';
-
-
-
-
-import Category from './src/screens/Category';
-
-const App = () => {
-  return (
-    <AppContextProvider>
-      <NavigationContainer>
-        <AppNavigator/>
-        {/* <Category/> */}
-      </NavigationContainer>
-    </AppContextProvider>
-=======
-import { StyleLogin } from './src/css/Styles';
 import Welcome from './src/screens/Welcome';
 import SignIn from './src/screens/SignIn';
 import SignUp from './src/screens/SignUp';
 import ResetPassword from './src/screens/ResetPassword';
 import ConfirmPhoneNum from './src/screens/ConfirmPhoneNum';
 import UpdatePassword from './src/screens/UpdatePassword';
+
+
+
+import Category from './src/screens/Category';
+
+
 const App = () => {
   return (
     <SafeAreaView>
@@ -59,7 +49,7 @@ const App = () => {
       {/* <ConfirmPhoneNum/> */}
       <UpdatePassword/>
     </SafeAreaView>
->>>>>>> devThuan
+
   )
 }
 

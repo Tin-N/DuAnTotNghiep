@@ -1,18 +1,11 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { COLOR } from './Theme';
 import { Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('screen');
-=======
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
-import React from 'react'
-import { COLOR } from './Theme'
-
 const { width, height } = Dimensions.get("window");
->>>>>>> devQuy
-export const StyleLogin = StyleSheet.create({
+
+export const StyleLogin1 = StyleSheet.create({
     header: {
         color: COLOR.primary,
     },
@@ -536,11 +529,6 @@ export const StyleDialogShopping = StyleSheet.create({
     },
     
 })
-
-    
-=======
-})
-
 export const StyleOrder = StyleSheet.create({
     container:{
         backgroundColor: 'white',
@@ -614,7 +602,6 @@ export const StyleOrder = StyleSheet.create({
         alignItems: 'center'
     },
 })
-
 export const StyleCategory = StyleSheet.create({
     textHeader:{
         fontSize: 16,
@@ -685,11 +672,6 @@ export const StyleCategory = StyleSheet.create({
         marginBottom: 10,
     }
 })
->>>>>>> devQuy
-=======
-import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
-import {COLOR} from './Theme';
 export const StyleLogin = StyleSheet.create({
   header: {
     color: COLOR.primary,
@@ -963,4 +945,4 @@ export const StyleLogin = StyleSheet.create({
       marginHorizontal: '1%',
     },
 });
->>>>>>> devThuan
+
