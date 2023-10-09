@@ -22,25 +22,14 @@ import Order from './src/screens/Order';
 import Login from './src/screens/Login';
 import { AppContextProvider } from './src/utils/AppContext';
 import AppNavigator from './src/utils/AppNavigator';
-<<<<<<< HEAD
 import Slideshow from './src/component/Slideshow/Slideshow';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import ProductDetail from './src/screens/ProductDetail';
 import DetailFeedback from './src/screens/personStore/DetailFeedback';
-const App = () => {
-  return (
-    // <AppContextProvider>
-    //   <NavigationContainer>
-    //     <AppNavigator/>
-    //   </NavigationContainer>
-    // </AppContextProvider>
-    <DetailFeedback/>
-  )}
 
 
 
 
-=======
 import Category from './src/screens/Category';
 
 const App = () => {
@@ -53,7 +42,7 @@ const App = () => {
     </AppContextProvider>
   )
 }
->>>>>>> devQuy
+
 
 
 
