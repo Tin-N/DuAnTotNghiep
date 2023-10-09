@@ -7,7 +7,12 @@ import Search from '../screens/Search'
 import Order from '../screens/Order'
 import Login from '../screens/Login'
 import { AppContext } from './AppContext';
+<<<<<<< HEAD
 import HomeStore from '../screens/personStore/HomeStore';
+=======
+import Category from '../screens/Category';
+
+>>>>>>> devQuy
 const Tab = createBottomTabNavigator();
 
 const User = () => {
