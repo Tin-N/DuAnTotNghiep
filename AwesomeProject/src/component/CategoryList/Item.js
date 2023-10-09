@@ -23,12 +23,13 @@ const Item = props => {
   return (
     <View
       style={{
-        margin: 5,
         borderColor: 'black',
         borderWidth: 0.8,
         padding: 2.5,
         borderRadius: 5,
         backgroundColor: 'white',
+        paddingLeft: 10,
+        margin: 5
       }}>
       <Text
         onPress={() => {

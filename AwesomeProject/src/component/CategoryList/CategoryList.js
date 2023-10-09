@@ -19,8 +19,9 @@ const scrollToIndex = index => {
 };
 
   return (
-    <View style={{marginTop:5, width:'100%',margin:10,padding:5}}>
+    <View style={{marginTop:5, width:'100%'}}>
         <FlatList
+            style={{paddingLeft:15, paddingRight: 50}}
             showsHorizontalScrollIndicator={false}
             ref={flatListRef}
             onViewableItemsChanged={handleOnViewableItemsChanged}
