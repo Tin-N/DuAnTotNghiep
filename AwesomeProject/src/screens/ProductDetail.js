@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         paddingHorizontal: 140,
         paddingVertical: 10,
-        
+        marginBottom: 10
     },
     addToCartText: {
         color: 'white'
