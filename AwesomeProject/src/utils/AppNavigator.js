@@ -3,24 +3,17 @@ import React, { useContext } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon1 from 'react-native-vector-icons/Ionicons';
 import Home from '../screens/Home'
-import Search from '../screens/Search'
 import Order from '../screens/Order'
-import Login from '../screens/Login'
 import { AppContext } from './AppContext';
-
+import SignUp from '../screens/SignUp';
 import HomeStore from '../screens/personStore/HomeStore';
-
 import Category from '../screens/Category';
-
-
 const Tab = createBottomTabNavigator();
-
 const User = () => {
     return (
         <Text>Đăng nhập</Text>
     )
 }
-
 const Main = () => {
     return (
         <Tab.Navigator
@@ -32,11 +25,9 @@ const Main = () => {
                     let iconName;
                     if (route.name === 'Home') {
                         iconName = focused ? 'home' : 'home-outline';
-                    } else if (route.name === 'Search') {
-                        iconName = focused ? 'search-sharp' : 'search-outline';
                     } else if (route.name === 'Order') {
                         iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
-                    } else if (route.name === 'Login') {
+                    } else if (route.name === 'SignUp') {
                         iconName = focused ? 'people-sharp' : 'people-outline';
                     }
                     return <Icon1 name={iconName} size={size} color={color} />
@@ -46,9 +37,8 @@ const Main = () => {
             })}
         >
             <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Search" component={Search} />
             <Tab.Screen name="Order" component={Order} />
-            <Tab.Screen name="Login" component={Login} />
+            <Tab.Screen name="SignUp" component={SignUp} />
         </Tab.Navigator>
     )
 }

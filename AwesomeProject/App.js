@@ -18,9 +18,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StyleLogin } from './src/css/Styles';
 
 import Home from './src/screens/Home';
-import Search from './src/screens/Search';
 import Order from './src/screens/Order';
-import Login from './src/screens/Login';
 import { AppContextProvider } from './src/utils/AppContext';
 import AppNavigator from './src/utils/AppNavigator';
 import Slideshow from './src/component/Slideshow/Slideshow';
