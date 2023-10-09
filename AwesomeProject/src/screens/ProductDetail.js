@@ -13,13 +13,22 @@ const ProductDetail = () => {
 
     }
 
+    
+
     const CommentItem = ({ item }) => {
+        const star = (starRating) => {
+            if(starRating < 5){
+                return '★'.repeat(starRating) + '☆'.repeat(5-starRating)
+            } else {
+                return '★'.repeat(starRating)
+            }
+        }
         return (
             <View style={styles.commentItem}>
                 <Image source={item.customerAvatar} style={styles.avatar} />
                 <View style={styles.commentDetails}>
                     <Text style={styles.customerName}>{item.customerName}</Text>
-                    <Text style={styles.customerStarRatings}>{'★'.repeat(item.customerStarRatings)}</Text>
+                    <Text style={styles.customerStarRatings}>{star(item.customerStarRatings)}</Text>
                     <Text style={styles.customerFeedback}>{item.customerFeedback}</Text>
                 </View>
             </View>
@@ -71,7 +80,7 @@ const ProductDetail = () => {
                     {/* Phần averageRating và feedbackCount */}
                     <View style={styles.ratingContainer}>
                         <Text style={styles.feedbackCount}>{feedbackCount} Bình Luận</Text>
-                        <Text style={styles.averageRating}>{averageRating.toFixed(1)} ☆</Text>
+                        <Text style={styles.averageRating}>{averageRating.toFixed(1)} ★</Text>
                     </View>
 
                     {/* <FlatList
