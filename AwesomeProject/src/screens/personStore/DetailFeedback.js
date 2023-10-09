@@ -83,6 +83,7 @@ const DetailFeedback = (props) => {
                     {percentRating}
                 </Text>
             </View>
+            
             <View style={StyleDetailFeedback.line}></View>
             <ScrollView showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}>
@@ -161,7 +162,7 @@ const dataFeedback = [
     {
         productID: 1,
         userID: 1,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        feedbackText: 'Dcm hang dom vai lit, moi xai duoc co 1 ngay ma hu cmnnr  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
         rating: 5
     },
     {
@@ -232,6 +233,26 @@ const dataFeedback = [
     {
         productID: 1,
         userID: 13,
+        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        rating: 5
+    },
+    {
+        productID: 1,
+        userID: 14,
+        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        rating: 5
+    }
+    ,
+    {
+        productID: 1,
+        userID: 15,
+        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        rating: 5
+    }
+    ,
+    {
+        productID: 1,
+        userID: 16,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         rating: 5
     }

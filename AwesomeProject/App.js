@@ -33,7 +33,7 @@ const App = () => {
     //     <AppNavigator/>
     //   </NavigationContainer>
     // </AppContextProvider>
-    <SearchStore/>
+    <DetailFeedback/>
     
   )
 }
