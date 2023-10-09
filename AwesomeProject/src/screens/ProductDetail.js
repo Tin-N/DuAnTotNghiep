@@ -79,13 +79,19 @@ const ProductDetail = () => {
                         renderItem={({ item }) => <CommentItem item={item} />}
                         keyExtractor={(item, index) => index.toString()}
                     /> */}
-{/*-------------------------- Vì FlatList lồng ScrollView sẽ gây ra lỗi và sẽ warning nên phải dùng cách dưới--------------------------- */}
+                    {/*-------------------------- Vì FlatList lồng ScrollView sẽ gây ra lỗi và sẽ warning nên phải dùng cách dưới--------------------------- */}
                     {
                         product.allCustomerFeedback.map((item) => <CommentItem key={item.customerID} item={item} />)
                     }
                     {/* data map tới item trỏ tới chỗ view render chọn key để giải nén từng item, dữ liệu item sẽ là item được truyền vào */}
-
-                    
+                    <View style={styles.LastTouchableOpacity}>
+                        <TouchableOpacity style={styles.seeAllReviewButton}>
+                            <Text style={styles.seeAllReviewText}>See All Review</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.addToCartButton}>
+                            <Text style={styles.addToCartText}>Add To Cart</Text>
+                        </TouchableOpacity>
+                    </View>
 
                 </ScrollView>
             </View>
@@ -100,6 +106,8 @@ const styles = StyleSheet.create({
     },
     customContent: {
         flex: 1,
+        marginLeft: 10,
+        marginRight: 10,
         backgroundColor: 'white'
     },
     productName: {
@@ -107,7 +115,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 25,
         fontWeight: '500',
-        color: 'black'
+        color: 'black',
+        fontStyle: 'bold'
     },
     productPrice: {
         marginLeft: 15,
@@ -176,6 +185,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
         fontSize: 16,
         fontWeight: 'bold',
+        color: '#FFC120'
     },
     customerFeedbackItem: {
         flexDirection: 'row', // Thiết lập thành hàng ngang
@@ -206,12 +216,37 @@ const styles = StyleSheet.create({
     },
     customerStarRatings: {
         fontSize: 16,
+        color:'#FFC120'
         // Các kiểu dáng khác của đánh giá sao
     },
     customerFeedback: {
         fontSize: 14,
         // Các kiểu dáng khác của phản hồi
     },
+
+    LastTouchableOpacity: {
+        alignItems: 'center',
+    },
+    seeAllReviewButton: {
+        borderWidth: 1,
+        borderRadius: 15,
+        paddingHorizontal: 130,
+        paddingVertical: 10,
+    },
+    seeAllReviewText: {
+        color: 'black'
+    },
+    addToCartButton: {
+        marginTop: 10,
+        backgroundColor: 'dodgerblue',
+        borderRadius: 15,
+        paddingHorizontal: 140,
+        paddingVertical: 10,
+        
+    },
+    addToCartText: {
+        color: 'white'
+    }
 });
 
 export default ProductDetail;
@@ -229,35 +264,35 @@ const product =
     "customerFeedback": "Good product!",
     "allCustomerFeedback": [
         {
-            customerID:4241,
+            customerID: 4241,
             customerAvatar: require('../images/91042496_p2.jpg'),
             customerName: 'Customer 1',
             customerFeedback: 'Great product! I love it.',
             customerStarRatings: 5,
         },
         {
-            customerID:1231,
+            customerID: 1231,
             customerAvatar: require('../images/91042496_p2.jpg'),
             customerName: 'Customer 2',
             customerFeedback: 'Good quality, fast shipping.',
             customerStarRatings: 4,
         },
         {
-            customerID:35345,
+            customerID: 35345,
             customerAvatar: require('../images/91042496_p2.jpg'),
             customerName: 'Customer 3',
             customerFeedback: 'Average product, could be better.',
             customerStarRatings: 3,
         },
         {
-            customerID:984306,
+            customerID: 984306,
             customerAvatar: require('../images/91042496_p2.jpg'),
             customerName: 'Customer 4',
             customerFeedback: 'Not satisfied with the product.',
             customerStarRatings: 2,
         },
         {
-            customerID:11930,
+            customerID: 11930,
             customerAvatar: require('../images/91042496_p2.jpg'),
             customerName: 'Customer 5',
             customerFeedback: 'Terrible quality, do not buy.',
