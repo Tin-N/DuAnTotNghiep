@@ -54,7 +54,7 @@ const ProductDetail = () => {
         <View style={styles.container}>
             <ActionBar title="Product Detail" />
             <View style={styles.customContent}>
-                <ScrollView>
+                <ScrollView style={{}}>
                     {/* đây là nơi hiện thị hình ảnh sản phẩm dạng slide */}
                     <Text style={styles.productName}>{product.productName}</Text>
                     <Text style={styles.productPrice}>{product.productPrice}</Text>
@@ -110,11 +110,10 @@ const ProductDetail = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: 'white'
     },
     customContent: {
-        flex: 1,
+       backgroundColor:'red',
         marginLeft: 10,
         marginRight: 10,
         backgroundColor: 'white'

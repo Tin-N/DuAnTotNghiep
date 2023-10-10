@@ -45,7 +45,8 @@ const App = () => {
       {/* <SignUp/> */}
       {/* <ResetPassword/> */}
       {/* <ConfirmPhoneNum/> */}
-      <UpdatePassword/>
+      {/* <UpdatePassword/> */}
+      <ProductDetail/>
     </SafeAreaView>
 
   )
