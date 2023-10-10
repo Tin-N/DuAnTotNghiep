@@ -321,3 +321,29 @@ export const StyleDialogShopping = StyleSheet.create({
     },
     
 })
+export const StyleDetailPersonFeedback = StyleSheet.create({
+    menu: {
+        paddingTop: 30,
+        flexDirection: 'row',
+        marginLeft: 30,
+        marginRight: 30,
+    },
+    textTitle: {
+        textAlign: 'center',
+        color: 'black',
+        fontSize: 20,
+        paddingLeft: 20,
+        marginTop: -6,
+    },
+    images: {
+        marginLeft: 80
+    },
+    touchOpa: {
+        marginLeft: 190
+    },
+    line: {
+        borderWidth: 1,
+        opacity: 0.03,
+        marginTop: 20
+    },
+})

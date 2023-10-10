@@ -21,7 +21,7 @@ const DetailFeedback = (props) => {
     const [percentRating4, setpercentRating4] = useState(0);
     const [percentRating5, setpercentRating5] = useState(0);
     useEffect(() => {
-        const countRating =  () => {
+        const countRating = () => {
             var star1 = 0;
             var star2 = 0;
             var star3 = 0;
@@ -65,9 +65,9 @@ const DetailFeedback = (props) => {
 
             // setpercentRating(result);
             //  setpercentRating(result);
-            setlengthFeedback(dataFeedback.length);          
+            setlengthFeedback(dataFeedback.length);
         }
-        countRating();   
+        countRating();
         return () => {
         }
     }, [percentRating])
@@ -78,15 +78,15 @@ const DetailFeedback = (props) => {
                 <Text style={StyleDetailFeedback.textTitle}>
                     Đánh Giá
                 </Text>
-                <Image style={{marginLeft:80}} source={require('../../images/star.png')}/>
+                <Image style={{ marginLeft: 80 }} source={require('../../images/star.png')} />
                 <Text>
                     {percentRating}
                 </Text>
             </View>
-            
+
             <View style={StyleDetailFeedback.line}></View>
             <ScrollView showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}>
+                showsVerticalScrollIndicator={false}>
                 <View style={StyleDetailFeedback.boxRate}>
                     <View style={StyleDetailFeedback.boxTextRate}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -138,7 +138,7 @@ const DetailFeedback = (props) => {
                         </Text>
                     </View>
                 </View>
-                <View  style={{paddingBottom:90}}>
+                <View style={{ paddingBottom: 90 }}>
                     <FlatList
                         data={dataFeedback}
                         showsHorizontalScrollIndicator={false}
@@ -146,7 +146,7 @@ const DetailFeedback = (props) => {
                         renderItem={({ item }) => <ItemFeedBack dataFeedback={item} />}
                         keyExtractor={item => item.userID} />
                     <TouchableOpacity style={StyleDetailFeedback.touchOpa}>
-                        <Text style={{fontWeight:'bold'}}>
+                        <Text style={{ fontWeight: 'bold' }}>
                             See more
                         </Text>
                     </TouchableOpacity>
@@ -160,100 +160,212 @@ const DetailFeedback = (props) => {
 export default DetailFeedback
 const dataFeedback = [
     {
+        feedbackID: 1,
         productID: 1,
         userID: 1,
         feedbackText: 'Dcm hang dom vai lit, moi xai duoc co 1 ngay ma hu cmnnr  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
-        rating: 5
+        rating: 5,
+        dataReplyFeedback: [
+            {
+                userID:2,
+                replyFeedbackId: 1,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                userID:3,
+                replyFeedbackId: 2,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
     },
     {
+        feedbackID: 2,
         productID: 1,
         userID: 2,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 1
+        rating: 1,
+        dataReplyFeedback: [
+            {
+                feedbackID: 1,
+                replyFeedbackId: 3,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                feedbackID: 2,
+                replyFeedbackId: 4,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
     },
     {
+        feedbackID: 3,
         productID: 1,
         userID: 3,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 4
+        rating: 4,
+        dataReplyFeedback: [
+            {
+                feedbackID: 1,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                feedbackID: 2,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
     },
     {
+        feedbackID: 4,
         productID: 1,
         userID: 4,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 2
+        rating: 2,
+        dataReplyFeedback: [
+            {
+                feedbackID: 1,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                feedbackID: 2,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
     },
     {
+        feedbackID: 5,
         productID: 1,
         userID: 5,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 2
+        rating: 2,
+        dataReplyFeedback: [
+            {
+                feedbackID: 1,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                feedbackID: 2,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
     },
     {
+        feedbackID: 5,
         productID: 1,
         userID: 6,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 2
-    },{
+        rating: 2,
+        dataReplyFeedback: [
+            {
+                feedbackID: 1,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                feedbackID: 2,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
+    },
+    {
+        feedbackID: 6,
         productID: 1,
         userID: 7,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 3
+        rating: 3,
+        dataReplyFeedback: [
+            {
+                feedbackID: 1,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                feedbackID: 2,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
     },
     {
+        feedbackID: 7,
         productID: 1,
         userID: 8,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 5
+        rating: 5,
+        dataReplyFeedback: [
+            {
+                feedbackID: 1,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                feedbackID: 2,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
     },
     {
+        feedbackID: 8,
         productID: 1,
         userID: 9,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 5
+        rating: 5,
+        dataReplyFeedback: [
+            {
+                feedbackID: 1,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                feedbackID: 2,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
     },
     {
+        feedbackID: 9,
         productID: 1,
         userID: 10,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 3
+        rating: 3,
+        dataReplyFeedback: [
+            {
+                feedbackID: 1,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                feedbackID: 2,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
     },
     {
+        feedbackID: 10,
         productID: 1,
         userID: 11,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 3
+        rating: 3,
+        dataReplyFeedback: [
+            {
+                feedbackID: 1,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                feedbackID: 2,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
     },
     {
+        feedbackID: 11,
         productID: 1,
         userID: 12,
         feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 5
-    },
-    {
-        productID: 1,
-        userID: 13,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 5
-    },
-    {
-        productID: 1,
-        userID: 14,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 5
-    }
-    ,
-    {
-        productID: 1,
-        userID: 15,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 5
-    }
-    ,
-    {
-        productID: 1,
-        userID: 16,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 5
+        rating: 5,
+        dataReplyFeedback: [
+            {
+                feedbackID: 1,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                feedbackID: 2,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
     }
 ]
+
