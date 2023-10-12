@@ -26,8 +26,8 @@ const App = () => {
   return (
     <AppContextProvider>
       <NavigationContainer>
-        <AppNavigator/>
-        {/* <Category/> */}
+        {/* <AppNavigator/> */}
+        <Category/>
       </NavigationContainer>
     </AppContextProvider>
   )
