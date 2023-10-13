@@ -34,7 +34,7 @@ const App = () => {
     //     <AppNavigator/>
     //   </NavigationContainer>
     // </AppContextProvider>
-    <DetailPersonFedback/>
+    <HomeStore/>
     
   )
 }

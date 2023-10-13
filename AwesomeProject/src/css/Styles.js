@@ -96,6 +96,7 @@ export const StyleHomeStore = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         margin: 3,
+        flex:1
     },
     reviewsProduct: {
         flexDirection: 'row',
