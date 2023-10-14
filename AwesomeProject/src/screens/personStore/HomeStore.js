@@ -22,7 +22,7 @@ const HomeStore = (props) => {
     const [color, setColor] = useState('');
     const [titleColor, settitleColor] = useState('');
     const [ratingProduct, setRatingProduct] = useState();
-    const [sold, setSold] = useState();
+    const [sold, setSold] = useState(0);
     const [size, setSize] = useState('');
     const [weight, setWieght] = useState('');
     const [imageOption, setImageOption] = useState('');
@@ -33,8 +33,7 @@ const HomeStore = (props) => {
             if (response.result) {
                 setDataProduct(response.products);
                 // setProductID(response.products._id);
-             console.log(typeof response.products.image);
-
+                setSold(response.products.sold)
             }
         }
         getAllProductByUserID();

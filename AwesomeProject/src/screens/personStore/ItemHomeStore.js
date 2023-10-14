@@ -7,8 +7,6 @@ const ItemHomeStore = (props) => {
   const { dulieu } = props;
   const [priceProduct, setPriceProduct] = useState('');
   const [salePrice, setSalePrice] = useState('')
-
-
   useEffect(() => {
     var salePricee = dulieu.price;
     setPriceProduct(formatPrice(dulieu.price));
