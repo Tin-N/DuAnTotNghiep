@@ -1,41 +1,85 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, FlatList } from 'react-native';
 import ActionBar from './ActionBar';
+import AxiosIntance from '../utils/AxiosIntance';
 
 
-const ProductDetail = () => {
-    const handleBackPress = () => {
-        // Xử lý sự kiện khi nút "Back" được nhấn
-        // Thường bạn sẽ điều hướng ngược lại màn hình trước đó
-    };
+const ProductDetail = (props) => {
+    const { route } = props;
+    const { params } = route;
+    const [product,setProduct]=useState({});
+    const [title, settitle] = useState("");
+    const [content, setcontent] = useState("");
+    const [imageUrl, setimageUrl] = useState("");
+    const [isLoading, setisLoading] = useState(true)
+    useEffect(() => {
+      const getDetails = async () => {
+        console.log(params.itemId);
+        const response = await AxiosIntance().get('productAPI/getProductByID?id=' + params.itemId);
+        if (response.result == false) {
+          ToastAndroid.show('Lấy dữ liệu thất bại', ToastAndroid.SHORT);
+        } else {
+            setProduct(response.products);
 
-    const handleUserInfoPress = () => {
 
-    }
+        //   settitle("Tên sản phẩm: " + response.products.name);
+        //   setcontent("Số lượng: " + response.products.quantity + "\n" + "Giá tiền: " + response.products.price + "\n"+lorem);
+        //   setimageUrl(response.products.images);
+        //   setisLoading(false);
+        //   console.log(imageUrl);
+        }
+      }
+      getDetails();
+      return () => {
+  
+      }
+    },)
+  
+    // const handleBackPress = () => {
+    //     // Xử lý sự kiện khi nút "Back" được nhấn
+    //     // Thường bạn sẽ điều hướng ngược lại màn hình trước đó
+    // };
+    // useEffect(() => {
+    //     const getAllProductByUserID = async () => {
+    //         const response = await AxiosIntance().get("/productAPI/getAllProductByUserID?id=" + '113');
+    //         if (response.result) {
+    //             setDataProduct(response.products);
+    //             // setProductID(response.products._id);
+    //             setSold(response.products.sold)
+    //         }
+    //     }
+    //     getAllProductByUserID();
+    //     // console.log(dataProduct);
+    //     return () => {
+    //     }
+    // }, [])
+    // const handleUserInfoPress = () => {
 
-    const CommentItem = ({ item }) => {
-        return (
-            <View style={styles.commentItem}>
-                <Image source={item.customerAvatar} style={styles.avatar} />
-                <View style={styles.commentDetails}>
-                    <Text style={styles.customerName}>{item.customerName}</Text>
-                    <Text style={styles.customerStarRatings}>{'★'.repeat(item.customerStarRatings)}</Text>
-                    <Text style={styles.customerFeedback}>{item.customerFeedback}</Text>
-                </View>
-            </View>
-        );
-    };
+    // }
+
+    // const CommentItem = ({ item }) => {
+    //     return (
+    //         <View style={styles.commentItem}>
+    //             <Image source={item.customerAvatar} style={styles.avatar} />
+    //             <View style={styles.commentDetails}>
+    //                 <Text style={styles.customerName}>{item.customerName}</Text>
+    //                 <Text style={styles.customerStarRatings}>{'★'.repeat(item.customerStarRatings)}</Text>
+    //                 <Text style={styles.customerFeedback}>{item.customerFeedback}</Text>
+    //             </View>
+    //         </View>
+    //     );
+    // };
 
     // Đầu tiên, tính trung bình đánh giá từ tất cả các đánh giá của khách hàng
-    let totalRatings = 0;
-    for (const feedback of product.allCustomerFeedback) {
-        totalRatings += feedback.customerStarRatings;
-    }
+    // let totalRatings = 0;
+    // for (const feedback of product.allCustomerFeedback) {
+    //     totalRatings += feedback.customerStarRatings;
+    // }
 
-    const averageRating = totalRatings / product.allCustomerFeedback.length;
+    // const averageRating = totalRatings / product.allCustomerFeedback.length;
 
-    // Sau đó, tính tổng số lượng phản hồi từ dữ liệu trong allCustomerFeedback
-    const feedbackCount = product.allCustomerFeedback.length;
+    // // Sau đó, tính tổng số lượng phản hồi từ dữ liệu trong allCustomerFeedback
+    // const feedbackCount = product.allCustomerFeedback.length;
 
     // Bây giờ, bạn có thể sử dụng averageRating và feedbackCount trong JSX của bạn
     // Thay vì sử dụng product.averageRating và product.feedbackCount
@@ -50,17 +94,25 @@ const ProductDetail = () => {
                 showsHorizontalScrollIndicator={false}
                 overScrollMode='never'>
                     {/* đây là nơi hiện thị hình ảnh sản phẩm dạng slide */}
-                    <Text style={styles.productName}>{product.productName}</Text>
-                    <Text style={styles.productPrice}>{product.productPrice}</Text>
+                    <Text style={styles.productName}>{product.name}</Text>
+                    <Text style={styles.productPrice}>{product.price}</Text>
                     <View style={styles.separator}></View>
-                    <TouchableOpacity onPress={handleUserInfoPress}>
+                    <TouchableOpacity>
                         <View style={styles.userInfo}>
                             <View style={styles.avatarContainer}>
-                                <Image source={product.sellerAvatar} style={styles.avatar} />
+                                <Image source={products.sellerAvatar} style={styles.avatar} />
                             </View>
                             <View style={styles.userInfoText}>
-                                <Text style={styles.userName}>{product.sellerName}</Text>
-                                <Text style={styles.verifiedText}>{product.verifiedSeller}</Text>
+
+                                 {/* Lay them api tu seller */}
+                                <Text style={styles.userName}>
+                                    {products.sellerName}
+                                   
+                                    </Text>
+                                <Text style={styles.verifiedText}>{products.verifiedSeller}</Text>
+                            
+                            
+                            
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -68,13 +120,17 @@ const ProductDetail = () => {
 
                     <View style={styles.descriptionContainer}>
                         <Text style={styles.descriptionLabel}>Description</Text>
-                        <Text style={styles.description}>{product.productDescription}</Text>
+                        <Text style={styles.description}>{product.detail}</Text>
                     </View>
 
                     {/* Phần averageRating và feedbackCount */}
                     <View style={styles.ratingContainer}>
-                        <Text style={styles.feedbackCount}>{feedbackCount} Bình Luận</Text>
-                        <Text style={styles.averageRating}>{averageRating.toFixed(1)} ☆</Text>
+                        <Text style={styles.feedbackCount}>{
+                        // feedbackCount
+                        } Bình Luận</Text>
+                        <Text style={styles.averageRating}>{
+                        // averageRating.toFixed(1)
+                        } ☆</Text>
                     </View>
 
                     {/* <FlatList
@@ -84,7 +140,7 @@ const ProductDetail = () => {
                     /> */}
                     {/*-------------------------- Vì FlatList lồng ScrollView sẽ gây ra lỗi và sẽ warning nên phải dùng cách dưới--------------------------- */}
                     {
-                        product.allCustomerFeedback.map((item) => <CommentItem key={item.customerID} item={item} />)
+                        // product.allCustomerFeedback.map((item) => <CommentItem key={item.customerID} item={item} />)
                     }
                     {/* data map tới item trỏ tới chỗ view render chọn key để giải nén từng item, dữ liệu item sẽ là item được truyền vào */}
                     <View style={styles.LastTouchableOpacity}>
@@ -254,7 +310,7 @@ const styles = StyleSheet.create({
 
 export default ProductDetail;
 
-const product =
+const products =
 {
     "sellerAvatar": require('../images/91042496_p2.jpg'),
     "sellerName": "Tiến Anh",

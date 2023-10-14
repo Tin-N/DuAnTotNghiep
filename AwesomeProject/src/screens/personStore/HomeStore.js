@@ -8,25 +8,7 @@ import AxiosIntance from '../../utils/AxiosIntance';
 const HomeStore = (props) => {
     const { navigation } = props;
     const [dataProduct, setDataProduct] = useState([]);
-    const [productID, setProductID] = useState('');
-    const [userID, setUserID] = useState('');
-    const [categoryID, setCategoryID] = useState('');
-    const [priceProduct, setPriceProduct] = useState('');
-    const [detailProduct, setDetailProduct] = useState('');
-    const [imageProduct, setImageProduct] = useState([]);
-    const [isApprovedProduct, setisApprovedProduct] = useState();
-    const [nameProduct, setNameProduct] = useState('');
-    const [quantityProduct, setQuantityProduct] = useState('');
-    const [optionProduct, setOptionProduct] = useState([]);
-    const [titleOption, setTitleOption] = useState('');
-    const [color, setColor] = useState('');
-    const [titleColor, settitleColor] = useState('');
-    const [ratingProduct, setRatingProduct] = useState();
-    const [sold, setSold] = useState(0);
-    const [size, setSize] = useState('');
-    const [weight, setWieght] = useState('');
-    const [imageOption, setImageOption] = useState('');
-    const [columns, setColumns] = useState(2);
+    const [columns, setColumns] = useState(2)
     useEffect(() => {
         const getAllProductByUserID = async () => {
             const response = await AxiosIntance().get("/productAPI/getAllProductByUserID?id=" + '113');
@@ -37,7 +19,6 @@ const HomeStore = (props) => {
             }
         }
         getAllProductByUserID();
-        // console.log(dataProduct);
         return () => {
         }
     }, [])
@@ -129,7 +110,7 @@ const HomeStore = (props) => {
                         numColumns={columns}
                         bounces={false}
                         nestedScrollEnabled={true}
-                        renderItem={({ item }) => <ItemHomeStore dulieu={item} />}
+                        renderItem={({ item }) => <ItemHomeStore dulieu={item} navigation={navigation}/>}
                         keyExtractor={item => item._id}
                     />
                 </View>

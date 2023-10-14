@@ -38,12 +38,12 @@ import DetailPersonFedback from './src/screens/personStore/DetailPersonFedback';
 import HomeStore from './src/screens/personStore/HomeStore';
 const App = () => {
   return (
-    // <AppContextProvider>
-    //   <NavigationContainer>
-    //     <AppNavigator/>
-    //   </NavigationContainer>
-    // </AppContextProvider>
-    <ProductDetail/>
+    <AppContextProvider>
+      <NavigationContainer>
+        <AppNavigator/>
+      </NavigationContainer>
+    </AppContextProvider>
+    // <ProductDetail/>
     
 
   )

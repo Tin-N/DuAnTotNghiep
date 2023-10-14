@@ -1,10 +1,10 @@
-import { View, Text, Image, ImageBackground } from 'react-native'
+import { View, Text, Image, ImageBackground, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { StyleHomeStore } from '../../css/Styles'
 import { formatPrice } from '../../../Agro'
 import { ImageBackgroundComponent } from 'react-native'
 const ItemHomeStore = (props) => {
-  const { dulieu } = props;
+  const { dulieu,navigation } = props;
   const [priceProduct, setPriceProduct] = useState('');
   const [salePrice, setSalePrice] = useState('')
   useEffect(() => {
@@ -13,9 +13,14 @@ const ItemHomeStore = (props) => {
     setSalePrice(formatPrice(salePricee * 0.9))
     return () => {
     }
-  }, [dulieu])
+  }, [dulieu]);
+  const handleOnClick = () => {
+    navigation.navigate("ProductDetail", { itemId: dulieu._id });
+  }
+  
   return (
-    <View style={StyleHomeStore.boxProduct}>
+   <TouchableOpacity onPress={handleOnClick}>
+     <View style={StyleHomeStore.boxProduct}>
       <Image source={{ uri: dulieu.image[0] }} style={{ height: 150, width: 140, borderRadius: 10, borderWidth: 1 }} />
       <Text style={{
         fontFamily: 'DM Sans',
@@ -61,6 +66,7 @@ const ItemHomeStore = (props) => {
         <Image style={{ marginLeft: 0 }} source={require('../../images/productoptions.png')} />
       </View>
     </View>
+   </TouchableOpacity>
   )
 }
 
