@@ -25,6 +25,7 @@ import Slideshow from './src/component/Slideshow/Slideshow';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import ProductDetail from './src/screens/ProductDetail';
 import DetailFeedback from './src/screens/personStore/DetailFeedback';
+<<<<<<< HEAD
 import Welcome from './src/screens/Welcome';
 import SignIn from './src/screens/SignIn';
 import SignUp from './src/screens/SignUp';
@@ -48,6 +49,20 @@ const App = () => {
       <UpdatePassword/>
     </SafeAreaView>
 
+=======
+import ItemFeedBack from './src/screens/personStore/ItemFeedBack';
+import DialogShopping from './src/screens/personStore/DialogShopping';
+import DetailPersonFedback from './src/screens/personStore/DetailPersonFedback';
+const App = () => {
+  return (
+    // <AppContextProvider>
+    //   <NavigationContainer>
+    //     <AppNavigator/>
+    //   </NavigationContainer>
+    // </AppContextProvider>
+    <HomeStore/>
+    
+>>>>>>> devTin
   )
 }
 

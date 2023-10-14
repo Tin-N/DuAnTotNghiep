@@ -239,6 +239,7 @@ export const StyleHomeStore = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         margin: 3,
+        flex:1
     },
     reviewsProduct: {
         flexDirection: 'row',
@@ -528,6 +529,7 @@ export const StyleDialogShopping = StyleSheet.create({
     },
     
 })
+<<<<<<< HEAD
 export const StyleOrder = StyleSheet.create({
     container:{
         backgroundColor: 'white',
@@ -945,3 +947,31 @@ export const StyleLogin = StyleSheet.create({
     },
 });
 
+=======
+export const StyleDetailPersonFeedback = StyleSheet.create({
+    menu: {
+        paddingTop: 30,
+        flexDirection: 'row',
+        marginLeft: 30,
+        marginRight: 30,
+    },
+    textTitle: {
+        textAlign: 'center',
+        color: 'black',
+        fontSize: 20,
+        paddingLeft: 20,
+        marginTop: -6,
+    },
+    images: {
+        marginLeft: 80
+    },
+    touchOpa: {
+        marginLeft: 190
+    },
+    line: {
+        borderWidth: 1,
+        opacity: 0.03,
+        marginTop: 20
+    },
+})
+>>>>>>> devTin
