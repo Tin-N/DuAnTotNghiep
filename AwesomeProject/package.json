@@ -10,21 +10,15 @@
     "lint": "eslint ."
   },
   "dependencies": {
-<<<<<<< HEAD
     "@expo/vector-icons": "^13.0.0",
-=======
     "@expo-google-fonts/dm-sans": "^0.2.3",
     "@fontsource/dm-sans": "^5.0.12",
     "@react-native-async-storage/async-storage": "^1.19.3",
->>>>>>> devTin
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.5.8",
-<<<<<<< HEAD
     "node-modules": "^0.0.1",
-=======
     "axios": "^1.5.1",
     "node-modules": "^1.0.1",
->>>>>>> devTin
     "react": "18.1.0",
     "react-native": "0.70.0",
     "react-native-gesture-handler": "^2.13.1",

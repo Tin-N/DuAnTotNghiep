@@ -59,7 +59,7 @@ const HomeStore = (props) => {
             <View style={StyleHomeStore.line}></View>
             <ScrollView
                 alwaysBounceVertical={false}
-                bounces={false}
+                overScrollMode='never'
                 style={{ marginBottom: 90 }}
                 showsVerticalScrollIndicator={false}>
                 <View style={StyleHomeStore.boxSeller}>

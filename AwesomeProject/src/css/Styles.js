@@ -529,7 +529,7 @@ export const StyleDialogShopping = StyleSheet.create({
     },
     
 })
-<<<<<<< HEAD
+
 export const StyleOrder = StyleSheet.create({
     container:{
         backgroundColor: 'white',
@@ -947,7 +947,6 @@ export const StyleLogin = StyleSheet.create({
     },
 });
 
-=======
 export const StyleDetailPersonFeedback = StyleSheet.create({
     menu: {
         paddingTop: 30,
@@ -974,4 +973,3 @@ export const StyleDetailPersonFeedback = StyleSheet.create({
         marginTop: 20
     },
 })
->>>>>>> devTin

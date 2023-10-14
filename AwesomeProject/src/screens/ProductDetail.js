@@ -45,7 +45,10 @@ const ProductDetail = () => {
         <View style={styles.container}>
             <ActionBar title="Product Detail" />
             <View style={styles.customContent}>
-                <ScrollView>
+                <ScrollView 
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                overScrollMode='never'>
                     {/* đây là nơi hiện thị hình ảnh sản phẩm dạng slide */}
                     <Text style={styles.productName}>{product.productName}</Text>
                     <Text style={styles.productPrice}>{product.productPrice}</Text>
