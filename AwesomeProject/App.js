@@ -27,9 +27,8 @@ import SearchScreen from './src/screens/SearchScreen';
 const App = () => {
   return (
   // <WelcomeScreen/>
-  // <HomeScreen/>
-  <SearchScreen/>
-  // <TestScreen/>
+  <HomeScreen/>
+  // <SearchScreen/>
   )
 }
 

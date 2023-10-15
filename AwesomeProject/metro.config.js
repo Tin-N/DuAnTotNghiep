@@ -5,7 +5,6 @@
  * @format
  */
 // import path from 'path';
-const {path} = require('path')
 const blacklistErrors = (rules) => {
   rules[1].message = 'RegExp not match any rules';
 };

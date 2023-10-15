@@ -200,7 +200,7 @@ export const StyleSearch = StyleSheet.create({
         flexDirection: 'row',
         height:50,
         marginLeft:30,
-        borderRadius:5,
+        borderRadius:10,
         marginRight:30,
         marginTop:10,
       }
@@ -212,16 +212,6 @@ export const StyleSearch = StyleSheet.create({
         fontSize:15
 
     },
-    TouchableOpacity:{
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:'#3669C9',
-        width:"14%",
-        borderBottomRightRadius:5,
-        borderTopRightRadius:5
-    }
-    ,
     iconSearch: {
         alignSelf:'center'
     },
