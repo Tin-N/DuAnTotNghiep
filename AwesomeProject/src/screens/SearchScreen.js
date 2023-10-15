@@ -3,7 +3,8 @@ import React, { useEffect,useState } from 'react'
 import { styleSearchScreen } from '../css/Styles'
 import Searchbar from '../component/Seachbar/Searchbar'
 import SearchSuggestion from '../component/SearchSuggestions/SearchSuggestions'
-import NoResult from '../component/SearchSuggestions/NoResult'
+import NoResult from '../component/SearchSuggestions/NoResult';
+import AxiosIntance from '../utils/AxiosIntance'
 const SearchScreen = () => {
     const [textSearch, setTextSearch] = useState("");
     const [isSearch,setIsSearch] = useState(false);
@@ -11,10 +12,10 @@ const SearchScreen = () => {
     {
         setTextSearch(text);
     }
-    // const onSubmitText = async ()
-    // {
-    //   // const response = await Axios
-    // }
+    const onSubmitText = async () =>
+    {
+      const response = await AxiosIntance().get()
+    }
 
     useEffect(() => {
       const checkText =() =>
@@ -48,7 +49,7 @@ const SearchScreen = () => {
 
 
     {
-        isSearch == true?<SearchSuggestion/>:<NoResult/>
+        isSearch == true?<SearchSuggestion/>:<View/>
     }
     </View>
   )
