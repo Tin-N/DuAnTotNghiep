@@ -3,16 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { StyleHomeStore } from '../../css/Styles'
 import { formatPrice } from '../../../Agro'
 const ItemHomeStore = (props) => {
-<<<<<<< HEAD
-  const { dulieu,navigation } = props;
-=======
   const { dulieu, navigation } = props;
->>>>>>> devTin
   const [priceProduct, setPriceProduct] = useState('');
   const [salePrice, setSalePrice] = useState('');
-  const detailProduct = () => {
-      navigation.navigate("DetailFeedBack", {ProductID: dulieu._id});
-  }
   useEffect(() => {
     var salePricee = dulieu.price;
     setPriceProduct(formatPrice(dulieu.price));
@@ -25,13 +18,9 @@ const ItemHomeStore = (props) => {
   }
   
   return (
-<<<<<<< HEAD
-   <TouchableOpacity onPress={handleOnClick}>
-     <View style={StyleHomeStore.boxProduct}>
-=======
     <View style={StyleHomeStore.boxProduct}>
-      <TouchableOpacity onPress={detailProduct}>
->>>>>>> devTin
+      <TouchableOpacity onPress={handleOnClick}>
+
       <Image source={{ uri: dulieu.image[0] }} style={{ height: 150, width: 140, borderRadius: 10, borderWidth: 1 }} />
       <Text style={{
         fontFamily: 'DM Sans',
@@ -79,8 +68,7 @@ const ItemHomeStore = (props) => {
       </View>
       </TouchableOpacity>
     </View>
-   </TouchableOpacity>
   )
 }
 
-export default ItemHomeStore
+export default ItemHomeStore;

@@ -14,7 +14,6 @@ const ProductDetail = (props) => {
     const [isLoading, setisLoading] = useState(true)
     useEffect(() => {
       const getDetails = async () => {
-        console.log(params.itemId);
         const response = await AxiosIntance().get('productAPI/getProductByID?id=' + params.itemId);
         if (response.result == false) {
           ToastAndroid.show('Lấy dữ liệu thất bại', ToastAndroid.SHORT);
@@ -83,8 +82,6 @@ const ProductDetail = (props) => {
 
     // Bây giờ, bạn có thể sử dụng averageRating và feedbackCount trong JSX của bạn
     // Thay vì sử dụng product.averageRating và product.feedbackCount
-
-
     return (
         <View style={styles.container}>
             <ActionBar title="Product Detail" />
@@ -103,16 +100,12 @@ const ProductDetail = (props) => {
                                 <Image source={products.sellerAvatar} style={styles.avatar} />
                             </View>
                             <View style={styles.userInfoText}>
-
                                  {/* Lay them api tu seller */}
                                 <Text style={styles.userName}>
                                     {products.sellerName}
                                    
                                     </Text>
-                                <Text style={styles.verifiedText}>{products.verifiedSeller}</Text>
-                            
-                            
-                            
+                                <Text style={styles.verifiedText}>{products.verifiedSeller}</Text>                                                   
                             </View>
                         </View>
                     </TouchableOpacity>
