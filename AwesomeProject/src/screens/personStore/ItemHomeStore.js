@@ -2,15 +2,21 @@ import { View, Text, Image, ImageBackground, TouchableOpacity } from 'react-nati
 import React, { useEffect, useState } from 'react'
 import { StyleHomeStore } from '../../css/Styles'
 import { formatPrice } from '../../../Agro'
-import { ImageBackgroundComponent } from 'react-native'
 const ItemHomeStore = (props) => {
+<<<<<<< HEAD
   const { dulieu,navigation } = props;
+=======
+  const { dulieu, navigation } = props;
+>>>>>>> devTin
   const [priceProduct, setPriceProduct] = useState('');
-  const [salePrice, setSalePrice] = useState('')
+  const [salePrice, setSalePrice] = useState('');
+  const detailProduct = () => {
+      navigation.navigate("DetailFeedBack", {ProductID: dulieu._id});
+  }
   useEffect(() => {
     var salePricee = dulieu.price;
     setPriceProduct(formatPrice(dulieu.price));
-    setSalePrice(formatPrice(salePricee * 0.9))
+    setSalePrice(formatPrice(salePricee * 0.9)); 
     return () => {
     }
   }, [dulieu]);
@@ -19,8 +25,13 @@ const ItemHomeStore = (props) => {
   }
   
   return (
+<<<<<<< HEAD
    <TouchableOpacity onPress={handleOnClick}>
      <View style={StyleHomeStore.boxProduct}>
+=======
+    <View style={StyleHomeStore.boxProduct}>
+      <TouchableOpacity onPress={detailProduct}>
+>>>>>>> devTin
       <Image source={{ uri: dulieu.image[0] }} style={{ height: 150, width: 140, borderRadius: 10, borderWidth: 1 }} />
       <Text style={{
         fontFamily: 'DM Sans',
@@ -41,8 +52,9 @@ const ItemHomeStore = (props) => {
           fontFamily: 'DM Sans',
           maxWidth: 200,
           flex: 1,
-          marginTop: 5,
-          flexWrap: 'nowrap'
+          marginTop: 7,
+          flexWrap: 'nowrap',
+          fontSize:12
         }}>
           {dulieu.sold} sold
         </Text>
@@ -65,6 +77,7 @@ const ItemHomeStore = (props) => {
         }}>30 Reviews</Text>
         <Image style={{ marginLeft: 0 }} source={require('../../images/productoptions.png')} />
       </View>
+      </TouchableOpacity>
     </View>
    </TouchableOpacity>
   )

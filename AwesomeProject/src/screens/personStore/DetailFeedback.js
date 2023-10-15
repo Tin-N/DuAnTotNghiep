@@ -8,6 +8,8 @@ import ItemFeedBack from './ItemFeedBack';
 import { ScrollView } from 'react-native';
 const DetailFeedback = (props) => {
     const { navigation } = props;
+    const { route } = props;
+    const { params } = route;
     const [star11, setStar11] = useState(0);
     const [star22, setStar22] = useState(0);
     const [star33, setStar33] = useState(0);
@@ -56,7 +58,6 @@ const DetailFeedback = (props) => {
             setpercentRating3(star3 / dataFeedback.length)
             setpercentRating4(star4 / dataFeedback.length)
             setpercentRating5(star5 / dataFeedback.length)
-
             // const result = percentRating+"";
             // const lastResult = result.slice(0,3);
             // const islastResult = parseFloat(lastResult);

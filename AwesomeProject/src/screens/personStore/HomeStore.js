@@ -8,13 +8,19 @@ import AxiosIntance from '../../utils/AxiosIntance';
 const HomeStore = (props) => {
     const { navigation } = props;
     const [dataProduct, setDataProduct] = useState([]);
+<<<<<<< HEAD
     const [columns, setColumns] = useState(2)
+=======
+    const [productID, setProductID] = useState('');
+    const [sold, setSold] = useState(0);
+    const [columns, setColumns] = useState(2);
+>>>>>>> devTin
     useEffect(() => {
         const getAllProductByUserID = async () => {
             const response = await AxiosIntance().get("/productAPI/getAllProductByUserID?id=" + '113');
             if (response.result) {
                 setDataProduct(response.products);
-                // setProductID(response.products._id);
+                setProductID(response.products._id);
                 setSold(response.products.sold)
             }
         }
@@ -40,6 +46,10 @@ const HomeStore = (props) => {
             <View style={StyleHomeStore.line}></View>
             <ScrollView
                 alwaysBounceVertical={false}
+<<<<<<< HEAD
+=======
+                bounces={false}
+>>>>>>> devTin
                 overScrollMode='never'
                 style={{ marginBottom: 90 }}
                 showsVerticalScrollIndicator={false}>
