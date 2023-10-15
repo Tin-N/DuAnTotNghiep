@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet, Text, View, Image} from 'react-native';
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import {styleHome} from '../css/Styles';
 import Searchbar from '../component/Seachbar/Searchbar';
 import Slideshow from '../component/Slideshow/Slideshow';
@@ -7,7 +7,47 @@ import CategoryList from '../component/CategoryList/CategoryList';
 import Banner from '../component/Banner/Banner';
 import {FetchData} from '../component/ProductList/data';
 import ProductList from '../component/ProductList/ProductList';
+import AxiosIntance from '../utils/AxiosIntance';
 const HomeScreen = () => {
+
+  const [categoryData1, setcategoryData1] = useState([])
+  const [categoryData2, setcategoryData2] = useState([])
+  const [categoryData3, setcategoryData3] = useState([])
+
+
+  useEffect(() => {
+    const getcategoryData1 = async()=>{
+      const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+"clothing"+"&limitData="+2+"&skipData="+0);
+      console.log(response+"CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCc");
+
+      if(response.result)
+      {
+        setcategoryData1(response.products);
+      }
+    }
+    const getcategoryData2 = async()=>{
+      const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+"hello"+"&limitData="+2+"&skipData="+0);
+      console.log(response+"BBBBBBBBBBBBBBBBBBBBBBBBB");
+
+      if(response.result)
+      {
+        setcategoryData2(response.products);
+      }
+    }
+    const getcategoryData3 = async()=>{
+      const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+"pants"+"&limitData="+2+"&skipData="+0);
+      console.log(response+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      if(response.result)
+      {
+        setcategoryData3(response.products);
+      }
+    }
+    getcategoryData1();
+    getcategoryData2();
+    getcategoryData3();
+  }, [])
+  
+
   return (
     <View>
       <ScrollView>
@@ -63,12 +103,12 @@ const HomeScreen = () => {
                     OpacitySecondText={0.5}
                 />
                 <ProductList
-                    data={FetchData()}
+                    data={categoryData3}
                     styleView={{
                     width: '100%',
                     padding: 10,
-                    margin: 10,
-                    }}
+                    margin: 20,
+                  }}
                     horizontal
                     showsHorizontalScrollIndicator={false}
                 />
@@ -88,10 +128,10 @@ const HomeScreen = () => {
             OpacitySecondText={0.5}
           />
           <ProductList
-            data={FetchData()}
+            data={categoryData1}
             styleView={{
               width: '100%',
-              margin: 10,
+              margin: 20,
             }}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -104,10 +144,10 @@ const HomeScreen = () => {
             <Text style={styleHome.text}>See all</Text>
           </View>
           <ProductList
-            data={FetchData()}
+            data={categoryData1}
             styleView={{
               width: '100%',
-              margin: 10,
+              margin: 20,
             }}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -121,10 +161,10 @@ const HomeScreen = () => {
             <Text style={styleHome.text}>See all</Text>
           </View>
           <ProductList
-            data={FetchData()}
+            data={categoryData2}
             styleView={{
               width: '100%',
-              margin: 10,
+              margin: 20,
             }}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -138,10 +178,10 @@ const HomeScreen = () => {
             <Text style={styleHome.text}>See all</Text>
           </View>
           <ProductList
-            data={FetchData()}
+            data={categoryData3}
             styleView={{
               width: '100%',
-              margin: 10,
+              margin: 20,
             }}
             horizontal
             showsHorizontalScrollIndicator={false}

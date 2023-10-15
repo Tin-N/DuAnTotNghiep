@@ -1,15 +1,25 @@
-import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
+import {View, Image,TouchableOpacity,TextInput} from 'react-native';
+
 import { StyleSearch } from '../../css/Styles'
 const Searchbar = (props) => {
-  const {onChangeText}=props;
-  return (
-    <View style={StyleSearch.viewSearchbar}>
-      <TextInput style={StyleSearch.textInput} placeholder='Tìm kiếm bằng tên thực phẩm' onChangeText={onChangeText}>
-      </TextInput>
-      <Image style={StyleSearch.iconSearch} source={require('../../images/Searchbar/search.png')} />
-    </View>
-  )
-}
+  const {onChangeText,onSubmitText}=props;
 
-export default Searchbar
+  return (
+
+    <View style={StyleSearch.viewSearchbar}>
+      <TextInput 
+      style={StyleSearch.textInput} 
+      placeholder='Tìm kiếm bằng tên thực phẩm' 
+      onChangeText={onChangeText} 
+      />
+      <TouchableOpacity 
+      onPress={onSubmitText}
+      style={StyleSearch.TouchableOpacity}>
+      <Image style={StyleSearch.iconSearch} source={require('../../images/Searchbar/search.png')} />
+
+      </TouchableOpacity>
+    </View>
+  );
+};
+export default Searchbar;

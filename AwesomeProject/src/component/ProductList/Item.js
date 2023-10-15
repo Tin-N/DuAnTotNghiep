@@ -34,9 +34,8 @@ const ItemList = props => {
 
   return (
     <View style={StyleHomeStore.boxProduct}>
-      <Image style={{padding:5}} source={require('../../images/ProductList/food.png')} />
+      <Image style={{padding:5,width:180,height:180}} source={{uri:data.image[0]}} />
       <Text
-        
         style={{
           marginVertical:10,
           textTransform:'uppercase',
@@ -47,19 +46,19 @@ const ItemList = props => {
           lineHeight: 17,
           marginBottom:name.length>=20?5:20
         }}>
-        {name}
+        {data.name}
       </Text>
-      <Text style={{marginLeft:10,color:'red',fontWeight:'700',fontSize:17,marginBottom:5}}>đ {data.priceProduct} </Text>
+      <Text style={{marginLeft:10,color:'red',fontWeight:'700',fontSize:17,marginBottom:5}}>đ {data.price} </Text>
       <View style={StyleHomeStore.reviewsProduct}>
         <View style={{flexDirection: 'row'}}>
           <Image source={require('../../images/ProductList/star.png')} />
           <Text style={{fontSize: 12, color: 'black'}}>
-            {data.rationProduct}
+            {data.rating}
           </Text>
         </View>
         <Text
           style={{width: 90, fontSize: 12, paddingLeft: 25, color: 'black'}}>
-          {data.reviewsProduct} Reviews
+          {data.sold} Reviews
         </Text>
         <Image
           style={{marginLeft: 10}}

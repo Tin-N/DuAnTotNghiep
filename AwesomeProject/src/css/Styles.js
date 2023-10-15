@@ -212,6 +212,17 @@ export const StyleSearch = StyleSheet.create({
         fontSize:15
 
     },
+
+    TouchableOpacity:{
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'#3669C9',
+        width:"14%",
+        borderBottomRightRadius:5,
+        borderTopRightRadius:5
+    }
+    ,
     iconSearch: {
         alignSelf:'center'
     },
