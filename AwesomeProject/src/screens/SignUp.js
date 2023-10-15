@@ -16,6 +16,9 @@ import {StyleLogin} from '../css/Styles.js';
 
 
 const SignUp = () => {
+  const [show, setshow] = useState(true);
+  const [visible, setvisible] = useState(true);
+
   return (
     <View
       >
@@ -33,48 +36,73 @@ const SignUp = () => {
 
       {/* TextInput Email */}
       <View>
-        <Text
-          style={StyleLogin.textHint}>
-          Email
-        </Text>
-        <TextInput
-          style={StyleLogin.input}
-          placeholder="Clavi@gmail.com"
-          keyboardType="numeric"
-        />
+        <Text style={StyleLogin.textHint}>Email</Text>
+
+        <View style={StyleLogin.input}>
+          <TextInput
+            style={StyleLogin.TextInputUP}
+            placeholder="Clavi@gmail.com"
+            keyboardType="default"
+          />
+        </View>
       </View>
-      {/* TextInput Email */}
 
       {/* TextInput Password */}
       <View>
-        <Text
-          style={StyleLogin.textHint}>
-          Password
-        </Text>
-        <TextInput
-          style={StyleLogin.input}
-          // onChangeText={onChangeNumber}
-          // value={password}
-          placeholder="Enter your password"
-          underlineColorAndroid="transparent"
-          secureTextEntry={true}
-        />
+        <Text style={StyleLogin.textHint}>Password</Text>
+
+        <View style={StyleLogin.input}>
+          <TextInput
+            style={StyleLogin.TextInputUP}
+            placeholder="Enter your password"
+            underlineColorAndroid="transparent"
+            secureTextEntry={visible}></TextInput>
+
+          <TouchableOpacity
+            onPress={() => {
+              setvisible(!visible);
+              setshow(!show);
+            }}
+            style={StyleLogin.CTIcon}>
+            <Image
+              source={
+                show === false
+                  ? require('../images/icon/view.png')
+                  : require('../images/icon/hide.png')
+              }
+              style={StyleLogin.HideShowIcon}
+            />
+          </TouchableOpacity>
+        </View>
         {/* TextInput Password */}
         
 
         {/* TextInput Confirm Password */}
-        <Text
-          style={StyleLogin.textHint}>
-          Confirm Password
-        </Text>
-        <TextInput
-          style={StyleLogin.input}
-          // onChangeText={onChangeNumber}
-          // value={password}
-          placeholder="Enter your password"
-          underlineColorAndroid="transparent"
-          secureTextEntry={true}
-        />
+        <Text style={StyleLogin.textHint}>Confirm Password</Text>
+
+        <View style={StyleLogin.input}>
+          <TextInput
+            style={StyleLogin.TextInputUP}
+            placeholder="Enter your password again"
+            underlineColorAndroid="transparent"
+            secureTextEntry={visible}></TextInput>
+
+          <TouchableOpacity
+            onPress={() => {
+              setvisible(!visible);
+              setshow(!show);
+            }}
+            style={StyleLogin.CTIcon}>
+            <Image
+              source={
+                show === false
+                  ? require('../images/icon/view.png')
+                  : require('../images/icon/hide.png')
+              }
+              style={StyleLogin.HideShowIcon}
+            />
+          </TouchableOpacity>
+        </View>
          {/* TextInput Confirm Password */}
 
 

@@ -15,69 +15,87 @@ const windowWIdth = Dimensions.get('window').width;
 import {StyleSheet} from 'react-native';
 
 const UpdatePassword = () => {
-  const [text, onChangeText] = React.useState('Useless Text');
-  const [number, onChangeNumber] = React.useState('');
+  const [show, setshow] = useState(true);
+  const [visible, setvisible] = useState(true);
   return (
     <View>
+      
+      <Text style={StyleLogin.HeadingTextCP}>Update Password</Text>
 
-      <Text
-        style={StyleLogin.HeadingTextCP}>
-        Update Password
-      </Text>
-
-      <Text
-         style={StyleLogin.HintText}>
+      <Text style={StyleLogin.HintText}>
         Complete the following final data to enter the Savvy Shop application
       </Text>
 
       <View>
-        <Text
-          style={StyleLogin.textHint}>
-          New Password
-        </Text>
-        <TextInput
-           style={StyleLogin.input}
-          // onChangeText={onChangeNumber}
-          // value={password}
-          TextHint="Enter your password"
-          underlineColorAndroid="transparent"
-          // secureTextEntry={true}
-        />
+        <Text style={StyleLogin.textHint}>New Password</Text>
+
+        <View style={StyleLogin.input}>
+          <TextInput
+            style={StyleLogin.TextInputUP}
+            placeholder="Enter your password"
+            underlineColorAndroid="transparent"
+            secureTextEntry={visible}></TextInput>
+
+          <TouchableOpacity
+            onPress={() => {
+              setvisible(!visible);
+              setshow(!show);
+            }}
+            style={StyleLogin.CTIcon}>
+            <Image
+              source={
+                show === false
+                  ? require('../images/icon/view.png')
+                  : require('../images/icon/hide.png')
+              }
+              style={StyleLogin.HideShowIcon}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
-      <View
-        style={StyleLogin.UPContainerWarning}>
+      <View style={StyleLogin.UPContainerWarning}>
         <Image
           source={require('../images/icon/warning.png')}
           style={StyleLogin.iconWarning}></Image>
-        <Text
-          style={StyleLogin.TextWarning}>
+        <Text style={StyleLogin.TextWarning}>
           {' '}
           Mật khẩu phải có 6 ký tự trở lên{' '}
         </Text>
       </View>
 
-      <View >
-        <Text
-          style={StyleLogin.textHint}>
-          Confirm New Password
-        </Text>
-        <TextInput
-              style={StyleLogin.input}
-          // onChangeText={onChangeNumber}
-          // value={password}
-          placeholder="Enter your password"
-          underlineColorAndroid="transparent"
-          secureTextEntry={true}
-        />
+      <View>
+        <Text style={StyleLogin.textHint}> Confirm New Password</Text>
+
+        <View style={StyleLogin.input}>
+          <TextInput
+            style={StyleLogin.TextInputUP}
+            placeholder="Enter your password"
+            underlineColorAndroid="transparent"
+            secureTextEntry={visible}></TextInput>
+
+          <TouchableOpacity
+            onPress={() => {
+              setvisible(!visible);
+              setshow(!show);
+            }}
+            style={StyleLogin.CTIcon}>
+            <Image
+              source={
+                show === false
+                  ? require('../images/icon/view.png')
+                  : require('../images/icon/hide.png')
+              }
+              style={StyleLogin.HideShowIcon}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={StyleLogin.ButtonUP}>
-      <TouchableOpacity style={StyleLogin.buttonShape}>
-          <Text style={StyleLogin.TextButton}>Confirm</Text>
+        <TouchableOpacity style={StyleLogin.buttonShape}>
+          <Text style={StyleLogin.TextButton}>Save Update</Text>
         </TouchableOpacity>
-
       </View>
-      
     </View>
   );
 };

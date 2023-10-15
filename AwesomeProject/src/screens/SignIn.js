@@ -13,10 +13,12 @@ import {Image} from 'react-native';
 const {width} = Dimensions.get('window');
 import {StyleSheet} from 'react-native';
 import {StyleLogin} from '../css/Styles.js';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 
 const SignIn = () => {
-  const [text, onChangeText] = React.useState('Useless Text');
-  const [number, onChangeNumber] = React.useState('');
+  const [show, setshow] = useState(true);
+  const [visible, setvisible] = useState(true);
+
   return (
     <View>
       {/* Text Savvy */}
@@ -28,25 +30,43 @@ const SignIn = () => {
       {/* TextInput Email */}
       <View>
         <Text style={StyleLogin.textHint}>Email</Text>
-        <TextInput
-          style={StyleLogin.input}
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder="Clavi@gmail.com"
-          keyboardType="numeric"
-        />
+        
+        <View style={StyleLogin.input}>
+          <TextInput
+            style={StyleLogin.TextInputUP}
+            placeholder="Clavi@gmail.com"
+            keyboardType="default"
+          />
+        </View>
       </View>
       {/* TextInput Password */}
       <View>
         <Text style={StyleLogin.textHint}>Password</Text>
-        <TextInput
-          style={StyleLogin.input}
-          // onChangeText={onChangeNumber}
-          // value={password}
-          placeholder="Enter your password"
-          underlineColorAndroid="transparent"
-          secureTextEntry={true}
-        />
+
+        <View style={StyleLogin.input}>
+          <TextInput
+            style={StyleLogin.TextInputUP}
+            placeholder="Enter your password"
+            underlineColorAndroid="transparent"
+            secureTextEntry={visible}></TextInput>
+
+          <TouchableOpacity
+            onPress={() => {
+              setvisible(!visible);
+              setshow(!show);
+            }}
+            style={StyleLogin.CTIcon}>
+            <Image
+              source={
+                show === false
+                  ? require('../images/icon/view.png')
+                  : require('../images/icon/hide.png')
+              }
+              style={StyleLogin.HideShowIcon}
+            />
+          </TouchableOpacity>
+        </View>
+
         <Text style={StyleLogin.fgPass}>Forgot password</Text>
 
         <TouchableOpacity style={StyleLogin.buttonShape}>
@@ -68,18 +88,17 @@ const SignIn = () => {
           </TouchableOpacity>
         </View>
         <View style={StyleLogin.CSbuttomText}>
-          <Text style={StyleLogin.ButtomText1}>You don't have any account?</Text>
-          <Text
-            style={StyleLogin.ButtomText2}>
-            SignUp
+          <Text style={StyleLogin.ButtomText1}>
+            You don't have any account?
           </Text>
+          <TouchableOpacity>
+            <Text style={StyleLogin.ButtomText2}>SignUp</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  
-});
+const styles = StyleSheet.create({});
 export default SignIn;
