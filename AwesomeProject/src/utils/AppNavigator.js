@@ -12,6 +12,7 @@ import Category from '../screens/Category';
 import ProductDetail from '../screens/ProductDetail';
 import SearchStore from '../screens/personStore/SearchStore';
 import ItemHomeStore from '../screens/personStore/ItemHomeStore';
+import DetailFeedback from '../screens/personStore/DetailFeedback';
 
 const Tab = createBottomTabNavigator();
 const Stack= createNativeStackNavigator();
@@ -29,6 +30,8 @@ const ProductHome = () => {
             {/* <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen> */}
             <Stack.Screen name='SearchStore' component={SearchStore}></Stack.Screen>
             <Stack.Screen name='ProductDetail' component={ProductDetail}></Stack.Screen>
+            <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
+            <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
         </Stack.Navigator>
     )
 }

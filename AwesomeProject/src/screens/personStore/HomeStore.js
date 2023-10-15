@@ -24,7 +24,6 @@ const HomeStore = (props) => {
         return () => {
         }
     }, [])
-
     return (
         <View>
             <View style={StyleHomeStore.menu}>

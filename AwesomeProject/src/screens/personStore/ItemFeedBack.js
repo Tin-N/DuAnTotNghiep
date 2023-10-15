@@ -63,7 +63,7 @@ const ItemFeedBack = (props) => {
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 30 }}>
                 <View style={{ marginLeft: 50, flexDirection: 'row', width: '33%', justifyContent: 'space-around', alignItems: 'center' }}>
-                    <Image source={require('../../images/like.png')} style={{ width: 17, height: 17 }}></Image>
+                    <Image source={require('../../images/like.png')} style={{ width: 13, height: 13 }}></Image>
                     <Text>50 lượt thích</Text>
                 </View>
                 <TouchableOpacity>

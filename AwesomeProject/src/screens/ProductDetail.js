@@ -1,39 +1,46 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, FlatList } from 'react-native';
 import ActionBar from './ActionBar';
 import AxiosIntance from '../utils/AxiosIntance';
-
-
 const ProductDetail = (props) => {
     const { route } = props;
     const { params } = route;
-    const [product,setProduct]=useState({});
+    const [product, setProduct] = useState({});
+    const [feedback, setFeedback] = useState([])
     const [title, settitle] = useState("");
     const [content, setcontent] = useState("");
     const [imageUrl, setimageUrl] = useState("");
     const [isLoading, setisLoading] = useState(true)
     useEffect(() => {
-      const getDetails = async () => {
-        const response = await AxiosIntance().get('productAPI/getProductByID?id=' + params.itemId);
-        if (response.result == false) {
-          ToastAndroid.show('Lấy dữ liệu thất bại', ToastAndroid.SHORT);
-        } else {
-            setProduct(response.products);
-
-
-        //   settitle("Tên sản phẩm: " + response.products.name);
-        //   setcontent("Số lượng: " + response.products.quantity + "\n" + "Giá tiền: " + response.products.price + "\n"+lorem);
-        //   setimageUrl(response.products.images);
-        //   setisLoading(false);
-        //   console.log(imageUrl);
+        const getDetails = async () => {
+            const response = await AxiosIntance().get('productAPI/getProductByID?id=' + params.itemId);
+            if (response.result == false) {
+                ToastAndroid.show('Lấy dữ liệu thất bại', ToastAndroid.SHORT);
+            } else {
+                setProduct(response.products);
+                //   settitle("Tên sản phẩm: " + response.products.name);
+                //   setcontent("Số lượng: " + response.products.quantity + "\n" + "Giá tiền: " + response.products.price + "\n"+lorem);
+                //   setimageUrl(response.products.images);
+                //   setisLoading(false);
+                //   console.log(imageUrl);
+            }
         }
-      }
-      getDetails();
-      return () => {
-  
-      }
-    },)
-  
+        const getFeedback = async () => {
+            const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?ProductID=' + params.itemId);
+            if (response.result == true) {
+                ToastAndroid.show('getFeedback thành công', ToastAndroid.SHORT);
+                setFeedback(response.feedbacks)
+            } else {
+                ToastAndroid.show('getFeedback thất bại', ToastAndroid.SHORT);
+            }
+        }
+        getFeedback();
+        getDetails();
+        return () => {
+
+        }
+    }, [params.itemId])
+
     // const handleBackPress = () => {
     //     // Xử lý sự kiện khi nút "Back" được nhấn
     //     // Thường bạn sẽ điều hướng ngược lại màn hình trước đó
@@ -86,10 +93,10 @@ const ProductDetail = (props) => {
         <View style={styles.container}>
             <ActionBar title="Product Detail" />
             <View style={styles.customContent}>
-                <ScrollView 
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                overScrollMode='never'>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    overScrollMode='never'>
                     {/* đây là nơi hiện thị hình ảnh sản phẩm dạng slide */}
                     <Text style={styles.productName}>{product.name}</Text>
                     <Text style={styles.productPrice}>{product.price}</Text>
@@ -100,12 +107,12 @@ const ProductDetail = (props) => {
                                 <Image source={products.sellerAvatar} style={styles.avatar} />
                             </View>
                             <View style={styles.userInfoText}>
-                                 {/* Lay them api tu seller */}
+                                {/* Lay them api tu seller */}
                                 <Text style={styles.userName}>
                                     {products.sellerName}
-                                   
-                                    </Text>
-                                <Text style={styles.verifiedText}>{products.verifiedSeller}</Text>                                                   
+
+                                </Text>
+                                <Text style={styles.verifiedText}>{products.verifiedSeller}</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -119,10 +126,10 @@ const ProductDetail = (props) => {
                     {/* Phần averageRating và feedbackCount */}
                     <View style={styles.ratingContainer}>
                         <Text style={styles.feedbackCount}>{
-                        // feedbackCount
+                            // feedbackCount
                         } Bình Luận</Text>
                         <Text style={styles.averageRating}>{
-                        // averageRating.toFixed(1)
+                            // averageRating.toFixed(1)
                         } ☆</Text>
                     </View>
 
@@ -268,7 +275,7 @@ const styles = StyleSheet.create({
     },
     customerStarRatings: {
         fontSize: 16,
-        color:'#FFC120'
+        color: '#FFC120'
         // Các kiểu dáng khác của đánh giá sao
     },
     customerFeedback: {
