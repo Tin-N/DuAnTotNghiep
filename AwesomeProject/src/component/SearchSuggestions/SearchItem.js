@@ -30,7 +30,6 @@ const SearchItem = props => {
       {enableDelete == true ? (
         <TouchableOpacity >
           <Image
-          
           style={StyleSearchSuggestions.image}
           source={require('../../images/Searchbar/x.png')}></Image>
         </TouchableOpacity>

@@ -1,15 +1,22 @@
-import { View, Text,Image, TouchableOpacity } from 'react-native'
+import { View, Text,Image, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useEffect,useState } from 'react'
 import { styleSearchScreen } from '../css/Styles'
 import Searchbar from '../component/Seachbar/Searchbar'
 import SearchSuggestion from '../component/SearchSuggestions/SearchSuggestions'
 import NoResult from '../component/SearchSuggestions/NoResult'
+
 const SearchScreen = () => {
+
+
     const [textSearch, setTextSearch] = useState("");
     const [isSearch,setIsSearch] = useState(false);
     const onChangeText = (text)=>
     {
         setTextSearch(text);
+    }
+    const onSubmitText = async()
+    {
+      // const response = await
     }
 
     useEffect(() => {
@@ -28,7 +35,7 @@ const SearchScreen = () => {
     }, [textSearch])
     
   return (
-    <View>
+    <ScrollView>
          <View style={styleSearchScreen.topBarView}>
          <TouchableOpacity>
             <Image
@@ -40,13 +47,13 @@ const SearchScreen = () => {
             
         </View>
         {/* Search bar */}
-        <Searchbar onChangeText={onChangeText}/>
+        <Searchbar onChangeText={onChangeText} />
 
 
     {
-        isSearch == true?<SearchSuggestion/>:<NoResult/>
+        isSearch == true?<SearchSuggestion/>:<View/>
     }
-    </View>
+    </ScrollView>
   )
 }
 
