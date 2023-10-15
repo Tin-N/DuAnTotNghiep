@@ -23,7 +23,7 @@ module.exports = {
   },
   serializer: {
     getModulesRunBeforeMainModule: () => [
-      path.resolve(__dirname, './blacklistErrors.js'),
+      // path.resolve(__dirname, './blacklistErrors.js'),
     ],
   },
 };
