@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet, Text, View, Image} from 'react-native';
-import React,{useState,useEffect} from 'react';
+import React from 'react';
 import {styleHome} from '../css/Styles';
 import Searchbar from '../component/Seachbar/Searchbar';
 import Slideshow from '../component/Slideshow/Slideshow';
@@ -8,8 +8,6 @@ import Banner from '../component/Banner/Banner';
 import {FetchData} from '../component/ProductList/data';
 import ProductList from '../component/ProductList/ProductList';
 const HomeScreen = () => {
-
-
   return (
     <View>
       <ScrollView>

@@ -14,10 +14,10 @@ const SearchScreen = () => {
     {
         setTextSearch(text);
     }
-    const onSubmitText = async()
-    {
-      // const response = await
-    }
+    // const onSubmitText = async ()
+    // {
+    //   // const response = await Axios
+    // }
 
     useEffect(() => {
       const checkText =() =>
