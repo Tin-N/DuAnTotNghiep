@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image,TouchableOpacity} from 'react-native';
 import React from 'react';
 import {StyleSearchSuggestions} from '../../css/Styles';
 const SearchItem = props => {
@@ -28,9 +28,12 @@ const SearchItem = props => {
         </Text> */}
       </View>
       {enableDelete == true ? (
-        <Image
+        <TouchableOpacity >
+          <Image
+          
           style={StyleSearchSuggestions.image}
           source={require('../../images/Searchbar/x.png')}></Image>
+        </TouchableOpacity>
       ) : (
         <View />
       )}
