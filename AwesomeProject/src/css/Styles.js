@@ -12,7 +12,91 @@ export const StyleLogin = StyleSheet.create({
 
 
 
-
+export const StyleOrder = StyleSheet.create({
+    container: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        backgroundColor: 'white',
+        width: width,
+        height: height,
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: 10,
+    },
+    textHeader: {
+        fontSize: 25,
+        fontStyle: 'bold',
+        color: 'black'
+    },
+    tillte: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: 10
+    },
+    textTillte: {
+        fontSize: 20,
+        fontStyle: 'bold',
+        color: 'black',
+        marginLeft: 5,
+    },
+    icon: {
+        position: 'absolute',
+        right: '5%',
+    },
+    myCart1: {
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    textPressable: {
+        fontSize: 20,
+        fontStyle: 'bold',
+        color: 'white',
+        textAlign: 'center'
+    },
+    pressable: {
+        marginTop: 20,
+        borderRadius: 35,
+        height: 52,
+        width: 239,
+        backgroundColor: '#D44325',
+        padding: 10,
+    },
+    image: {
+        height: 226,
+        width: 219,
+    },
+    imageFlatList: {
+        height: 80,
+        width: 59,
+    },
+    textNameFlatList: {
+        fontSize: 20,
+        fontStyle: 'bold',
+        color: 'black',
+        marginLeft: 5,
+    },
+    textInfoFlatList: {
+        fontSize: 12,
+        fontStyle: 'bold',
+        color: '#AEAEAE',
+        marginLeft: 5,
+    },
+    function: {
+        width: 100,
+        alignItems: 'center'
+    },
+    checkBoxOrder: {
+        position: 'relative',
+        top: '50%',
+    }, 
+    pressableBuy: {
+        height: 52,
+        backgroundColor: '#D44325',
+        padding: 5,
+    },
+})
 
 export const stylesNoResult = StyleSheet.create({
     view: {
