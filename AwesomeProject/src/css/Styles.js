@@ -24,7 +24,7 @@ export const StyleLogin = StyleSheet.create({
     justifyContent: 'space-between',
     paddingTop: '2%',
     marginHorizontal: 16,
-    paddingBottom: '5%',
+    paddingBottom: '3%',
   },
   textHint: {
     color: COLOR.TextHint,
@@ -38,6 +38,13 @@ export const StyleLogin = StyleSheet.create({
     marginHorizontal: 20,
     color: COLOR.Blue,
     fontSize: 15,
+    fontWeight: 'bold',
+  },
+  fgPass1: {
+    textAlign: 'center',
+    marginTop: '3%',
+    color: COLOR.Blue,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   input: {
@@ -73,6 +80,7 @@ export const StyleLogin = StyleSheet.create({
     height: 55,
     color: 'white',
   },
+  
   text: {
     color: COLOR.TextHint,
     fontSize: 17,
@@ -108,14 +116,14 @@ export const StyleLogin = StyleSheet.create({
     marginHorizontal: 0,
   },
   CbuttomText: {
-    marginTop: '20%',
+    marginTop: '8%',
     flexDirection: 'row',
     justifyContent: 'center',
     width: '94%',
     marginHorizontal: 10,
   },
   CSbuttomText: {
-    marginTop: '10%',
+    marginTop: '7%',
     flexDirection: 'row',
     justifyContent: 'center',
     width: '94%',
@@ -147,7 +155,7 @@ export const StyleLogin = StyleSheet.create({
   },
   RPBottomText: {
     textAlign: 'center',
-    marginTop: '60%',
+    marginTop: '50%',
     fontSize: 20,
     color: 'black',
     fontWeight: 'bold',

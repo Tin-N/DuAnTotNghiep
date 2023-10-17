@@ -24,16 +24,20 @@ import SignUp from './src/screens/SignUp';
 import ResetPassword from './src/screens/ResetPassword';
 import ConfirmPhoneNum from './src/screens/ConfirmPhoneNum';
 import UpdatePassword from './src/screens/UpdatePassword';
-
+import { UserContextProvider } from '../AwesomeProject/src/utils/Context'
 const App = () => {
   return (
     <SafeAreaView>
-  
-      {/* <SignIn/> */}
+      <UserContextProvider>
+        {/* <SignIn/> */}
+         <SignUp/>
+      </UserContextProvider>
+      
       {/* <SignUp/> */}
       {/* <ResetPassword/> */}
       {/* <ConfirmPhoneNum/> */}
-      <UpdatePassword/>
+      {/* <UpdatePassword/> */}
+
     </SafeAreaView>
   )
 }
