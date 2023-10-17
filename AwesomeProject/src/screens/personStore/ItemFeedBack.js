@@ -7,12 +7,14 @@ const ItemFeedBack = (props) => {
     const { dataFeedback } = props;
     const [shopFeedBack, setShopFeedBack] = useState("wsdf")
     const [roleId, setRoleId] = useState(1)
-
+    // console.log(dataFeedback._id);
     useEffect(() => {
         setShopFeedBack("2");
         setRoleId(2);
     }, [dataFeedback])
-
+    const detailFeedback = () => {
+        navigation.navigate('DetailPersonFedback');
+    }
     const [imageStar, setimageStar] = useState(require('../../images/close.png'))
     useEffect(() => {
         const starImage = () => {
@@ -66,7 +68,7 @@ const ItemFeedBack = (props) => {
                     <Image source={require('../../images/like.png')} style={{ width: 13, height: 13 }}></Image>
                     <Text>50 lượt thích</Text>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={detailFeedback}>
                     <Text >Trả lời()</Text>
                 </TouchableOpacity>
             </View>

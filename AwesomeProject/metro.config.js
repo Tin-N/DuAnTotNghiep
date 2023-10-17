@@ -5,25 +5,13 @@
  * @format
  */
 
-const blacklistErrors = (rules) => {
-  rules[1].message = 'RegExp not match any rules';
-};
-
 module.exports = {
   transformer: {
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
-        inlineRequires: false,
+        inlineRequires: true,
       },
     }),
-  },
-  resolver: {
-    sourceExts: ['js', 'json', 'ts', 'tsx'],
-  },
-  serializer: {
-    getModulesRunBeforeMainModule: () => [
-      path.resolve(__dirname, './blacklistErrors.js'),
-    ],
   },
 };

@@ -18,7 +18,7 @@ const DetailFeedback = (props) => {
     const [star44, setStar44] = useState(0);
     const [star55, setStar55] = useState(0);
     // const [dataFeedback, setDataFeedback] = useState([]);
-    const [feedback, setFeedback] = useState('');
+    // const [feedback, setFeedback] = useState('');
     const [lengthFeedback, setlengthFeedback] = useState(0);
     const [percentRating, setpercentRating] = useState(0);
     const [percentRating1, setpercentRating1] = useState(0);
@@ -30,16 +30,17 @@ const DetailFeedback = (props) => {
         navigation.navigate("HomeStore");
     }
     useEffect(() => {
-        // const getFeedback = async () => {
-        //     const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?productID=' + params.itemId);
-        //     if(response.result == true){
-        //         ToastAndroid('Lấy feedback thành công', ToastAndroid.SHORT);
-        //         setDataFeedback(response.feedbacks);
-        //     }else {
-        //         ToastAndroid('Lấy feedback thất bại', ToastAndroid.SHORT);
-        //     }
-        // }
-        // getFeedback();
+        const getFeedback = async () => {
+            const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?productID=' + params.itemId);
+            console.log(response);
+            if (response.result == true) {
+                ToastAndroid('Lấy feedback thành công', ToastAndroid.SHORT);
+                // setDataFeedback(response.feedbacks);
+            } else {
+                ToastAndroid('Lấy feedback thất bại', ToastAndroid.SHORT);
+            }
+        }
+        getFeedback();
         const countRating = () => {
             var star1 = 0;
             var star2 = 0;
@@ -166,7 +167,7 @@ const DetailFeedback = (props) => {
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) => <ItemFeedBack dataFeedback={item} />}
-                        keyExtractor={item => item.userID} />
+                        keyExtractor={item => item.feedbackID} />
                     <TouchableOpacity style={StyleDetailFeedback.touchOpa}>
                         <Text style={{ fontWeight: 'bold' }}>
                             See more
@@ -256,7 +257,26 @@ const dataFeedback = [
                 title: 'Cảm ơn bạn rất nhiều!'
             }
         ]
+    },
+    {
+        feedbackID: 4,
+        productID: 1,
+        userID: 4,
+        feedbackText: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
+        rating: 3,
+        dataReplyFeedback: [
+            {
+                userID: 2,
+                replyFeedbackId: 1,
+                title: 'Cảm ơn bạn rất nhiều!'
+            },
+            {
+                userID: 3,
+                replyFeedbackId: 2,
+                title: 'Cảm ơn bạn rất nhiều!'
+            }
+        ]
     }
-    
+
 ]
 
