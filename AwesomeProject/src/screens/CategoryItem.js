@@ -7,7 +7,7 @@ const CategoryItem = (props) => {
     const { dulieu1 } = props;
 
     return (
-        <View style={{ width: width * 0.5, marginLeft: 10, }}>
+        <View style={{ width: width * 0.46, marginLeft: 10, borderWidth: 0.2,  marginBottom: 10, borderRadius: 5, padding: 5}}>
             <Image style={{ alignSelf: 'center' }} source={require('../images/product.png')} />
             <Text style={{
                 fontSize: 14,

@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View, Image, Pressable, FlatList } from 'react-native'
-import React, { useContext } from 'react'
+import { StyleSheet, Text, View, Image, Pressable, FlatList, TouchableOpacity, Switch } from 'react-native'
+import React, { useContext, useState } from 'react'
 import { AppContext } from '../utils/AppContext'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { StyleOrder } from '../css/Styles'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome5'
+import { StyleCategory, StyleOrder } from '../css/Styles'
 import OrderItem from './OrderItem'
 import { ScrollView } from 'react-native-gesture-handler'
 
@@ -33,58 +35,69 @@ const MyCart2 = () => {
 
 const Order = () => {
   const { isOrder } = useContext(AppContext);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [isCheck, setisCheck] = useState([]);
+  const options = [""];
+  function pickOption(selectedCheck) {
+    if (isCheck.includes(selectedCheck)) {
+      setisCheck(isCheck.filter(isCheck => isCheck !== selectedCheck));
+      return;
+    }
+    setisCheck(isCheck => isCheck.concat(selectedCheck))
+  }
   return (
     <View style={StyleOrder.container}>
-
-      {/* header */}
-      <View style={StyleOrder.header}>
-        <Text style={StyleOrder.textHeader}>My Cart</Text>
-        <Pressable onPress={click}>
-          <Icon name='ellipsis-vertical' size={24} color={"black"} />
-        </Pressable>
-
-      </View>
-
-      {/* co san pham thi hien list san pham khong thi hien hinh anh */}
       <View>
-        {
-          isOrder == false ? <MyCart1 /> : <MyCart2 />
-        }
+        {/* header */}
+        <View style={StyleOrder.header}>
+          <Text style={StyleOrder.textHeader}>My Cart</Text>
+          <Pressable onPress={click}>
+            <Icon name='ellipsis-vertical' size={24} color={"black"} />
+          </Pressable>
+
+        </View>
+
+        {/* co san pham thi hien list san pham khong thi hien hinh anh */}
+        <View>
+          {
+            isOrder == true ? <MyCart1 /> : <MyCart2 />
+          }
+        </View>
       </View>
 
-      {/* 1 so chuc nang */}
-      <View style={StyleOrder.tillte}>
-        <Image source={require('../images/wishlist.png')} />
-        <Text style={StyleOrder.textTillte}>Wishlist</Text>
-        <Pressable onPress={click} style={StyleOrder.icon}>
-          <Image source={require('../images/Frame5.png')} />
-        </Pressable>
-      </View>
+      <View style={{ marginBottom: 60 }}>
+        <View style={StyleOrder.tillte}>
+          <Image source={require('../images/cost.png')} />
+          <Text style={StyleOrder.textTillte}>Bạn chưa có sản phầm nào</Text>
+          <Switch
+            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </View>
 
-      <View style={StyleOrder.tillte}>
-        <Image source={require('../images/shopping.png')} />
-        <Text style={StyleOrder.textTillte}>Shipping and Payment</Text>
-        <Pressable onPress={click} style={StyleOrder.icon}>
-          <Image source={require('../images/Frame5.png')} />
-        </Pressable>
-      </View>
+        <View style={StyleOrder.tillte}>
 
-      <View style={StyleOrder.tillte}>
-        <Image source={require('../images/refundPolicy.png')} />
-        <Text style={StyleOrder.textTillte}>Refund Policy</Text>
-        <Pressable onPress={click} style={StyleOrder.icon}>
-          <Image source={require('../images/Frame5.png')} />
-        </Pressable>
-      </View>
+          {options.map(option => (
+            <View key={option} >
+              <View style={{ marginTop: 10 }}>
+                <TouchableOpacity onPress={() => pickOption(option)}>
+                  {isCheck.includes(option) == true ? <MaterialIcons name='check-box' size={24} color={'green'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))}
 
-      <View style={StyleOrder.tillte} onPress={click}>
-        <Image source={require('../images/support.png')} />
-        <Text style={StyleOrder.textTillte}>Support</Text>
-        <Pressable onPress={click} style={StyleOrder.icon}>
-          <Image source={require('../images/Frame5.png')} />
-        </Pressable>
-      </View>
+          <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: 0đ</Text>
 
+          <Pressable onPress={click} style={StyleOrder.pressableBuy}>
+            <Text style={[StyleOrder.textTillte, { color: 'white', marginTop: 5 }]}>Mua Hàng</Text>
+          </Pressable>
+        </View>
+      </View>
     </View>
   )
 }
@@ -101,6 +114,7 @@ var data = [
     "name": "IPhone14",
     "firm": "Apple- Iphone",
     "cost": 1000000,
+    "quantity": 2,
     "image": "iphone14"
   },
   {
@@ -108,6 +122,7 @@ var data = [
     "name": "IPhone14",
     "firm": "Apple- Iphone",
     "cost": 2000000,
+    "quantity": 2,
     "image": "iphone14"
   },
   {
@@ -115,6 +130,7 @@ var data = [
     "name": "IPhone14",
     "firm": "Apple- Iphone",
     "cost": 3000000,
+    "quantity": 2,
     "image": "iphone14"
   },
   {
@@ -122,6 +138,7 @@ var data = [
     "name": "IPhone14",
     "firm": "Apple- Iphone",
     "cost": 3000000,
+    "quantity": 1,
     "image": "iphone14"
   },
   {
@@ -129,6 +146,7 @@ var data = [
     "name": "IPhone14",
     "firm": "Apple- Iphone",
     "cost": 3000000,
+    "quantity": 1,
     "image": "iphone14"
   },
   {
@@ -136,6 +154,7 @@ var data = [
     "name": "IPhone14",
     "firm": "Apple- Iphone",
     "cost": 3000000,
+    "quantity": 3,
     "image": "iphone14"
   },
 ]
