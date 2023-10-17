@@ -161,7 +161,6 @@ export const StyleHomeStore = StyleSheet.create({
   }
 })
 
-<<<<<<< HEAD
 export const StyleSearch = StyleSheet.create({
     menu: {
         paddingTop: 50,
@@ -170,131 +169,9 @@ export const StyleSearch = StyleSheet.create({
         marginRight: 30,
     },
     textTitle: {
-=======
-export const StyleOrder = StyleSheet.create({
-    container: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        backgroundColor: 'white',
-        width: width,
-        height: height,
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        margin: 10,
-    },
-    textHeader: {
-        fontSize: 25,
-        fontStyle: 'bold',
-        color: 'black'
-    },
-    tillte: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        margin: 10
-    },
-    textTillte: {
-        fontSize: 20,
-        fontStyle: 'bold',
-        color: 'black',
-        marginLeft: 5,
-    },
-    icon: {
-        position: 'absolute',
-        right: '5%',
-    },
-    myCart1: {
-        flexDirection: 'column',
-        alignItems: 'center'
-    },
-    textPressable: {
-        fontSize: 20,
-        fontStyle: 'bold',
-        color: 'white',
-        textAlign: 'center'
-    },
-    pressable: {
-        marginTop: 20,
-        borderRadius: 35,
-        height: 52,
-        width: 239,
-        backgroundColor: '#D44325',
-        padding: 10,
-    },
-    image: {
-        height: 226,
-        width: 219,
-    },
-    imageFlatList: {
-        height: 80,
-        width: 59,
-    },
-    textNameFlatList: {
-        fontSize: 20,
-        fontStyle: 'bold',
-        color: 'black',
-        marginLeft: 5,
-    },
-    textInfoFlatList: {
-        fontSize: 12,
-        fontStyle: 'bold',
-        color: '#AEAEAE',
-        marginLeft: 5,
-    },
-    function: {
-        width: 100,
-        alignItems: 'center'
-    },
-    checkBoxOrder: {
-        position: 'relative',
-        top: '50%',
-    }, 
-    pressableBuy: {
-        height: 52,
-        backgroundColor: '#D44325',
-        padding: 5,
-    },
-})
 
-export const StyleCategory = StyleSheet.create({
-    textHeader: {
-        fontSize: 16,
-        color: 'black',
-    },
-    textTillte: {
-        fontSize: 25,
-        fontStyle: 'bold',
-        color: 'black',
-        marginLeft: 30
-    },
-    search: {
-        position: 'relative',
-        marginTop: 15,
-    },
-    textInput: {
-        height: 50,
-        width: 325,
-        backgroundColor: '#FAFAFA',
-        alignSelf: 'center',
-        padding: 15,
-    },
-    icon: {
-        position: 'absolute',
-        top: '25%',
-        right: '15%'
-    },
-    pressable: {
-        borderRadius: 10,
-        height: 52,
-        width: 325,
-        padding: 15,
-        borderWidth: 1,
-        alignSelf: 'center',
-    },
-    textPressable: {
-        fontSize: 14,
->>>>>>> origin/devQuy
+
+
         textAlign: 'center',
         color: 'black',
         fontSize: 20,
@@ -393,7 +270,6 @@ export const StyleCategory = StyleSheet.create({
         fontSize: 20,
         color: 'black'
     },
-<<<<<<< HEAD
     productSelling: {
         marginTop: 15,
         marginLeft: 30,
@@ -554,7 +430,45 @@ export const StyleBanner =  StyleSheet.create({
         // backgroundColor:'blue'
     }
  })
-=======
+
+export const StyleCategory = StyleSheet.create({
+    textHeader: {
+        fontSize: 16,
+        color: 'black',
+    },
+    textTillte: {
+        fontSize: 25,
+        fontStyle: 'bold',
+        color: 'black',
+        marginLeft: 30
+    },
+    search: {
+        position: 'relative',
+        marginTop: 15,
+    },
+    textInput: {
+        height: 50,
+        width: 325,
+        backgroundColor: '#FAFAFA',
+        alignSelf: 'center',
+        padding: 15,
+    },
+    icon: {
+        position: 'absolute',
+        top: '25%',
+        right: '15%'
+    },
+    pressable: {
+        borderRadius: 10,
+        height: 52,
+        width: 325,
+        padding: 15,
+        borderWidth: 1,
+        alignSelf: 'center',
+    },
+    textPressable: {
+        fontSize: 14,
+    },
     centeredView: {
         flex: 1,
         justifyContent: 'center',
@@ -583,8 +497,8 @@ export const StyleBanner =  StyleSheet.create({
         color: 'black',
         marginTop: 10,
         marginBottom: 10,
-    }
-})
+    },
+    });
 export const StyleSlider = StyleSheet.create({
     container: {
         alignItems: 'stretch',
@@ -600,4 +514,3 @@ export const StyleSlider = StyleSheet.create({
         justifyContent: 'center',
     },
 })
->>>>>>> origin/devQuy

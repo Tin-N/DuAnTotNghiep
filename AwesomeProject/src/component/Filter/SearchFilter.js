@@ -19,7 +19,7 @@ const SearchFilter = () => {
     }
 
     return (
-        <View>
+        <View style={StyleOrder.container}>
 
 
             <View>
