@@ -89,7 +89,7 @@ const SearchScreen = () => {
       :
       <View>
         {
-          data.length>0?<ProductList
+          (data.length>0)&&(isSearch!==true)?<ProductList
             data={data}
             styleView={{
 
@@ -98,7 +98,13 @@ const SearchScreen = () => {
             }}
             numColumns={columns}
             showsVerticalScrollIndicator={false}
-          />:<NoResult/>
+          />:
+          <View style={{justifyContent:'center',alignItems:'center'}}>
+            {
+              (textSearch.length>0)&&(data.length==0)&&(isSearch!==true)?<NoResult/>:<View/>
+            }
+          </View>
+            
         }
       </View>
     }

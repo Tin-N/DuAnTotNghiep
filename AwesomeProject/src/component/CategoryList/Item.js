@@ -28,7 +28,6 @@ const Item = props => {
         padding: 2.5,
         borderRadius: 5,
         backgroundColor: 'white',
-        paddingLeft: 10,
         margin: 5
       }}>
       <Text
