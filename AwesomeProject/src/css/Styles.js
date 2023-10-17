@@ -685,7 +685,6 @@ export const StyleCategory = StyleSheet.create({
         marginBottom: 10,
     }
 })
-<<<<<<< HEAD
 export const StyleLogin = StyleSheet.create({
   header: {
     color: COLOR.primary,
@@ -986,7 +985,6 @@ export const StyleDetailPersonFeedback = StyleSheet.create({
         marginTop: 20
     },
 })
-=======
 export const StyleSlider = StyleSheet.create({
     container: {
         alignItems: 'stretch',
@@ -1002,4 +1000,3 @@ export const StyleSlider = StyleSheet.create({
         justifyContent: 'center',
     },
 })
->>>>>>> devQuy
