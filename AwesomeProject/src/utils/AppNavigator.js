@@ -17,9 +17,10 @@ import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
 import TestScreen from '../screens/TestScreen';
 import DetailProduct from '../screens/personStore/DetailProduct';
 // import TestScreen from '../screens/TestScreen/TestScreen'
+import DetailProduct from '../screens/personStore/DetailProduct';
+import { Header } from 'react-native/Libraries/NewAppScreen';
 const Tab = createBottomTabNavigator();
 const Stack= createNativeStackNavigator();
-
 const User = () => {
     return (
         <Text>Đăng nhập</Text>
@@ -40,6 +41,7 @@ const ProductHome = () => {
                 
             ></Stack.Screen>
 
+         
         </Stack.Navigator>
     )
 }
@@ -65,9 +67,9 @@ const Main = () => {
                 tabBarInactiveTintColor: 'black',
             })}
         >
-            <Tab.Screen name="Home" component={ProductHome} />
+            <Tab.Screen name="Home" component={ProductHome}/>
             <Tab.Screen name="Order" component={Order} />
-            <Tab.Screen name="SignUp" component={SignUp} />
+            <Tab.Screen name="SignUp" component={SignUp}/>
         </Tab.Navigator>
     )
 }

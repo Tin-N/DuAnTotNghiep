@@ -39,6 +39,17 @@ const DetailFeedback = (props) => {
             }
         }
         getFeedback();
+        // const getFeedback = async () => {
+        //     const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?productID=' + params.itemId);
+        //     console.log(response);
+        //     if (response.result == true) {
+        //         ToastAndroid('Lấy feedback thành công', ToastAndroid.SHORT);
+        //         // setDataFeedback(response.feedbacks);
+        //     } else {
+        //         ToastAndroid('Lấy feedback thất bại', ToastAndroid.SHORT);
+        //     }
+        // }
+        // getFeedback();       
         if (dataFeedback.length > 0) {
             const countRating = () => {
                 var star1 = 0;
@@ -296,8 +307,33 @@ const dataFeedback = [
                 title: 'Cảm ơn bạn rất nhiều!'
             }
         ]
-       
     }
+    // },
+    // {
+    //     "productID": "1",
+    //     "userID": "1",
+    //     "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
+    //     "rating": 5
+    // },
+    // {
+    //     "productID": "1",
+    //     "userID": "2",
+    //     "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
+    //     "rating": 2
+    // },
+    // {
+    //     "productID": "1",
+    //     "userID": "3",
+    //     "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
+    //     "rating": 5
+    // },
+    // {
+    //     "productID": "1",
+    //     "userID": "4",
+    //     "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
+    //     "rating": 5
+
+    // }
 
 ]
 

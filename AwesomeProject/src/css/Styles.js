@@ -3,10 +3,13 @@ import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { COLOR } from './Theme';
 import { Dimensions } from 'react-native';
-import { useFonts, DMSans_400Regular } from '@expo-google-fonts/dm-sans'
+const {width, height} = Dimensions.get('screen');
+import { Dimensions } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+
 const {width, height} = Dimensions.get('screen');
 export const StyleLogin1 = StyleSheet.create({
+
     header: {
         color: COLOR.primary,
     },
