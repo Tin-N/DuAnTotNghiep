@@ -3,9 +3,8 @@ import React, { useState } from 'react'
 import { StyleCategory, StyleOrder } from '../css/Styles'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
-import CategoryItem from './CategoryItem'
-
-
+import { Slider } from "@miblanchard/react-native-slider";
+import SliderContainer from '../component/SliderContainer/SliderContainer'
 const Category = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [isFilter, setisFilter] = useState(false);
@@ -41,14 +40,14 @@ const Category = () => {
                 </Pressable>
             </View>
 
-            <View style={{ height: 580 }}>
+            {/* <View style={{ height: 580 }}>
                 <FlatList
                     data={data}
                     numColumns={2}
                     renderItem={({ item }) => <CategoryItem dulieu1={item} />}
                     keyExtractor={item => item._id}
                 />
-            </View>
+            </View> */}
 
             <View>
                 <Pressable style={StyleCategory.pressable} onPress={() => setModalVisible(true)}>
@@ -105,8 +104,14 @@ const Category = () => {
 
 
 const Filter = () => {
+    const [sliderState, setSliderState] = React.useState(0);
+    //checkbox
     const [isCheck, setisCheck] = useState([]);
     const options = ["Semua Sub Kategori", "Keripik", "Kue", "Nasi"];
+
+
+
+
     function pickOption(selectedCheck) {
         if (isCheck.includes(selectedCheck)) {
             setisCheck(isCheck.filter(isCheck => isCheck !== selectedCheck));
@@ -114,13 +119,34 @@ const Filter = () => {
         }
         setisCheck(isCheck => isCheck.concat(selectedCheck))
     }
+
     return (
         <View>
             <Text style={StyleCategory.textRang}>Range Harga</Text>
-            <View style={StyleOrder.header}>
-            <Text style={StyleCategory.textPressable}>Rp 50.000</Text>
-            <Text style={StyleCategory.textPressable}>Rp 100.000</Text>
+            {/* <Slider
+                style={{ width: 300, height: 40 }}
+                minimumValue={0}
+                maximumValue={3}
+                minimumTrackTintColor="#3669C9"
+                maximumTrackTintColor="#FFFFFF"
+            /> */}
+            <View >
+                <SliderContainer
+                    sliderValue={[0, 10000000]}>
+                    <Slider
+                        step={1000}
+                        minimumValue={0}
+                        maximumValue={10000000}
+                    />
+                </SliderContainer>
             </View>
+
+            {/* <View style={StyleOrder.header}>
+                <Text style={StyleCategory.textPressable}>Rp 0</Text>
+                <Text style={StyleCategory.textPressable}>Rp 100.000</Text>
+            </View> */}
+
+            {/* checkbox */}
             {options.map(option => (
                 <View key={option} >
                     <View style={StyleOrder.header}>
@@ -136,7 +162,6 @@ const Filter = () => {
 
     )
 }
-
 // const Sorting = () => {
 //     return (
 //         <View>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import { Slider } from "@miblanchard/react-native-slider";
 import { StyleCategory, StyleSlider } from '../../css/Styles';
-
+import { formatPrice } from '../../../Agro';
 
 const SliderContainer = (props) => {
     const DEFAULT_VALUE = 0.2;
@@ -13,20 +13,6 @@ const SliderContainer = (props) => {
     let renderTrackMarkComponent;
 
         
-    // useEffect(() => {
-    //     const isFixed =()=>
-    //     {
-    //         for(var i=0;i<value.length;i++)
-    //         {
-    //             setValue({...value,sliderValue[i].toFixed()})
-    //         }
-    //     }
-      
-    //     return () => {
-          
-    //     }
-    //   }, [sliderValue])
-
     if (trackMarks?.length && (!Array.isArray(value) || value?.length === 1)) {
         renderTrackMarkComponent = (index) => {
             const currentMarkValue = trackMarks[index];
@@ -57,10 +43,18 @@ const SliderContainer = (props) => {
         );
     };
 
+    const FormatPrice=(array)=>
+    {
+        var demo=[];
+        for(var i=0;i<array.length;i++){
+           demo.push(formatPrice(array[i]));
+        }
+        return demo.join(' - ');
+    }
     return (
         <View style={StyleSlider.sliderContainer}>
             <View style={StyleSlider.titleContainer}>
-                <Text style={StyleCategory.textPressable}>{Array.isArray(value) ? value.join(' - ') : value}</Text>
+                <Text style={StyleCategory.textPressable}>{Array.isArray(value) ? FormatPrice(value) : value}</Text>
             </View>
             {renderChildren()}
         </View>

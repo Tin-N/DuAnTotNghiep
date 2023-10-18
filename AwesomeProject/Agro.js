@@ -1,4 +1,6 @@
-export const formatPrice = (input) => {  
+export const formatPrice = (input) => {
+  
+  
     var price = input.toString();
     var array = [];
     for (i = price.length; i >= 0; i -= 3) {

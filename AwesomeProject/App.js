@@ -24,11 +24,13 @@ import TestScreen from './src/screens/TestScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchScreen from './src/screens/SearchScreen';
+import Category from './src/screens/Category';
 const App = () => {
   return (
   // <WelcomeScreen/>
   // <HomeScreen/>
-    <TestScreen/>
+    // <TestScreen/>
+    <Category/>
   // <SearchScreen/>
   )
 }
