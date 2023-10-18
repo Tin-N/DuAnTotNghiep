@@ -17,6 +17,8 @@ import {StyleSheet} from 'react-native';
 const UpdatePassword = () => {
   const [show, setshow] = useState(true);
   const [visible, setvisible] = useState(true);
+  const [showCP, setshowCP] = useState(true);
+  const [visibleCP, setvisibleCP] = useState(true);
   return (
     <View>
       
@@ -76,13 +78,13 @@ const UpdatePassword = () => {
 
           <TouchableOpacity
             onPress={() => {
-              setvisible(!visible);
-              setshow(!show);
+              setvisibleCP(!visibleCP);
+              setshowCP(!showCP);
             }}
             style={StyleLogin.CTIcon}>
             <Image
               source={
-                show === false
+                showCP === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }

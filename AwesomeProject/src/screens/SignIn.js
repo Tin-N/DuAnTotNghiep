@@ -99,8 +99,11 @@ const SignIn = () => {
             />
           </TouchableOpacity>
         </View>
-
-        <Text style={StyleLogin.fgPass}>Forgot password</Text>
+        
+        <TouchableOpacity>
+          <Text style={StyleLogin.fgPass}>Forgot password</Text>
+        </TouchableOpacity>
+        
 
         <TouchableOpacity style={StyleLogin.buttonShape} onPress={Signin}>
           <Text style={StyleLogin.TextButton}>Sign In</Text>

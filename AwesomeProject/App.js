@@ -30,14 +30,13 @@ const App = () => {
     <SafeAreaView>
       <UserContextProvider>
         {/* <SignIn/> */}
-         <SignUp/>
-      </UserContextProvider>
-      
-      {/* <SignUp/> */}
+         {/* <SignUp/> */}
       {/* <ResetPassword/> */}
       {/* <ConfirmPhoneNum/> */}
-      {/* <UpdatePassword/> */}
-
+      <UpdatePassword/>
+      </UserContextProvider>
+      
+ 
     </SafeAreaView>
   )
 }
