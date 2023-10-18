@@ -9,8 +9,22 @@ import Searchbar from '../component/Seachbar/Searchbar';
 import Item from '../component/CategoryList/Item';
 import CategoryList from '../component/CategoryList/CategoryList';
 import Banner from '../component/Banner/Banner';
-const TestScreen = () => {
-  const [column, setcolumn] = useState(2)
+import {useEffect} from 'react';
+import { useNavigation } from '@react-navigation/native';
+// import useNavi
+const TestScreen = (props) => {
+  const navigation= useNavigation();
+  const [column, setcolumn] = useState(2);
+  useEffect(() => {
+    navigation.getParent()?.setOptions({
+      tabBarStyle: {
+        display: "none"
+      }
+    });
+    return () => navigation.getParent()?.setOptions({
+      tabBarStyle: undefined
+    });
+  }, [navigation]);
   return (
     <View>
       {/* <Slideshow

@@ -27,7 +27,7 @@ const ItemHomeStore = (props) => {
     }
   }, [dulieu]);
   const handleOnClick = () => {
-    navigation.navigate("DetailFeedback", { itemId: dulieu._id });
+    navigation.navigate("TestScreen", { itemId: dulieu._id });
   }
   return (
     <View style={StyleHomeStore.boxProduct}>
