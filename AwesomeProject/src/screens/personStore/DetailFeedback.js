@@ -28,7 +28,6 @@ const DetailFeedback = (props) => {
         navigation.navigate("HomeStore");
     }
     useEffect(() => {
-<<<<<<< HEAD
         const getFeedback = async () => {
             const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?productID=' + params.itemId);
             console.log(response);
@@ -40,30 +39,6 @@ const DetailFeedback = (props) => {
             }
         }
         getFeedback();
-        const countRating = () => {
-            var star1 = 0;
-            var star2 = 0;
-            var star3 = 0;
-            var star4 = 0;
-            var star5 = 0;
-            var isrealRating = 0;
-            for (i = 0; i < dataFeedback.length; i++) {
-                if (dataFeedback[i].rating == 1) {
-                    star1++;
-                    setStar11(star1);
-                } else if (dataFeedback[i].rating == 2) {
-                    star2++;
-                    setStar22(star2);
-                } else if (dataFeedback[i].rating == 3) {
-                    star3++;
-                    setStar33(star3);
-                } else if (dataFeedback[i].rating == 4) {
-                    star4++;
-                    setStar44(star4);
-                } else if (dataFeedback[i].rating == 5) {
-                    star5++;
-                    setStar55(star5);
-=======
         if (dataFeedback.length > 0) {
             const countRating = () => {
                 var star1 = 0;
@@ -89,7 +64,6 @@ const DetailFeedback = (props) => {
                         star5++;
                         setStar55(star5);
                     }
->>>>>>> devTin
                 }
                 /*
                 Thuật toán tính tổng số lượng feedBack, phần trăm sao đánh giá theo từng loại
@@ -130,7 +104,7 @@ const DetailFeedback = (props) => {
         }
         return () => {
         }
-    }, [])
+    }, []);
     return (
         <View>
             <View style={StyleDetailFeedback.menu}>
@@ -229,7 +203,6 @@ const DetailFeedback = (props) => {
 export default DetailFeedback
 const dataFeedback = [
     {
-<<<<<<< HEAD
         feedbackID: 1,
         productID: 1,
         userID: 1,
@@ -323,30 +296,7 @@ const dataFeedback = [
                 title: 'Cảm ơn bạn rất nhiều!'
             }
         ]
-=======
-        "productID": "1",
-        "userID": "1",
-        "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
-        "rating": 5
-    },
-    {
-        "productID": "1",
-        "userID": "2",
-        "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
-        "rating": 2
-    },
-    {
-        "productID": "1",
-        "userID": "3",
-        "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
-        "rating": 5
-    },
-    {
-        "productID": "1",
-        "userID": "4",
-        "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
-        "rating": 5
->>>>>>> devTin
+       
     }
 
 ]

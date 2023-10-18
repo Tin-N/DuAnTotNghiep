@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { StyleDetailProduct } from '../../css/Styles'
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen')
@@ -7,8 +7,22 @@ import LinearGradient from 'react-native-linear-gradient';
 const image = { uri: 'http://prices.vn/storage/photo/product/giay-the-thao-nam-1645556039033_0.png' };
 import { formatPrice } from '../../../Agro';
 import { ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 const DetailProduct = () => {
     const [produtPrice, setProductPrice] = useState(145000);
+    const navigation= useNavigation();
+  const [column, setcolumn] = useState(2);
+  useEffect(() => {
+    navigation.getParent()?.setOptions({
+      tabBarStyle: {
+        display: "none"
+      }
+    });
+    return () => navigation.getParent()?.setOptions({
+      tabBarStyle: undefined
+    });
+  }, [navigation]);
     return (
         <View style={{ height: 785 }}>
             <View style={StyleDetailProduct.menu}>

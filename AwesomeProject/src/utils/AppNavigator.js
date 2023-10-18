@@ -15,6 +15,7 @@ import ItemHomeStore from '../screens/personStore/ItemHomeStore';
 import DetailFeedback from '../screens/personStore/DetailFeedback';
 import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
 import TestScreen from '../screens/TestScreen';
+import DetailProduct from '../screens/personStore/DetailProduct';
 // import TestScreen from '../screens/TestScreen/TestScreen'
 const Tab = createBottomTabNavigator();
 const Stack= createNativeStackNavigator();
@@ -35,7 +36,7 @@ const ProductHome = () => {
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
             <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
-            <Stack.Screen name='TestScreen' component={TestScreen}
+            <Stack.Screen name='DetailProduct' component={DetailProduct}
                 
             ></Stack.Screen>
 
