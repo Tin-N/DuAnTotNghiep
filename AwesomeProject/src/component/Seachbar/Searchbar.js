@@ -9,7 +9,7 @@ const Searchbar = (props) => {
 
     <View style={StyleSearch.viewSearchbar}>
       <TextInput 
-      style={StyleSearch.textInput} 
+      style={StyleSearch.textInput2} 
       placeholder='Tìm kiếm bằng tên thực phẩm' 
       onChangeText={onChangeText} 
       />

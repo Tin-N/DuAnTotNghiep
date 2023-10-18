@@ -7,7 +7,7 @@ const AxiosIntance = (contentType = 'application/json') => {
         //  'http://192.168.2.5:3000/Api' // Tin
         //  'http://192.168.1.8:3000/Api'//Nhat
 
-         'http://172.16.117.18:3000/Api'// O truong  
+         'http://172.16.102.134:3000/Api'// O truong  
 
     });
     axiosInstance.interceptors.request.use(

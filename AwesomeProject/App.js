@@ -16,21 +16,29 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
-
-
+import { NavigationContainer } from '@react-navigation/native';
+import AppNavigator from './src/utils/AppNavigator';
+import { AppContextProvider } from './src/utils/AppContext';
 import { StyleLogin } from './src/css/Styles';
-import TestScreen from './src/screens/TestScreen';
-import WelcomeScreen from './src/screens/WelcomeScreen';
-import HomeScreen from './src/screens/HomeScreen';
-import SearchScreen from './src/screens/SearchScreen';
-import Category from './src/screens/Category';
+// import TestScreen from './src/screens/TestScreen';
+// import WelcomeScreen from './src/screens/WelcomeScreen';
+// import HomeScreen from './src/screens/HomeScreen';
+// import SearchScreen from './src/screens/SearchScreen';
+// import Category from './src/screens/Category';
+// import SearchStore from './src/screens/personStore/SearchStore';
+// import HomeStore from './src/screens/personStore/HomeStore';
 const App = () => {
   return (
   // <WelcomeScreen/>
   // <HomeScreen/>
     // <TestScreen/>
-    <Category/>
+    // <HomeStore/>
+    <AppContextProvider>
+      <NavigationContainer>
+        <AppNavigator/>
+      </NavigationContainer>
+    </AppContextProvider>
+    // <SearchStore/>
   // <SearchScreen/>
   )
 }

@@ -252,6 +252,18 @@ export const StyleSearch = StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
     },
+    
+
+    searchButton:{
+        marginLeft:5,
+        padding:15,
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'#3669C9',
+        borderRadius:30
+    },
+
     textTitle: {
 
 
@@ -293,13 +305,20 @@ export const StyleSearch = StyleSheet.create({
       }
     ,
     textInput: {
+        paddingHorizontal:20,
+        padding:10,
+        width:'60%',
+        borderRadius:30,
+        fontSize:15,
+        borderWidth:0.8,
+        borderColor:'black'
+    },
+    textInput2: {
         padding:10,
         width:'90%',
         borderRadius:10,
         fontSize:15
-
     },
-
     TouchableOpacity:{
         display:'flex',
         justifyContent:'center',
