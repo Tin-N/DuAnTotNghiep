@@ -1,22 +1,14 @@
-<<<<<<< HEAD
 
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { COLOR } from './Theme';
-import { Dimensions } from 'react-native';
-const { width, height } = Dimensions.get("window");
-
-export const StyleLogin1 = StyleSheet.create({
-=======
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
-import { COLOR } from './Theme'
 import { useFonts, DMSans_400Regular } from '@expo-google-fonts/dm-sans'
-import LinearGradient from 'react-native-linear-gradient'
 import { Dimensions } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
+
 const {width, height} = Dimensions.get('screen');
-export const StyleLogin = StyleSheet.create({
->>>>>>> devTin
+export const StyleLogin1 = StyleSheet.create({
+
     header: {
         color: COLOR.primary,
     },
@@ -996,7 +988,6 @@ export const StyleDetailPersonFeedback = StyleSheet.create({
         marginTop: 20
     },
 })
-<<<<<<< HEAD
 export const StyleSlider = StyleSheet.create({
     container: {
         alignItems: 'stretch',
@@ -1012,7 +1003,6 @@ export const StyleSlider = StyleSheet.create({
         justifyContent: 'center',
     },
 })
-=======
 export const StyleDetailProduct = StyleSheet.create({
     menu: {
         paddingTop: 30,
@@ -1102,4 +1092,3 @@ export const StyleDetailProduct = StyleSheet.create({
         fontFamily: 'TiltNeon-Regular' 
     }
 })
->>>>>>> devTin

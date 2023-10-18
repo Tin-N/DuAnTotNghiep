@@ -1,25 +1,63 @@
 import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleDetailProduct } from '../../css/Styles'
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen')
 import LinearGradient from 'react-native-linear-gradient';
+import AxiosIntance from '../../utils/AxiosIntance';
 const image = { uri: 'http://prices.vn/storage/photo/product/giay-the-thao-nam-1645556039033_0.png' };
 import { formatPrice } from '../../../Agro';
 import { ScrollView } from 'react-native';
-const DetailProduct = () => {
-    const [produtPrice, setProductPrice] = useState(145000);
+const DetailProduct = (props) => {
+    const { navigation } = props;
+    const { route } = props;
+    const { params } = route;
+    const [productPrice, setProductPrice] = useState('');
+    const [dataProduct, setDataProduct] = useState({});
+    const [imageProduct, setImageProduct] = useState('');
+    console.log(params.itemId+'aaaaaaaaaaaaaaaa');
+    const back = () => {
+        navigation.goBack();
+    }
+    useEffect(() => {
+        const getDetails = async () => {
+            const response = await AxiosIntance().get('/productAPI/getProductByID?id=' + params.itemId);
+            if (response.result == false) {
+                ToastAndroid.show('Lấy dữ liệu thất bại', ToastAndroid.SHORT);
+            } else {
+                setDataProduct(response.products);
+                setProductPrice(response.products.price);
+                setImageProduct(response.products.image[0]);
+                console.log(response.products.image[0]);
+            }
+        }
+        const getFeedback = async () => {
+            const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?ProductID=' + params.itemId);
+            if (response.result == true) {
+                ToastAndroid.show('getFeedback thành công', ToastAndroid.SHORT);          
+            } else {
+                ToastAndroid.show('getFeedback thất bại', ToastAndroid.SHORT);
+            }
+        }
+        getFeedback();
+        getDetails();
+        return () => {
+
+        }
+    }, [params.itemId])
     return (
         <View style={{ height: 785 }}>
             <View style={StyleDetailProduct.menu}>
-                <Image source={require('../../images/backic.png')} />
+                <TouchableOpacity onPress={back}>
+                    <Image source={require('../../images/backic.png')} />
+                </TouchableOpacity>
                 <Text style={StyleDetailProduct.textTitle}>
                     T.Tin Sản Phẩm
                 </Text>
             </View>
             <ScrollView showsVerticalScrollIndicator={false}
                 overScrollMode='never'>
-                <ImageBackground source={image} resizeMode='cover' style={{ width: width, height: 320, marginTop: 20 }}>
+                <ImageBackground source={{uri: imageProduct}} resizeMode='cover' style={{ width: width, height: 320, marginTop: 20 }}>
                 </ImageBackground>
                 <LinearGradient
                     start={{ x: 0, y: 0.5 }} // Điểm bắt đầu của gradient (trái)
@@ -34,7 +72,7 @@ const DetailProduct = () => {
                         đ
                     </Text>
                     <Text style={StyleDetailProduct.textPrice}>
-                        {formatPrice(produtPrice)}
+                        {formatPrice(productPrice)}
                     </Text>
                     <Text style={StyleDetailProduct.textSalePrice}>
                         đ230,000

@@ -35,8 +35,11 @@ import Category from './src/screens/Category';
 import ItemFeedBack from './src/screens/personStore/ItemFeedBack';
 import DialogShopping from './src/screens/personStore/DialogShopping';
 import DetailPersonFedback from './src/screens/personStore/DetailPersonFedback';
-<<<<<<< HEAD
+import DetailProduct from './src/screens/personStore/DetailProduct';
 import HomeStore from './src/screens/personStore/HomeStore';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+const Stack = createNativeStackNavigator()
 const App = () => {
   return (
     <AppContextProvider>
@@ -45,19 +48,6 @@ const App = () => {
       </NavigationContainer>
     </AppContextProvider>
     // <ProductDetail/>
-=======
-import DetailProduct from './src/screens/personStore/DetailProduct';
-const App = () => {
-  return (
-    // <AppContextProvider>
-    //   <NavigationContainer>
-    //     <AppNavigator/>
-    //   </NavigationContainer>
-    // </AppContextProvider>
-    <DetailProduct/>
->>>>>>> devTin
-    
-
   )
 }
 

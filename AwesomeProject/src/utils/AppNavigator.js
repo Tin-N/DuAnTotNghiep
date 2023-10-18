@@ -14,10 +14,10 @@ import SearchStore from '../screens/personStore/SearchStore';
 import ItemHomeStore from '../screens/personStore/ItemHomeStore';
 import DetailFeedback from '../screens/personStore/DetailFeedback';
 import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
-
+import DetailProduct from '../screens/personStore/DetailProduct';
+import { Header } from 'react-native/Libraries/NewAppScreen';
 const Tab = createBottomTabNavigator();
 const Stack= createNativeStackNavigator();
-
 const User = () => {
     return (
         <Text>Đăng nhập</Text>
@@ -34,6 +34,10 @@ const ProductHome = () => {
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
             <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
+            <Stack.Screen name='DetailProduct' component={DetailProduct}
+            options={({ route }) => ({
+                tabBarVisible: false, // Ẩn thanh
+              })}/>
         </Stack.Navigator>
     )
 }
@@ -59,9 +63,9 @@ const Main = () => {
                 tabBarInactiveTintColor: 'black',
             })}
         >
-            <Tab.Screen name="Home" component={ProductHome} />
+            <Tab.Screen name="Home" component={ProductHome}/>
             <Tab.Screen name="Order" component={Order} />
-            <Tab.Screen name="SignUp" component={SignUp} />
+            <Tab.Screen name="SignUp" component={SignUp}/>
         </Tab.Navigator>
     )
 }
