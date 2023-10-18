@@ -35,6 +35,7 @@ import Category from './src/screens/Category';
 import ItemFeedBack from './src/screens/personStore/ItemFeedBack';
 import DialogShopping from './src/screens/personStore/DialogShopping';
 import DetailPersonFedback from './src/screens/personStore/DetailPersonFedback';
+<<<<<<< HEAD
 import HomeStore from './src/screens/personStore/HomeStore';
 const App = () => {
   return (
@@ -44,6 +45,17 @@ const App = () => {
       </NavigationContainer>
     </AppContextProvider>
     // <ProductDetail/>
+=======
+import DetailProduct from './src/screens/personStore/DetailProduct';
+const App = () => {
+  return (
+    // <AppContextProvider>
+    //   <NavigationContainer>
+    //     <AppNavigator/>
+    //   </NavigationContainer>
+    // </AppContextProvider>
+    <DetailProduct/>
+>>>>>>> devTin
     
 
   )
