@@ -28,13 +28,13 @@ const ConfirmPhoneNum = () => {
 
      
       <Text
-        style={StyleLogin.HintText}>
+        style={StyleLogin.HintTextCP}>
         Enter the 4-digit code sent to +1(83626457)
       </Text>
 
  
       <View style= {{
-        marginTop: 20,
+        marginTop: "0%",
         flexDirection: 'row',
         width: '90%',
       }}>
