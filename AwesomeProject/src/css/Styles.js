@@ -7,7 +7,7 @@ const {width, height} = Dimensions.get('screen');
 import { Dimensions } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
-const {width, height} = Dimensions.get('screen');
+
 export const StyleLogin1 = StyleSheet.create({
 
     header: {

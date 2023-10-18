@@ -11,9 +11,18 @@ import { formatPrice } from '../../../Agro';
 import { ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const DetailProduct = () => {
-    const [produtPrice, setProductPrice] = useState(145000);
-    const navigation= useNavigation();
+
+   
+
+const DetailProduct = (props) => {
+    const { navigation } = props;
+    const { route } = props;
+    const { params } = route;
+    const [productPrice, setProductPrice] = useState('');
+    const [dataProduct, setDataProduct] = useState({});
+    const [imageProduct, setImageProduct] = useState('');
+    // const [produtPrice, setProductPrice] = useState(145000);
+    // const navigation= useNavigation();
   const [column, setcolumn] = useState(2);
   useEffect(() => {
     navigation.getParent()?.setOptions({
@@ -25,14 +34,6 @@ const DetailProduct = () => {
       tabBarStyle: undefined
     });
   }, [navigation]);
-
-const DetailProduct = (props) => {
-    const { navigation } = props;
-    const { route } = props;
-    const { params } = route;
-    const [productPrice, setProductPrice] = useState('');
-    const [dataProduct, setDataProduct] = useState({});
-    const [imageProduct, setImageProduct] = useState('');
     console.log(params.itemId+'aaaaaaaaaaaaaaaa');
     const back = () => {
         navigation.goBack();
@@ -142,4 +143,4 @@ const DetailProduct = (props) => {
     )
 }
 
-export default DetailProduct
+export default DetailProduct;
