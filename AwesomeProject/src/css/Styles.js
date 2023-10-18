@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
@@ -6,6 +7,16 @@ import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get("window");
 
 export const StyleLogin1 = StyleSheet.create({
+=======
+import { View, Text, StyleSheet } from 'react-native'
+import React from 'react'
+import { COLOR } from './Theme'
+import { useFonts, DMSans_400Regular } from '@expo-google-fonts/dm-sans'
+import LinearGradient from 'react-native-linear-gradient'
+import { Dimensions } from 'react-native'
+const {width, height} = Dimensions.get('screen');
+export const StyleLogin = StyleSheet.create({
+>>>>>>> devTin
     header: {
         color: COLOR.primary,
     },
@@ -239,7 +250,7 @@ export const StyleHomeStore = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         margin: 3,
-        flex:1
+        flex: 1
     },
     reviewsProduct: {
         flexDirection: 'row',
@@ -478,18 +489,18 @@ export const StyleDetailFeedback = StyleSheet.create({
         fontSize: 20,
         paddingLeft: 110,
         marginTop: -6,
-        width:220
+        width: 220
     },
     images: {
         marginLeft: 80
     },
     touchOpa: {
-        alignItems:'center',
-        width:300,
-        padding:5,
-        marginLeft:48,
-        borderWidth:0.4,
-        borderRadius:5
+        alignItems: 'center',
+        width: 300,
+        padding: 5,
+        marginLeft: 48,
+        borderWidth: 0.4,
+        borderRadius: 5
     },
     line: {
         borderWidth: 1,
@@ -517,17 +528,17 @@ export const StyleDetailFeedback = StyleSheet.create({
 export const StyleDialogShopping = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white', 
-        marginTop: 200, 
+        backgroundColor: 'white',
+        marginTop: 200,
         marginBottom: 30,
-        borderRadius:5,
+        borderRadius: 5,
     },
     line: {
         borderWidth: 1,
         opacity: 0.03,
         marginTop: 20
     },
-    
+
 })
 
 export const StyleOrder = StyleSheet.create({
@@ -985,6 +996,7 @@ export const StyleDetailPersonFeedback = StyleSheet.create({
         marginTop: 20
     },
 })
+<<<<<<< HEAD
 export const StyleSlider = StyleSheet.create({
     container: {
         alignItems: 'stretch',
@@ -1000,3 +1012,94 @@ export const StyleSlider = StyleSheet.create({
         justifyContent: 'center',
     },
 })
+=======
+export const StyleDetailProduct = StyleSheet.create({
+    menu: {
+        paddingTop: 30,
+        flexDirection: 'row',
+        marginLeft: 30,
+        marginRight: 30,
+    },
+    textTitle: {
+        textAlign: 'center',
+        color: 'black',
+        fontSize: 20,
+        paddingLeft: 20,
+        marginTop: -9,
+        fontFamily: 'TiltNeon-Regular'
+    },
+    line: {
+        borderWidth: 1,
+        opacity: 0.03,
+        marginTop: 20
+    },
+    banner: {
+        padding: 10
+    },
+    titleBanner: {
+        color: 'white',
+        fontSize: 25,
+        fontFamily: 'TiltNeon-Regular'
+    },
+    textPrice: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#3669C9',
+        fontFamily: 'TiltNeon-Regular'
+    },
+    textSalePrice: {
+        fontSize: 20,
+        textDecorationLine: 'line-through',
+        marginTop: 7,
+        marginLeft:10
+    },
+    textd: {
+        fontSize: 23,
+        marginTop: 6,
+        fontWeight: 'bold',
+        color: '#3669C9'
+    },
+    textBoxSale: {
+        fontSize: 20,
+        backgroundColor: '#DDDDDD',
+        borderRadius: 5,
+        textAlign: 'center',
+        height: 30,
+        marginTop: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
+        fontFamily: 'TiltNeon-Regular',
+        color: '#3669C9',
+        marginLeft:10
+    },
+    bottom: {
+        height: 65,
+        width: width,
+        backgroundColor: 'white',
+        position: 'absolute',
+        bottom: 0,
+        padding: 8,
+        flexDirection: 'row',
+        borderTopWidth: 0.2,
+        borderTopColor: '#DDDDDD'
+    },
+    touchOpa: {
+        backgroundColor: '#1351c4', 
+        padding: 8, 
+        width: 130, 
+        borderRadius: 25
+    },
+    image: {
+        width: 25, 
+        height: 25, 
+        marginLeft: 3, 
+        marginTop:8
+    },
+    textButton: {
+        textAlign: 'center', 
+        fontSize: 18, 
+        color: 'white', 
+        fontFamily: 'TiltNeon-Regular' 
+    }
+})
+>>>>>>> devTin

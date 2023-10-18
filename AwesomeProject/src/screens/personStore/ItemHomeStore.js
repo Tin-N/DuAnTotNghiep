@@ -7,7 +7,10 @@ const ItemHomeStore = (props) => {
   const { dulieu, navigation } = props;
   const [priceProduct, setPriceProduct] = useState('');
   const [salePrice, setSalePrice] = useState('');
+<<<<<<< HEAD
   const [countFeedback, setCountFeedback] = useState();
+=======
+>>>>>>> devTin
   useEffect(() => {
     var salePricee = dulieu.price;
     setPriceProduct(formatPrice(dulieu.price));
@@ -31,9 +34,29 @@ const ItemHomeStore = (props) => {
   }
   return (
     <View style={StyleHomeStore.boxProduct}>
+<<<<<<< HEAD
       <TouchableOpacity onPress={handleOnClick}>
 
         <Image source={{ uri: dulieu.image[0] }} style={{ height: 150, width: 140, borderRadius: 10, borderWidth: 1 }} />
+=======
+      <TouchableOpacity>
+      <Image source={{ uri: dulieu.image[0] }} style={{ height: 150, width: 140, borderRadius: 10, borderWidth: 1 }} />
+      <Text style={{
+        fontFamily: 'DM Sans',
+        maxWidth: 200,
+        flex: 1,
+        flexWrap: 'nowrap'
+      }}>
+        {dulieu.name}
+      </Text>
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={{
+          marginTop: 5, color: 'grey',
+          textDecorationLine: 'line-through', width: 90
+        }}>
+          {priceProduct}đ
+        </Text>
+>>>>>>> devTin
         <Text style={{
           fontFamily: 'DM Sans',
           maxWidth: 200,
