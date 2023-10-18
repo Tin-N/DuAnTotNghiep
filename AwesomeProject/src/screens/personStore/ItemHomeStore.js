@@ -6,9 +6,6 @@ const ItemHomeStore = (props) => {
   const { dulieu, navigation } = props;
   const [priceProduct, setPriceProduct] = useState('');
   const [salePrice, setSalePrice] = useState('');
-  const detailProduct = () => {
-      navigation.navigate("DetailFeedBack", {ProductID: dulieu._id});
-  }
   useEffect(() => {
     var salePricee = dulieu.price;
     setPriceProduct(formatPrice(dulieu.price));
@@ -18,7 +15,7 @@ const ItemHomeStore = (props) => {
   }, [dulieu])
   return (
     <View style={StyleHomeStore.boxProduct}>
-      <TouchableOpacity onPress={detailProduct}>
+      <TouchableOpacity>
       <Image source={{ uri: dulieu.image[0] }} style={{ height: 150, width: 140, borderRadius: 10, borderWidth: 1 }} />
       <Text style={{
         fontFamily: 'DM Sans',

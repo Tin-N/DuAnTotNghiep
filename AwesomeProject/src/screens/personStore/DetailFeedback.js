@@ -8,8 +8,6 @@ import ItemFeedBack from './ItemFeedBack';
 import { ScrollView } from 'react-native';
 const DetailFeedback = (props) => {
     const { navigation } = props;
-    const { route } = props;
-    const { params } = route;
     const [star11, setStar11] = useState(0);
     const [star22, setStar22] = useState(0);
     const [star33, setStar33] = useState(0);
@@ -23,52 +21,69 @@ const DetailFeedback = (props) => {
     const [percentRating4, setpercentRating4] = useState(0);
     const [percentRating5, setpercentRating5] = useState(0);
     useEffect(() => {
-        const countRating = () => {
-            var star1 = 0;
-            var star2 = 0;
-            var star3 = 0;
-            var star4 = 0;
-            var star5 = 0;
-            var isrealRating = 0;
-            for (i = 0; i < dataFeedback.length; i++) {
-                if (dataFeedback[i].rating == 1) {
-                    star1++;
-                    setStar11(star1);
-                } else if (dataFeedback[i].rating == 2) {
-                    star2++;
-                    setStar22(star2);
-                } else if (dataFeedback[i].rating == 3) {
-                    star3++;
-                    setStar33(star3);
-                } else if (dataFeedback[i].rating == 4) {
-                    star4++;
-                    setStar44(star4);
-                } else if (dataFeedback[i].rating == 5) {
-                    star5++;
-                    setStar55(star5);
+        if (dataFeedback.length > 0) {
+            const countRating = () => {
+                var star1 = 0;
+                var star2 = 0;
+                var star3 = 0;
+                var star4 = 0;
+                var star5 = 0;
+                var isrealRating = 0;
+                for (i = 0; i < dataFeedback.length; i++) {
+                    if (dataFeedback[i].rating == 1) {
+                        star1++;
+                        setStar11(star1);
+                    } else if (dataFeedback[i].rating == 2) {
+                        star2++;
+                        setStar22(star2);
+                    } else if (dataFeedback[i].rating == 3) {
+                        star3++;
+                        setStar33(star3);
+                    } else if (dataFeedback[i].rating == 4) {
+                        star4++;
+                        setStar44(star4);
+                    } else if (dataFeedback[i].rating == 5) {
+                        star5++;
+                        setStar55(star5);
+                    }
                 }
+                /*
+                Thuật toán tính tổng số lượng feedBack, phần trăm sao đánh giá theo từng loại
+                */
+                isrealRating = (star1 * 1 + star2 * 2 + star3 * 3 + star4 * 4 + star5 * 5)
+                setpercentRating(((isrealRating / (dataFeedback.length * 5)) * 5).toFixed(1))
+                setpercentRating1(star1 / dataFeedback.length)
+                setpercentRating2(star2 / dataFeedback.length)
+                setpercentRating3(star3 / dataFeedback.length)
+                setpercentRating4(star4 / dataFeedback.length)
+                setpercentRating5(star5 / dataFeedback.length)
+                setlengthFeedback(dataFeedback.length);
+                if (percentRating1 == 0)
+                    setStar11(0);
+                if (percentRating2 == 0)
+                    setStar22(0);
+                if (percentRating3 == 0)
+                    setStar33(0);
+                if (percentRating4 == 0)
+                    setStar44(0);
+                if (percentRating5 == 0)
+                    setStar55(0);
             }
-            /*
-            Thuật toán tính tổng số lượng feedBack, phần trăm sao đánh giá theo từng loại
-            */
-            isrealRating = (star1 * 1 + star2 * 2 + star3 * 3 + star4 * 4 + star5 * 5)
-            setpercentRating(((isrealRating / (dataFeedback.length * 5)) * 5).toFixed(1))
-            setpercentRating1(star1 / dataFeedback.length)
-            setpercentRating2(star2 / dataFeedback.length)
-            setpercentRating3(star3 / dataFeedback.length)
-            setpercentRating4(star4 / dataFeedback.length)
-            setpercentRating5(star5 / dataFeedback.length)
-            // const result = percentRating+"";
-            // const lastResult = result.slice(0,3);
-            // const islastResult = parseFloat(lastResult);
-            // setpercentRating(islastResult);
-            // console.log(percentRating+"   "+ islastResult);
-
-            // setpercentRating(result);
-            //  setpercentRating(result);
-            setlengthFeedback(dataFeedback.length);
+            countRating();
+        } else if (dataFeedback.length == 0) {
+            setpercentRating(0)
+            setpercentRating1(0)
+            setpercentRating2(0)
+            setpercentRating3(0)
+            setpercentRating4(0)
+            setpercentRating5(0)
+            setlengthFeedback(0)
+            setStar11(0)
+            setStar22(0)
+            setStar33(0)
+            setStar44(0)
+            setStar55(0)
         }
-        countRating();
         return () => {
         }
     }, [percentRating])
@@ -139,10 +154,10 @@ const DetailFeedback = (props) => {
                         </Text>
                     </View>
                 </View>
-                <View style={{ paddingBottom: 90 }}>
+                {dataFeedback.length > 0 ? <View style={{ paddingBottom: 90 }}>
                     <FlatList
                         data={dataFeedback}
-                        showsHorizontalScrollIndicator={false}
+                        showsHorzontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) => <ItemFeedBack dataFeedback={item} />}
                         keyExtractor={item => item.userID} />
@@ -151,7 +166,12 @@ const DetailFeedback = (props) => {
                             See more
                         </Text>
                     </TouchableOpacity>
-                </View>
+                </View> :
+                    <View>
+                        <Text style={{ textAlign: 'center', fontSize: 20, marginTop: 100 }}>
+                            Không có bình luận nào
+                        </Text>
+                    </View>}
             </ScrollView>
 
         </View>
@@ -161,212 +181,28 @@ const DetailFeedback = (props) => {
 export default DetailFeedback
 const dataFeedback = [
     {
-        feedbackID: 1,
-        productID: 1,
-        userID: 1,
-        feedbackText: 'Dcm hang dom vai lit, moi xai duoc co 1 ngay ma hu cmnnr  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
-        rating: 5,
-        dataReplyFeedback: [
-            {
-                userID:2,
-                replyFeedbackId: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                userID:3,
-                replyFeedbackId: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
+        "productID": "1",
+        "userID": "1",
+        "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
+        "rating": 5
     },
     {
-        feedbackID: 2,
-        productID: 1,
-        userID: 2,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 1,
-        dataReplyFeedback: [
-            {
-                feedbackID: 1,
-                replyFeedbackId: 3,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                feedbackID: 2,
-                replyFeedbackId: 4,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
+        "productID": "1",
+        "userID": "2",
+        "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
+        "rating": 2
     },
     {
-        feedbackID: 3,
-        productID: 1,
-        userID: 3,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 4,
-        dataReplyFeedback: [
-            {
-                feedbackID: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                feedbackID: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
+        "productID": "1",
+        "userID": "3",
+        "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
+        "rating": 5
     },
     {
-        feedbackID: 4,
-        productID: 1,
-        userID: 4,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 2,
-        dataReplyFeedback: [
-            {
-                feedbackID: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                feedbackID: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 5,
-        productID: 1,
-        userID: 5,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 2,
-        dataReplyFeedback: [
-            {
-                feedbackID: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                feedbackID: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 5,
-        productID: 1,
-        userID: 6,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 2,
-        dataReplyFeedback: [
-            {
-                feedbackID: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                feedbackID: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 6,
-        productID: 1,
-        userID: 7,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 3,
-        dataReplyFeedback: [
-            {
-                feedbackID: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                feedbackID: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 7,
-        productID: 1,
-        userID: 8,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 5,
-        dataReplyFeedback: [
-            {
-                feedbackID: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                feedbackID: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 8,
-        productID: 1,
-        userID: 9,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 5,
-        dataReplyFeedback: [
-            {
-                feedbackID: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                feedbackID: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 9,
-        productID: 1,
-        userID: 10,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 3,
-        dataReplyFeedback: [
-            {
-                feedbackID: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                feedbackID: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 10,
-        productID: 1,
-        userID: 11,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 3,
-        dataReplyFeedback: [
-            {
-                feedbackID: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                feedbackID: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 11,
-        productID: 1,
-        userID: 12,
-        feedbackText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        rating: 5,
-        dataReplyFeedback: [
-            {
-                feedbackID: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                feedbackID: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
+        "productID": "1",
+        "userID": "4",
+        "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
+        "rating": 5
     }
 ]
 

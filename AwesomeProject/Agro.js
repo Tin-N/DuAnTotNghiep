@@ -11,6 +11,6 @@ export const formatPrice = (input) => {
           array.push(price.substring(i, i - 1));
       }
     }
-    const string = array.reverse().join(".");
+    const string = array.reverse().join(",");
     return string;
   }

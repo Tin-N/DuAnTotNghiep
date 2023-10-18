@@ -57,7 +57,7 @@ const ItemFeedBack = (props) => {
                 </View>
             </View>
             <View style={{ paddingLeft: 57 }}>
-                <Text style={{ letterSpacing: 0.3 }}>
+                <Text style={{ letterSpacing: 0.3, fontFamily: 'TiltNeon-Regular' }}>
                     {dataFeedback.feedbackText}
                 </Text>
             </View>
