@@ -81,11 +81,10 @@ const Main = () => {
 const AppNavigator = () => {
     const {isLogin} = useContext(AppContext);
     return (
-        <>
-            {
-                isLogin == true ? <Main/>:<User/> 
-            }
-        </>
+        
+             <Main/>
+            
+        
     )
 }
 
