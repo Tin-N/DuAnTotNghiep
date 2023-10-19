@@ -31,21 +31,21 @@ const SignUp = () => {
   const SignUp= async()=>{
     if(password==confirmPass){
       console.log(emailUser+password);
-      try {
-        const response= await AxiosIntance().post("/UserApi/register?email="+ emailUser + "&password="+ password);
-        console.log(response);
-        if(response.result==true)
-        {
-          ToastAndroid.show("Đăng ký thành công",ToastAndroid.SHORT);
-          // moveToLoggin();
-          console.log(response);
-        }
-          else
-          ToastAndroid.show("Đăng ký thất bại",ToastAndroid.SHORT);
+      // try {
+      //   const response= await AxiosIntance().post("/UserApi/register?email="+ emailUser + "&password="+ password);
+      //   console.log(response);
+      //   if(response.result==true)
+      //   {
+      //     ToastAndroid.show("Đăng ký thành công",ToastAndroid.SHORT);
+      //     // moveToLoggin();
+      //     console.log(response);
+      //   }
+      //     else
+      //     ToastAndroid.show("Đăng ký thất bại",ToastAndroid.SHORT);
 
-      } catch (error) {
-        console.log(error);
-      }
+      // } catch (error) {
+      //   console.log(error);
+      // }
     }else{
       ToastAndroid.show("Mật khẩu không trùng khớp",ToastAndroid.SHORT);
     }
@@ -72,8 +72,9 @@ const SignUp = () => {
 
         <View style={StyleLogin.input}>
           <TextInput
+            value={emailUser}
             style={StyleLogin.TextInputUP}
-            placeholder="Clavi@gmail.com"
+            placeholder="Enter your email"
             keyboardType="default"
             onChangeText={setEmailUser}
           />

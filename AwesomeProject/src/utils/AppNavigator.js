@@ -15,7 +15,6 @@ import ItemHomeStore from '../screens/personStore/ItemHomeStore';
 import DetailFeedback from '../screens/personStore/DetailFeedback';
 import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
 import TestScreen from '../screens/TestScreen';
-import DetailProduct from '../screens/personStore/DetailProduct';
 // import TestScreen from '../screens/TestScreen/TestScreen'
 import DetailProduct from '../screens/personStore/DetailProduct';
 import { Header } from 'react-native/Libraries/NewAppScreen';

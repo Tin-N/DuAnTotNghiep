@@ -1,6 +1,5 @@
 import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native'
 import React, { useState,useEffect } from 'react'
-import React, { useState, useEffect } from 'react'
 import { StyleDetailProduct } from '../../css/Styles'
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen')

@@ -4,7 +4,6 @@ import React from 'react';
 import { COLOR } from './Theme';
 import { Dimensions } from 'react-native';
 const {width, height} = Dimensions.get('screen');
-import { Dimensions } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
 
