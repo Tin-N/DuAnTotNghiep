@@ -4,7 +4,7 @@ import Pagination from '../component/Pagination/Pagination'
 import ProductList from '../component/ProductList/ProductList'
 import { FetchData } from '../component/ProductList/data'
 import AxiosIntance from '../utils/AxiosIntance'
-const ProductScreen = () => {
+const ProductScreen = (props) => {
     const [mainData, setMainData] = useState([]);
     const [loadMoreData, setLoadMoreData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +20,7 @@ const ProductScreen = () => {
                 setMainData(response.products);
                 setLoadMoreData(response.products.slice(0, newProduct));
                 setIsLoading(false);
-                console.log(response.products.length==response.products.slice(0, newProduct).length,response.products.length,response.products.slice(0, newProduct).length);
+                // console.log(response.products.length==response.products.slice(0, newProduct).length,response.products.length,response.products.slice(0, newProduct).length);
 
             }
         }
@@ -60,6 +60,11 @@ const ProductScreen = () => {
         </View>
         :
         <ScrollView>
+            {/* <View style={{height:40,justifyContent:'center',borderBottomColor:'gray',borderWidth:0.2,marginHorizontal:5}}>
+                <View>
+                    <Text style={{alignSelf:'center',textAlign:'center'}}>Xem sản phẩm theo loại: Quần áo{}</Text>
+                </View>
+            </View> */}
                 <ProductList 
                 data={loadMoreData}   
                 styleView={{width:'100%',margin:10}}
@@ -70,9 +75,19 @@ const ProductScreen = () => {
                {
                (loadMoreData.length<10)&&(loadMoreData.length!==mainData.length)
                ?
-                    <TouchableOpacity onPress={LoadMoreData}>
-                        <Text style={{color: '#25251b', fontSize: 15}}>Load more</Text>
+                    <View style={{
+                        width:'100%',
+                        alignItems:'center',
+                        marginVertical:8
+                        }}>
+                        <TouchableOpacity onPress={LoadMoreData} style={{
+                        backgroundColor:'#e8e8e8',
+                        paddingHorizontal:13,
+                         borderRadius:10
+                    }}>
+                        <Text style={{color: '#9d9d9d', fontSize: 15, marginVertical:10}}>Load more</Text>
                     </TouchableOpacity>
+                    </View>
                     :<></>} 
 
                 <Pagination

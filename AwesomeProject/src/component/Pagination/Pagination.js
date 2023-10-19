@@ -69,12 +69,14 @@ const styles = StyleSheet.create({
     pagination: {
         flexDirection: 'row',
         justifyContent: 'center',
+        marginBottom:10,
     },
     pageNumber: {
-        elevation: 1,
+        elevation: 6,
         padding: 10,
         paddingHorizontal: 15,
         margin: 4,
+        borderRadius:30,
         backgroundColor: 'white',
         color: 'black'
 

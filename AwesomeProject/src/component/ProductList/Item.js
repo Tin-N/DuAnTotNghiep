@@ -34,7 +34,7 @@ const ItemList = props => {
 
   return (
     <View style={StyleHomeStore.boxProduct}>
-      <Image style={{padding:5,width:180,height:180}} source={{uri:data.image[0]}} />
+      <Image style={{padding:5,width:160,height:180}} source={{uri:data.image[0]}} />
       <Text
         style={{
           marginVertical:10,
@@ -57,7 +57,7 @@ const ItemList = props => {
           </Text>
         </View>
         <Text
-          style={{width: 90, fontSize: 12, paddingLeft: 25, color: 'black'}}>
+          style={{width: 90, fontSize: 12, paddingLeft: 18, color: 'black'}}>
           {data.sold} Reviews
         </Text>
         <Image

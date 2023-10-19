@@ -232,7 +232,8 @@ export const StyleHomeStore = StyleSheet.create({
       paddingRight: 30,
   },
   boxProduct: {
-    width:170,
+    width:180,
+    elevation:1,
       backgroundColor: 'white',
       borderRadius: 10,
       padding: 10,
