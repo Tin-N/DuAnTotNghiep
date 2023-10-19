@@ -6,16 +6,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const OrderItem = (props) => {
     const { dulieu1 } = props
-    const totalCost = dulieu1.cost*dulieu1.quantity;
-    const Delete = () => {
-        console.log("Đã xóa");
-    }
-
-    const Add = () => {
-        console.log("Thêm");
-    }
+    const itemTotalCost = dulieu1.cost * dulieu1.quantity;
     const [isCheck, setisCheck] = useState([]);
-    const options = [""];
+
     function pickOption(selectedCheck) {
         if (isCheck.includes(selectedCheck)) {
             setisCheck(isCheck.filter(isCheck => isCheck !== selectedCheck));
@@ -23,6 +16,7 @@ const OrderItem = (props) => {
         }
         setisCheck(isCheck => isCheck.concat(selectedCheck))
     }
+
     return (
         <View style={StyleOrder.header}>
             {options.map(option => (
@@ -34,7 +28,6 @@ const OrderItem = (props) => {
                     </View>
                 </View>
             ))}
-
             <View style={StyleOrder.header}>
                 <Image style={StyleOrder.imageFlatList} source={require('../images/iphone14.png')} />
                 <View>
@@ -55,7 +48,7 @@ const OrderItem = (props) => {
             </View>
 
             <View style={[StyleOrder.header, StyleOrder.function]}>
-                <Text>${totalCost}</Text>
+                <Text>${itemTotalCost}</Text>
             </View>
         </View>
     )
