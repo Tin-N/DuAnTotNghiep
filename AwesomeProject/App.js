@@ -20,6 +20,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './src/utils/AppNavigator';
 import { AppContextProvider } from './src/utils/AppContext';
 import { StyleLogin } from './src/css/Styles';
+import ProductScreen from './src/screens/ProductScreen';
 // import TestScreen from './src/screens/TestScreen';
 // import WelcomeScreen from './src/screens/WelcomeScreen';
 // import HomeScreen from './src/screens/HomeScreen';
@@ -33,13 +34,14 @@ const App = () => {
   // <HomeScreen/>
     // <TestScreen/>
     // <HomeStore/>
-    <AppContextProvider>
-      <NavigationContainer>
-        <AppNavigator/>
-      </NavigationContainer>
-    </AppContextProvider>
+    // <AppContextProvider>
+    //   <NavigationContainer>
+    //     <AppNavigator/>
+    //   </NavigationContainer>
+    // </AppContextProvider>
     // <SearchStore/>
   // <SearchScreen/>
+  <ProductScreen/>
   )
 }
 

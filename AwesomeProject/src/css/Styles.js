@@ -616,4 +616,9 @@ export const StyleSlider = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-})
+});
+
+
+export const styleProductScreen=StyleSheet.create({
+    
+});
