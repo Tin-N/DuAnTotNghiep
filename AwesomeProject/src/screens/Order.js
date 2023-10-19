@@ -7,38 +7,72 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 import { StyleCategory, StyleOrder } from '../css/Styles'
 import OrderItem from './OrderItem'
 import { ScrollView } from 'react-native-gesture-handler'
+import AxiosIntance from '../utils/AxiosIntance'
 
 
-// khong co cart
-const MyCart1 = () => {
-  return (
-    <View style={StyleOrder.myCart1}>
-      <Image style={StyleOrder.image} source={require('../images/myCart1.png')} />
-      <Text style={StyleOrder.textHeader}>Your Card is Empty</Text>
-      <Pressable style={StyleOrder.pressable}>
-        <Text style={StyleOrder.textPressable}>Start Browsing</Text>
-      </Pressable>
-    </View>
-  )
-}
 
-// co cart
-const MyCart2 = () => {
-  return (
-    <FlatList style={{ height: 370 }}
-      data={data}
-      renderItem={({ item }) => <OrderItem dulieu1={item} />}
-      keyExtractor={item => item._id}
-    />
-  )
-}
+
 
 const Order = () => {
   const { isOrder } = useContext(AppContext);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [isCheck, setisCheck] = useState([]);
-  const options = [""];
+  const [grandTotal, setgrandTotal] = useState()
+  const [products, setproducts] = useState([]);
+  const [orderDetailID, setorderDetailID] = useState();
+
+  // khong co cart
+  const MyCart1 = () => {
+    return (
+      <View style={StyleOrder.myCart1}>
+        <Image style={StyleOrder.image} source={require('../images/myCart1.png')} />
+        <Text style={StyleOrder.textHeader}>Your Card is Empty</Text>
+        <Pressable style={StyleOrder.pressable}>
+          <Text style={StyleOrder.textPressable}>Start Browsing</Text>
+        </Pressable>
+      </View>
+    )
+  }
+
+  // co cart
+  const MyCart2 = () => {
+    return (
+      <FlatList style={{ height: 370 }}
+        data={sampleData}
+        renderItem={({ item }) => <OrderItem data={item} productsSelected={productsSelected} />}
+        keyExtractor={item => item._id}
+      />
+    )
+  }
+
+  const productsSelected = (productID, totalCost) => {
+    setgrandTotal(totalCost);
+    setproducts(products => [...products, productID])
+  }
+
+  const OrderFunc = async () => {
+    try {
+      const orderDetailRequestData = {
+        products: products,
+        totalCost: grandTotal,
+      };
+      const orderRequestData = {
+        orderDetailID: orderDetailID,
+        // userID: data truyền vào
+        orderDate: new Date()
+      }
+      const orderDetailResponse = await AxiosIntance().post('/OrderDetails/add', orderDetailRequestData);
+      setorderDetailID(orderDetailResponse.data.orderDetailID)
+      if (orderResponse && orderResponse.status === 201) {
+        const orderResponse = await AxiosIntance().post('/Order/add', orderRequestData);
+        console.log("Đặt hàng thành công" + orderResponse);
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   function pickOption(selectedCheck) {
     if (isCheck.includes(selectedCheck)) {
       setisCheck(isCheck.filter(isCheck => isCheck !== selectedCheck));
@@ -46,6 +80,7 @@ const Order = () => {
     }
     setisCheck(isCheck => isCheck.concat(selectedCheck))
   }
+
   return (
     <View style={StyleOrder.container}>
       <View>
@@ -55,7 +90,6 @@ const Order = () => {
           <Pressable onPress={click}>
             <Icon name='ellipsis-vertical' size={24} color={"black"} />
           </Pressable>
-
         </View>
 
         {/* co san pham thi hien list san pham khong thi hien hinh anh */}
@@ -80,7 +114,6 @@ const Order = () => {
         </View>
 
         <View style={StyleOrder.tillte}>
-
           {options.map(option => (
             <View key={option} >
               <View style={{ marginTop: 10 }}>
@@ -91,9 +124,9 @@ const Order = () => {
             </View>
           ))}
 
-          <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: 0đ</Text>
+          <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: {grandTotal}</Text>
 
-          <Pressable onPress={click} style={StyleOrder.pressableBuy}>
+          <Pressable onPress={OrderFunc} style={StyleOrder.pressableBuy}>
             <Text style={[StyleOrder.textTillte, { color: 'white', marginTop: 5 }]}>Mua Hàng</Text>
           </Pressable>
         </View>
@@ -104,58 +137,20 @@ const Order = () => {
 
 export default Order
 
-const click = () => {
-  console.log("213");
-}
-
-var data = [
+const sampleData = [
   {
-    "_id": "1",
-    "name": "IPhone14",
-    "firm": "Apple- Iphone",
-    "cost": 1000000,
-    "quantity": 2,
-    "image": "iphone14"
+    productID: '65291577c199df71b460f143',
+    quantity: 2,
+    price: 50,
   },
   {
-    "_id": "2",
-    "name": "IPhone14",
-    "firm": "Apple- Iphone",
-    "cost": 2000000,
-    "quantity": 2,
-    "image": "iphone14"
+    productID: '652915b8c199df71b460f146',
+    quantity: 3,
+    price: 75,
   },
   {
-    "_id": "3",
-    "name": "IPhone14",
-    "firm": "Apple- Iphone",
-    "cost": 3000000,
-    "quantity": 2,
-    "image": "iphone14"
+    productID: '65291733c199df71b460f190',
+    quantity: 1,
+    price: 105,
   },
-  {
-    "_id": "4",
-    "name": "IPhone14",
-    "firm": "Apple- Iphone",
-    "cost": 3000000,
-    "quantity": 1,
-    "image": "iphone14"
-  },
-  {
-    "_id": "5",
-    "name": "IPhone14",
-    "firm": "Apple- Iphone",
-    "cost": 3000000,
-    "quantity": 1,
-    "image": "iphone14"
-  },
-  {
-    "_id": "6",
-    "name": "IPhone14",
-    "firm": "Apple- Iphone",
-    "cost": 3000000,
-    "quantity": 3,
-    "image": "iphone14"
-  },
-]
-
+];
