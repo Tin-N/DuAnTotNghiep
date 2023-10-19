@@ -37,8 +37,7 @@ import DialogShopping from './src/screens/personStore/DialogShopping';
 import DetailPersonFedback from './src/screens/personStore/DetailPersonFedback';
 import DetailProduct from './src/screens/personStore/DetailProduct';
 import HomeStore from './src/screens/personStore/HomeStore';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 const Stack = createNativeStackNavigator()
 const App = () => {
   return (
@@ -47,6 +46,7 @@ const App = () => {
         <AppNavigator/>
       </NavigationContainer>
     </AppContextProvider>
+
 )
 }
 

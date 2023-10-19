@@ -42,7 +42,7 @@ const SignIn = () => {
         setisLogin(true);
         setuserInfo(response.user);
         navigation.navigate('Product');
-        console.log(response );
+        console.log(response);
 
       }else{
         // ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);
