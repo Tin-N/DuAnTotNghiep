@@ -1,15 +1,17 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { StyleHomeStore, StyleLogin } from '../../css/Styles'
 import { FlatList } from 'react-native';
 import ItemHomeStore from './ItemHomeStore';
 import { ScrollView } from 'react-native';
 import AxiosIntance from '../../utils/AxiosIntance';
+import { AppContext } from '../../utils/AppContext';
 const HomeStore = (props) => {
     const { navigation } = props;
     const [dataProduct, setDataProduct] = useState([]);
     const [productID, setProductID] = useState('');
     const [sold, setSold] = useState(0);
+    const {isLogin}=useContext(AppContext)
     const [columns, setColumns] = useState(2);
     useEffect(() => {
         const getAllProductByUserID = async () => {
@@ -21,6 +23,7 @@ const HomeStore = (props) => {
             }
         }
         getAllProductByUserID();
+        console.log(isLogin);
         return () => {
         }
     }, [])

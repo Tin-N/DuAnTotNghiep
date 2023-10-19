@@ -18,11 +18,16 @@ import TestScreen from '../screens/TestScreen';
 // import TestScreen from '../screens/TestScreen/TestScreen'
 import DetailProduct from '../screens/personStore/DetailProduct';
 import { Header } from 'react-native/Libraries/NewAppScreen';
+import SignIn from '../screens/SignIn';
 const Tab = createBottomTabNavigator();
 const Stack= createNativeStackNavigator();
 const User = () => {
     return (
-        <Text>Đăng nhập</Text>
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='SignIn'>
+                        <Stack.Screen name='Product' component={ProductHome}></Stack.Screen>
+                        <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
+                        <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
+        </Stack.Navigator>
     )
 }
 
@@ -68,7 +73,7 @@ const Main = () => {
         >
             <Tab.Screen name="Home" component={ProductHome}/>
             <Tab.Screen name="Order" component={Order} />
-            <Tab.Screen name="SignUp" component={SignUp}/>
+            {/* <Tab.Screen name="SignUp" component={SignUp}/> */}
         </Tab.Navigator>
     )
 }
@@ -78,7 +83,7 @@ const AppNavigator = () => {
     return (
         <>
             {
-                isLogin == true ? <User/> : <Main/>
+                isLogin == true ? <Main/>:<User/> 
             }
         </>
     )
