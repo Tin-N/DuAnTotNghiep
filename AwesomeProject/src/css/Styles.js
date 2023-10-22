@@ -6,7 +6,7 @@ import { useFonts, DMSans_400Regular } from '@expo-google-fonts/dm-sans'
 import { Dimensions } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
-const {width, height} = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 export const StyleLogin1 = StyleSheet.create({
 
     header: {
@@ -513,8 +513,9 @@ export const StyleDetailFeedback = StyleSheet.create({
     boxStarRate: {
         marginLeft: 15
     },
-    boxPercentRate: {
-
+    separator: {
+        height: 1,
+        padding: 10
     }
 })
 export const StyleDialogShopping = StyleSheet.create({
@@ -532,7 +533,6 @@ export const StyleDialogShopping = StyleSheet.create({
     },
 
 })
-
 export const StyleOrder = StyleSheet.create({
     container: {
         flexDirection: 'column',
@@ -611,7 +611,7 @@ export const StyleOrder = StyleSheet.create({
     checkBoxOrder: {
         position: 'relative',
         top: '50%',
-    }, 
+    },
     pressableBuy: {
         height: 52,
         backgroundColor: '#D44325',
@@ -689,201 +689,201 @@ export const StyleCategory = StyleSheet.create({
     }
 })
 export const StyleLogin = StyleSheet.create({
-  header: {
-    color: COLOR.primary,
-  },
-  HeadingText: {
-    color: COLOR.background,
-    fontSize: 80,
-    fontWeight: 'bold',
-    marginTop: "2%",
-    justifyContent: 'space-between',
-    marginHorizontal: 20,
-    // Tạo bóng chữ
-    textShadowColor: 'black',
-    textShadowOffset: {width: -3, height: 5},
-    textShadowRadius: 1,
-  },
-  extraText: {
-    color: 'black',
-    fontSize: 30,
-    fontWeight: 'bold',
-    justifyContent: 'space-between',
-    marginHorizontal: 16,
-  },
-  textHint: {
-    color: COLOR.TextHint,
-    fontSize: 15,
-    marginTop: "1%",
-    justifyContent: 'space-between',
-    marginHorizontal: 16,
-  },
-  fgPass: {
-    textAlign: 'right',
-    marginHorizontal: 20,
-    color: COLOR.Blue,
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  input: {
-    placeholderTextColor: COLOR.TextPlaceHolder,
-    height: 30,
-    margin: 12,
-    borderWidth: 1,
-    borderColor: COLOR.borderColor,
-    padding: 15,
-    height: 55,
-    justifyContent: 'space-between',
-    borderRadius: 5,
-  },
-  buttonShape: {
-    alignItems: 'center',
-    jussifyContent: 'center',
-    backgroundColor: COLOR.background,
-    padding: 10,
-    height: 55,
-    width: '95%',
-    marginHorizontal: 10,
-    marginTop: 20,
-    borderRadius: 30,
-    // marginHorizontal: 10
-  },
-  TextButton: {
-    fontSize: 20,
-    paddingTop: 2,
-    fontWeight: 'bold',
-    height: 55,
-    color: 'white',
-  },
-  text: {
-    color: COLOR.TextHint,
-    fontSize: 17,
-    justifyContent: 'space-between',
-    marginHorizontal: 16,
-    marginTop: 15,
-    // backgroundColor: 'red',
-    textAlign: 'center',
-  },
-  FGcontainer: {
-    flexDirection: 'row',
-    width: '94%',
-    marginHorizontal: 10,
-    marginTop: 10,
-    justifyContent: 'space-around',
-  },
-  FButton: {
-    alignItems: 'center',
-    backgroundColor: COLOR.Blue,
-    padding: 10,
-    height: 55,
-    width: '46%',
-    borderRadius: 10,
-    marginHorizontal: 0,
-  },
-  GButton: {
-    alignItems: 'center',
-    borderWidth: 0.5,
-    padding: 10,
-    height: 55,
-    width: '46%',
-    borderRadius: 10,
-    marginHorizontal: 0,
-  },
-  CbuttomText: {
-    marginTop: '20%',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '94%',
-    marginHorizontal: 10,
-  },
-  CSbuttomText: {
-    marginTop: '10%',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '94%',
-    marginHorizontal: 10,
-  },
-  ButtomText1: {
-    fontSize: 20,
-    fontWight: 'bold',
-    // backgroundColor: 'red',
-  },
-  ButtomText2: {
-    color: COLOR.Blue,
-    fontSize: 20,
-    fontWight: 'bold',
-    fontStyle: 'italic',
-    // backgroundColor: 'blue',
-    textDecorationLine: 'underline',
-  },
-  SButtonShape: {
-    alignItems: 'center',
-    jussifyContent: 'center',
-    backgroundColor: COLOR.background,
-    padding: 10,
-    height: 55,
-    width: '94%',
-    marginHorizontal: 10,
-    marginTop: 20,
-    borderRadius: 30,
-  },
-  RPBottomText:{
-    textAlign: 'center',
-    marginTop: "60%",
-    fontSize: 20,
-    color: 'black',
-    fontWeight: 'bold',
-    // backgroundColor: 'red',
-  },
-  RSPassInput:{
-      placeholderTextColor: COLOR.TextPlaceHolder,
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      borderColor: COLOR.borderColor,
-      padding: 15,
-      height: 55,
-      justifyContent: 'space-between',
-      borderRadius: 25,
-  },
+    header: {
+        color: COLOR.primary,
+    },
+    HeadingText: {
+        color: COLOR.background,
+        fontSize: 80,
+        fontWeight: 'bold',
+        marginTop: "2%",
+        justifyContent: 'space-between',
+        marginHorizontal: 20,
+        // Tạo bóng chữ
+        textShadowColor: 'black',
+        textShadowOffset: { width: -3, height: 5 },
+        textShadowRadius: 1,
+    },
+    extraText: {
+        color: 'black',
+        fontSize: 30,
+        fontWeight: 'bold',
+        justifyContent: 'space-between',
+        marginHorizontal: 16,
+    },
+    textHint: {
+        color: COLOR.TextHint,
+        fontSize: 15,
+        marginTop: "1%",
+        justifyContent: 'space-between',
+        marginHorizontal: 16,
+    },
+    fgPass: {
+        textAlign: 'right',
+        marginHorizontal: 20,
+        color: COLOR.Blue,
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+    input: {
+        placeholderTextColor: COLOR.TextPlaceHolder,
+        height: 30,
+        margin: 12,
+        borderWidth: 1,
+        borderColor: COLOR.borderColor,
+        padding: 15,
+        height: 55,
+        justifyContent: 'space-between',
+        borderRadius: 5,
+    },
+    buttonShape: {
+        alignItems: 'center',
+        jussifyContent: 'center',
+        backgroundColor: COLOR.background,
+        padding: 10,
+        height: 55,
+        width: '95%',
+        marginHorizontal: 10,
+        marginTop: 20,
+        borderRadius: 30,
+        // marginHorizontal: 10
+    },
+    TextButton: {
+        fontSize: 20,
+        paddingTop: 2,
+        fontWeight: 'bold',
+        height: 55,
+        color: 'white',
+    },
+    text: {
+        color: COLOR.TextHint,
+        fontSize: 17,
+        justifyContent: 'space-between',
+        marginHorizontal: 16,
+        marginTop: 15,
+        // backgroundColor: 'red',
+        textAlign: 'center',
+    },
+    FGcontainer: {
+        flexDirection: 'row',
+        width: '94%',
+        marginHorizontal: 10,
+        marginTop: 10,
+        justifyContent: 'space-around',
+    },
+    FButton: {
+        alignItems: 'center',
+        backgroundColor: COLOR.Blue,
+        padding: 10,
+        height: 55,
+        width: '46%',
+        borderRadius: 10,
+        marginHorizontal: 0,
+    },
+    GButton: {
+        alignItems: 'center',
+        borderWidth: 0.5,
+        padding: 10,
+        height: 55,
+        width: '46%',
+        borderRadius: 10,
+        marginHorizontal: 0,
+    },
+    CbuttomText: {
+        marginTop: '20%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: '94%',
+        marginHorizontal: 10,
+    },
+    CSbuttomText: {
+        marginTop: '10%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: '94%',
+        marginHorizontal: 10,
+    },
+    ButtomText1: {
+        fontSize: 20,
+        fontWight: 'bold',
+        // backgroundColor: 'red',
+    },
+    ButtomText2: {
+        color: COLOR.Blue,
+        fontSize: 20,
+        fontWight: 'bold',
+        fontStyle: 'italic',
+        // backgroundColor: 'blue',
+        textDecorationLine: 'underline',
+    },
+    SButtonShape: {
+        alignItems: 'center',
+        jussifyContent: 'center',
+        backgroundColor: COLOR.background,
+        padding: 10,
+        height: 55,
+        width: '94%',
+        marginHorizontal: 10,
+        marginTop: 20,
+        borderRadius: 30,
+    },
+    RPBottomText: {
+        textAlign: 'center',
+        marginTop: "60%",
+        fontSize: 20,
+        color: 'black',
+        fontWeight: 'bold',
+        // backgroundColor: 'red',
+    },
+    RSPassInput: {
+        placeholderTextColor: COLOR.TextPlaceHolder,
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        borderColor: COLOR.borderColor,
+        padding: 15,
+        height: 55,
+        justifyContent: 'space-between',
+        borderRadius: 25,
+    },
 
-  //Welcome 
-  HeadingTextWelcome: {
-      paddingTop: "2%",
-      fontWeight: 'bold',
-      paddingHorizontal: 20,
-      color: 'white',
-      fontFamily: 'INter-Black',
-      fontSize: 39,
-  },
-  ButtonWelcome: {
-    alignItems: 'center',
-          backgroundColor: 'white',
-          padding: 10,
-          height: 55,
-          margin: 75,
-          borderRadius: 30,
-          marginHorizontal : 20,
-  },
-  TextWelcome:{
-    fontSize: 20,
-    paddingTop: 2,
-    fontWeight: 'bold',
-    height: 55,
-    color: COLOR.background,
+    //Welcome 
+    HeadingTextWelcome: {
+        paddingTop: "2%",
+        fontWeight: 'bold',
+        paddingHorizontal: 20,
+        color: 'white',
+        fontFamily: 'INter-Black',
+        fontSize: 39,
+    },
+    ButtonWelcome: {
+        alignItems: 'center',
+        backgroundColor: 'white',
+        padding: 10,
+        height: 55,
+        margin: 75,
+        borderRadius: 30,
+        marginHorizontal: 20,
+    },
+    TextWelcome: {
+        fontSize: 20,
+        paddingTop: 2,
+        fontWeight: 'bold',
+        height: 55,
+        color: COLOR.background,
     },
 
     // Confirm Pass
     HeadingTextCP: {
-      color: COLOR.background,
-      fontSize: 30,
-      fontWeight: 'bold',
-      marginTop: "20%",
-      justifyContent: 'space-between',
-      marginHorizontal: 20,
+        color: COLOR.background,
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginTop: "20%",
+        justifyContent: 'space-between',
+        marginHorizontal: 20,
     },
     HintText:
-      {
+    {
         color: 'black',
         fontSize: 16,
         fontWeight: 'bold',
@@ -891,77 +891,76 @@ export const StyleLogin = StyleSheet.create({
         color: COLOR.TextHint,
         justifyContent: 'space-between',
         marginHorizontal: 16,
-      
+
     },
     inputCP: {
-      placeholderTextColor: COLOR.TextPlaceHolder,
-      height: 40,
-      width: '20%',
-      margin: 12,
-      borderWidth: 1,
-      borderColor: COLOR.borderColor,
-      padding: 15,
-      height: 55,
-      justifyContent: 'space-between',
-      borderRadius: 25,
-      textAlign : 'center',
+        placeholderTextColor: COLOR.TextPlaceHolder,
+        height: 40,
+        width: '20%',
+        margin: 12,
+        borderWidth: 1,
+        borderColor: COLOR.borderColor,
+        padding: 15,
+        height: 55,
+        justifyContent: 'space-between',
+        borderRadius: 25,
+        textAlign: 'center',
     },
-    Resent:{
-      color: COLOR.Blue,
-      fontSize: 20,
-      fontWeight: 'bold',
-      marginHorizontal: 15,
+    Resent: {
+        color: COLOR.Blue,
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginHorizontal: 15,
     },
-    ContainerSentCode:{
-      flexDirection: 'row',
-      marginTop: 15,
-      width: '90%',
-      marginHorizontal: 15,
-      // backgroundColor: COLOR.background,
+    ContainerSentCode: {
+        flexDirection: 'row',
+        marginTop: 15,
+        width: '90%',
+        marginHorizontal: 15,
+        // backgroundColor: COLOR.background,
     },
-    SCText1:{
-      color: COLOR.TextHint,
-      fontSize: 14,
-      flex: 5,
+    SCText1: {
+        color: COLOR.TextHint,
+        fontSize: 14,
+        flex: 5,
     },
-    SCText2:{
-      color: COLOR.TextHint,
-      fontSize: 14,
-      flex: 1,
+    SCText2: {
+        color: COLOR.TextHint,
+        fontSize: 14,
+        flex: 1,
     },
 
     //UPdate Password
-    UPContainerWarning:{
-      marginTop: '2%',
-      marginHorizontal: '6%',
-      flexDirection: 'row',
-      alignItems: 'center',
-      // backgroundColor: 'green',
+    UPContainerWarning: {
+        marginTop: '2%',
+        marginHorizontal: '6%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        // backgroundColor: 'green',
     },
-    iconWarning:{
-      width: 20,
-      height: 20,
-      // justifyContent: 'space-between',
-      alignItems: 'center',
+    iconWarning: {
+        width: 20,
+        height: 20,
+        // justifyContent: 'space-between',
+        alignItems: 'center',
 
-      // backgroundColor: 'yellow',
+        // backgroundColor: 'yellow',
     },
-    TextWarning:{
-      color: COLOR.TextHint,
-      width: '85%',
-      fontSize: 15,
-      // backgroundColor: 'red',
-      alignItems: 'center',
-      // color: COLOR.TextHint,
-      justifyContent: 'space-between',
-      marginHorizontal: '2%',
+    TextWarning: {
+        color: COLOR.TextHint,
+        width: '85%',
+        fontSize: 15,
+        // backgroundColor: 'red',
+        alignItems: 'center',
+        // color: COLOR.TextHint,
+        justifyContent: 'space-between',
+        marginHorizontal: '2%',
     },
-    ButtonUP:{
-      marginTop: '20%',
-      marginHorizontal: '1%',
+    ButtonUP: {
+        marginTop: '20%',
+        marginHorizontal: '1%',
     },
 });
-
 export const StyleDetailPersonFeedback = StyleSheet.create({
     menu: {
         paddingTop: 30,
@@ -1005,10 +1004,11 @@ export const StyleSlider = StyleSheet.create({
 })
 export const StyleDetailProduct = StyleSheet.create({
     menu: {
-        paddingTop: 30,
         flexDirection: 'row',
         marginLeft: 30,
         marginRight: 30,
+        paddingTop: 20,
+        paddingBottom: 15
     },
     textTitle: {
         textAlign: 'center',
@@ -1016,17 +1016,20 @@ export const StyleDetailProduct = StyleSheet.create({
         fontSize: 20,
         paddingLeft: 20,
         marginTop: -9,
-        fontFamily: 'TiltNeon-Regular'
+        fontFamily: 'TiltNeon-Regular',
     },
     line: {
-        borderWidth: 1,
-        opacity: 0.03,
-        marginTop: 20
+        height: 10,
+        opacity: 0.06,
+        marginTop: 8,
+        backgroundColor: '#766f6f'
     },
     banner: {
-        padding: 10
+        width: width
     },
     titleBanner: {
+        padding: 10,
+
         color: 'white',
         fontSize: 25,
         fontFamily: 'TiltNeon-Regular'
@@ -1041,7 +1044,7 @@ export const StyleDetailProduct = StyleSheet.create({
         fontSize: 20,
         textDecorationLine: 'line-through',
         marginTop: 7,
-        marginLeft:10
+        marginLeft: 10
     },
     textd: {
         fontSize: 23,
@@ -1060,7 +1063,7 @@ export const StyleDetailProduct = StyleSheet.create({
         paddingRight: 10,
         fontFamily: 'TiltNeon-Regular',
         color: '#3669C9',
-        marginLeft:10
+        marginLeft: 10
     },
     bottom: {
         height: 65,
@@ -1074,21 +1077,25 @@ export const StyleDetailProduct = StyleSheet.create({
         borderTopColor: '#DDDDDD'
     },
     touchOpa: {
-        backgroundColor: '#1351c4', 
-        padding: 8, 
-        width: 130, 
+        backgroundColor: '#1351c4',
+        padding: 8,
+        width: 130,
         borderRadius: 25
     },
     image: {
-        width: 25, 
-        height: 25, 
-        marginLeft: 3, 
-        marginTop:8
+        width: 25,
+        height: 25,
+        marginLeft: 3,
+        marginTop: 8
     },
     textButton: {
-        textAlign: 'center', 
-        fontSize: 18, 
-        color: 'white', 
-        fontFamily: 'TiltNeon-Regular' 
+        textAlign: 'center',
+        fontSize: 18,
+        color: 'white',
+        fontFamily: 'TiltNeon-Regular'
+    },
+    separator: {
+        height: 1,
+        padding: 10
     }
 })

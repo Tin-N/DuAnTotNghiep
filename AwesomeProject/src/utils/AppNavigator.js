@@ -15,9 +15,9 @@ import ItemHomeStore from '../screens/personStore/ItemHomeStore';
 import DetailFeedback from '../screens/personStore/DetailFeedback';
 import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
 import DetailProduct from '../screens/personStore/DetailProduct';
-import { Header } from 'react-native/Libraries/NewAppScreen';
+import CreateProduct from '../screens/personStore/CreateProduct';
 const Tab = createBottomTabNavigator();
-const Stack= createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 const User = () => {
     return (
         <Text>Đăng nhập</Text>
@@ -34,10 +34,8 @@ const ProductHome = () => {
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
             <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
-            <Stack.Screen name='DetailProduct' component={DetailProduct}
-            options={({ route }) => ({
-                tabBarVisible: false, // Ẩn thanh
-              })}/>
+            <Stack.Screen name='DetailProduct' component={DetailProduct}/>
+            <Stack.Screen name='CreateProduct' component={CreateProduct}></Stack.Screen>
         </Stack.Navigator>
     )
 }
@@ -63,19 +61,19 @@ const Main = () => {
                 tabBarInactiveTintColor: 'black',
             })}
         >
-            <Tab.Screen name="Home" component={ProductHome}/>
+            <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Order" component={Order} />
-            <Tab.Screen name="SignUp" component={SignUp}/>
+            <Tab.Screen name="SignUp" component={SignUp} />
         </Tab.Navigator>
     )
 }
 
 const AppNavigator = () => {
-    const {isLogin} = useContext(AppContext);
+    const { isLogin } = useContext(AppContext);
     return (
         <>
             {
-                isLogin == true ? <User/> : <Main/>
+                isLogin == true ? <User /> : <Main />
             }
         </>
     )

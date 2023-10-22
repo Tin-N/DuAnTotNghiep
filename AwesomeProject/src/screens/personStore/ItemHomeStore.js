@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { StyleHomeStore } from '../../css/Styles'
 import { formatPrice } from '../../../Agro'
 import AxiosIntance from '../../utils/AxiosIntance'
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 const ItemHomeStore = (props) => {
   const { dulieu, navigation } = props;
   const [priceProduct, setPriceProduct] = useState('');
@@ -49,16 +52,6 @@ const ItemHomeStore = (props) => {
           }}>
             {priceProduct}đ
           </Text>
-          <Text style={{
-            fontFamily: 'DM Sans',
-            maxWidth: 200,
-            flex: 1,
-            marginTop: 7,
-            flexWrap: 'nowrap',
-            fontSize: 12
-          }}>
-            {dulieu.sold} sold
-          </Text>
         </View>
         <Text style={{ marginTop: 5, color: '#3669C9' }}>
           Giá: {salePrice}đ
@@ -76,8 +69,17 @@ const ItemHomeStore = (props) => {
             color: 'black',
             width: 110
           }}>15 Reviews</Text>
-          <Image style={{ marginLeft: 0 }} source={require('../../images/productoptions.png')} />
         </View>
+        <Text style={{
+            fontFamily: 'TiltNeon-Regular',
+            maxWidth: 200,
+            flex: 1,
+            flexWrap: 'nowrap',
+            fontSize: 13,
+            marginTop:7
+          }}>
+            {dulieu.sold} đã bán
+          </Text>
       </TouchableOpacity>
     </View>
   )

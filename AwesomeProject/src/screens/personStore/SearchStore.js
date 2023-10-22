@@ -10,6 +10,9 @@ import React, { useState } from 'react'
 import { StyleSearch } from '../../css/Styles'
 import { TextInput, ScrollView, FlatList } from 'react-native'
 import ItemHomeStore from './ItemHomeStore'
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 const SearchStore = () => {
     const [columns, setColumns] = useState(2);
     return (

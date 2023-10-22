@@ -5,6 +5,9 @@ import { FlatList } from 'react-native';
 import ItemHomeStore from './ItemHomeStore';
 import { ScrollView } from 'react-native';
 import AxiosIntance from '../../utils/AxiosIntance';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 const HomeStore = (props) => {
     const { navigation } = props;
     const [dataProduct, setDataProduct] = useState([]);
@@ -12,15 +15,19 @@ const HomeStore = (props) => {
     const [sold, setSold] = useState(0);
     const [columns, setColumns] = useState(2);
     useEffect(() => {
-        const getAllProductByUserID = async () => {
-            const response = await AxiosIntance().get("/productAPI/getAllProductByUserID?id=" + '113');
-            if (response.result) {
-                setDataProduct(response.products);
-                setProductID(response.products._id);
-                setSold(response.products.sold)
+        try {
+            const getAllProductByUserID = async () => {
+                const response = await AxiosIntance().get("/productAPI/getAllProductByUserID?id=" + '113');
+                if (response.result) {
+                    setDataProduct(response.products);
+                    setProductID(response.products._id);
+                    setSold(response.products.sold)
+                }
             }
-        }
-        getAllProductByUserID();
+            getAllProductByUserID();
+        } catch (error) {  
+            throw error       
+        }  
         return () => {
         }
     }, [])
