@@ -15,21 +15,27 @@ const CreateProduct = () => {
     ]);
     const [image, setimage] = useState([]);
     const [name, setName] = useState('');
-    const [price, setPrice] = useState();
+    const [price, setPrice] = useState(0);
     const [category, setCategory] = useState('');
-    const [quantity, setQuantity] = useState();
+    const [quantity, setQuantity] = useState(0);
     const [uerID, setUserID] = useState('');
     const [detail, setDetail] = useState('');
     const addProduct = async () => {
-        setCategory(value)
-        try {
-            const request = await AxiosIntance().post('/productAPI/addProduct', 
-            {name: name, price: price, quantity: quantity, categoryID: category, detail: detail, userID: '113'})
-            if (request.result)
-            ToastAndroid.show("Thêm thành công", ToastAndroid.SHORT);
-        } catch (error) {
-            ToastAndroid.show("Thêm thất bại", ToastAndroid.SHORT);
-        }
+            setCategory(value) // Sửa lại đoạn này vì useState ở đây là bất đồng bộ  không cập nhật kịp biến category
+
+            try {
+                const request = await AxiosIntance().post('/productAPI/addProduct', 
+                {name: name, price: price, quantity: quantity, categoryID: value, detail: detail, userID: '113'});
+
+                console.log(request)
+
+                if (request.result)
+                    ToastAndroid.show("Thêm thành công", ToastAndroid.SHORT);
+            } catch (error) {
+                console.log(error)
+                ToastAndroid.show("Thêm thất bại", ToastAndroid.SHORT);
+            }
+        
     }
     return (
         <View>

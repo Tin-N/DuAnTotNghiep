@@ -14,8 +14,8 @@ const ItemHomeStore = (props) => {
 
   useEffect(() => {
     var salePricee = dulieu.price;
-    setPriceProduct(formatPrice(dulieu.price));
-    setSalePrice(formatPrice(salePricee * 0.9));
+    setPriceProduct(formatPrice(salePricee));
+    setSalePrice(formatPrice(Math.round(salePricee * 0.9)));
     // const getFeedback = async () => {
     //   const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?ProductID=' + dulieu.id);
     //   console.log(dulieu._id + "xxxxxxxxxxxxxx");
