@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TextInput,
-  ToastAndroid,
 } from 'react-native';
 import React, {useState} from 'react';
 import {COLOR} from '../css/Theme';
@@ -14,42 +13,11 @@ import {Image} from 'react-native';
 const windowWIdth = Dimensions.get('window').width;
 import {StyleSheet} from 'react-native';
 import {StyleLogin} from '../css/Styles.js';
-import AxiosIntance from '../utils/AxiosIntance';
 
 
 const SignUp = () => {
   const [show, setshow] = useState(true);
   const [visible, setvisible] = useState(true);
-
-  const [showCP, setshowCP] = useState(true);
-  const [visibleCp, setvisibleCP] = useState(true);
-  const [confirmPass,setConfirmPass]=React.useState("");
-  const [emailUser,setEmailUser]=React.useState("");
-  const [password,setPassword]=React.useState("");
-//http://localhost:3000/api/UserApi/register?email=thuan1234@gmail.com&password=1234
-
-  const SignUp= async()=>{
-    if(password==confirmPass){
-      console.log(emailUser+password);
-      try {
-        const response= await AxiosIntance().post("/UserApi/register?email="+ emailUser + "&password="+ password);
-        console.log(response);
-        if(response.result==true)
-        {
-          ToastAndroid.show("Đăng ký thành công",ToastAndroid.SHORT);
-          // moveToLoggin();
-          console.log(response);
-        }
-          else
-          ToastAndroid.show("Đăng ký thất bại",ToastAndroid.SHORT);
-
-      } catch (error) {
-        console.log(error);
-      }
-    }else{
-      ToastAndroid.show("Mật khẩu không trùng khớp",ToastAndroid.SHORT);
-    }
-  }
 
   return (
     <View
@@ -75,7 +43,6 @@ const SignUp = () => {
             style={StyleLogin.TextInputUP}
             placeholder="Clavi@gmail.com"
             keyboardType="default"
-            onChangeText={setEmailUser}
           />
         </View>
       </View>
@@ -89,9 +56,7 @@ const SignUp = () => {
             style={StyleLogin.TextInputUP}
             placeholder="Enter your password"
             underlineColorAndroid="transparent"
-            secureTextEntry={visible}
-            onChangeText={setPassword}
-            ></TextInput>
+            secureTextEntry={visible}></TextInput>
 
           <TouchableOpacity
             onPress={() => {
@@ -120,20 +85,17 @@ const SignUp = () => {
             style={StyleLogin.TextInputUP}
             placeholder="Enter your password again"
             underlineColorAndroid="transparent"
-            secureTextEntry={visible}
-            onChangeText={setConfirmPass}
-            
-            ></TextInput>
+            secureTextEntry={visible}></TextInput>
 
           <TouchableOpacity
             onPress={() => {
-              setvisibleCP(!visibleCp);
-              setshowCP(!showCP);
+              setvisible(!visible);
+              setshow(!show);
             }}
             style={StyleLogin.CTIcon}>
             <Image
               source={
-                showCP === false
+                show === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }
@@ -145,8 +107,7 @@ const SignUp = () => {
 
 
         <TouchableOpacity
-          style={StyleLogin.buttonShape} onPress={SignUp}>
-            
+          style={StyleLogin.buttonShape}>
           <Text
             style={StyleLogin.TextButton}>
             Sign In

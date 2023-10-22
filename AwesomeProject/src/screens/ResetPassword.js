@@ -55,7 +55,7 @@ const ResetPassword = () => {
           </Text>
         </TouchableOpacity>
 
-        <Text style={StyleLogin.fgPass1}>
+        <Text style={StyleLogin.fgPass}>
           Change Number?</Text>
           <Text
             style={StyleLogin.RPBottomText}>

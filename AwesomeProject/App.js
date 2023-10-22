@@ -24,7 +24,7 @@ import SignUp from './src/screens/SignUp';
 import ResetPassword from './src/screens/ResetPassword';
 import ConfirmPhoneNum from './src/screens/ConfirmPhoneNum';
 import UpdatePassword from './src/screens/UpdatePassword';
-import { UserContextProvider } from '../AwesomeProject/src/utils/Context'
+
 const App = () => {
   return (
     <SafeAreaView>
@@ -37,6 +37,14 @@ const App = () => {
       </UserContextProvider>
       
  
+
+  
+      {/* <SignIn/> */}
+      {/* <SignUp/> */}
+      {/* <ResetPassword/> */}
+      {/* <ConfirmPhoneNum/> */}
+      <UpdatePassword/>
+
     </SafeAreaView>
   )
 }
