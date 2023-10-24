@@ -14,7 +14,7 @@ import AxiosIntance from '../utils/AxiosIntance'
 
 
 const Order = () => {
-  const { isOrder } = useContext(AppContext);
+  // const { isOrder } = useContext(AppContext);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [isCheck, setisCheck] = useState([]);
@@ -22,8 +22,8 @@ const Order = () => {
   const [products, setproducts] = useState([]);
   const [orderDetailID, setorderDetailID] = useState();
 
-  // khong co cart
-  const MyCart1 = () => {
+  // View thông báo khi giỏ hàng trống
+  const MyCartIsEmpty = () => {
     return (
       <View style={StyleOrder.myCart1}>
         <Image style={StyleOrder.image} source={require('../images/myCart1.png')} />
@@ -35,13 +35,13 @@ const Order = () => {
     )
   }
 
-  // co cart
-  const MyCart2 = () => {
+  // View giỏ hàng
+  const MyCart = () => {
     return (
-      <FlatList style={{ height: 370 }}
+      <FlatList
         data={sampleData}
-        renderItem={({ item }) => <OrderItem data={item} productsSelected={productsSelected} />}
-        keyExtractor={item => item._id}
+        renderItem={({ item }) => <OrderItem data={item} />}
+        keyExtractor={item => item.productID}
       />
     )
   }
@@ -51,6 +51,7 @@ const Order = () => {
     setproducts(products => [...products, productID])
   }
 
+  // Hàm xử lý chức năng đặt hàng
   const OrderFunc = async () => {
     try {
       const orderDetailRequestData = {
@@ -73,6 +74,7 @@ const Order = () => {
     }
   }
 
+  // Hàm xử lý chọn tất các các sản phẩm trong giỏ hàng
   function pickOption(selectedCheck) {
     if (isCheck.includes(selectedCheck)) {
       setisCheck(isCheck.filter(isCheck => isCheck !== selectedCheck));
@@ -83,24 +85,21 @@ const Order = () => {
 
   return (
     <View style={StyleOrder.container}>
-      <View>
-        {/* header */}
-        <View style={StyleOrder.header}>
-          <Text style={StyleOrder.textHeader}>My Cart</Text>
-          <Pressable onPress={click}>
-            <Icon name='ellipsis-vertical' size={24} color={"black"} />
-          </Pressable>
-        </View>
-
-        {/* co san pham thi hien list san pham khong thi hien hinh anh */}
-        <View>
-          {
-            isOrder == true ? <MyCart1 /> : <MyCart2 />
-          }
-        </View>
+      {/* Header */}
+      <View style={StyleOrder.header}>
+        <Text style={StyleOrder.textHeader}>My Cart</Text>
+        <Pressable>
+          <Icon name='ellipsis-vertical' size={24} color={"black"} />
+        </Pressable>
       </View>
 
-      <View style={{ marginBottom: 60 }}>
+      {/* Content */}
+      <View style={{ height: 550, }}>
+        <MyCart />
+      </View>
+
+      {/* Order Process */}
+      <View style={{ marginBottom: 100 }}>
         <View style={StyleOrder.tillte}>
           <Image source={require('../images/cost.png')} />
           <Text style={StyleOrder.textTillte}>Bạn chưa có sản phầm nào</Text>
@@ -114,7 +113,7 @@ const Order = () => {
         </View>
 
         <View style={StyleOrder.tillte}>
-          {options.map(option => (
+          {/* {options.map(option => (
             <View key={option} >
               <View style={{ marginTop: 10 }}>
                 <TouchableOpacity onPress={() => pickOption(option)}>
@@ -122,7 +121,7 @@ const Order = () => {
                 </TouchableOpacity>
               </View>
             </View>
-          ))}
+          ))} */}
 
           <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: {grandTotal}</Text>
 
