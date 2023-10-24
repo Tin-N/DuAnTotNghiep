@@ -22,8 +22,8 @@ const Order = () => {
   const [products, setproducts] = useState([]);
   const [orderDetailID, setorderDetailID] = useState();
 
-  // khong co cart
-  const MyCart1 = () => {
+  // View thông báo khi giỏ hàng trống
+  const MyCartIsEmpty = () => {
     return (
       <View style={StyleOrder.myCart1}>
         <Image style={StyleOrder.image} source={require('../images/myCart1.png')} />
@@ -35,8 +35,8 @@ const Order = () => {
     )
   }
 
-  // co cart
-  const MyCart2 = () => {
+  // View giỏ hàng
+  const MyCart = () => {
     return (
       <FlatList style={{ height: 370 }}
         data={sampleData}
@@ -51,6 +51,7 @@ const Order = () => {
     setproducts(products => [...products, productID])
   }
 
+  // Hàm xử lý chức năng đặt hàng
   const OrderFunc = async () => {
     try {
       const orderDetailRequestData = {
@@ -73,6 +74,7 @@ const Order = () => {
     }
   }
 
+  // Hàm xử lý chọn tất các các sản phẩm trong giỏ hàng
   function pickOption(selectedCheck) {
     if (isCheck.includes(selectedCheck)) {
       setisCheck(isCheck.filter(isCheck => isCheck !== selectedCheck));
@@ -94,9 +96,10 @@ const Order = () => {
 
         {/* co san pham thi hien list san pham khong thi hien hinh anh */}
         <View>
-          {
-            isOrder == true ? <MyCart1 /> : <MyCart2 />
-          }
+          {/* {
+            isOrder == true ? <MyCartIsEmpty/> : <MyCart2/>
+          } */}
+          <MyCart/>
         </View>
       </View>
 

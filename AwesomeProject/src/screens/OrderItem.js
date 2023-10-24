@@ -60,7 +60,7 @@ const OrderItem = async (props) => {
                 <View>
                     <Text style={StyleOrder.textNameFlatList}>{productName}</Text>
                     <Text style={StyleOrder.textInfoFlatList}>{categoryID}</Text>
-                    <Text style={StyleOrder.textInfoFlatList} onChang>${data.price}</Text>
+                    <Text style={StyleOrder.textInfoFlatList}>${data.price}</Text>
                 </View>
             </View>
 
