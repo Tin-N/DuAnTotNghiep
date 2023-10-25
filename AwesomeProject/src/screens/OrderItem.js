@@ -4,13 +4,14 @@ import { StyleOrder } from '../css/Styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AxiosIntance from '../utils/AxiosIntance'; // Đảm bảo bạn đã import AxiosInstance
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 const OrderItem = (props) => {
     const { data } = props;
     const [quantity, setQuantity] = useState(data.quantity);
-    const [productName, setProductName] = useState('Tên Sản Phẩm');
+    const [productName, setProductName] = useState('Tên Sản Phẩmqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
     const [imageUri, setImageUri] = useState();
-    const [categoryID, setCategoryID] = useState('Gán');
+    const [categoryID, setCategoryID] = useState('Gánqqqqqqqqqqqqqqqqq');
     const [isCheck, setIsCheck] = useState(false);
 
     console.log(data.productID)
@@ -51,14 +52,20 @@ const OrderItem = (props) => {
 
     return (
         <View style={StyleOrder.header}>
-            <View style={StyleOrder.checkBoxOrder}>
-                <Pressable onPress={toggleCheck}>
+            <View style={StyleOrder.viewCheckBoxOrder}>
+                {/* <Pressable onPress={toggleCheck}>
                     {isCheck ? <MaterialIcons name='check-box' size={24} color={'green'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
-                </Pressable>
+                </Pressable> */}
+                <BouncyCheckbox
+                    style={StyleOrder.checkBoxOrder}
+                    fillColor='white'
+                    onPress={() => setIsCheck(!isCheck)}
+                    iconComponent={isCheck ? <MaterialIcons name='check-box' size={24} color={'#3669C9'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
+                    />
             </View>
 
             <View style={StyleOrder.header}>
-                <Image style={StyleOrder.imageFlatList} source={{ uri: imageUri }} />
+                <Image style={StyleOrder.imageFlatList} source={require('../images/food.png')} />
                 <View>
                     <Text numberOfLines={2} style={StyleOrder.textNameFlatList}>{productName}</Text>
                     <Text numberOfLines={2} style={StyleOrder.textInfoFlatList}>{categoryID}</Text>

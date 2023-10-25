@@ -544,7 +544,7 @@ export const StyleOrder = StyleSheet.create({
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        margin: 5
+        margin: 5,
     },
     textHeader: {
         fontSize: 25,
@@ -610,9 +610,12 @@ export const StyleOrder = StyleSheet.create({
         width: 20 * width / 100,
         alignItems: 'center'
     },
+    viewCheckBoxOrder: {
+        width: 5 * width / 100,
+    },
     checkBoxOrder: {
-        position: 'relative',
-        top: '50%',
+        position: 'absolute',
+        top: '25%',
     },
     pressableBuy: {
         height: 52,

@@ -8,7 +8,7 @@ import { StyleCategory, StyleOrder } from '../css/Styles'
 import OrderItem from './OrderItem'
 import { ScrollView } from 'react-native-gesture-handler'
 import AxiosIntance from '../utils/AxiosIntance'
-
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 
 
@@ -18,6 +18,7 @@ const Order = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [isCheck, setisCheck] = useState([]);
+  const [isCheckBox, setisCheckBox] = useState(false);
   const [grandTotal, setgrandTotal] = useState()
   const [products, setproducts] = useState([]);
   const [orderDetailID, setorderDetailID] = useState();
@@ -89,7 +90,7 @@ const Order = () => {
         {/* header */}
         <View style={StyleOrder.header}>
           <Text style={StyleOrder.textHeader}>My Cart</Text>
-          <Pressable onPress={click}>
+          <Pressable >
             <Icon name='ellipsis-vertical' size={24} color={"black"} />
           </Pressable>
         </View>
@@ -103,14 +104,13 @@ const Order = () => {
         </View>
       </View>
       {/* Order Process */}
-      <View style={{ marginBottom: 100 }}>
+      <View style={{ marginBottom: 50 }}>
         <View style={StyleOrder.tillte}>
           <Image source={require('../images/cost.png')} />
           <Text style={StyleOrder.textTillte}>Bạn chưa có sản phầm nào</Text>
           <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
-            thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
+            trackColor={{ false: '#767577', true: '#3669C9' }}
+            thumbColor={isEnabled ? '#18039E' : '#f4f3f4'}
             onValueChange={toggleSwitch}
             value={isEnabled}
           />
@@ -126,7 +126,11 @@ const Order = () => {
               </View>
             </View>
           ))} */}
-
+          <BouncyCheckbox
+            fillColor='white'
+            onPress={() => setisCheckBox(!isCheckBox)}
+            iconComponent={isCheckBox ? <MaterialIcons name='check-box' size={24} color={'#3669C9'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
+          />
           <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: {grandTotal}</Text>
 
           <Pressable onPress={OrderFunc} style={StyleOrder.pressableBuy}>
@@ -144,7 +148,7 @@ const sampleData = [
   {
     productID: '65291577c199df71b460f143',
     quantity: 2,
-    price: 50,
+    price: 5000000000000000000000000000000,
   },
   {
     productID: '652915b8c199df71b460f146',
@@ -153,6 +157,16 @@ const sampleData = [
   },
   {
     productID: '65291733c199df71b460f190',
+    quantity: 1,
+    price: 105,
+  },
+  {
+    productID: '1',
+    quantity: 1,
+    price: 105,
+  },
+  {
+    productID: '2',
     quantity: 1,
     price: 105,
   },

@@ -38,15 +38,14 @@ import DetailPersonFedback from './src/screens/personStore/DetailPersonFedback';
 import DetailProduct from './src/screens/personStore/DetailProduct';
 import HomeStore from './src/screens/personStore/HomeStore';
 
-const Stack = createNativeStackNavigator()
 const App = () => {
   return (
-    <AppContextProvider>
-      <NavigationContainer>
-        <AppNavigator/>
-      </NavigationContainer>
-    </AppContextProvider>
-
+    // <AppContextProvider>
+    //   <NavigationContainer>
+    //     <AppNavigator/>
+    //   </NavigationContainer>
+    // </AppContextProvider>
+<Order/>
 )
 }
 
