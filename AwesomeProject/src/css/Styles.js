@@ -9,9 +9,6 @@ export const StyleLogin = StyleSheet.create({
   },
 });
 
-
-
-
 export const StyleOrder = StyleSheet.create({
     container: {
         flexDirection: 'column',
@@ -583,6 +580,7 @@ export const StyleCategory = StyleSheet.create({
         marginBottom: 10,
     },
     });
+    
 export const StyleSlider = StyleSheet.create({
     container: {
         alignItems: 'stretch',

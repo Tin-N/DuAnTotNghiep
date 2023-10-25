@@ -24,12 +24,20 @@ import TestScreen from './src/screens/TestScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchScreen from './src/screens/SearchScreen';
+import { AppContextProvider } from './src/utils/AppContext';
+import { NavigationContainer } from '@react-navigation/native';
+import AppNavigator from './src/utils/AppNavigator';
+import CategoryManager from './src/screens/CategoryManager';
+import CensorshipProduct from './src/screens/CensorshipProduct';
 const App = () => {
   return (
-  // <WelcomeScreen/>
-  // <HomeScreen/>
-    <TestScreen/>
-  // <SearchScreen/>
+    // <AppContextProvider>
+    //   <NavigationContainer>
+    //     <AppNavigator/>
+    //   </NavigationContainer>
+    // </AppContextProvider>
+    <CategoryManager/>
+    // <CensorshipProduct/>
   )
 }
 
