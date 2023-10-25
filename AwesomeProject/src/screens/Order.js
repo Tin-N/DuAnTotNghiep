@@ -1,17 +1,15 @@
-import { StyleSheet, Text, View, Image, Pressable, FlatList, TouchableOpacity, Switch } from 'react-native'
-import React, { useContext, useState } from 'react'
+import { StyleSheet, Text, View, Image, Pressable, FlatList, TouchableOpacity, Switch, Alert } from 'react-native'
+import React, { useContext, useState, useEffect } from 'react'
 import { AppContext } from '../utils/AppContext'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 import { StyleCategory, StyleOrder } from '../css/Styles'
 import OrderItem from './OrderItem'
-import { ScrollView } from 'react-native-gesture-handler'
+import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import AxiosIntance from '../utils/AxiosIntance'
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-
-
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Order = () => {
   // const { isOrder } = useContext(AppContext);
@@ -19,9 +17,18 @@ const Order = () => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [isCheck, setisCheck] = useState([]);
   const [isCheckBox, setisCheckBox] = useState(false);
-  const [grandTotal, setgrandTotal] = useState()
-  const [products, setproducts] = useState([]);
-  const [orderDetailID, setorderDetailID] = useState();
+  const [grandTotal, setgrandTotal] = useState();
+  const [products, setproducts] = useState();
+  const [orderDetailID, setorderDetailID] = useState('');
+
+  // Xóa mục grandTotal và products
+  AsyncStorage.removeItem('grandTotal' && 'products' && 'currentTotal')
+    .then(() => {
+      // console.log('Đã xóa dữ liệu grandTotal và products trong AsyncStorage');
+    })
+    .catch(error => {
+      console.error('Lỗi khi xóa dữ liệu grandTotal và products trong AsyncStorage: ', error);
+    });
 
   // View thông báo khi giỏ hàng trống
   const MyCartIsEmpty = () => {
@@ -47,95 +54,84 @@ const Order = () => {
     )
   }
 
-  const productsSelected = (productID, totalCost) => {
-    setgrandTotal(totalCost);
-    setproducts(products => [...products, productID])
-  }
-
   // Hàm xử lý chức năng đặt hàng
   const OrderFunc = async () => {
+    console.log("-------------------------------------------------")
+    console.log("Current Products: " + products)
     try {
-      const orderDetailRequestData = {
-        products: products,
-        totalCost: grandTotal,
-      };
-      const orderRequestData = {
-        orderDetailID: orderDetailID,
-        // userID: data truyền vào
-        orderDate: new Date()
-      }
-      const orderDetailResponse = await AxiosIntance().post('/OrderDetails/add', orderDetailRequestData);
-      setorderDetailID(orderDetailResponse.data.orderDetailID)
-      if (orderResponse && orderResponse.status === 201) {
-        const orderResponse = await AxiosIntance().post('/Order/add', orderRequestData);
-        console.log("Đặt hàng thành công" + orderResponse);
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
-  // Hàm xử lý chọn tất các các sản phẩm trong giỏ hàng
-  function pickOption(selectedCheck) {
-    if (isCheck.includes(selectedCheck)) {
-      setisCheck(isCheck.filter(isCheck => isCheck !== selectedCheck));
-      return;
+      const productsSelected = await AsyncStorage.getItem('products');
+      const grandTotalOfAllItems = await AsyncStorage.getItem('grandTotal');
+      while (products == []) {
+          setproducts(JSON.parse(productsSelected));
+          setgrandTotal(grandTotalOfAllItems);
+      }
+
+        console.log("Current Products After: " + products)
+        const orderDetailResponse = await AxiosIntance().post('/orderdetail/add', { products: products, totalCost: grandTotal });
+        console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
+        setorderDetailID(orderDetailResponse.data.orderDetailID)
+        if (orderDetailResponse.error == false) {
+          const orderResponse = await AxiosIntance().post('/order/add', { orderDetailID: orderDetailID, orderDate: new Date() });
+          console.log("Đặt hàng thành công " + orderResponse.orderDetailID);
+        }
+        
+      // Xóa mục grandTotal và products
+      AsyncStorage.removeItem('grandTotal' && 'products')
+        .then(() => {
+          // console.log('Đã xóa dữ liệu grandTotal và products trong AsyncStorage');
+        })
+        .catch(error => {
+          console.error('Lỗi khi xóa dữ liệu grandTotal và products trong AsyncStorage: ', error);
+        });
+    } catch (error) {
+      console.log("Đặt hàng không thành công --- " + error)
+      throw error;
     }
-    setisCheck(isCheck => isCheck.concat(selectedCheck))
   }
 
   return (
     <View style={StyleOrder.container}>
-      <View>
-        {/* header */}
-        <View style={StyleOrder.header}>
-          <Text style={StyleOrder.textHeader}>My Cart</Text>
-          <Pressable >
-            <Icon name='ellipsis-vertical' size={24} color={"black"} />
-          </Pressable>
-        </View>
 
-        {/* co san pham thi hien list san pham khong thi hien hinh anh */}
-        <View>
-          {/* {
-            isOrder == true ? <MyCartIsEmpty/> : <MyCart2/>
-          } */}
-          <MyCart />
-        </View>
+      {/* header */}
+      <View style={StyleOrder.header}>
+        <Text style={StyleOrder.textHeader}>My Cart</Text>
+        <Pressable >
+          <Icon name='ellipsis-vertical' size={24} color={"black"} />
+        </Pressable>
       </View>
-      {/* Order Process */}
-      <View style={{ marginBottom: 50 }}>
-        <View style={StyleOrder.tillte}>
-          <Image source={require('../images/cost.png')} />
-          <Text style={StyleOrder.textTillte}>Bạn chưa có sản phầm nào</Text>
-          <Switch
-            trackColor={{ false: '#767577', true: '#3669C9' }}
-            thumbColor={isEnabled ? '#18039E' : '#f4f3f4'}
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-          />
-        </View>
 
-        <View style={StyleOrder.tillte}>
-          {/* {options.map(option => (
-            <View key={option} >
-              <View style={{ marginTop: 10 }}>
-                <TouchableOpacity onPress={() => pickOption(option)}>
-                  {isCheck.includes(option) == true ? <MaterialIcons name='check-box' size={24} color={'green'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))} */}
-          <BouncyCheckbox
-            fillColor='white'
-            onPress={() => setisCheckBox(!isCheckBox)}
-            iconComponent={isCheckBox ? <MaterialIcons name='check-box' size={24} color={'#3669C9'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
-          />
-          <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: {grandTotal}</Text>
+      {/* co san pham thi hien list san pham khong thi hien hinh anh */}
+      <View style={{ height: 500 }}>
+        <MyCart />
+      </View>
 
-          <Pressable onPress={OrderFunc} style={StyleOrder.pressableBuy}>
-            <Text style={[StyleOrder.textTillte, { color: 'white', marginTop: 5 }]}>Mua Hàng</Text>
-          </Pressable>
+      <View>
+        {/* Order Process */}
+        <View style={{ bottom: 100 }}>
+          <View style={StyleOrder.tillte}>
+            <Image source={require('../images/cost.png')} />
+            <Text style={StyleOrder.textTillte}>Bạn chưa có sản phầm nào</Text>
+            <Switch
+              trackColor={{ false: '#767577', true: '#3669C9' }}
+              thumbColor={isEnabled ? '#18039E' : '#f4f3f4'}
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
+          </View>
+
+          <View style={StyleOrder.tillte}>
+            <BouncyCheckbox
+              fillColor='white'
+              onPress={() => setisCheckBox(!isCheckBox)}
+              iconComponent={isCheckBox ? <MaterialIcons name='check-box' size={24} color={'#3669C9'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
+            />
+            <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: {grandTotal}</Text>
+
+            <Pressable onPress={OrderFunc} style={StyleOrder.pressableBuy}>
+              <Text style={[StyleOrder.textTillte, { color: 'white', marginTop: 5 }]}>Mua Hàng</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </View>
@@ -147,27 +143,14 @@ export default Order
 const sampleData = [
   {
     productID: '65291577c199df71b460f143',
-    quantity: 2,
-    price: 5000000000000000000000000000000,
+    quantity: 1,
   },
   {
-    productID: '652915b8c199df71b460f146',
-    quantity: 3,
-    price: 75,
+    productID: '6529164fc199df71b460f15a',
+    quantity: 1,
   },
   {
     productID: '65291733c199df71b460f190',
     quantity: 1,
-    price: 105,
-  },
-  {
-    productID: '1',
-    quantity: 1,
-    price: 105,
-  },
-  {
-    productID: '2',
-    quantity: 1,
-    price: 105,
   },
 ];

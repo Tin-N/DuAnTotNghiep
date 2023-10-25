@@ -45,8 +45,8 @@ const App = () => {
     //     <AppNavigator/>
     //   </NavigationContainer>
     // </AppContextProvider>
-<Order/>
-)
+    <Order />
+  )
 }
 
 

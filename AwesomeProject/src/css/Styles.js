@@ -540,11 +540,13 @@ export const StyleOrder = StyleSheet.create({
         backgroundColor: 'white',
         width: width,
         height: height,
+        marginLeft: 5,
+        marginRight: 5
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        margin: 5,
+        marginTop: 5,
     },
     textHeader: {
         fontSize: 25,
@@ -554,7 +556,6 @@ export const StyleOrder = StyleSheet.create({
     tillte: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        margin: 10
     },
     textTillte: {
         fontSize: 20,
