@@ -85,7 +85,6 @@ const Order = () => {
 
   return (
     <View style={StyleOrder.container}>
-
       <View>
         {/* header */}
         <View style={StyleOrder.header}>
@@ -103,7 +102,6 @@ const Order = () => {
           <MyCart />
         </View>
       </View>
-      
       {/* Order Process */}
       <View style={{ marginBottom: 100 }}>
         <View style={StyleOrder.tillte}>

@@ -63,7 +63,6 @@ const OrderItem = (props) => {
                     <Text numberOfLines={2} style={StyleOrder.textNameFlatList}>{productName}</Text>
                     <Text numberOfLines={2} style={StyleOrder.textInfoFlatList}>{categoryID}</Text>
                     <Text numberOfLines={2} style={StyleOrder.textInfoFlatList}>${data.price}</Text>
-
                 </View>
             </View>
 
