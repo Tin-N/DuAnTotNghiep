@@ -14,7 +14,7 @@ import AxiosIntance from '../utils/AxiosIntance'
 
 
 const Order = () => {
-  const { isOrder } = useContext(AppContext);
+  // const { isOrder } = useContext(AppContext);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [isCheck, setisCheck] = useState([]);
@@ -38,10 +38,10 @@ const Order = () => {
   // View giỏ hàng
   const MyCart = () => {
     return (
-      <FlatList style={{ height: 370 }}
+      <FlatList
         data={sampleData}
-        renderItem={({ item }) => <OrderItem data={item} productsSelected={productsSelected} />}
-        keyExtractor={item => item._id}
+        renderItem={({ item }) => <OrderItem data={item} />}
+        keyExtractor={item => item.productID}
       />
     )
   }
@@ -85,6 +85,7 @@ const Order = () => {
 
   return (
     <View style={StyleOrder.container}>
+
       <View>
         {/* header */}
         <View style={StyleOrder.header}>
@@ -99,11 +100,12 @@ const Order = () => {
           {/* {
             isOrder == true ? <MyCartIsEmpty/> : <MyCart2/>
           } */}
-          <MyCart/>
+          <MyCart />
         </View>
       </View>
-
-      <View style={{ marginBottom: 60 }}>
+      
+      {/* Order Process */}
+      <View style={{ marginBottom: 100 }}>
         <View style={StyleOrder.tillte}>
           <Image source={require('../images/cost.png')} />
           <Text style={StyleOrder.textTillte}>Bạn chưa có sản phầm nào</Text>
@@ -117,7 +119,7 @@ const Order = () => {
         </View>
 
         <View style={StyleOrder.tillte}>
-          {options.map(option => (
+          {/* {options.map(option => (
             <View key={option} >
               <View style={{ marginTop: 10 }}>
                 <TouchableOpacity onPress={() => pickOption(option)}>
@@ -125,7 +127,7 @@ const Order = () => {
                 </TouchableOpacity>
               </View>
             </View>
-          ))}
+          ))} */}
 
           <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: {grandTotal}</Text>
 

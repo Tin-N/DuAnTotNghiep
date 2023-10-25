@@ -1,66 +1,69 @@
-import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
-import { StyleCategory, StyleOrder } from '../css/Styles'
-import Icon from 'react-native-vector-icons/Ionicons'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import Order from './Order'
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleOrder } from '../css/Styles';
+import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AxiosIntance from '../utils/AxiosIntance'; // Đảm bảo bạn đã import AxiosInstance
 
-const OrderItem = async (props) => {
-    const { data } = props
-    const [quantity, setquantity] = useState(data.quantity)
-    const [productName, setproductName] = useState()
-    const [imageUri, setImageUri] = useState(null);
-    const [categoryID, setcategoryID] = useState()
+const OrderItem = (props) => {
+    const { data } = props;
+    const [quantity, setQuantity] = useState(data.quantity);
+    const [productName, setProductName] = useState('Tên Sản Phẩm');
+    const [imageUri, setImageUri] = useState();
+    const [categoryID, setCategoryID] = useState('Gán');
+    const [isCheck, setIsCheck] = useState(false);
 
-    const [isCheck, setisCheck] = useState();
+    console.log(data.productID)
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await AxiosIntance().get(`/productAPI/getProductByID?id=${data.productID}`);
+                if (response.result == true) {
+                    console.log("Lấy dữ liệu nè: ")
+                    setProductName(response.products.name);
+                    setImageUri(response.products.image[0]);
+                    setCategoryID(response.products.categoryID);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        })();
+    }, [data.productID]);
+
     const itemTotalCost = quantity * data.price;
 
-
     const increaseQuantity = () => {
-        setquantity(quantity + 1);
+        console.log("Tăng số lượng");
+        setQuantity(quantity + 1);
     };
 
     const decreaseQuantity = () => {
         if (quantity > 1) {
-            setquantity(quantity - 1);
+            console.log("Giảm số lượng");
+            setQuantity(quantity - 1);
         }
     };
 
-    function pickOption(selectedCheck) {
-        if (isCheck.includes(selectedCheck)) {
-            setisCheck(isCheck.filter(isCheck => isCheck !== selectedCheck));
-            return;
-        }
-        setisCheck(isCheck => isCheck.concat(selectedCheck))
-        props.productsSelected(data.productID, itemTotalCost)
-    }
-
-    const response = await AxiosIntance().get('productAPI/getProductByID?id=' + data.productID);
-    if (response || response.status === 201) {
-        setproductName(response.products.name);
-        setImageUri(response.products.image);
-        setcategoryID(response.products.categoryID);
-    } else {
-        ToastAndroid.show('Lấy dữ liệu thất bại', ToastAndroid.SHORT);
-    }
+    const toggleCheck = () => {
+        setIsCheck(!isCheck);
+        props.productsSelected(data.productID, itemTotalCost);
+    };
 
     return (
         <View style={StyleOrder.header}>
-            {options.map(option => (
-                <View key={option} >
-                    <View style={StyleOrder.checkBoxOrder}>
-                        <TouchableOpacity onPress={() => pickOption(option)}>
-                            {isCheck.includes(option) == true ? <MaterialIcons name='check-box' size={24} color={'green'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            ))}
+            <View style={StyleOrder.checkBoxOrder}>
+                <Pressable onPress={toggleCheck}>
+                    {isCheck ? <MaterialIcons name='check-box' size={24} color={'green'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
+                </Pressable>
+            </View>
+
             <View style={StyleOrder.header}>
                 <Image style={StyleOrder.imageFlatList} source={{ uri: imageUri }} />
                 <View>
-                    <Text style={StyleOrder.textNameFlatList}>{productName}</Text>
-                    <Text style={StyleOrder.textInfoFlatList}>{categoryID}</Text>
-                    <Text style={StyleOrder.textInfoFlatList}>${data.price}</Text>
+                    <Text numberOfLines={2} style={StyleOrder.textNameFlatList}>{productName}</Text>
+                    <Text numberOfLines={2} style={StyleOrder.textInfoFlatList}>{categoryID}</Text>
+                    <Text numberOfLines={2} style={StyleOrder.textInfoFlatList}>${data.price}</Text>
+
                 </View>
             </View>
 
@@ -68,7 +71,7 @@ const OrderItem = async (props) => {
                 <Pressable onPress={decreaseQuantity}>
                     <Icon name='trash-outline' size={24} />
                 </Pressable>
-                <Text>{data.quantity}</Text>
+                <Text>{quantity}</Text>
                 <Pressable onPress={increaseQuantity}>
                     <Icon name='add' size={24} />
                 </Pressable>
@@ -78,9 +81,9 @@ const OrderItem = async (props) => {
                 <Text>{itemTotalCost}</Text>
             </View>
         </View>
-    )
-}
+    );
+};
 
-export default OrderItem
+export default OrderItem;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
