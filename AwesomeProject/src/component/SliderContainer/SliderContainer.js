@@ -6,10 +6,24 @@ import { formatPrice } from '../../../Agro';
 
 const SliderContainer = (props) => {
     const DEFAULT_VALUE = 0.2;
-    const {caption,children,sliderValue,trackMarks,vertical}=props; 
+    const {caption,children,sliderValue,trackMarks,vertical,onValueChange}=props; 
     const [value, setValue] = React.useState(
         sliderValue ? sliderValue : DEFAULT_VALUE,
     );
+
+
+    const handleSliderValueChange = (newValue) => {
+        // Gọi hàm callback để truyền giá trị mới
+        // Array.isArray(newValue)?FormatPrice(newValue):value;
+        
+        onValueChange(newValue);
+        // Cập nhật giá trị trong state của SliderContainer
+        setValue(newValue);
+    };
+
+
+
+
     let renderTrackMarkComponent;
 
         
@@ -32,7 +46,7 @@ const SliderContainer = (props) => {
             (child) => {
                 if (!!child && child.type === Slider) {
                     return React.cloneElement(child, {
-                        onValueChange: setValue,
+                        onValueChange: handleSliderValueChange,
                         renderTrackMarkComponent,
                         trackMarks,
                         value,
@@ -43,20 +57,22 @@ const SliderContainer = (props) => {
         );
     };
 
-    const FormatPrice=(array)=>
+    const FormatPrice=(array,format)=>
     {
         var demo=[];
         for(var i=0;i<array.length;i++){
            demo.push(formatPrice(array[i]));
         }
-        return demo.join(' - ');
+        if(format)
+            return demo.join(' - ');
+        return demo;
     }
     return (
         <View style={StyleSlider.sliderContainer}>
             <View style={StyleSlider.titleContainer}>
-                <Text style={StyleCategory.textPressable}>{Array.isArray(value) ? FormatPrice(value) : value}</Text>
+                <Text style={StyleCategory.textPressable}>{Array.isArray(value) ? FormatPrice(value,true) : value}</Text>
             </View>
-            {renderChildren()}
+            {renderChildren(handleSliderValueChange)}
         </View>
     );
 };

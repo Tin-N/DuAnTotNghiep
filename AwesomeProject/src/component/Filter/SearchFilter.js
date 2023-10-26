@@ -1,14 +1,35 @@
-import { StyleSheet, Text, View, Pressable, TextInput, FlatList, Modal, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Pressable, TextInput, FlatList, Modal, TouchableOpacity, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { StyleCategory, StyleOrder } from '../../css/Styles'
+import SliderContainer from '../SliderContainer/SliderContainer'
+import { Slider } from '@miblanchard/react-native-slider';
+import Filter from './Filter';
+import Sorting2 from './Sorting';
 import Icon from 'react-native-vector-icons/Ionicons'
 // import Feather from 'react-native-vector-icons/Feather'
 // import CategoryItem from './CategoryItem'
 
 
-const SearchFilter = () => {
-    const [modalVisible, setModalVisible] = useState(false);
+const SearchFilter = (props) => {
+    const {onSubmit,setModalVisible,modalVisible} = props;
+    // const [modalVisible, setModalVisible] = useState(false);
     const [isFilter, setisFilter] = useState(false);
+
+    //sorting2
+    const [sortType, setSortType] = useState({});
+
+    // Filter
+    const [sliderState, setSliderState] = useState([0, 10000000]);
+    //checkbox
+    const [category, setCategory] = useState("");
+
+    const handleSubmit =()=>{
+        const values = [sortType, sliderState, category];
+        // ToastAndroid.show(typeof sliderState)
+        onSubmit(values);
+    }
+
+    // Kết quả category
 
     const click = () => {
         setisFilter(true);
@@ -19,14 +40,14 @@ const SearchFilter = () => {
     }
 
     return (
-        <View style={StyleOrder.container}>
+        <View>
+ {/* style={[StyleOrder.container,{display:modalVisible?"flex":"none",zIndex:4}]} */}
 
-
-            <View>
-                <Pressable style={StyleCategory.pressable} onPress={() => setModalVisible(true)}>
+            {/* <View>
+                <Pressable style={StyleCategory.pressable} onPress={() => setModalVisible(modalVisible)}>
                     <Text style={StyleCategory.textPressable}>Filter & Sorting</Text>
                 </Pressable>
-            </View>
+            </View> */}
 
             <View>
                 <Modal
@@ -56,13 +77,24 @@ const SearchFilter = () => {
 
                             </View>
                             {
-                                isFilter == false ? <Sorting2 /> : <Filter />
+                                isFilter == false ?
+                                 <Sorting2 
+                                    sortType={sortType} 
+                                    setSortType={setSortType}
+                                 /> 
+                                 : 
+                                 <Filter
+                                    sliderState={sliderState}
+                                    setSliderState={setSliderState}
+                                    category={category}
+                                    setCategory={setCategory}
+                                 />
                             }
                             <View style={StyleOrder.header}>
-                                <Pressable style={StyleCategory.pressableModal}>
+                                <Pressable style={StyleCategory.pressableModal} onPress={()=>{setModalVisible(!modalVisible)}}>
                                     <Text style={StyleCategory.textPressable}>Reset</Text>
                                 </Pressable>
-                                <Pressable style={[StyleCategory.pressableModal, { backgroundColor: '#3669C9' }]}>
+                                <Pressable style={[StyleCategory.pressableModal, { backgroundColor: '#3669C9' }]}  onPress={()=>{handleSubmit();setModalVisible(!modalVisible)}}>
                                     <Text style={StyleCategory.textPressable}>Apply</Text>
                                 </Pressable>
                             </View>
@@ -75,118 +107,8 @@ const SearchFilter = () => {
 }
 
 
-const Filter = () => {
-    const [sliderState, setSliderState] = React.useState(0);
-    //checkbox
-    const [isCheck, setisCheck] = useState([]);
-    const options = ["Semua Sub Kategori", "Keripik", "Kue", "Nasi"];
 
 
-
-
-    function pickOption(selectedCheck) {
-        if (isCheck.includes(selectedCheck)) {
-            setisCheck(isCheck.filter(isCheck => isCheck !== selectedCheck));
-            return;
-        }
-        setisCheck(isCheck => isCheck.concat(selectedCheck))
-    }
-
-    return (
-        <View>
-            <Text style={StyleCategory.textRang}>Range Harga</Text>
-            {/* <Slider
-                style={{ width: 300, height: 40 }}
-                minimumValue={0}
-                maximumValue={3}
-                minimumTrackTintColor="#3669C9"
-                maximumTrackTintColor="#FFFFFF"
-            /> */}
-            <View >
-                <SliderContainer
-                    sliderValue={[0, 10000000]}>
-                    <Slider
-                        step={1000}
-                        minimumValue={0}
-                        maximumValue={10000000}
-                    />
-                </SliderContainer>
-            </View>
-
-            {/* <View style={StyleOrder.header}>
-                <Text style={StyleCategory.textPressable}>Rp 0</Text>
-                <Text style={StyleCategory.textPressable}>Rp 100.000</Text>
-            </View> */}
-
-            {/* checkbox */}
-            {options.map(option => (
-                <View key={option} >
-                    <View style={StyleOrder.header}>
-                        <Text style={StyleCategory.textPressable}>{option}</Text>
-                        <TouchableOpacity onPress={() => pickOption(option)}>
-                            {isCheck.includes(option) == true ? <Icon name='checkmark-circle-sharp' size={24} color={'green'} /> : <Icon name='checkmark-circle-outline' size={24} color={'black'} />}
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ borderBottomWidth: 1, marginBottom: 5, borderBottomColor: '#EDEDED' }}></View>
-                </View>
-            ))}
-        </View>
-
-    )
-}
-
-
-// const Sorting = () => {
-//     return (
-//         <View>
-//             <View style={StyleOrder.header}>
-//                 <Text style={StyleCategory.textPressable}>Name (A - Z)</Text>
-
-//                 <Icon name='checkmark-circle-outline' size={20} color={'black'} />
-
-//             </View>
-//             <View style={StyleOrder.header}>
-//                 <Text style={StyleCategory.textPressable}>Name (Z - A) </Text>
-//                 <Icon name='checkmark-circle-outline' size={20} color={'black'} />
-//             </View>
-//             <View style={StyleOrder.header}>
-//                 <Text style={StyleCategory.textPressable}>Harga (Rendah-Tinggi)</Text>
-//                 <Icon name='checkmark-circle-outline' size={20} color={'black'} />
-//             </View>
-//             <View style={StyleOrder.header}>
-//                 <Text style={StyleCategory.textPressable}>Lokasi</Text>
-//                 <Icon name='checkmark-circle-outline' size={20} color={'black'} />
-//             </View>
-//         </View>
-//     )
-// }
-
-const Sorting2 = () => {
-    const [isCheck, setisCheck] = useState([]);
-    const options = ["Name (A - Z)", "Name (Z - A)", "Harga (Rendah-Tinggi)", "Lokasi"];
-    function pickOption(selectedCheck) {
-        if (isCheck.includes(selectedCheck)) {
-            setisCheck(isCheck.filter(isCheck => isCheck !== selectedCheck));
-            return;
-        }
-        setisCheck(isCheck => isCheck.concat(selectedCheck))
-    }
-    return (
-        <View>
-            {options.map(option => (
-                <View key={option} >
-                    <View style={StyleOrder.header}>
-                        <Text style={StyleCategory.textPressable}>{option}</Text>
-                        <TouchableOpacity onPress={() => pickOption(option)}>
-                            {isCheck.includes(option) == true ? <Icon name='checkmark-circle-sharp' size={24} color={'green'} /> : <Icon name='checkmark-circle-outline' size={24} color={'black'} />}
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ borderBottomWidth: 1, marginBottom: 5, borderBottomColor: '#EDEDED' }}></View>
-                </View>
-            ))}
-        </View>
-    )
-}
 
 export default SearchFilter
 

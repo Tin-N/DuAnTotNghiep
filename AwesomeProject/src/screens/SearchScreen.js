@@ -6,12 +6,21 @@ import SearchSuggestion from '../component/SearchSuggestions/SearchSuggestions'
 import NoResult from '../component/SearchSuggestions/NoResult';
 import AxiosIntance from '../utils/AxiosIntance'
 import ProductList from '../component/ProductList/ProductList'
+import {useNavigation} from '@react-navigation/native'
+
 const SearchScreen = () => {
+  const navigation=useNavigation();
+
     const [textSearch, setTextSearch] = useState("");
     const [isSearch,setIsSearch] = useState(false);
     const [data, setData] = useState([]);
     const [columns, setcolumns] = useState(2)
     const [isLoading, setisLoading] = useState(false);
+
+
+    const handleClick=()=>{
+      navigation.goBack();
+    }
     const onChangeText = (text)=>
     {
 
@@ -20,25 +29,9 @@ const SearchScreen = () => {
     }
     
     const onSubmitText = async () => {
-      setIsSearch(false);
-      setisLoading(true);
-      ToastAndroid.show(textSearch, ToastAndroid.SHORT);
-    
-      try {
-        const response = await AxiosIntance().get("/productAPI/searchByName?name=" + textSearch + "&limitData="+0);
-        console.log(response);
-        if (response.result) {
-          setisLoading(false);
-          setData(response.products);
-          // setProductID(response.products._id);
-          // setSold(response.products.sold);
-        } else {
-          setisLoading(false);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        setisLoading(false);
-      }
+     console.log(textSearch.length);
+     if(textSearch.length>0)
+      navigation.navigate("FilterScreen",{searchText:textSearch});
     }
 
     useEffect(() => {
@@ -65,9 +58,9 @@ const SearchScreen = () => {
   return (
     <ScrollView>
          <View style={styleSearchScreen.topBarView}>
-         <TouchableOpacity>
+         <TouchableOpacity onPress={handleClick}>
             <Image
-                style={styleSearchScreen.icons}
+                style={[styleSearchScreen.icons,{marginLeft:10}]}
                 source={require('../images/icon/previous-ic.png')}
                 />
          </TouchableOpacity>
@@ -75,39 +68,16 @@ const SearchScreen = () => {
             
         </View>
         {/* Search bar */}
-        <Searchbar onChangeText={onChangeText} onSubmitText={onSubmitText}/>
+        <Searchbar onChangeText={onChangeText}onClick={false} onSubmitText={onSubmitText}/>
 
 
     {
         isSearch == true?<SearchSuggestion/>:<View/>
     }
 
-    {
-      isLoading == true?
-      <ActivityIndicator
-      style={{justifyContent:'center',alignItems:'center',height:"100%"}}/>
-      :
-      <View>
-        {
-          (data.length>0)&&(isSearch!==true)?<ProductList
-            data={data}
-            styleView={{
-
-              width: '100%',
-              margin: 10,
-            }}
-            numColumns={columns}
-            showsVerticalScrollIndicator={false}
-          />:
-          <View style={{justifyContent:'center',alignItems:'center'}}>
-            {
-              (textSearch.length>0)&&(data.length==0)&&(isSearch!==true)?<NoResult/>:<View/>
-            }
-          </View>
-            
-        }
-      </View>
-    }
+  
+     
+      
     </ScrollView>
 
   )

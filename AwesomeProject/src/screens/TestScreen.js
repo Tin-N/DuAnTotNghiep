@@ -1,5 +1,5 @@
-import {View, Text} from 'react-native';
-import React, { useState } from 'react';
+import {View, Text, FlatList, ToastAndroid} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Slideshow from '../component/Slideshow/Slideshow';
 import SearchSuggestion from '../component/SearchSuggestions/SearchSuggestions';
 import NoResult from '../component/SearchSuggestions/NoResult';
@@ -12,11 +12,73 @@ import Banner from '../component/Banner/Banner';
 import Pagination from '../component/Pagination/Pagination';
 import SearchFilter from '../component/Filter/SearchFilter';
 const TestScreen = () => {
-  const [column, setcolumn] = useState(2)
-  const[page,setPage]=useState(1);
+
+  const [valueFilter, setValueFilter] = useState([])
+
+  useEffect(() => {
+    console.log(valueFilter);
+  // ToastAndroid.show(valueFilter[0],ToastAndroid.LONG)
+    return () => {
+      
+    }
+  }, [valueFilter])
+  
+//   const [data, setdata] = useState([]);
+//   const [column, setcolumn] = useState(2)
+//   const[page,setPage]=useState(1);
+
+//   useEffect(() => {
+//     setIsLoading(true);
+//   const getFirstList = async ()=>{
+//     const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id=clothing&limitData=10&skipPage="+(page-1))
+//         if(response.result)
+//         {
+//             // setMainData(response.products);
+//             setdata(response.products.slice(0, newProduct));
+//             // setIsLoading(false);
+//             // console.log(response.products.length==response.products.slice(0, newProduct).length,response.products.length,response.products.slice(0, newProduct).length);
+
+//         }
+//     }
+//     getFirstList()
+//   return () => {
+    
+//   }
+// }, [page]);
   return (
     <View  style={{width:'100%',height:'100%',justifyContent:'center',alignItems:'center'}}>
-      {/* <Slideshow
+      {/* <ProductList 
+                data={data}   
+                styleView={{width:'100%',margin:10}}
+                numColumns={column}
+                
+                showsHorizontalScrollIndicator={false}          
+              />
+
+              <FlatList
+              
+              /> */}
+              <SearchFilter onSubmit={setValueFilter}/>
+    </View>
+  );
+};
+
+export default TestScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ {/* <Slideshow
         width={'80%'}
         flex={0.8}
         heightRate={0.4}
@@ -43,9 +105,4 @@ totalPages={10}
 onPageChange={setPage}
 maxVisiblePages={4}
 /> */}
-<SearchFilter/>
-    </View>
-  );
-};
-
-export default TestScreen;
+{/* <SearchFilter/> */}

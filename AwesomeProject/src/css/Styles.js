@@ -320,6 +320,12 @@ export const StyleSearch = StyleSheet.create({
         borderRadius:10,
         fontSize:15
     },
+    textInput3: {
+        paddingLeft:15,
+        width:'90%',
+        borderRadius:10,
+        fontSize:15
+    },
     TouchableOpacity:{
         display:'flex',
         justifyContent:'center',
@@ -465,7 +471,6 @@ export const StyleBanner =  StyleSheet.create({
 
         // View
     topBarView:{
-        
         height:50,
         padding:10,
         paddingLeft:30,
@@ -474,20 +479,22 @@ export const StyleBanner =  StyleSheet.create({
         // backgroundColor:'red'
     },
     title:{
-        color:'#EE2624',
-        fontSize:20,
+        color:'#000000',
+        fontSize:15,
+        textAlign:'center',
         fontWeight:'700',
-        textAlign:'right',
-        width:'66%',
+        width:'80%',
         justifyContent:'flex-end',
     },
     viewIcons:{
-        width:'34%',
+        width:'20%',
         justifyContent:'flex-end',
         flexDirection:'row',
         marginRight:10,
     },
     icons:{
+        height:30,
+        width:30,
         marginRight:10
     },
 
@@ -522,9 +529,7 @@ export const StyleBanner =  StyleSheet.create({
         alignItems:'center',
         justifyContent:'flex-start',
     },
-    icons:{
-        marginLeft:15
-    },
+  
     title:{
         fontWeight:'bold',
         fontSize:20,
@@ -572,6 +577,7 @@ export const StyleCategory = StyleSheet.create({
     },
     textPressable: {
         fontSize: 14,
+        textAlign:'center',
     },
     centeredView: {
         flex: 1,

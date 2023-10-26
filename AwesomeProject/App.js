@@ -21,9 +21,10 @@ import AppNavigator from './src/utils/AppNavigator';
 import { AppContextProvider } from './src/utils/AppContext';
 import { StyleLogin } from './src/css/Styles';
 import ProductScreen from './src/screens/ProductScreen';
-// import TestScreen from './src/screens/TestScreen';
+import TestScreen from './src/screens/TestScreen';
+import FilterScreen from './src/screens/FilterScreen';
 // import WelcomeScreen from './src/screens/WelcomeScreen';
-// import HomeScreen from './src/screens/HomeScreen';
+import HomeScreen from './src/screens/HomeScreen';
 // import SearchScreen from './src/screens/SearchScreen';
 // import Category from './src/screens/Category';
 // import SearchStore from './src/screens/personStore/SearchStore';
@@ -33,15 +34,16 @@ const App = () => {
   // <WelcomeScreen/>
   // <HomeScreen/>
     // <TestScreen/>
+    // <FilterScreen/>
     // <HomeStore/>
-    // <AppContextProvider>
-    //   <NavigationContainer>
-    //     <AppNavigator/>
-    //   </NavigationContainer>
-    // </AppContextProvider>
+    <AppContextProvider>
+      <NavigationContainer>
+        <AppNavigator/>
+      </NavigationContainer>
+    </AppContextProvider>
     // <SearchStore/>
   // <SearchScreen/>
-  <ProductScreen/>
+  // <ProductScreen/>
   )
 }
 

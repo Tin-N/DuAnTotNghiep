@@ -13,7 +13,9 @@ import ProductDetail from '../screens/ProductDetail';
 import SearchStore from '../screens/personStore/SearchStore';
 import ItemHomeStore from '../screens/personStore/ItemHomeStore';
 import DetailFeedback from '../screens/personStore/DetailFeedback';
-
+import SearchScreen from '../screens/SearchScreen';
+import FilterScreen from '../screens/FilterScreen';
+import HomeScreen from '../screens/HomeScreen';
 const Tab = createBottomTabNavigator();
 const Stack= createNativeStackNavigator();
 
@@ -26,8 +28,9 @@ const User = () => {
 const ProductHome = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProductList'>
-            <Stack.Screen name='ProductList' component={HomeStore}></Stack.Screen>
-            {/* <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen> */}
+            <Stack.Screen name='ProductList' component={HomeScreen}></Stack.Screen>
+            <Stack.Screen name='SearchScreen' component={SearchScreen}></Stack.Screen>
+            <Stack.Screen name='FilterScreen' component={FilterScreen}></Stack.Screen>
             <Stack.Screen name='SearchStore' component={SearchStore}></Stack.Screen>
             <Stack.Screen name='ProductDetail' component={ProductDetail}></Stack.Screen>
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>

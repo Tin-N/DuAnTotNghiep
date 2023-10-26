@@ -8,17 +8,21 @@ import Banner from '../component/Banner/Banner';
 import {FetchData} from '../component/ProductList/data';
 import ProductList from '../component/ProductList/ProductList';
 import AxiosIntance from '../utils/AxiosIntance';
-const HomeScreen = () => {
-
+import {useNavigation} from '@react-navigation/native'
+const HomeScreen = (props) => {
+  const navigation=useNavigation();
   const [categoryData1, setcategoryData1] = useState([])
   const [categoryData2, setcategoryData2] = useState([])
   const [categoryData3, setcategoryData3] = useState([])
 
-
+  const handleClick=()=> {
+    navigation.navigate("SearchScreen");
+    console.log("homeSceen");
+  }
   useEffect(() => {
     const getcategoryData1 = async()=>{
       const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+"clothing"+"&limitData="+2+"&skipData="+0);
-      console.log(response+"CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCc");
+      // console.log(response+"CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCc");
 
       if(response.result)
       {
@@ -27,7 +31,7 @@ const HomeScreen = () => {
     }
     const getcategoryData2 = async()=>{
       const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+"hello"+"&limitData="+2+"&skipData="+0);
-      console.log(response+"BBBBBBBBBBBBBBBBBBBBBBBBB");
+      // console.log(response+"BBBBBBBBBBBBBBBBBBBBBBBBB");
 
       if(response.result)
       {
@@ -36,7 +40,7 @@ const HomeScreen = () => {
     }
     const getcategoryData3 = async()=>{
       const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+"pants"+"&limitData="+2+"&skipData="+0);
-      console.log(response+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      // console.log(response+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
       if(response.result)
       {
         setcategoryData3(response.products);
@@ -56,17 +60,21 @@ const HomeScreen = () => {
           <Text style={styleHome.title}>Savvy shopping</Text>
           <View style={styleHome.viewIcons}>
             <Image
-              style={styleHome.icons}
+              style={[styleHome.icons,{height:20,width:20,margin:10}]}
               source={require('../images/icon/notification.png')}
             />
             <Image
-              style={styleHome.icons}
+              style={[styleHome.icons,{height:20,width:20,margin:10}]}
               source={require('../images/icon/shopping-cart.png')}
             />
           </View>
         </View>
         {/* Search bar */}
-        <Searchbar />
+        <Searchbar
+        onClick={true} 
+        handleClick={handleClick}
+        isSearch={false}
+        />
 
         {/* Slideshow */}
 
