@@ -123,6 +123,11 @@ const HomeStore = (props) => {
                         keyExtractor={item => item._id}
                     />
                 </View>
+                {/* <TouchableOpacity style={{height:50, width:50, 
+                    borderRadius:25, 
+                    backgroundColor:'#3669C9', position:'absolute', }}>
+
+                </TouchableOpacity> */}
             </ScrollView>
         </View>
     )

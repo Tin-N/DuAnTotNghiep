@@ -34,7 +34,7 @@ const ItemHomeStore = (props) => {
     navigation.navigate("DetailProduct", { itemId: dulieu._id });
   }
   return (
-    <View style={StyleHomeStore.boxProduct}>
+    <View style={[StyleHomeStore.boxProduct]}>
       <TouchableOpacity onPress={handleOnClick}>
         <Image source={{ uri: dulieu.image[0] }} style={{ height: 150, width: 140, borderRadius: 10, borderWidth: 1 }} />
         <Text style={{
@@ -45,41 +45,24 @@ const ItemHomeStore = (props) => {
         }}>
           {dulieu.name}
         </Text>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={{
-            marginTop: 5, color: 'grey',
-            textDecorationLine: 'line-through', width: 90
-          }}>
-            {priceProduct}đ
-          </Text>
-        </View>
-        <Text style={{ marginTop: 5, color: '#3669C9' }}>
+        <Text style={{ color: '#3669C9' }}>
           Giá: {salePrice}đ
         </Text>
-        <View style={StyleHomeStore.reviewsProduct}>
-          <View style={{ flexDirection: 'row' }}>
-            <Image source={require('../../images/star.png')} />
-            <Text style={{ fontSize: 13, color: 'black' }}>
-              {dulieu.rating}
-            </Text>
-          </View>
+        <Text>
+          Kho: {dulieu.quantity}
+        </Text>
+        <View>
           <Text style={{
-            width: 90, fontSize: 12,
-            paddingLeft: 15,
-            color: 'black',
-            width: 110
-          }}>15 Reviews</Text>
-        </View>
-        <Text style={{
             fontFamily: 'TiltNeon-Regular',
             maxWidth: 200,
             flex: 1,
             flexWrap: 'nowrap',
-            fontSize: 13,
-            marginTop:7
+            fontSize: 15,
+            marginTop: 4
           }}>
             {dulieu.sold} đã bán
           </Text>
+        </View>
       </TouchableOpacity>
     </View>
   )

@@ -68,7 +68,7 @@ const ItemFeedBack = (props) => {
                     {dataFeedback.feedback}
                 </Text>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                 <View style={{ marginLeft: 50, flexDirection: 'row', width: '33%', justifyContent: 'space-around', alignItems: 'center' }}>
                     <Image source={require('../../images/like.png')} style={{ width: 13, height: 13 }}></Image>
                     <Text>50 lượt thích</Text>
@@ -76,7 +76,7 @@ const ItemFeedBack = (props) => {
                 <TouchableOpacity onPress={detailFeedback}>
                     <Text >Trả lời()</Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
             {/* <FlatList
             data = {dataReplyFeedback}
             showsHorizontalScrollIndicator={false}

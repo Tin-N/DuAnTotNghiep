@@ -39,6 +39,16 @@ const DetailProduct = (props) => {
         return <View style={StyleDetailProduct.separator} />;
     };
     useEffect(() => {
+        navigation.getParent()?.setOptions({
+          tabBarStyle: {
+            display: "none"
+          }
+        });
+        return () => navigation.getParent()?.setOptions({
+          tabBarStyle: undefined
+        });
+      }, [navigation]);
+    useEffect(() => {
         const getDetails = async () => {
             const response = await AxiosIntance().get('/productAPI/getProductByID?id=' + params.itemId);
             if (response.result == false) {
@@ -184,7 +194,7 @@ const DetailProduct = (props) => {
                     <Text style={{ padding: 15, fontSize: 20, fontFamily: 'TiltNeon-Regular' }}>{detail}</Text>
                 </View>
                 <View style={StyleDetailProduct.line}></View>
-                <View style={{marginBottom:100}}>
+                <View style={{ marginBottom: 100 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ margin: 10, fontSize: 18 }}>
                             Đánh giá ({feedbackLength})
@@ -204,6 +214,38 @@ const DetailProduct = (props) => {
                         ItemSeparatorComponent={Separator} />
                 </View>
             </ScrollView>
+            <View style={StyleDetailProduct.bottom}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ paddingLeft: 10, paddingRight: 10, }}>
+                        <Image style={StyleDetailProduct.image} source={require('../../images/avatarPersonStore.png')} />
+                        <Text style={{ fontSize: 12, textAlign: 'center' }}>Store</Text>
+                    </View>
+                    <Image style={{ height: 45, marginTop: -4 }} source={require('../../images/lineheight.png')} />
+                    <View style={{ paddingLeft: 10, paddingRight: 10 }}>
+                        <Image style={StyleDetailProduct.image} source={require('../../images/iconchat1.png')} />
+                        <Text style={{ fontSize: 12, textAlign: 'center' }}>Chat</Text>
+                    </View>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: 10 }}>
+                    <TouchableOpacity style={StyleDetailProduct.touchOpa}>
+                        <Text style={StyleDetailProduct.textButton}>
+                            Buy Now
+                        </Text>
+                    </TouchableOpacity>
+                    <LinearGradient
+                        start={{ x: 0, y: 0.5 }} // Điểm bắt đầu của gradient (trái)
+                        end={{ x: 0.8, y: 0.5 }}   // Điểm kết thúc của gradient (phải)
+                        colors={['#3669C9', '#070723']}
+                        style={{ padding: 8, width: 130, borderRadius: 25, marginLeft: 5 }}
+                    >
+                        <TouchableOpacity >
+                            <Text style={StyleDetailProduct.textButton}>
+                                Add to Cart
+                            </Text>
+                        </TouchableOpacity>
+                    </LinearGradient>
+                </View>
+            </View>
         </View>
     )
 }

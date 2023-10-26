@@ -9,14 +9,9 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
-
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
-
-
 import { StyleLogin } from './src/css/Styles';
-
 import Home from './src/screens/Home';
 import Order from './src/screens/Order';
 import { AppContextProvider } from './src/utils/AppContext';
