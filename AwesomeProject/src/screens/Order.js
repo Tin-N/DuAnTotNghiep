@@ -6,6 +6,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 import { StyleCategory, StyleOrder } from '../css/Styles'
 import OrderItem from './OrderItem'
+const ObjectID = require('bson-objectid');
 
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import AxiosIntance from '../utils/AxiosIntance'
@@ -20,17 +21,7 @@ const Order = () => {
 
   const [isCheckBox, setisCheckBox] = useState(false);
   const [grandTotal, setgrandTotal] = useState();
-  const [products, setproducts] = useState();
-  const [orderDetailID, setorderDetailID] = useState('');
-
-  // Xóa mục grandTotal và products
-  AsyncStorage.removeItem('grandTotal' && 'products' && 'currentTotal')
-    .then(() => {
-      // console.log('Đã xóa dữ liệu grandTotal và products trong AsyncStorage');
-    })
-    .catch(error => {
-      console.error('Lỗi khi xóa dữ liệu grandTotal và products trong AsyncStorage: ', error);
-    });
+  const [products, setproducts] = useState([]);
 
   // View thông báo khi giỏ hàng trống
   const MyCartIsEmpty = () => {
@@ -50,42 +41,106 @@ const Order = () => {
     return (
       <FlatList
         data={sampleData}
-        renderItem={({ item }) => <OrderItem data={item} />}
+        renderItem={
+          ({ item }) =>
+            <OrderItem data={item}
+              itemSelectedData={itemFromOrderItem}
+              itemDeselectedData={itemDeselectedFromOrderItem}
+              updateItemData={updateItemSelected}
+              newData={products}
+            />
+        }
         keyExtractor={item => item.productID}
       />
     )
   }
 
+  const itemFromOrderItem = (productsReceived) => {
+    setproducts([...products, productsReceived]);
+
+    console.log(productsReceived)
+  }
+
+  const itemDeselectedFromOrderItem = (productIDReceived) => {
+    setproducts(products => products.filter(product => product.productID !== productIDReceived));
+  }
+
+  const updateItemSelected = (productID, quantity, itemTotalCost) => {
+    // Sao chép mảng sản phẩm hiện tại để tránh thay đổi trực tiếp state
+    const updatedProducts = [...products];
+
+    // Tìm sản phẩm có productID trùng khớp trong mảng
+    const existingProductIndex = updatedProducts.findIndex(item => item.productID === productID);
+
+    if (existingProductIndex !== -1) {
+      // Nếu có sản phẩm trùng khớp, cập nhật quantity và itemTotalCost
+      updatedProducts[existingProductIndex].quantity = quantity;
+      updatedProducts[existingProductIndex].itemTotalCost = itemTotalCost;
+
+      // Cập nhật state với danh sách sản phẩm mới
+      setproducts(updatedProducts);
+    } else {
+      return;
+    }
+  }
+
+  const updatedSampleData = sampleData.filter((sampleItem) => {
+    return !products.some((productItem) => productItem.productID === sampleItem.productID);
+  });
+
   // Hàm xử lý chức năng đặt hàng
   const OrderFunc = async () => {
     console.log("-------------------------------------------------")
-    console.log("Current Products: " + products)
     try {
+      console.log("Current Products After: " + products)
 
-      const productsSelected = await AsyncStorage.getItem('products');
-      const grandTotalOfAllItems = await AsyncStorage.getItem('grandTotal');
-      while (products == []) {
-          setproducts(JSON.parse(productsSelected));
-          setgrandTotal(grandTotalOfAllItems);
+      // Sử dụng reduce để tính tổng itemTotalCost của tất cả các mục trong mảng products
+      const total = products.reduce((accumulator, product) => {
+        return accumulator + product.itemTotalCost;
+      }, 0);
+
+      // Xóa dữ liệu truyền vào
+      updatedSampleData;
+
+      // Cập nhật giá trị grandTotal
+      setgrandTotal(total);
+      const objectId = new ObjectID();
+      console.log(objectId)
+      const orderDetailResponse = await AxiosIntance().post('/orderdetail/add', { orderDetailID: objectId, products: products, totalCost: grandTotal });
+
+      console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
+
+      const OrderPost = async () => {
+        if (orderDetailResponse.error == false) {
+          const orderResponse = await AxiosIntance().post('/order/add', { orderDetailID: objectId, orderDate: new Date() });
+          console.log("Đặt hàng thành công, Order ID: " + orderResponse.orderDetailID);
+        }
       }
 
-        console.log("Current Products After: " + products)
-        const orderDetailResponse = await AxiosIntance().post('/orderdetail/add', { products: products, totalCost: grandTotal });
-        console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
-        setorderDetailID(orderDetailResponse.data.orderDetailID)
-        if (orderDetailResponse.error == false) {
-          const orderResponse = await AxiosIntance().post('/order/add', { orderDetailID: orderDetailID, orderDate: new Date() });
-          console.log("Đặt hàng thành công " + orderResponse.orderDetailID);
-        }
-        
-      // Xóa mục grandTotal và products
-      AsyncStorage.removeItem('grandTotal' && 'products')
-        .then(() => {
-          // console.log('Đã xóa dữ liệu grandTotal và products trong AsyncStorage');
-        })
-        .catch(error => {
-          console.error('Lỗi khi xóa dữ liệu grandTotal và products trong AsyncStorage: ', error);
-        });
+      Alert.alert(
+        'Thông báo',
+        'Bạn có muốn mua những sản phẩm này?', // Nội dung thông báo
+        [
+          {
+            text: 'Cancel', // Chữ hiển thị trên nút Cancel
+            onPress: () => {
+              // Xử lý khi người dùng chọn "Cancel"
+              console.log('Bạn đã chọn Cancel');
+            }
+          },
+          {
+            text: 'OK', // Chữ hiển thị trên nút OK
+            onPress: () => {
+              // Xử lý khi người dùng chọn "OK"
+              setTimeout(() => {
+                OrderPost();
+              }, 500);
+
+            },
+          },
+        ]
+      );
+
     } catch (error) {
       console.log("Đặt hàng không thành công --- " + error)
       throw error;
@@ -139,7 +194,7 @@ const Order = () => {
       </View>
     </View>
   )
-  }
+}
 export default Order
 
 const sampleData = [

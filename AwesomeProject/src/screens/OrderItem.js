@@ -9,15 +9,14 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OrderItem = (props) => {
-
-    const { data } = props;
+    const { data, itemSelectedData, itemDeselectedData, updateItemData, newData } = props;
     const [quantity, setQuantity] = useState(data.quantity);
     const [productName, setProductName] = useState('Tên Sản Phẩm');
     const [imageUri, setImageUri] = useState();
     const [categoryID, setCategoryID] = useState('Gán');
     const [isCheck, setIsCheck] = useState(false);
     const [productPrice, setproductPrice] = useState(50)
-    const itemTotalCost = quantity * productPrice;
+    let itemTotalCost = quantity * productPrice;
 
     useEffect(() => {
         (async () => {
@@ -35,37 +34,35 @@ const OrderItem = (props) => {
         })();
     }, [data.productID]);
 
-    const increaseQuantity = async (productID, quantity) => {
+    // const setNewDataAfterReRender = (productID) => {
+    //     // Sao chép mảng sản phẩm hiện tại để tránh thay đổi trực tiếp state
+    //     const newProductsInfo = [...newData.products];
+    //     console.log(">>>>>>>>>>>>>>" + newProductsInfo.quantity)
+
+    //     // Tìm sản phẩm có productID trùng khớp trong mảng
+    //     const existingProductIndex = newProductsInfo.findIndex(item => item.productID === productID);
+
+    //     if (existingProductIndex !== -1) {
+    //         const newQuantity = newProductsInfo[existingProductIndex].quantity;
+    //         setQuantity(newQuantity);
+
+    //         // Tính toán itemTotalCost dựa vào newQuantity và productPrice (bạn cần có productPrice ở đâu đó)
+    //         let newItemTotalCost = newQuantity * productPrice;
+    //         // Sử dụng newItemTotalCost khi cần thiết, ví dụ:
+    //         itemTotalCost = itemTotalCost;
+    //         console.log('New Item Total Cost:', newItemTotalCost);
+    //     }
+    // };
+
+    const increaseQuantity = (productID, quantity, itemTotalCost) => {
         try {
             console.log("Tăng số lượng");
             let newQuantity = quantity + 1;
             setQuantity(newQuantity);
-            const productsJSON = await AsyncStorage.getItem('products');
-            let products = [];
-            if (productsJSON) {
-                products = JSON.parse(productsJSON);
-            }
-
-            // Kiểm tra xem sản phẩm đã tồn tại trong danh sách chưa
-            const existingProductIndex = products.findIndex(item => item.productID === productID);
-
-            if (existingProductIndex !== -1) {
-                // Sản phẩm đã tồn tại, cập nhật số lượng
-                products[existingProductIndex].quantity = newQuantity;
-            }
-            // Lưu danh sách sản phẩm mới vào AsyncStorage
-            await AsyncStorage.setItem('products', JSON.stringify(products));
-
-            // Tính toán grandTotal bằng tổng của itemTotalCost
-            const grandTotal = products.reduce((total, item) => {
-                // Tính toán itemTotalCost dựa vào productID và quantity
-                const itemTotalCost = item.quantity * productPrice; // productPrice cần được xác định ở đây
-                return total + itemTotalCost;
-            }, 0);
-
-            // Lưu giá trị grandTotal vào AsyncStorage
-            await AsyncStorage.setItem('grandTotal', grandTotal.toString());
-            console.log({ products, grandTotal });
+            const newItemTotalCost = newQuantity * productPrice
+            updateItemData(productID, newQuantity, newItemTotalCost)
+            console.log(data.productID, newQuantity, newItemTotalCost);
+            // setNewDataAfterReRender(productID)
         } catch (error) {
             console.log(error);
             throw error
@@ -74,36 +71,13 @@ const OrderItem = (props) => {
 
     const decreaseQuantity = async (productID, quantity) => {
         if (quantity > 1) {
-            console.log("Giảm số lượng");
             try {
+                console.log("Giảm số lượng");
                 let newQuantity = quantity - 1;
                 setQuantity(newQuantity);
-                const productsJSON = await AsyncStorage.getItem('products');
-                let products = [];
-                if (productsJSON) {
-                    products = JSON.parse(productsJSON);
-                }
-
-                // Kiểm tra xem sản phẩm đã tồn tại trong danh sách chưa
-                const existingProductIndex = products.findIndex(item => item.productID === productID);
-
-                if (existingProductIndex !== -1) {
-                    // Sản phẩm đã tồn tại, cập nhật số lượng
-                    products[existingProductIndex].quantity = newQuantity;
-                }
-                // Lưu danh sách sản phẩm mới vào AsyncStorage
-                await AsyncStorage.setItem('products', JSON.stringify(products));
-
-                // Tính toán grandTotal bằng tổng của itemTotalCost
-                const grandTotal = products.reduce((total, item) => {
-                    // Tính toán itemTotalCost dựa vào productID và quantity
-                    const itemTotalCost = item.quantity * productPrice; // productPrice cần được xác định ở đây
-                    return total + itemTotalCost;
-                }, 0);
-
-                // Lưu giá trị grandTotal vào AsyncStorage
-                await AsyncStorage.setItem('grandTotal', grandTotal.toString());
-                console.log({ products, grandTotal });
+                const newItemTotalCost = newQuantity * productPrice
+                updateItemData(productID, newQuantity, newItemTotalCost)
+                console.log(data.productID, newQuantity, newItemTotalCost);
             } catch (error) {
                 console.log(error);
                 throw error
@@ -116,71 +90,23 @@ const OrderItem = (props) => {
         }
     };
 
-    const itemSelectedProcess = async (productID, quantity) => {
+    const itemSelectedProcess = (productID, quantity, itemTotalCost) => {
         try {
-            // Lấy danh sách sản phẩm từ AsyncStorage (nếu tồn tại)
-            const productsJSON = await AsyncStorage.getItem('products');
-            let products = [];
-            if (productsJSON) {
-                products = JSON.parse(productsJSON);
+            let products = {
+                productID: productID,
+                quantity: quantity,
+                itemTotalCost: itemTotalCost,
             }
-
-            // Kiểm tra xem sản phẩm đã tồn tại trong danh sách chưa
-            const existingProductIndex = products.findIndex(item => item.productID === productID);
-
-            if (existingProductIndex !== -1) {
-                // Sản phẩm đã tồn tại, cập nhật số lượng
-                products[existingProductIndex].quantity = quantity;
-            } else {
-                // Sản phẩm chưa tồn tại, thêm mới vào danh sách
-                products.push({ productID, quantity });
-            }
-
-            // Lưu danh sách sản phẩm mới vào AsyncStorage
-            await AsyncStorage.setItem('products', JSON.stringify(products));
-
-            // Tính toán grandTotal bằng tổng của itemTotalCost
-            const grandTotal = products.reduce((total, item) => {
-                // Tính toán itemTotalCost dựa vào productID và quantity
-                const itemTotalCost = item.quantity * productPrice;
-                return total + itemTotalCost;
-            }, 0);
-
-            // Lưu giá trị grandTotal vào AsyncStorage
-            await AsyncStorage.setItem('grandTotal', grandTotal.toString());
-            console.log({ products, grandTotal });
+            itemSelectedData(products);
         } catch (error) {
             console.error('Lỗi khi xử lý sản phẩm:', error);
             throw error;
         }
     };
 
-    const itemDeSelectedProcess = async (productID, quantity) => {
+    const itemDeSelectedProcess = (productID) => {
         try {
-            // Lấy danh sách sản phẩm từ AsyncStorage (nếu tồn tại)
-            const productsJSON = await AsyncStorage.getItem('products');
-            let products = [];
-            if (productsJSON) {
-                products = JSON.parse(productsJSON);
-            }
-
-            // Tìm sản phẩm theo productID và xóa nó khỏi danh sách
-            const productIndex = products.findIndex(item => item.productID === productID);
-            if (productIndex !== -1) {
-                // Lấy giá trị itemTotalCost của sản phẩm bị xóa
-                const removedProduct = products.splice(productIndex, 1)[0];
-                const removedItemTotalCost = removedProduct.quantity * productPrice;
-                // Lưu danh sách sản phẩm mới vào AsyncStorage
-                await AsyncStorage.setItem('products', JSON.stringify(products));
-                // Lấy giá trị hiện tại của grandTotal
-                const grandTotalJSON = await AsyncStorage.getItem('grandTotal');
-                let grandTotal = grandTotalJSON ? parseFloat(grandTotalJSON) : 0;
-                // Giảm grandTotal
-                grandTotal -= removedItemTotalCost;
-                // Lưu giá trị grandTotal mới vào AsyncStorage
-                await AsyncStorage.setItem('grandTotal', grandTotal.toString());
-                console.log({ products, grandTotal });
-            }
+            itemDeselectedData(productID)
         } catch (error) {
             console.error('Lỗi khi xử lý bỏ chọn sản phẩm:', error);
             throw error;
@@ -202,9 +128,9 @@ const OrderItem = (props) => {
                         } else setIsCheck(isCheck == false)
 
                         if (!isCheck) {
-                            itemSelectedProcess(data.productID, quantity);
+                            itemSelectedProcess(data.productID, quantity, itemTotalCost);
                         } else {
-                            itemDeSelectedProcess(data.productID, quantity);
+                            itemDeSelectedProcess(data.productID, quantity, itemTotalCost);
                         }
                     }}
                     iconComponent={isCheck ? <MaterialIcons name='check-box' size={24} color={'#3669C9'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
@@ -221,11 +147,11 @@ const OrderItem = (props) => {
             </View>
 
             <View style={[StyleOrder.header, StyleOrder.function]}>
-                <Pressable onPress={() => decreaseQuantity(data.productID, quantity)}>
+                <Pressable onPress={() => decreaseQuantity(data.productID, quantity, itemTotalCost)}>
                     <Icon name='trash-outline' size={24} />
                 </Pressable>
                 <Text>{quantity}</Text>
-                <Pressable onPress={() => increaseQuantity(data.productID, quantity)}>
+                <Pressable onPress={() => increaseQuantity(data.productID, quantity, itemTotalCost)}>
                     <Icon name='add' size={24} />
                 </Pressable>
             </View>
