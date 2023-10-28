@@ -49,7 +49,7 @@ const SearchFilter = (props) => {
                 </Pressable>
             </View> */}
 
-            <View>
+            <View  >
                 <Modal
                     animationType="slide"
                     transparent={true}

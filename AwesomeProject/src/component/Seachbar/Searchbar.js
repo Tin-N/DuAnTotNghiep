@@ -3,7 +3,7 @@ import {View, Image,TouchableOpacity,TextInput,Text} from 'react-native';
 
 import { StyleSearch } from '../../css/Styles'
 const Searchbar = (props) => {
-  const {onChangeText,onSubmitText,onClick,isSearch,handleClick}=props;
+  const {onChangeText,onSubmitText,onClick,isSearch,handleClick,text}=props;
   const  handleClickTO=()=> {
     if(onClick)
       handleClick();
@@ -20,6 +20,7 @@ const Searchbar = (props) => {
       onChangeText={onChangeText} 
       onTouchStart={()=>handleClickTO()}
       onEndEditing={onSubmitText}
+      value={text}
       />
         <TouchableOpacity 
         onPress={onSubmitText}

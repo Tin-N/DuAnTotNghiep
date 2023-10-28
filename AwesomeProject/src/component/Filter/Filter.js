@@ -1,12 +1,27 @@
 import { Text, View, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleCategory, StyleOrder } from '../../css/Styles'
 import SliderContainer from '../SliderContainer/SliderContainer'
 import { Slider } from '@miblanchard/react-native-slider';
 import Icon from 'react-native-vector-icons/Ionicons'
+import AxiosIntance from '../../utils/AxiosIntance';
 
 const Filter = (props) => {
 
+    const [categoryData, setCategoryData] = useState([]);
+    useEffect(() => {
+      const getCategory = async ()=>{
+        const response= await AxiosIntance().get("/Category/getCategory");
+        if(response.result){
+            setCategoryData(response.categories);
+        }
+      }
+      getCategory();
+      return () => {
+        
+      }
+    }, [])
+    
    const { sliderState, setSliderState, category, setCategory } =props
 
 
@@ -39,7 +54,7 @@ const Filter = (props) => {
     //     }
     // ];
     
-    const options = ["clothing", "Shirt","pants"];
+    // const options = ["clothing", "Shirt","pants"];
 
     function pickOption(selectedCheck) {       
         setCategory(selectedCheck);
@@ -65,12 +80,12 @@ const Filter = (props) => {
                 </SliderContainer>
             </View>
             {/* checkbox */}
-            {options.map(option => (
-                <View key={option} >
+            {categoryData.map(option => (
+                <View key={option._id} >
                     <View style={StyleOrder.header}>
-                        <Text style={StyleCategory.textPressable}>{option}</Text>
-                        <TouchableOpacity onPress={() => pickOption(option)}>
-                            {category==option ? <Icon name='checkmark-circle-sharp' size={24} color={'green'} /> : <Icon name='checkmark-circle-outline' size={24} color={'black'} />}
+                        <Text style={StyleCategory.textPressable}>{option.name}</Text>
+                        <TouchableOpacity onPress={() => pickOption(option._id)}>
+                            {category==option._id ? <Icon name='checkmark-circle-sharp' size={24} color={'green'} /> : <Icon name='checkmark-circle-outline' size={24} color={'black'} />}
                         </TouchableOpacity>
                     </View>
                     <View style={{ borderBottomWidth: 1, marginBottom: 5, borderBottomColor: '#EDEDED' }}></View>

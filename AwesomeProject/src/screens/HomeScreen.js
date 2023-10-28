@@ -22,7 +22,7 @@ const HomeScreen = (props) => {
   useEffect(() => {
     const getcategoryData1 = async()=>{
       const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+"clothing"+"&limitData="+2+"&skipData="+0);
-      // console.log(response+"CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCc");
+      console.log(response);
 
       if(response.result)
       {
@@ -31,7 +31,7 @@ const HomeScreen = (props) => {
     }
     const getcategoryData2 = async()=>{
       const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+"hello"+"&limitData="+2+"&skipData="+0);
-      // console.log(response+"BBBBBBBBBBBBBBBBBBBBBBBBB");
+      console.log(response+"BBBBBBBBBBBBBBBBBBBBBBBBB");
 
       if(response.result)
       {
@@ -40,7 +40,7 @@ const HomeScreen = (props) => {
     }
     const getcategoryData3 = async()=>{
       const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+"pants"+"&limitData="+2+"&skipData="+0);
-      // console.log(response+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      console.log(response+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
       if(response.result)
       {
         setcategoryData3(response.products);
@@ -136,6 +136,7 @@ const HomeScreen = (props) => {
             OpacitySecondText={0.5}
           />
           <ProductList
+          infinitiveScroll={false}
             data={categoryData1}
             styleView={{
               width: '100%',
@@ -152,6 +153,8 @@ const HomeScreen = (props) => {
             <Text style={styleHome.text}>See all</Text>
           </View>
           <ProductList
+                    infinitiveScroll={false}
+
             data={categoryData1}
             styleView={{
               width: '100%',
@@ -169,6 +172,8 @@ const HomeScreen = (props) => {
             <Text style={styleHome.text}>See all</Text>
           </View>
           <ProductList
+                    infinitiveScroll={false}
+
             data={categoryData2}
             styleView={{
               width: '100%',
