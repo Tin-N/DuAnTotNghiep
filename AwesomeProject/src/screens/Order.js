@@ -1,17 +1,15 @@
 import { StyleSheet, Text, View, Image, Pressable, FlatList, TouchableOpacity, Switch, Alert } from 'react-native'
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useCallback } from 'react'
 import { AppContext } from '../utils/AppContext'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 import { StyleCategory, StyleOrder } from '../css/Styles'
 import OrderItem from './OrderItem'
-const ObjectID = require('bson-objectid');
-
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import AxiosIntance from '../utils/AxiosIntance'
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+const ObjectID = require('bson-objectid');
 
 const Order = () => {
   // const { isOrder } = useContext(AppContext);
@@ -20,7 +18,7 @@ const Order = () => {
   const [isCheck, setisCheck] = useState([]);
 
   const [isCheckBox, setisCheckBox] = useState(false);
-  const [grandTotal, setgrandTotal] = useState();
+  const [grandTotal, setgrandTotal] = useState(0);
   const [products, setproducts] = useState([]);
 
   // View thông báo khi giỏ hàng trống
@@ -44,10 +42,10 @@ const Order = () => {
         renderItem={
           ({ item }) =>
             <OrderItem data={item}
-              itemSelectedData={itemFromOrderItem}
-              itemDeselectedData={itemDeselectedFromOrderItem}
-              updateItemData={updateItemSelected}
-              newData={products}
+              itemSelectedData={handleItemSeletedFromOrderItem}
+              itemDeselectedData={handleItemDeselectedFromOrderItem}
+              updateItemData={handleUpdateItemSelected}
+
             />
         }
         keyExtractor={item => item.productID}
@@ -55,17 +53,18 @@ const Order = () => {
     )
   }
 
-  const itemFromOrderItem = (productsReceived) => {
+  const handleItemSeletedFromOrderItem = useCallback((productsReceived) => {
     setproducts([...products, productsReceived]);
 
-    console.log(productsReceived)
-  }
+    console.log("Product được callback: " + productsReceived)
 
-  const itemDeselectedFromOrderItem = (productIDReceived) => {
+  }, [products])
+
+  const handleItemDeselectedFromOrderItem = useCallback((productIDReceived) => {
     setproducts(products => products.filter(product => product.productID !== productIDReceived));
-  }
+  }, [products])
 
-  const updateItemSelected = (productID, quantity, itemTotalCost) => {
+  const handleUpdateItemSelected = useCallback((productID, quantity, itemTotalCost) => {
     // Sao chép mảng sản phẩm hiện tại để tránh thay đổi trực tiếp state
     const updatedProducts = [...products];
 
@@ -82,38 +81,38 @@ const Order = () => {
     } else {
       return;
     }
-  }
+  }, [products])
 
   const updatedSampleData = sampleData.filter((sampleItem) => {
     return !products.some((productItem) => productItem.productID === sampleItem.productID);
-  });
+  }, [sampleData]);
 
   // Hàm xử lý chức năng đặt hàng
   const OrderFunc = async () => {
     console.log("-------------------------------------------------")
     try {
-      console.log("Current Products After: " + products)
+      console.log("Current Products" + products)
 
       // Sử dụng reduce để tính tổng itemTotalCost của tất cả các mục trong mảng products
-      const total = products.reduce((accumulator, product) => {
-        return accumulator + product.itemTotalCost;
+      const total = products.reduce((prevTotalValue, product) => {
+        return prevTotalValue + product.itemTotalCost;
       }, 0);
+      // Cập nhật giá trị grandTotal
+      console.log("Total: " + total)
 
       // Xóa dữ liệu truyền vào
       updatedSampleData;
 
-      // Cập nhật giá trị grandTotal
-      setgrandTotal(total);
       const objectId = new ObjectID();
       console.log(objectId)
-      const orderDetailResponse = await AxiosIntance().post('/orderdetail/add', { orderDetailID: objectId, products: products, totalCost: grandTotal });
+      const orderDetailResponse = await AxiosIntance().post('/orderdetail/add', { orderDetailID: objectId, products: products, totalCost: total });
 
       console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
 
       const OrderPost = async () => {
         if (orderDetailResponse.error == false) {
           const orderResponse = await AxiosIntance().post('/order/add', { orderDetailID: objectId, orderDate: new Date() });
-          console.log("Đặt hàng thành công, Order ID: " + orderResponse.orderDetailID);
+          console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
         }
       }
 
@@ -132,10 +131,7 @@ const Order = () => {
             text: 'OK', // Chữ hiển thị trên nút OK
             onPress: () => {
               // Xử lý khi người dùng chọn "OK"
-              setTimeout(() => {
-                OrderPost();
-              }, 500);
-
+              OrderPost();
             },
           },
         ]

@@ -5,10 +5,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AxiosIntance from '../utils/AxiosIntance';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import {memo} from "react"
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const OrderItem = (props) => {
+const OrderItem = memo ((props) => {
     const { data, itemSelectedData, itemDeselectedData, updateItemData, newData } = props;
     const [quantity, setQuantity] = useState(data.quantity);
     const [productName, setProductName] = useState('Tên Sản Phẩm');
@@ -163,7 +162,7 @@ const OrderItem = (props) => {
             </View>
         </View>
     );
-};
+});
 
 export default OrderItem;
 
