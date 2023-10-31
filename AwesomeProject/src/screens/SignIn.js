@@ -7,17 +7,50 @@ import {
   SafeAreaView,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState,useContext, ToastAndroid, } from 'react';
 import {COLOR} from '../css/Theme';
 import {Image} from 'react-native';
 const {width} = Dimensions.get('window');
 import {StyleSheet} from 'react-native';
 import {StyleLogin} from '../css/Styles.js';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
-
+import AxiosIntance from '../utils/AxiosIntance';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import {UserContext} from '../utils/Context';
+import {useNavigation} from '@react-navigation/native'
+import { AppContext } from '../utils/AppContext';
 const SignIn = () => {
   const [show, setshow] = useState(true);
   const [visible, setvisible] = useState(true);
+  const [showPassword, setShowPassword] = useState(true);
+  const [emailUser, setEmailUser] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const {setisLogin}= useContext(AppContext);
+  const {setuserInfo}= useContext(AppContext);
+  const navigation=useNavigation();
+
+  const Signin = async () => {
+    try {
+      const response= await AxiosIntance().post("/UserApi/login?email="+ emailUser + "&password="+ password);
+      // console.log(emailUser, password );
+      if(response.user)
+      {
+        console.log(emailUser, password );
+        // await AsyncStorage.setItem("token",response.returnData.data.token);
+        // ToastAndroid.show("Đăng nhập ",ToastAndroid.SHORT);
+        // ToastAndroid.show("Đăng nhập thành công",ToastAndroid.SHORT);
+        setisLogin(true);
+        setuserInfo(response.user);
+        navigation.navigate('Product');
+        console.log(response);
+
+      }else{
+        // ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <View>
@@ -36,6 +69,7 @@ const SignIn = () => {
             style={StyleLogin.TextInputUP}
             placeholder="Clavi@gmail.com"
             keyboardType="default"
+            onChangeText={setEmailUser}
           />
         </View>
       </View>
@@ -48,17 +82,18 @@ const SignIn = () => {
             style={StyleLogin.TextInputUP}
             placeholder="Enter your password"
             underlineColorAndroid="transparent"
-            secureTextEntry={visible}></TextInput>
+            secureTextEntry={showPassword}
+            onChangeText={setPassword}
+            ></TextInput>
 
           <TouchableOpacity
             onPress={() => {
-              setvisible(!visible);
-              setshow(!show);
+             setShowPassword(!showPassword)
             }}
             style={StyleLogin.CTIcon}>
             <Image
               source={
-                show === false
+                showPassword === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }
@@ -72,7 +107,7 @@ const SignIn = () => {
         </TouchableOpacity>
         
 
-        <TouchableOpacity style={StyleLogin.buttonShape}>
+        <TouchableOpacity style={StyleLogin.buttonShape} onPress={Signin}>
           <Text style={StyleLogin.TextButton}>Sign In</Text>
         </TouchableOpacity>
         <Text style={StyleLogin.text}>Or</Text>
