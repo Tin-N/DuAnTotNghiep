@@ -10,16 +10,34 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import AxiosIntance from '../utils/AxiosIntance'
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 const ObjectID = require('bson-objectid');
+import { memo } from "react"
 
 const Order = () => {
   // const { isOrder } = useContext(AppContext);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  const [isCheck, setisCheck] = useState([]);
 
   const [isCheckBox, setisCheckBox] = useState(false);
-  const [grandTotal, setgrandTotal] = useState(0);
   const [products, setproducts] = useState([]);
+  const [total, settotal] = useState(0)
+
+  const [userCart, setuserCart] = useState()
+  const userID = "5f87cf3a2a3a2f45babc64c3";
+
+  console.log(">>>>> Order.js Render <<<<<")
+
+
+  // Lấy dữ liệu giỏ hàng của user
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await AxiosIntance().get(`/cart/getCartByUserID/${userID}`);
+        setuserCart(response[0].products);
+      } catch (error) {
+        console.log("Lỗi lấy dữ liệu: " + error)
+      }
+    })();
+  }, []);
 
   // View thông báo khi giỏ hàng trống
   const MyCartIsEmpty = () => {
@@ -33,12 +51,11 @@ const Order = () => {
       </View>
     )
   }
-
   // View giỏ hàng
   const MyCart = () => {
     return (
       <FlatList
-        data={sampleData}
+        data={userCart}
         renderItem={
           ({ item }) =>
             <OrderItem data={item}
@@ -56,8 +73,7 @@ const Order = () => {
   const handleItemSeletedFromOrderItem = useCallback((productsReceived) => {
     setproducts([...products, productsReceived]);
 
-    console.log("Product được callback: " + productsReceived)
-
+    console.log("Product đã chọn " + productsReceived)
   }, [products])
 
   const handleItemDeselectedFromOrderItem = useCallback((productIDReceived) => {
@@ -65,27 +81,30 @@ const Order = () => {
   }, [products])
 
   const handleUpdateItemSelected = useCallback((productID, quantity, itemTotalCost) => {
-    // Sao chép mảng sản phẩm hiện tại để tránh thay đổi trực tiếp state
-    const updatedProducts = [...products];
+    const cloneProducts = [...products];
 
-    // Tìm sản phẩm có productID trùng khớp trong mảng
-    const existingProductIndex = updatedProducts.findIndex(item => item.productID === productID);
+    const existingProductIndex = cloneProducts.findIndex(item => item.productID === productID);
 
     if (existingProductIndex !== -1) {
-      // Nếu có sản phẩm trùng khớp, cập nhật quantity và itemTotalCost
-      updatedProducts[existingProductIndex].quantity = quantity;
-      updatedProducts[existingProductIndex].itemTotalCost = itemTotalCost;
+      cloneProducts[existingProductIndex].quantity = quantity;
+      cloneProducts[existingProductIndex].itemTotalCost = itemTotalCost;
 
-      // Cập nhật state với danh sách sản phẩm mới
-      setproducts(updatedProducts);
+      setproducts(cloneProducts);
     } else {
       return;
     }
   }, [products])
 
-  const updatedSampleData = sampleData.filter((sampleItem) => {
-    return !products.some((productItem) => productItem.productID === sampleItem.productID);
-  }, [sampleData]);
+  // Tính tổng tiền
+  useEffect(() => {
+    // Sử dụng reduce để tính tổng itemTotalCost của tất cả các mục trong mảng products
+    settotal(products.reduce((prevTotalValue, product) => {
+      console.log(">>>>>>>>>>" + product.itemTotalCost)
+      return prevTotalValue + product.itemTotalCost;
+    }, 0))
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>" + products.itemTotalCost)
+    console.log("Total: " + total)
+  }, [products])
 
   // Hàm xử lý chức năng đặt hàng
   const OrderFunc = async () => {
@@ -93,25 +112,15 @@ const Order = () => {
     try {
       console.log("Current Products" + products)
 
-      // Sử dụng reduce để tính tổng itemTotalCost của tất cả các mục trong mảng products
-      const total = products.reduce((prevTotalValue, product) => {
-        return prevTotalValue + product.itemTotalCost;
-      }, 0);
-      // Cập nhật giá trị grandTotal
-      console.log("Total: " + total)
-
-      // Xóa dữ liệu truyền vào
-      updatedSampleData;
-
       const objectId = new ObjectID();
       console.log(objectId)
+      
       const orderDetailResponse = await AxiosIntance().post('/orderdetail/add', { orderDetailID: objectId, products: products, totalCost: total });
-
       console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
 
       const OrderPost = async () => {
         if (orderDetailResponse.error == false) {
-          const orderResponse = await AxiosIntance().post('/order/add', { orderDetailID: objectId, orderDate: new Date() });
+          const orderResponse = await AxiosIntance().post('/order/add', { orderDetailID: objectId, orderDate: new Date(), deliveryStatus: 'Pending' });
           console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
         }
       }
@@ -131,7 +140,10 @@ const Order = () => {
             text: 'OK', // Chữ hiển thị trên nút OK
             onPress: () => {
               // Xử lý khi người dùng chọn "OK"
-              OrderPost();
+              OrderPost().then(() => {
+                setproducts([]);
+                // Hàm xóa dữ liệu trên cart của user sẽ được thêm ở đây
+              });
             },
           },
         ]
@@ -156,7 +168,7 @@ const Order = () => {
 
       {/* co san pham thi hien list san pham khong thi hien hinh anh */}
       <View style={{ height: 500 }}>
-        <MyCart />
+        {!userCart ? <MyCartIsEmpty /> : <MyCart />}
       </View>
 
 
@@ -165,7 +177,9 @@ const Order = () => {
         <View style={{ bottom: 100 }}>
           <View style={StyleOrder.tillte}>
             <Image source={require('../images/cost.png')} />
-            <Text style={StyleOrder.textTillte}>Bạn chưa có sản phầm nào</Text>
+            {total == 0
+              ? <Text style={StyleOrder.textTillte}>Bạn chưa chọn sản phầm nào</Text>
+              : <Text style={StyleOrder.textTillte}>Bạn đã chọn {products.length} sản phẩm</Text>}
             <Switch
               trackColor={{ false: '#767577', true: '#3669C9' }}
               thumbColor={isEnabled ? '#18039E' : '#f4f3f4'}
@@ -180,7 +194,7 @@ const Order = () => {
               onPress={() => setisCheckBox(!isCheckBox)}
               iconComponent={isCheckBox ? <MaterialIcons name='check-box' size={24} color={'#3669C9'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
             />
-            <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: {grandTotal}</Text>
+            <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: {total}</Text>
 
             <Pressable onPress={OrderFunc} style={StyleOrder.pressableBuy}>
               <Text style={[StyleOrder.textTillte, { color: 'white', marginTop: 5 }]}>Mua Hàng</Text>
@@ -191,19 +205,4 @@ const Order = () => {
     </View>
   )
 }
-export default Order
-
-const sampleData = [
-  {
-    productID: '65291577c199df71b460f143',
-    quantity: 1,
-  },
-  {
-    productID: '6529164fc199df71b460f15a',
-    quantity: 1,
-  },
-  {
-    productID: '65291733c199df71b460f190',
-    quantity: 1,
-  },
-];
+export default memo(Order);

@@ -1,26 +1,28 @@
 import { StyleSheet, Text, View, Image, Pressable, ToastAndroid, Alert } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { StyleOrder } from '../css/Styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AxiosIntance from '../utils/AxiosIntance';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import {memo} from "react"
+import { memo } from "react"
 
-const OrderItem = memo ((props) => {
-    const { data, itemSelectedData, itemDeselectedData, updateItemData, newData } = props;
+const OrderItem = (props) => {
+    const { data, itemSelectedData, itemDeselectedData, updateItemData } = props;
     const [quantity, setQuantity] = useState(data.quantity);
     const [productName, setProductName] = useState('Tên Sản Phẩm');
     const [imageUri, setImageUri] = useState();
     const [categoryID, setCategoryID] = useState('Gán');
-    const [isCheck, setIsCheck] = useState(false);
+    const [isCheck, setIsCheck] = useState(false); // chọn sản phẩm
     const [productPrice, setproductPrice] = useState(50)
     let itemTotalCost = quantity * productPrice;
 
+    // console.log("Item Rendered: " + data.productID);
     useEffect(() => {
         (async () => {
             try {
                 const response = await AxiosIntance().get(`/productAPI/getProductByID?id=${data.productID}`);
+                console.log("Response: " + response)
                 if (response.result == true) {
                     setProductName(response.products.name);
                     setproductPrice(response.products.price)
@@ -31,29 +33,9 @@ const OrderItem = memo ((props) => {
                 console.log("lỗi lấy dữ liệu: " + error)
             }
         })();
-    }, [data.productID]);
+    }, []);
 
-    // const setNewDataAfterReRender = (productID) => {
-    //     // Sao chép mảng sản phẩm hiện tại để tránh thay đổi trực tiếp state
-    //     const newProductsInfo = [...newData.products];
-    //     console.log(">>>>>>>>>>>>>>" + newProductsInfo.quantity)
-
-    //     // Tìm sản phẩm có productID trùng khớp trong mảng
-    //     const existingProductIndex = newProductsInfo.findIndex(item => item.productID === productID);
-
-    //     if (existingProductIndex !== -1) {
-    //         const newQuantity = newProductsInfo[existingProductIndex].quantity;
-    //         setQuantity(newQuantity);
-
-    //         // Tính toán itemTotalCost dựa vào newQuantity và productPrice (bạn cần có productPrice ở đâu đó)
-    //         let newItemTotalCost = newQuantity * productPrice;
-    //         // Sử dụng newItemTotalCost khi cần thiết, ví dụ:
-    //         itemTotalCost = itemTotalCost;
-    //         console.log('New Item Total Cost:', newItemTotalCost);
-    //     }
-    // };
-
-    const increaseQuantity = (productID, quantity, itemTotalCost) => {
+    const increaseQuantity = useCallback((productID, quantity) => {
         try {
             console.log("Tăng số lượng");
             let newQuantity = quantity + 1;
@@ -61,14 +43,13 @@ const OrderItem = memo ((props) => {
             const newItemTotalCost = newQuantity * productPrice
             updateItemData(productID, newQuantity, newItemTotalCost)
             console.log(data.productID, newQuantity, newItemTotalCost);
-            // setNewDataAfterReRender(productID)
         } catch (error) {
             console.log(error);
             throw error
         }
-    };
+    }, []);
 
-    const decreaseQuantity = async (productID, quantity) => {
+    const decreaseQuantity = useCallback((productID, quantity) => {
         if (quantity > 1) {
             try {
                 console.log("Giảm số lượng");
@@ -87,9 +68,9 @@ const OrderItem = memo ((props) => {
                 { text: 'OK', onPress: () => "Đây sẽ là chức năng xóa trong tương lai" },
             ]);
         }
-    };
+    }, []);
 
-    const itemSelectedProcess = (productID, quantity, itemTotalCost) => {
+    const itemSelectedProcess = useCallback((productID, quantity, itemTotalCost) => {
         try {
             let products = {
                 productID: productID,
@@ -101,16 +82,16 @@ const OrderItem = memo ((props) => {
             console.error('Lỗi khi xử lý sản phẩm:', error);
             throw error;
         }
-    };
+    }, []);
 
-    const itemDeSelectedProcess = (productID) => {
+    const itemDeSelectedProcess = useCallback((productID) => {
         try {
             itemDeselectedData(productID)
         } catch (error) {
             console.error('Lỗi khi xử lý bỏ chọn sản phẩm:', error);
             throw error;
         }
-    };
+    }, []);
 
     return (
         <View style={StyleOrder.header}>
@@ -146,11 +127,11 @@ const OrderItem = memo ((props) => {
             </View>
 
             <View style={[StyleOrder.header, StyleOrder.function]}>
-                <Pressable onPress={() => decreaseQuantity(data.productID, quantity, itemTotalCost)}>
+                <Pressable onPress={() => decreaseQuantity(data.productID, quantity)}>
                     <Icon name='trash-outline' size={24} />
                 </Pressable>
                 <Text>{quantity}</Text>
-                <Pressable onPress={() => increaseQuantity(data.productID, quantity, itemTotalCost)}>
+                <Pressable onPress={() => increaseQuantity(data.productID, quantity)}>
                     <Icon name='add' size={24} />
                 </Pressable>
             </View>
@@ -162,8 +143,8 @@ const OrderItem = memo ((props) => {
             </View>
         </View>
     );
-});
+};
 
-export default OrderItem;
+export default memo(OrderItem);
 
 const styles = StyleSheet.create({});
