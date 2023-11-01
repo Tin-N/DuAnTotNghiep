@@ -2,13 +2,16 @@ import { StyleSheet, Text, View, FlatList, TextInput, Pressable, ToastAndroid } 
 import React, { useState, useEffect } from 'react'
 import CategoryManagerItem from './CategoryManagerItem'
 import AxiosIntance from '../utils/AxiosIntance';
-import { StyleOrder } from '../css/Styles';
+import { StyleOrder, SytleCategoryManager } from '../css/Styles';
 
 
 const CategoryManager = () => {
   const [categoryManager, setcategoryManager] = useState([]);
+
   const [categoryManagerName, setcategoryManagerName] = useState({});
+
   const [changeCategoryManager, setchangeCategoryManager] = useState(false);
+
   useEffect(() => {
     const getCategoryManager = async () => {
       const reponse = await AxiosIntance().get('/Category/getCategory');
@@ -21,11 +24,15 @@ const CategoryManager = () => {
     }
   }, [changeCategoryManager])
 
-  const addCategoryManager = async () => {
-    if (categoryManagerName != "") {
+  console.log(categoryManager);
+
+  const addCategoryManager = async () => { 
+    console.log(categoryManager.name);
+    if (categoryManagerName != "" && categoryManagerName != categoryManager.name) {
       const reponse = await AxiosIntance().post('/Category/addCategory', { name: categoryManagerName });
       if (reponse) {
         changeCategoryManagerFun();
+        setcategoryManagerName("")
         ToastAndroid.show('Thêm thành công', ToastAndroid.SHORT);
       } else {
         ToastAndroid.show('Thêm thất bại', ToastAndroid.SHORT);
@@ -39,20 +46,20 @@ const CategoryManager = () => {
   }
 
   return (
-    <View style={{ flexDirection: 'column', height: 760, justifyContent: 'space-between', }}>
-      <View style={{borderWidth: 0.2, borderRadius: 5,  margin: 5, padding: 5}}>
+    <View style={SytleCategoryManager.container}>
+      <View style={SytleCategoryManager.viewTop}>
+        <TextInput placeholder= 'Danh mục' onChangeText={setcategoryManagerName} style={SytleCategoryManager.textInput}/>
+        <Pressable onPress={addCategoryManager} style={SytleCategoryManager.pressable} >
+          <Text style={SytleCategoryManager.textPressable}>Thêm</Text>
+        </Pressable>
+      </View>
+
+      <View>
         <FlatList
           data={categoryManager}
           renderItem={({ item }) => <CategoryManagerItem dulieu1={[item]} changeCategoryManager={changeCategoryManagerFun} />}
           keyExtractor={item => item._id}
         />
-      </View>
-
-      <View style={{flexDirection: 'row',}}>
-        <TextInput placeholder='Danh mục' onChangeText={setcategoryManagerName} style={{width:'75%', borderWidth: 0.2, borderRadius: 5, padding: 0.2}}/>
-        <Pressable onPress={addCategoryManager} style={StyleOrder.pressable} >
-          <Text>Thêm</Text>
-        </Pressable>
       </View>
     </View>
   )

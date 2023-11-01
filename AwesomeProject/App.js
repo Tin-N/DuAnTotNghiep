@@ -36,8 +36,8 @@ const App = () => {
     //     <AppNavigator/>
     //   </NavigationContainer>
     // </AppContextProvider>
-    <CategoryManager/>
-    // <CensorshipProduct/>
+    // <CategoryManager/>
+     <CensorshipProduct/> // shop: ten, anh | product: detail | ko duyet: thong bao ko duyet | giao dien
   )
 }
 

@@ -9,7 +9,7 @@ const CensorshipProduct = () => {
     useEffect(() => {
         const getCensorshipProduct = async () => {
             const reponse = await AxiosIntance().get('/productAPI/get-product-censorship');
-            console.log(reponse.product);
+            
             if (reponse) {
                 setcensorshipProduct(reponse.product);
             }
@@ -26,7 +26,7 @@ const CensorshipProduct = () => {
 
     return (
         <View>
-            <FlatList style={{ height: 370 }}
+            <FlatList
                 data={censorshipProduct}
                 renderItem={({ item }) => <CensorshipProductItem dulieu1={item} changeCensorshipProductFun={changeCensorshipProductFun}/>}
                 keyExtractor={item => item._id}
