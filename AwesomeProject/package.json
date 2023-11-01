@@ -24,9 +24,12 @@
     "node-modules": "^1.0.1",
     "react": "18.1.0",
     "react-native": "0.70.0",
+    "react-native-color-picker": "^0.6.0",
+    "react-native-color-wheel": "^0.1.7",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-gesture-handler": "^2.13.1",
     "react-native-image-picker": "^7.0.2",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-masonry-list": "^2.16.1",
     "react-native-modal": "^13.0.1",
@@ -38,7 +41,9 @@
     "react-native-star-rating-widget": "^1.7.2",
     "react-native-svg": "^13.14.0",
     "react-native-swiper": "^1.6.0",
-    "react-native-vector-icons": "^10.0.0"
+    "react-native-vector-icons": "^10.0.0",
+    "react-slider": "^2.0.6",
+    "reanimated-color-picker": "^2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

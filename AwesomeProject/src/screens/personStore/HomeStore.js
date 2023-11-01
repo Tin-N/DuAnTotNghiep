@@ -4,8 +4,7 @@ import { StyleHomeStore, StyleLogin } from '../../css/Styles'
 import { FlatList } from 'react-native';
 import ItemHomeStore from './ItemHomeStore';
 import { ScrollView } from 'react-native';
-import AxiosIntance from '../../utils/AxiosIntance';
-import { LogBox } from 'react-native';
+import AxiosIntance from '../../utils/AxiosIntance';import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const HomeStore = (props) => {
@@ -25,14 +24,25 @@ const HomeStore = (props) => {
                 }
             }
             getAllProductByUserID();
-        } catch (error) {  
-            throw error       
-        }  
+        } catch (error) {
+            throw error
+        }
         return () => {
         }
     }, [])
+    const createHandler = () => {
+        navigation.navigate('CreateProduct');
+    }
     return (
         <View>
+            <TouchableOpacity onPress={createHandler} style={{
+                height: 50, width: 50,
+                borderRadius: 25, backgroundColor: '#3669C9',
+                position: 'absolute', bottom: 80, zIndex: 5, alignItems: 'center',
+                justifyContent: 'center', right: 0, margin: 10
+            }}>
+                <Text style={{ fontSize: 30, color: 'white' }}>+</Text>
+            </TouchableOpacity>
             <View style={StyleHomeStore.menu}>
                 <Image source={require('../../images/backic.png')} />
                 <Text style={StyleHomeStore.textTitle}>
@@ -119,15 +129,10 @@ const HomeStore = (props) => {
                         numColumns={columns}
                         bounces={false}
                         nestedScrollEnabled={true}
-                        renderItem={({ item }) => <ItemHomeStore dulieu={item} navigation={navigation}/>}
+                        renderItem={({ item }) => <ItemHomeStore dulieu={item} navigation={navigation} />}
                         keyExtractor={item => item._id}
                     />
                 </View>
-                {/* <TouchableOpacity style={{height:50, width:50, 
-                    borderRadius:25, 
-                    backgroundColor:'#3669C9', position:'absolute', }}>
-
-                </TouchableOpacity> */}
             </ScrollView>
         </View>
     )

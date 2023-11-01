@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ImageBackground, Modal } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { StyleDetailProduct } from '../../css/Styles'
 import { Dimensions } from 'react-native';
@@ -10,6 +10,7 @@ import { ScrollView, FlatList } from 'react-native';
 import StarRating from 'react-native-star-rating-widget';
 import StarRatingDisplay from 'react-native-star-rating-widget';
 import ItemFeedBack from './ItemFeedBack';
+import { StyleDialogShopping } from '../../css/Styles';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
@@ -22,10 +23,12 @@ const DetailProduct = (props) => {
     const [imageProduct, setImageProduct] = useState('');
     const [dataFeedback, setDataFeedback] = useState([]);
     const [dataColor, setDataColor] = useState([]);
+    const [dataSize, setDataSize] = useState([]);
     const [detail, setDetail] = useState('');
     const [feedbackLength, setFeedbackLenght] = useState();
     const [percentRating, setPercentRating] = useState(0);
     const [heart, setHeart] = useState(false);
+    const [isDialogVisible, setDialogVisible] = useState(false);
     const heartHandler = () => {
         setHeart(!heart);
     }
@@ -40,14 +43,14 @@ const DetailProduct = (props) => {
     };
     useEffect(() => {
         navigation.getParent()?.setOptions({
-          tabBarStyle: {
-            display: "none"
-          }
+            tabBarStyle: {
+                display: "none"
+            }
         });
         return () => navigation.getParent()?.setOptions({
-          tabBarStyle: undefined
+            tabBarStyle: undefined
         });
-      }, [navigation]);
+    }, [navigation]);
     useEffect(() => {
         const getDetails = async () => {
             const response = await AxiosIntance().get('/productAPI/getProductByID?id=' + params.itemId);
@@ -105,12 +108,86 @@ const DetailProduct = (props) => {
                 setDataColor(response.color)
             }
         }
+        const getSizeByProductID = async () => {
+            const response = await AxiosIntance().get('/Options/sizeAPI/getSizeByProductId?productID=' + params.itemId)
+            if (response.result == true) {
+                setDataSize(response.size)
+            }
+        }
         getColorByProductID();
         getDetails();
         getFeedback();
+        getSizeByProductID();
         return () => {
         }
     }, [])
+    const MyDialog = ({ isVisible, onClose }) => {
+        return (
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={isVisible}
+                onRequestClose={() => {
+                    onClose();
+                }}
+            >
+                <View style={StyleDialogShopping.containerShopping}>
+                    <TouchableOpacity onPress={onClose} style={{ right: 0, margin: 10, position: 'absolute', top: 0 }} >
+                        <Image source={require('../../images/close.png')} />
+                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', padding: 10 }}>
+                        <Image style={{ width: 100, height: 100, borderRadius: 5 }} source={imageProduct ? { uri: imageProduct } : null} />
+                        <View style={{ marginLeft: 10 }}>
+                            <View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{
+                                        marginLeft: 0, fontSize: 30,
+                                        color: '#3669C9', fontWeight: 'bold'
+                                    }}>
+                                        {formatPrice(productPrice)}
+                                    </Text>
+                                    <Text style={{ marginLeft: 0, fontSize: 20, color: '#3669C9', marginLeft: 4, paddingTop: 8 }}>
+                                        đ
+                                    </Text>
+                                </View>
+                                <Text style={{ fontSize: 20, textDecorationLine: 'line-through' }}>
+                                    199.000 đ
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={StyleDialogShopping.line}>
+                    </View>
+                    <View>
+                        {
+                            dataColor.length > 0 ?
+                                <View style={{ padding: 10 }}>
+                                    <Text style={{ fontSize: 23, color: 'black' }}>Nhóm màu</Text>
+                                    <View style={{ flexDirection: 'row', marginTop: 10, flexWrap: 'wrap' }}>
+                                        {dataColor.map(item => (
+                                            <View key={item._id} style={{
+                                                margin: 5,
+                                                justifyContent: 'center',
+                                                alignItems: 'center', borderWidth: 1, borderRadius: 5, overflow: 'hidden',
+                                                backgroundColor:'#f7f5f5'
+                                            }}>
+                                                <Image style={{ width: 110, height: 100 }} source={item.image ? { uri: item.image } : null} />                               
+                                                    <Text style={{
+                                                        height: 30, textAlign: 'center',
+                                                        paddingTop: 5, width:'auto'
+                                                    }}>{item.title}
+                                                    </Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                </View>
+                                : <View />
+                        }
+                    </View>
+                </View>
+            </Modal>
+        );
+    };
     return (
         <View style={{ height: 785, backgroundColor: 'white' }}>
             <View style={StyleDetailProduct.menu}>
@@ -227,10 +304,11 @@ const DetailProduct = (props) => {
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', marginLeft: 10 }}>
-                    <TouchableOpacity style={StyleDetailProduct.touchOpa}>
+                    <TouchableOpacity onPress={() => setDialogVisible(true)} style={StyleDetailProduct.touchOpa}>
                         <Text style={StyleDetailProduct.textButton}>
                             Buy Now
                         </Text>
+                        <MyDialog isVisible={isDialogVisible} onClose={() => setDialogVisible(false)} />
                     </TouchableOpacity>
                     <LinearGradient
                         start={{ x: 0, y: 0.5 }} // Điểm bắt đầu của gradient (trái)

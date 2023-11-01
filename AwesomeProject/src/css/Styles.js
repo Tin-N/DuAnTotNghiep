@@ -63,7 +63,7 @@ export const StyleSearchSuggestions = StyleSheet.create({
 });
 export const StyleHomeStore = StyleSheet.create({
     menu: {
-        paddingTop: 50,
+        paddingTop: 30,
         flexDirection: 'row',
         marginLeft: 30,
         marginRight: 30,
@@ -420,17 +420,36 @@ export const StyleDetailFeedback = StyleSheet.create({
 })
 export const StyleDialogShopping = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: 'white',
-        marginTop: 200,
-        marginBottom: 30,
+        flex:1,
+        marginTop: 250,
         borderRadius: 5,
+        marginLeft:30,
+        marginRight:30,
+        backgroundColor:'white',
+        padding:10, borderWidth:1, height: 'auto'
     },
     line: {
         borderWidth: 1,
         opacity: 0.03,
         marginTop: 20
     },
+    container2: {
+        flex: 1,
+        marginTop: 300,
+        borderRadius: 5,
+        marginLeft:30,
+        marginRight:30,
+        backgroundColor:'white',
+        padding:10, borderWidth:1, height:150
+    },
+    containerShopping: {
+        flex:1,
+        marginTop: 150,
+        borderTopLeftRadius: 10, borderTopRightRadius:10,
+        backgroundColor:'white',
+        padding:10, borderWidth:1
+    }
+
 
 })
 export const StyleOrder = StyleSheet.create({

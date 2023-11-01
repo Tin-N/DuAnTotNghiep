@@ -7,7 +7,6 @@ const Opacity = () => {
 const DialogShopping = () => {
     const MyDialog = ({ isVisible, onClose }) => {
         return (
-
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -39,8 +38,6 @@ const DialogShopping = () => {
                     </View>
                 </View>
             </Modal>
-
-
         );
     };
     const [isDialogVisible, setDialogVisible] = useState(false);

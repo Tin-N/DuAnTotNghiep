@@ -7,6 +7,7 @@ import { FlatList } from 'react-native';
 import ItemFeedBack from './ItemFeedBack';
 import { ScrollView } from 'react-native';
 import AxiosIntance from '../../utils/AxiosIntance';
+import StarRating from 'react-native-star-rating-widget';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
@@ -28,21 +29,22 @@ const DetailFeedback = (props) => {
     const [percentRating3, setpercentRating3] = useState(0);
     const [percentRating4, setpercentRating4] = useState(0);
     const [percentRating5, setpercentRating5] = useState(0);
+    const [rating, setRating] = useState(0);
     const onHandle = () => {
         navigation.goBack();
     }
     useEffect(() => {
-            const getFeedback = async () => {
-                const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId);
-                if (response.result == true) {
-                    setDataFeedback(response.feedbacks);
-                    ToastAndroid.show('Lấy feedback thành công', ToastAndroid.SHORT);
-                    // setFeedbackLenght(response.feedbacks.length);
-                } else {
-                    ToastAndroid.show('Lấy feedback thất bại', ToastAndroid.SHORT);
-                }
+        const getFeedback = async () => {
+            const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId);
+            if (response.result == true) {
+                setDataFeedback(response.feedbacks);
+                ToastAndroid.show('Lấy feedback thành công', ToastAndroid.SHORT);
+                // setFeedbackLenght(response.feedbacks.length);
+            } else {
+                ToastAndroid.show('Lấy feedback thất bại', ToastAndroid.SHORT);
             }
-            getFeedback();
+        }
+        getFeedback();
         return () => {
         }
     }, [params.itemId])
@@ -89,7 +91,7 @@ const DetailFeedback = (props) => {
                 setlengthFeedback(dataFeedback.length);
             }
             countRating();
-        }else if(dataFeedback.length == 0){
+        } else if (dataFeedback.length == 0) {
             setpercentRating(0)
             setpercentRating1(0)
             setpercentRating2(0)
@@ -105,9 +107,8 @@ const DetailFeedback = (props) => {
         }
         return () => {
         }
-        
-    }, [dataFeedback])
 
+    }, [dataFeedback])
     return (
         <View>
             <View style={StyleDetailFeedback.menu}>
@@ -117,10 +118,6 @@ const DetailFeedback = (props) => {
 
                 <Text style={StyleDetailFeedback.textTitle}>
                     Đánh Giá
-                </Text>
-                <Image style={{ marginLeft: 80 }} source={require('../../images/star.png')} />
-                <Text>
-                    {percentRating}
                 </Text>
             </View>
             <View style={StyleDetailFeedback.line}></View>
@@ -184,8 +181,8 @@ const DetailFeedback = (props) => {
                         showsHorzontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) => <ItemFeedBack dataFeedback={item} />}
-                        keyExtractor={item => item._id} 
-                        ItemSeparatorComponent={Separator}/>
+                        keyExtractor={item => item._id}
+                        ItemSeparatorComponent={Separator} />
                     <TouchableOpacity style={StyleDetailFeedback.touchOpa}>
                         <Text style={{ fontWeight: 'bold' }}>
                             See more
