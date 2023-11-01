@@ -33,7 +33,7 @@ const User = () => {
 
 const ProductHome = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProductList'>
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='HomeStore'>
             <Stack.Screen name='ProductList' component={HomeStore}></Stack.Screen>
             {/* <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen> */}
             <Stack.Screen name='SearchStore' component={SearchStore}></Stack.Screen>

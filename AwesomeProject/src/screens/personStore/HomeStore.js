@@ -4,6 +4,7 @@ import { StyleHomeStore, StyleLogin } from '../../css/Styles'
 import { FlatList } from 'react-native';
 import ItemHomeStore from './ItemHomeStore';
 import { ScrollView } from 'react-native';
+import { AppContext } from '../../utils/AppContext';
 import AxiosIntance from '../../utils/AxiosIntance';import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();

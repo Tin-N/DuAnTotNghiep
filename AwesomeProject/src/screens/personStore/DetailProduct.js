@@ -1,5 +1,5 @@
 
-import { View, Text, Image, TouchableOpacity, ImageBackground, Modal } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ImageBackground, Modal, ToastAndroid } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { StyleDetailProduct } from '../../css/Styles'
 import { Dimensions } from 'react-native';
@@ -32,8 +32,40 @@ const DetailProduct = (props) => {
     const [percentRating, setPercentRating] = useState(0);
     const [heart, setHeart] = useState(false);
     const [isDialogVisible, setDialogVisible] = useState(false);
-    const heartHandler = () => {
-        setHeart(!heart);
+
+    // favoriteID
+    const [favorite, setFavorite] = useState({})
+
+
+
+
+    const heartHandler = async() => {
+        console.log(favorite);
+        if(heart)
+        {
+            console.log("Aiyooooo");
+
+            const response= await AxiosIntance().post("/favoriteApi/deleteFavorite?id="+favorite._id);
+            if(response.result)
+            {
+                setFavorite({});
+                ToastAndroid.show("Gỡ khỏi ưu thích thành công",ToastAndroid.SHORT);
+                setHeart(!heart);
+            }else{
+                ToastAndroid.show("Gỡ khỏi ưu thích không thành công",ToastAndroid.SHORT);
+            }
+        }else{
+            const response= await AxiosIntance().post("/favoriteApi/addFavorite?userID="+"113"+"&productID="+params.itemId);
+            if(response.result)
+            {
+                ToastAndroid.show("Thích thành công",ToastAndroid.SHORT);
+                setHeart(!heart);
+                setFavorite(response.favorite)
+
+            }else{
+                ToastAndroid.show("Thêm vào ưu thích không thành công",ToastAndroid.SHORT);
+            }
+        }
     }
     const handlerDetail = () => {
         navigation.navigate("DetailFeedback", { itemId: params.itemId })
@@ -66,6 +98,26 @@ const DetailProduct = (props) => {
                 setDetail(response.products.detail);
             }
         }
+
+
+        // Get favorite 
+
+        const getFavorite =async()=>{
+            const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID="+"113"+"&productID="+params.itemId);
+            if(response.result){
+                setFavorite(response.favorite);
+                if(Object.keys(response.favorite).length>0){
+                    setHeart(!heart);
+                }
+            }
+        }
+
+
+
+
+
+
+
         const getFeedback = async () => {
             const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId);
             if (response.result == true) {
@@ -121,6 +173,8 @@ const DetailProduct = (props) => {
         getDetails();
         getFeedback();
         getSizeByProductID();
+
+        getFavorite();
         return () => {
         }
     }, [])
@@ -250,7 +304,7 @@ const DetailProduct = (props) => {
                         <TouchableOpacity onPress={heartHandler}>
                             <Image style={{ width: 30, height: 30, marginRight: 15 }}
                                 source={
-                                    heart == true ?
+                                    heart==true ?
                                         require('../../images/heart.png') : require('../../images/unheart.png')
                                 } />
                         </TouchableOpacity>
