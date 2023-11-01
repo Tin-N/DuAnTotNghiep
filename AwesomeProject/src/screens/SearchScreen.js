@@ -14,11 +14,10 @@ import SearchSuggestion from '../component/SearchSuggestions/SearchSuggestions';
 import NoResult from '../component/SearchSuggestions/NoResult';
 import AxiosIntance from '../utils/AxiosIntance';
 import ProductList from '../component/ProductList/ProductList';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const SearchScreen = () => {
   const navigation = useNavigation();
-
   const [textSearch, setTextSearch] = useState('');
   const [isSearch, setIsSearch] = useState(false);
   const [data, setData] = useState([]);

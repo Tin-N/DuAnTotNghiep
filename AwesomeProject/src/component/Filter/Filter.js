@@ -8,7 +8,7 @@ import AxiosIntance from '../../utils/AxiosIntance';
 
 const Filter = (props) => {
 
-    const [categoryData, setCategoryData] = useState([]);
+    const [categoryData, setCategoryData] = useState([{_id:"All",name:"Tất cả"}]);
     useEffect(() => {
       const getCategory = async ()=>{
         const response= await AxiosIntance().get("/Category/getCategory");

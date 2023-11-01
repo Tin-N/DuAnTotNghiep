@@ -17,7 +17,8 @@ const FilterScreen = (props) => {
   const [data, setData] = useState([]);
   const [valueFilter, setValueFilter] = useState([{},[0,10000000],""]);
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [isLoadingmini,setisLoadingmini]=useState(false);
+  const [countData, setcountData] = useState(0)
   const handleClick=()=>{
     navigation.goBack();
   }
@@ -38,7 +39,7 @@ const FilterScreen = (props) => {
 
   // Category
       if(stringValue.length>0)
-      url=url+"categoryID="+stringValue;
+      url=url+"&categoryID="+stringValue;
   
       // sort 
       if (Object.keys(objValue).length === 0) {
@@ -58,50 +59,47 @@ const FilterScreen = (props) => {
     return url;
   }
 
+  useEffect(() => {
+    
+    Load();
+    console.log(page);
+
+    return () => {
+      
+    }
+  }, [page])
+  
   const loadMoreData = async ()=>{
-        try {
-          
-          console.log("co chay ");
-
-          const response = await AxiosIntance().get("/productAPI/searchByName?"+createURLstring(valueFilter[0],valueFilter[1],valueFilter[2])+"&skipData="+page);
-              setPage(page+1);
-
-              if(response.result)
-              {
-                if(response.totalPage>=page){
-                  console.log("load....");
-                  return response.products
-
-                }else{
-                  setPage(1);
-                   return []; 
-                }
-
-              }
-
-              return [];
-        } catch (error) {
-          console.log(error);
-          return [];
-        }
+    setPage(page+1);
+    setisLoadingmini(!isLoadingmini)
     }
     const Load = async ()=>{
-      setisLoading(true);
+      
+      if(isLoadingmini)
+        setisLoading(true);
+      
       
       try {
-        // setPage(page+1);
         const response = await AxiosIntance().get("/productAPI/searchByName?"+createURLstring(valueFilter[0],valueFilter[1],valueFilter[2])+"&skipData="+page);
         console.log(response +"   " + createURLstring(valueFilter[0],valueFilter[1],valueFilter[2]));
         if (response.result&&response.products.length>0) {
           console.log(response);
-          setData(response.products);
+          if(page==1){
+            setData(response.products);
+            setcountData(response.count)
+            console.log("Hellooo");
+          }
+          else if(page>1)
+          setData([...data,...response.products]);
+          
           setisLoading(false);
 
         } else {
+          // setData([]);
           setisLoading(false);
           ToastAndroid.show("Đã hết sản phẩm ",ToastAndroid.SHORT);
         }
-        setPage(page+1)
+        setisLoadingmini(!isLoadingmini);
       } catch (error) {
         console.error("Error:", error);
         setisLoading(false);
@@ -110,13 +108,20 @@ const FilterScreen = (props) => {
   
   useEffect(() => {
 
-  Load();
+    if ((Object.keys(valueFilter[0]).length > 0)||valueFilter[1].length > 0||valueFilter[2]>0) {
+      // console.log('Đối tượng rỗng');
+      // Load();
+      console.log((Object.keys(valueFilter[0]).length > 0) +"   "+ valueFilter[1].length > 0 +"   "+ valueFilter[2]>0 +"                "+ valueFilter[1][1]+"                 "+valueFilter[2]);
+      if(page==1)
+        Load();
+      setPage(1);
+  }
     return () => {
       
     }
   }, [valueFilter]);
   return (
-    <ScrollView>
+    <View>
       <View style={styleHome.topBarView}>
       <TouchableOpacity onPress={handleClick}>
             <Image
@@ -142,39 +147,41 @@ const FilterScreen = (props) => {
             setModalVisible={setModalVisible}
           />
 
-    <View>
-     {
-      isLoading == true?
-      <ActivityIndicator
-      color={"blue"}
-      size={'large'}/>
-      :
-      <View>
+        <View>
         {
-          (typeof data!=='undefined')?
-            <View>
-                    <ProductList
-                  data={data}
-                  infinitiveScroll={true}
-                  loadMoreData={loadMoreData}
-                  styleView={{
-                    width: '100%',
-                    margin: 10,
-                  }}
-                  numColumns={columns}
-                  showsVerticalScrollIndicator={false}
-                />
+          isLoading == true?
+          <ActivityIndicator
+          color={"blue"}
+          size={'large'}/>
+          :
+          <View>
+            {
+              data.length>0?
+                <View>
+                        <ProductList
+                        count={countData}
+                      data={data}
+                      isLoadingmini={isLoadingmini}
+                      infinitiveScroll={true}
+                      loadMoreData={loadMoreData}
+                      styleView={{
+                        width: '100%',
+                        margin: 10,
+                        marginBottom:150,
+                      }}
+                      numColumns={columns}
+                      showsVerticalScrollIndicator={false}
+                    />
+                </View>
+                :<View style={{justifyContent:'center',alignItems:'center',height:"100%"}}>
+                  <NoResult/>
+                  </View>
                 
-            </View>
-            :<View style={{justifyContent:'center',alignItems:'center',height:"100%"}}>
-              <NoResult/>
-              </View>
-            
+            }
+          </View>
         }
-      </View>
-    }
-     </View>
-    </ScrollView>
+        </View>
+    </View>
   )
 }
 

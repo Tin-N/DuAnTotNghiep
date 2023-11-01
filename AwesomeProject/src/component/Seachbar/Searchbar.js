@@ -5,9 +5,7 @@ import { StyleSearch } from '../../css/Styles'
 const Searchbar = (props) => {
   const {onChangeText,onSubmitText,onClick,isSearch,handleClick,text}=props;
   const  handleClickTO=()=> {
-    if(onClick)
       handleClick();
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAADSdSdad");
   }
   return (
 
@@ -18,8 +16,10 @@ const Searchbar = (props) => {
       style={StyleSearch.textInput2}
       placeholder='Tìm kiếm bằng tên thực phẩm'
       onChangeText={onChangeText} 
-      onTouchStart={()=>handleClickTO()}
-      onEndEditing={onSubmitText}
+      onTouchStart={()=>{
+        if(onClick)
+        handleClickTO()}}
+      onSubmitEditing={onSubmitText}
       value={text}
       />
         <TouchableOpacity 
