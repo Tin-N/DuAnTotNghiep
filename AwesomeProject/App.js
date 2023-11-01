@@ -25,10 +25,15 @@ import TestScreen from './src/screens/TestScreen';
 import FilterScreen from './src/screens/FilterScreen';
 // import WelcomeScreen from './src/screens/WelcomeScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import DisableUserScreen from './src/screens/DisableUserScreen';
+import Tesst from './src/screens/Tesst';
+import Item from './src/component/UserList/Item';
+import ActivateUserScreen from './src/screens/ActivateUserScreen';
 // import SearchScreen from './src/screens/SearchScreen';
 // import Category from './src/screens/Category';
 // import SearchStore from './src/screens/personStore/SearchStore';
 // import HomeStore from './src/screens/personStore/HomeStore';
+
 const App = () => {
   return (
   // <WelcomeScreen/>
@@ -36,14 +41,16 @@ const App = () => {
     // <TestScreen/>
     // <FilterScreen/>
     // <HomeStore/>
-    <AppContextProvider>
-      <NavigationContainer>
-        <AppNavigator/>
-      </NavigationContainer>
-    </AppContextProvider>
+    // <AppContextProvider>
+    //   <NavigationContainer>
+    //     <AppNavigator/>
+    //   </NavigationContainer>
+    // </AppContextProvider>
     // <SearchStore/>
   // <SearchScreen/>
   // <ProductScreen/>
+  <Tesst/>
+  // <Item/>
   )
 }
 

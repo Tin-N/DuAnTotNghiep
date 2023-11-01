@@ -5,8 +5,8 @@ const AxiosIntance = (contentType = 'application/json') => {
         // baseURL: 'https://fpoly-hcm.herokuapp.com/api/'
         baseURL:
         //  'http://192.168.2.5:3000/Api' // Tin
-         'http://192.168.1.4:3000/Api'//Nhat
-
+         'http://192.168.1.2:3000/Api'//Nhat
+        
         //  'http://172.16.84.139:3000/Api'// O truong  
 
     });
