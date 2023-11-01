@@ -4,8 +4,9 @@ import { StyleHomeStore, StyleLogin } from '../../css/Styles'
 import { FlatList } from 'react-native';
 import ItemHomeStore from './ItemHomeStore';
 import { ScrollView } from 'react-native';
-import AxiosIntance from '../../utils/AxiosIntance';
-import { AppContext } from '../../utils/AppContext';
+import AxiosIntance from '../../utils/AxiosIntance';import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 const HomeStore = (props) => {
     const { navigation } = props;
     const [dataProduct, setDataProduct] = useState([]);
@@ -14,21 +15,36 @@ const HomeStore = (props) => {
     const {isLogin}=useContext(AppContext)
     const [columns, setColumns] = useState(2);
     useEffect(() => {
-        const getAllProductByUserID = async () => {
-            const response = await AxiosIntance().get("/productAPI/getAllProductByUserID?id=" + '113');
-            if (response.result) {
-                setDataProduct(response.products);
-                setProductID(response.products._id);
-                setSold(response.products.sold)
+        try {
+            const getAllProductByUserID = async () => {
+                const response = await AxiosIntance().get("/productAPI/getAllProductByUserID?id=" + '113');
+                if (response.result) {
+                    setDataProduct(response.products);
+                    setProductID(response.products._id);
+                    setSold(response.products.sold)
+                }
             }
+            getAllProductByUserID();
+        } catch (error) {
+            throw error
         }
-        getAllProductByUserID();
-        console.log(isLogin);
+
         return () => {
         }
     }, [])
+    const createHandler = () => {
+        navigation.navigate('CreateProduct');
+    }
     return (
         <View>
+            <TouchableOpacity onPress={createHandler} style={{
+                height: 50, width: 50,
+                borderRadius: 25, backgroundColor: '#3669C9',
+                position: 'absolute', bottom: 80, zIndex: 5, alignItems: 'center',
+                justifyContent: 'center', right: 0, margin: 10
+            }}>
+                <Text style={{ fontSize: 30, color: 'white' }}>+</Text>
+            </TouchableOpacity>
             <View style={StyleHomeStore.menu}>
                 <Image source={require('../../images/backic.png')} />
                 <Text style={StyleHomeStore.textTitle}>
@@ -115,7 +131,7 @@ const HomeStore = (props) => {
                         numColumns={columns}
                         bounces={false}
                         nestedScrollEnabled={true}
-                        renderItem={({ item }) => <ItemHomeStore dulieu={item} navigation={navigation}/>}
+                        renderItem={({ item }) => <ItemHomeStore dulieu={item} navigation={navigation} />}
                         keyExtractor={item => item._id}
                     />
                 </View>

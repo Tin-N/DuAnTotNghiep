@@ -1,13 +1,14 @@
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { FlatList } from 'react-native';
-
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 
 const ItemFeedBack = (props) => {
     const { dataFeedback } = props;
     const [shopFeedBack, setShopFeedBack] = useState("wsdf")
-    const [roleId, setRoleId] = useState(1)
-    // console.log(dataFeedback._id);
+    const [roleId, setRoleId] = useState(1);
     useEffect(() => {
         setShopFeedBack("2");
         setRoleId(2);
@@ -17,26 +18,30 @@ const ItemFeedBack = (props) => {
     }
     const [imageStar, setimageStar] = useState(require('../../images/close.png'))
     useEffect(() => {
-        const starImage = () => {
-            if (dataFeedback.rating == 1) {
-                setimageStar(require('../../images/1star.png'))
-                return
+        try {
+            const starImage = () => {
+                if (dataFeedback.rating == 1) {
+                    setimageStar(require('../../images/1star.png'))
+                    return
+                }
+                if (dataFeedback.rating == 2) {
+                    setimageStar(require('../../images/2star.png'))
+                    return
+                } if (dataFeedback.rating == 3) {
+                    setimageStar(require('../../images/3star.png'))
+                    return
+                } if (dataFeedback.rating == 4) {
+                    setimageStar(require('../../images/4star.png'))
+                    return
+                } if (dataFeedback.rating == 5) {
+                    setimageStar(require('../../images/5star.png'))
+                    return
+                }
             }
-            if (dataFeedback.rating == 2) {
-                setimageStar(require('../../images/2star.png'))
-                return
-            } if (dataFeedback.rating == 3) {
-                setimageStar(require('../../images/3star.png'))
-                return
-            } if (dataFeedback.rating == 4) {
-                setimageStar(require('../../images/4star.png'))
-                return
-            } if (dataFeedback.rating == 5) {
-                setimageStar(require('../../images/5star.png'))
-                return
-            }
+            starImage();
+        } catch (error) {   
         }
-        starImage();
+        
         return () => {
         }
     }, [])
@@ -55,15 +60,15 @@ const ItemFeedBack = (props) => {
                             ngày 10 tháng 3 2023
                         </Text>
                     </View>
-                    <Image style={{ marginTop: 10 }} source={imageStar} />
+                    <Image style={{ marginTop: 5 }} source={imageStar} />
                 </View>
             </View>
             <View style={{ paddingLeft: 57 }}>
                 <Text style={{ letterSpacing: 0.3, fontFamily: 'TiltNeon-Regular' }}>
-                    {dataFeedback.feedbackText}
+                    {dataFeedback.feedback}
                 </Text>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 30 }}>
+            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                 <View style={{ marginLeft: 50, flexDirection: 'row', width: '33%', justifyContent: 'space-around', alignItems: 'center' }}>
                     <Image source={require('../../images/like.png')} style={{ width: 13, height: 13 }}></Image>
                     <Text>50 lượt thích</Text>
@@ -71,7 +76,7 @@ const ItemFeedBack = (props) => {
                 <TouchableOpacity onPress={detailFeedback}>
                     <Text >Trả lời()</Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
             {/* <FlatList
             data = {dataReplyFeedback}
             showsHorizontalScrollIndicator={false}

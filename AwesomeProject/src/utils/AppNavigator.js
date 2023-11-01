@@ -17,10 +17,10 @@ import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
 import TestScreen from '../screens/TestScreen';
 // import TestScreen from '../screens/TestScreen/TestScreen'
 import DetailProduct from '../screens/personStore/DetailProduct';
-import { Header } from 'react-native/Libraries/NewAppScreen';
-import SignIn from '../screens/SignIn';
+
+import CreateProduct from '../screens/personStore/CreateProduct';
 const Tab = createBottomTabNavigator();
-const Stack= createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 const User = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='SignIn'>
@@ -41,11 +41,13 @@ const ProductHome = () => {
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
             <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
-            <Stack.Screen name='DetailProduct' component={DetailProduct}
-                
-            ></Stack.Screen>
-
-         
+            <Stack.Screen name='DetailProduct' component={DetailProduct} />
+            <Stack.Screen name='CreateProduct' component={CreateProduct}
+                options={{
+                    presentation: 'modal',
+                    animationTypeForReplace: 'push',
+                    animation: 'slide_from_right'
+                }}></Stack.Screen>
         </Stack.Navigator>
     )
 }
@@ -71,20 +73,22 @@ const Main = () => {
                 tabBarInactiveTintColor: 'black',
             })}
         >
-            <Tab.Screen name="Home" component={ProductHome}/>
+            <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Order" component={Order} />
-            {/* <Tab.Screen name="SignUp" component={SignUp}/> */}
+
         </Tab.Navigator>
     )
 }
 
 const AppNavigator = () => {
-    const {isLogin} = useContext(AppContext);
+    const { isLogin } = useContext(AppContext);
     return (
-        
-             <Main/>
-            
-        
+
+        <>
+            {
+                isLogin == true ? <User /> : <Main />
+            }
+        </>
     )
 }
 

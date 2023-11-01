@@ -9,14 +9,9 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
-
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
-
-
 import { StyleLogin } from './src/css/Styles';
-
 import Home from './src/screens/Home';
 import Order from './src/screens/Order';
 import { AppContextProvider } from './src/utils/AppContext';
@@ -38,14 +33,18 @@ import DetailPersonFedback from './src/screens/personStore/DetailPersonFedback';
 import DetailProduct from './src/screens/personStore/DetailProduct';
 import HomeStore from './src/screens/personStore/HomeStore';
 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CreateProduct from './src/screens/personStore/CreateProduct';
+const Stack = createNativeStackNavigator()
 const App = () => {
   return (
-    // <AppContextProvider>
-    //   <NavigationContainer>
-    //     <AppNavigator/>
-    //   </NavigationContainer>
-    // </AppContextProvider>
-    <Order />
+    <AppContextProvider>
+      <NavigationContainer>
+        <AppNavigator/>
+      </NavigationContainer>
+    </AppContextProvider>
+    // <CreateProduct/>
   )
 }
 

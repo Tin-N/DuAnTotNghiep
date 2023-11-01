@@ -7,15 +7,20 @@ import { FlatList } from 'react-native';
 import ItemFeedBack from './ItemFeedBack';
 import { ScrollView } from 'react-native';
 import AxiosIntance from '../../utils/AxiosIntance';
-import { Axios } from 'axios';
+import StarRating from 'react-native-star-rating-widget';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 const DetailFeedback = (props) => {
     const { navigation } = props;
+    const { route } = props;
+    const { params } = route;
     const [star11, setStar11] = useState(0);
     const [star22, setStar22] = useState(0);
     const [star33, setStar33] = useState(0);
     const [star44, setStar44] = useState(0);
     const [star55, setStar55] = useState(0);
-    // const [dataFeedback, setDataFeedback] = useState([]);
+    const [dataFeedback, setDataFeedback] = useState([]);
     // const [feedback, setFeedback] = useState('');
     const [lengthFeedback, setlengthFeedback] = useState(0);
     const [percentRating, setpercentRating] = useState(0);
@@ -24,32 +29,29 @@ const DetailFeedback = (props) => {
     const [percentRating3, setpercentRating3] = useState(0);
     const [percentRating4, setpercentRating4] = useState(0);
     const [percentRating5, setpercentRating5] = useState(0);
+    const [rating, setRating] = useState(0);
     const onHandle = () => {
-        navigation.navigate("HomeStore");
+        navigation.goBack();
     }
     useEffect(() => {
         const getFeedback = async () => {
-            const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?productID=' + params.itemId);
-            console.log(response);
+            const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId);
             if (response.result == true) {
-                ToastAndroid('Lấy feedback thành công', ToastAndroid.SHORT);
-                // setDataFeedback(response.feedbacks);
+                setDataFeedback(response.feedbacks);
+                ToastAndroid.show('Lấy feedback thành công', ToastAndroid.SHORT);
+                // setFeedbackLenght(response.feedbacks.length);
             } else {
-                ToastAndroid('Lấy feedback thất bại', ToastAndroid.SHORT);
+                ToastAndroid.show('Lấy feedback thất bại', ToastAndroid.SHORT);
             }
         }
         getFeedback();
-        // const getFeedback = async () => {
-        //     const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?productID=' + params.itemId);
-        //     console.log(response);
-        //     if (response.result == true) {
-        //         ToastAndroid('Lấy feedback thành công', ToastAndroid.SHORT);
-        //         // setDataFeedback(response.feedbacks);
-        //     } else {
-        //         ToastAndroid('Lấy feedback thất bại', ToastAndroid.SHORT);
-        //     }
-        // }
-        // getFeedback();       
+        return () => {
+        }
+    }, [params.itemId])
+    const Separator = () => {
+        return <View style={StyleDetailFeedback.separator} />;
+    };
+    useEffect(() => {
         if (dataFeedback.length > 0) {
             const countRating = () => {
                 var star1 = 0;
@@ -87,16 +89,6 @@ const DetailFeedback = (props) => {
                 setpercentRating4(star4 / dataFeedback.length)
                 setpercentRating5(star5 / dataFeedback.length)
                 setlengthFeedback(dataFeedback.length);
-                if (percentRating1 == 0)
-                    setStar11(0);
-                if (percentRating2 == 0)
-                    setStar22(0);
-                if (percentRating3 == 0)
-                    setStar33(0);
-                if (percentRating4 == 0)
-                    setStar44(0);
-                if (percentRating5 == 0)
-                    setStar55(0);
             }
             countRating();
         } else if (dataFeedback.length == 0) {
@@ -115,7 +107,8 @@ const DetailFeedback = (props) => {
         }
         return () => {
         }
-    }, []);
+
+    }, [dataFeedback])
     return (
         <View>
             <View style={StyleDetailFeedback.menu}>
@@ -126,12 +119,7 @@ const DetailFeedback = (props) => {
                 <Text style={StyleDetailFeedback.textTitle}>
                     Đánh Giá
                 </Text>
-                <Image style={{ marginLeft: 80 }} source={require('../../images/star.png')} />
-                <Text>
-                    {percentRating}
-                </Text>
             </View>
-
             <View style={StyleDetailFeedback.line}></View>
             <ScrollView showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
@@ -193,7 +181,8 @@ const DetailFeedback = (props) => {
                         showsHorzontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) => <ItemFeedBack dataFeedback={item} />}
-                        keyExtractor={item => item.feedbackID} />
+                        keyExtractor={item => item._id}
+                        ItemSeparatorComponent={Separator} />
                     <TouchableOpacity style={StyleDetailFeedback.touchOpa}>
                         <Text style={{ fontWeight: 'bold' }}>
                             See more
@@ -206,134 +195,133 @@ const DetailFeedback = (props) => {
                         </Text>
                     </View>}
             </ScrollView>
-
         </View>
     )
 }
 
 export default DetailFeedback
-const dataFeedback = [
-    {
-        feedbackID: 1,
-        productID: 1,
-        userID: 1,
-        feedbackText: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
-        rating: 5,
-        dataReplyFeedback: [
-            {
-                userID: 2,
-                replyFeedbackId: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                userID: 3,
-                replyFeedbackId: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 2,
-        productID: 1,
-        userID: 2,
-        feedbackText: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
-        rating: 4,
-        dataReplyFeedback: [
-            {
-                userID: 2,
-                replyFeedbackId: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                userID: 3,
-                replyFeedbackId: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 3,
-        productID: 1,
-        userID: 3,
-        feedbackText: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
-        rating: 5,
-        dataReplyFeedback: [
-            {
-                userID: 2,
-                replyFeedbackId: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                userID: 3,
-                replyFeedbackId: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 4,
-        productID: 1,
-        userID: 4,
-        feedbackText: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
-        rating: 3,
-        dataReplyFeedback: [
-            {
-                userID: 2,
-                replyFeedbackId: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                userID: 3,
-                replyFeedbackId: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 4,
-        productID: 1,
-        userID: 4,
-        feedbackText: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
-        rating: 3,
-        dataReplyFeedback: [
-            {
-                userID: 2,
-                replyFeedbackId: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                userID: 3,
-                replyFeedbackId: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    }
-    // },
-    // {
-    //     "productID": "1",
-    //     "userID": "1",
-    //     "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
-    //     "rating": 5
-    // },
-    // {
-    //     "productID": "1",
-    //     "userID": "2",
-    //     "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
-    //     "rating": 2
-    // },
-    // {
-    //     "productID": "1",
-    //     "userID": "3",
-    //     "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
-    //     "rating": 5
-    // },
-    // {
-    //     "productID": "1",
-    //     "userID": "4",
-    //     "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
-    //     "rating": 5
 
-    // }
+// const dataFeedback = [
+//     {
+//         feedbackID: 1,
+//         productID: 1,
+//         userID: 1,
+//         feedback: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
+//         rating: 5,
+//         dataReplyFeedback: [
+//             {
+//                 userID: 2,
+//                 replyFeedbackId: 1,
+//                 title: 'Cảm ơn bạn rất nhiều!'
+//             },
+//             {
+//                 userID: 3,
+//                 replyFeedbackId: 2,
+//                 title: 'Cảm ơn bạn rất nhiều!'
+//             }
+//         ]
+//     },
+//     {
+//         feedbackID: 2,
+//         productID: 1,
+//         userID: 2,
+//         feedback: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
+//         rating: 4,
+//         dataReplyFeedback: [
+//             {
+//                 userID: 2,
+//                 replyFeedbackId: 1,
+//                 title: 'Cảm ơn bạn rất nhiều!'
+//             },
+//             {
+//                 userID: 3,
+//                 replyFeedbackId: 2,
+//                 title: 'Cảm ơn bạn rất nhiều!'
+//             }
+//         ]
+//     },
+//     {
+//         feedbackID: 3,
+//         productID: 1,
+//         userID: 3,
+//         feedback: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
+//         rating: 5,
+//         dataReplyFeedback: [
+//             {
+//                 userID: 2,
+//                 replyFeedbackId: 1,
+//                 title: 'Cảm ơn bạn rất nhiều!'
+//             },
+//             {
+//                 userID: 3,
+//                 replyFeedbackId: 2,
+//                 title: 'Cảm ơn bạn rất nhiều!'
+//             }
+//         ]
+//     },
+//     {
+//         feedbackID: 4,
+//         productID: 1,
+//         userID: 4,
+//         feedback: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
+//         rating: 3,
+//         dataReplyFeedback: [
+//             {
+//                 userID: 2,
+//                 replyFeedbackId: 1,
+//                 title: 'Cảm ơn bạn rất nhiều!'
+//             },
+//             {
+//                 userID: 3,
+//                 replyFeedbackId: 2,
+//                 title: 'Cảm ơn bạn rất nhiều!'
+//             }
+//         ]
+//     },
+//     {
+//         feedbackID: 4,
+//         productID: 1,
+//         userID: 4,
+//         feedback: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
+//         rating: 3,
+//         dataReplyFeedback: [
+//             {
+//                 userID: 2,
+//                 replyFeedbackId: 1,
+//                 title: 'Cảm ơn bạn rất nhiều!'
+//             },
+//             {
+//                 userID: 3,
+//                 replyFeedbackId: 2,
+//                 title: 'Cảm ơn bạn rất nhiều!'
+//             }
+//         ]
+//     },
+//     {
+//         "productID": "1",
+//         "userID": "1",
+//         "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
+//         "rating": 5
+//     },
+//     {
+//         "productID": "1",
+//         "userID": "2",
+//         "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
+//         "rating": 2
+//     },
+//     {
+//         "productID": "1",
+//         "userID": "3",
+//         "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
+//         "rating": 5
+//     },
+//     {
+//         "productID": "1",
+//         "userID": "4",
+//         "feedbackText": "Sản phẩm quá tuyệt vời không thể tin nổi",
+//         "rating": 5
 
-]
+//     }
+
+// ]
 

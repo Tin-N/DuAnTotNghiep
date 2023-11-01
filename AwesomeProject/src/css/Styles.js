@@ -3,10 +3,10 @@ import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { COLOR } from './Theme';
 import { Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('screen');
 import LinearGradient from 'react-native-linear-gradient'
 
 
+const { width, height } = Dimensions.get('screen');
 export const StyleLogin1 = StyleSheet.create({
 
     header: {
@@ -62,193 +62,93 @@ export const StyleSearchSuggestions = StyleSheet.create({
     },
 });
 export const StyleHomeStore = StyleSheet.create({
-
-    container: {
-    },
-    menu: {
-        paddingTop: 50,
-        flexDirection: 'row',
-        marginLeft: 30,
-        marginRight: 30,
-    },
-    textTitle: {
-        textAlign: 'center',
-        color: 'black',
-        fontSize: 20,
-        paddingLeft: 110,
-        marginTop: -6
-    },
-    images: {
-        marginLeft: 80
-    },
-    touchOpa: {
-        marginLeft: 75
-    },
-    line: {
-        borderWidth: 1,
-        opacity: 0.03,
-        marginTop: 20
-    },
-    boxSeller: {
-        marginTop: 30,
-        paddingLeft: 30,
-        paddingRight: 30,
-        flexDirection: 'row'
-    },
-    infoSeller: {
-        flexDirection: 'row',
-    },
-    boxNameSeller: {
-        width: 218,
-        marginLeft: 20
-    },
-    boxRate: {
-        flexDirection: 'row',
-        paddingTop: 10
-    },
-    textRate: {
-        fontSize: 20,
-        color: 'black',
-        marginTop: -5,
-        paddingLeft: 5
-    },
-    boxLocate: {
-        flexDirection: 'row',
-        marginLeft: 30,
-        marginTop: 20
-    },
-    boxProductStore: {
-        flexDirection: 'row',
-        marginTop: 20,
-        marginLeft: 30,
-        justifyContent: 'space-between',
-        marginRight: 30
-    },
-    textTitleProduct: {
-        fontSize: 15
-    },
-    textCountProduct: {
-        color: 'black',
-        fontSize: 13
-    },
-    textitleProductSelling: {
-        fontSize: 20,
-        color: 'black'
-    },
-    productSelling: {
-        marginTop: 15,
-        marginLeft: 30,
-        marginRight: 30
-    },
-    boxSelling: {
-        backgroundColor: 'FAFAFA',
-        paddingLeft: 30,
-        paddingRight: 30,
-    },
-    boxProduct: {
-        backgroundColor: 'white',
-        borderRadius: 10,
-        padding: 10,
-        margin: 3,
-    },
-    reviewsProduct: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 5
-    },
-
     menu: {
         paddingTop: 30,
         flexDirection: 'row',
         marginLeft: 30,
         marginRight: 30,
-    },
-    textTitle: {
+      },
+      textTitle: {
         textAlign: 'center',
         color: 'black',
         fontSize: 20,
         paddingLeft: 110,
         marginTop: -6,
-    },
-    images: {
-        marginLeft: 80
-    },
-    touchOpa: {
-        marginLeft: 75
-    },
-    line: {
+      },
+      touchOpa: {
+        marginLeft: 75,
+      },
+      line: {
         borderWidth: 1,
         opacity: 0.03,
-        marginTop: 20
-    },
-    boxSeller: {
+        marginTop: 20,
+      },
+      boxSeller: {
         marginTop: 30,
         paddingLeft: 30,
         paddingRight: 30,
-        flexDirection: 'row'
-    },
-    infoSeller: {
         flexDirection: 'row',
-    },
-    boxNameSeller: {
+      },
+      infoSeller: {
+        flexDirection: 'row',
+      },
+      boxNameSeller: {
         width: 218,
-        marginLeft: 20
-    },
-    boxRate: {
+        marginLeft: 20,
+      },
+      boxRate: {
         flexDirection: 'row',
-        paddingTop: 10
-    },
-    textRate: {
+        paddingTop: 10,
+      },
+      textRate: {
         fontSize: 20,
         color: 'black',
         marginTop: -5,
-        paddingLeft: 5
-    },
-    boxLocate: {
+        paddingLeft: 5,
+      },
+      boxLocate: {
         flexDirection: 'row',
         marginLeft: 30,
-        marginTop: 20
-    },
-    boxProductStore: {
+        marginTop: 20,
+      },
+      boxProductStore: {
         flexDirection: 'row',
         marginTop: 20,
         marginLeft: 30,
         justifyContent: 'space-between',
-        marginRight: 30
-    },
-    textTitleProduct: {
-        fontSize: 15
-    },
-    textCountProduct: {
+        marginRight: 30,
+      },
+      textTitleProduct: {
+        fontSize: 15,
+      },
+      textCountProduct: {
         color: 'black',
-        fontSize: 13
-    },
-    textitleProductSelling: {
+        fontSize: 13,
+      },
+      textitleProductSelling: {
         fontSize: 20,
-        color: 'black'
-    },
-    productSelling: {
+        color: 'black',
+      },
+      productSelling: {
         marginTop: 15,
         marginLeft: 30,
-        marginRight: 30
-    },
-    boxSelling: {
+        marginRight: 30,
+      },
+      boxSelling: {
         backgroundColor: 'FAFAFA',
         paddingLeft: 30,
         paddingRight: 30,
-    },
-    boxProduct: {
+      },
+      boxProduct: {
         backgroundColor: 'white',
         borderRadius: 10,
         padding: 10,
         margin: 3,
-        flex: 1
-    },
-    reviewsProduct: {
+      },
+      reviewsProduct: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 5
-    }
+      },
 });
 export const StyleShipper = StyleSheet.create({
     line: {
@@ -513,26 +413,45 @@ export const StyleDetailFeedback = StyleSheet.create({
     boxStarRate: {
         marginLeft: 15
     },
-    boxPercentRate: {
-
+    separator: {
+        height: 1,
+        padding: 5
     }
 })
 export const StyleDialogShopping = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: 'white',
-        marginTop: 200,
-        marginBottom: 30,
+        flex:1,
+        marginTop: 250,
         borderRadius: 5,
+        marginLeft:30,
+        marginRight:30,
+        backgroundColor:'white',
+        padding:10, borderWidth:1, height: 'auto'
     },
     line: {
         borderWidth: 1,
         opacity: 0.03,
         marginTop: 20
     },
+    container2: {
+        flex: 1,
+        marginTop: 300,
+        borderRadius: 5,
+        marginLeft:30,
+        marginRight:30,
+        backgroundColor:'white',
+        padding:10, borderWidth:1, height:150
+    },
+    containerShopping: {
+        flex:1,
+        marginTop: 150,
+        borderTopLeftRadius: 10, borderTopRightRadius:10,
+        backgroundColor:'white',
+        padding:10, borderWidth:1
+    }
+
 
 })
-
 export const StyleOrder = StyleSheet.create({
     container: {
         flexDirection: 'column',
@@ -615,8 +534,9 @@ export const StyleOrder = StyleSheet.create({
         width: 5 * width / 100,
     },
     checkBoxOrder: {
-        position: 'absolute',
-        top: '25%',
+
+        position: 'relative',
+        top: '50%',
     },
     pressableBuy: {
         height: 52,
@@ -632,7 +552,8 @@ export const StyleLogin = StyleSheet.create({
         color: COLOR.background,
         fontSize: 80,
         fontWeight: 'bold',
-        marginTop: '2%',
+
+        marginTop: "2%",
         justifyContent: 'space-between',
         marginHorizontal: 20,
         // Tạo bóng chữ
@@ -653,6 +574,12 @@ export const StyleLogin = StyleSheet.create({
         color: COLOR.TextHint,
         fontSize: 17,
         marginTop: '1%',
+        marginHorizontal: 16,
+    },
+    textHint: {
+        color: COLOR.TextHint,
+        fontSize: 15,
+        marginTop: "1%",
         justifyContent: 'space-between',
         marginHorizontal: 16,
     },
@@ -797,8 +724,11 @@ export const StyleLogin = StyleSheet.create({
     },
 
     //Welcome
+   
+
+    //Welcome 
     HeadingTextWelcome: {
-        paddingTop: '2%',
+        paddingTop: "2%",
         fontWeight: 'bold',
         paddingHorizontal: 20,
         color: 'white',
@@ -827,11 +757,12 @@ export const StyleLogin = StyleSheet.create({
         color: COLOR.background,
         fontSize: 30,
         fontWeight: 'bold',
-        marginTop: '20%',
+        marginTop: "20%",
         justifyContent: 'space-between',
         marginHorizontal: 20,
     },
-    HintText: {
+    HintText:
+    {
         color: 'black',
         fontSize: 16,
         fontWeight: 'bold',
@@ -840,22 +771,7 @@ export const StyleLogin = StyleSheet.create({
         color: COLOR.TextHint,
         // justifyContent: 'center',
         marginHorizontal: 16,
-        lineHeight: 30,
-        marginVertical: '5%',
-        // backgroundColor: 'red',
-    },
-    HintTextCP: {
-        color: 'black',
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginTop: 30,
-        height: 55,
-        color: COLOR.TextHint,
-        // justifyContent: 'center',
-        marginHorizontal: "5%",
-        lineHeight: 30,
-        marginVertical: '1%',
-        // backgroundColor: 'red',
+
     },
     inputCP: {
         placeholderTextColor: COLOR.TextPlaceHolder,
@@ -900,7 +816,7 @@ export const StyleLogin = StyleSheet.create({
         marginHorizontal: '6%',
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: '4%',
+
         // backgroundColor: 'green',
     },
     iconWarning: {
@@ -922,11 +838,9 @@ export const StyleLogin = StyleSheet.create({
         marginHorizontal: '2%',
     },
     ButtonUP: {
-        // position: 'absolute',
-        bottom: 0,
-        flex: 2,
-        left: 0,
-        right: 0,
+
+        marginTop: '20%',
+        marginHorizontal: '1%',
     },
     containerTextInput: {
         flexDirection: 'row',
@@ -949,7 +863,6 @@ export const StyleLogin = StyleSheet.create({
     },
 
 });
-
 export const StyleDetailPersonFeedback = StyleSheet.create({
     menu: {
         paddingTop: 30,
@@ -993,10 +906,11 @@ export const StyleSlider = StyleSheet.create({
 })
 export const StyleDetailProduct = StyleSheet.create({
     menu: {
-        paddingTop: 30,
         flexDirection: 'row',
         marginLeft: 30,
         marginRight: 30,
+        paddingTop: 20,
+        paddingBottom: 15
     },
     textTitle: {
         textAlign: 'center',
@@ -1004,17 +918,20 @@ export const StyleDetailProduct = StyleSheet.create({
         fontSize: 20,
         paddingLeft: 20,
         marginTop: -9,
-        fontFamily: 'TiltNeon-Regular'
+        fontFamily: 'TiltNeon-Regular',
     },
     line: {
-        borderWidth: 1,
-        opacity: 0.03,
-        marginTop: 20
+        height: 10,
+        opacity: 0.06,
+        marginTop: 8,
+        backgroundColor: '#766f6f'
     },
     banner: {
-        padding: 10
+        width: width
     },
     titleBanner: {
+        padding: 10,
+
         color: 'white',
         fontSize: 25,
         fontFamily: 'TiltNeon-Regular'
@@ -1078,5 +995,133 @@ export const StyleDetailProduct = StyleSheet.create({
         fontSize: 18,
         color: 'white',
         fontFamily: 'TiltNeon-Regular'
+    },
+    separator: {
+        height: 1,
+        padding: 10
     }
 })
+
+// HeadingTextWelcome: {
+//     paddingTop: '2%',
+// input: {
+//     placeholderTextColor: COLOR.TextPlaceHolder,
+//     height: 30,
+//     margin: 12,
+//     borderWidth: 1,
+//     borderColor: COLOR.borderColor,
+//     padding: 15,
+//     height: 55,
+//     justifyContent: 'space-between',
+//     borderRadius: 5,
+// },
+// buttonShape: {
+//     alignItems: 'center',
+//     jussifyContent: 'center',
+//     backgroundColor: COLOR.background,
+//     padding: 10,
+//     height: 55,
+//     width: '95%',
+//     marginHorizontal: 10,
+//     marginTop: 20,
+//     borderRadius: 30,
+//     // marginHorizontal: 10
+// },
+// TextButton: {
+//     fontSize: 20,
+//     paddingTop: 2,
+//     fontWeight: 'bold',
+//     height: 55,
+//     color: 'white',
+// },
+// text: {
+//     color: COLOR.TextHint,
+//     fontSize: 17,
+//     justifyContent: 'space-between',
+//     marginHorizontal: 16,
+//     marginTop: 15,
+//     // backgroundColor: 'red',
+//     textAlign: 'center',
+// },
+// FGcontainer: {
+//     flexDirection: 'row',
+//     width: '94%',
+//     marginHorizontal: 10,
+//     marginTop: 10,
+//     justifyContent: 'space-around',
+// },
+// FButton: {
+//     alignItems: 'center',
+//     backgroundColor: COLOR.Blue,
+//     padding: 10,
+//     height: 55,
+//     width: '46%',
+//     borderRadius: 10,
+//     marginHorizontal: 0,
+// },
+// GButton: {
+//     alignItems: 'center',
+//     borderWidth: 0.5,
+//     padding: 10,
+//     height: 55,
+//     width: '46%',
+//     borderRadius: 10,
+//     marginHorizontal: 0,
+// },
+// CbuttomText: {
+//     marginTop: '20%',
+//     flexDirection: 'row',
+//     justifyContent: 'center',
+//     width: '94%',
+//     marginHorizontal: 10,
+// },
+// CSbuttomText: {
+//     marginTop: '10%',
+//     flexDirection: 'row',
+//     justifyContent: 'center',
+//     width: '94%',
+//     marginHorizontal: 10,
+// },
+// ButtomText1: {
+//     fontSize: 20,
+//     fontWight: 'bold',
+//     // backgroundColor: 'red',
+// },
+// ButtomText2: {
+//     color: COLOR.Blue,
+//     fontSize: 20,
+//     fontWight: 'bold',
+//     fontStyle: 'italic',
+//     // backgroundColor: 'blue',
+//     textDecorationLine: 'underline',
+// },
+// SButtonShape: {
+//     alignItems: 'center',
+//     jussifyContent: 'center',
+//     backgroundColor: COLOR.background,
+//     padding: 10,
+//     height: 55,
+//     width: '94%',
+//     marginHorizontal: 10,
+//     marginTop: 20,
+//     borderRadius: 30,
+// },
+// RPBottomText: {
+//     textAlign: 'center',
+//     marginTop: "60%",
+//     fontSize: 20,
+//     color: 'black',
+//     fontWeight: 'bold',
+//     // backgroundColor: 'red',
+// },
+// RSPassInput: {
+//     placeholderTextColor: COLOR.TextPlaceHolder,
+//     height: 40,
+//     margin: 12,
+//     borderWidth: 1,
+//     borderColor: COLOR.borderColor,
+//     padding: 15,
+//     height: 55,
+//     justifyContent: 'space-between',
+//     borderRadius: 25,
+// },
