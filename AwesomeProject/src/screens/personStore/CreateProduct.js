@@ -53,8 +53,6 @@ const CreateProduct = (props) => {
                 return 'flex';
             return 'none'
         }
-
-
         const colorPickerRef = useRef(null);
 
         const handleColorSelected = (color) => {
@@ -62,7 +60,6 @@ const CreateProduct = (props) => {
             setHexColor(fromHsv(color));
             // Alert the user 
         };
-
         const doneworkHandler = () => {
             if (imageVariations && colorVariations && hexColor)
                 return false
@@ -275,7 +272,7 @@ const CreateProduct = (props) => {
     const Upload2 = async () => {
         const img = [];
         for (i = 0; i < colorModels.length; i++) {
-            const response = await fetch(image[i]);
+            const response = await fetch(colorModels[i].image);
             const blob = await response.blob();
             const filename = Date.now() + ".jpg";
             const storageRef = ref(storage, filename);
@@ -298,7 +295,6 @@ const CreateProduct = (props) => {
             const snapshot = await uploadBytes(storageRef, blob);
             const url = await getDownloadURL(snapshot.ref);
             img.push(url);
-            console.log(img);
         }
         setimageLink(img);
         setcheckimgLink(true);
@@ -316,8 +312,11 @@ const CreateProduct = (props) => {
     const removeImageFromImageArray = (imageToRemove) => {
         const updatedImageArray = image.filter((image) => image !== imageToRemove);
         setimage(updatedImageArray);
-        setColorModels(updatedImageArray);
     };
+    const removeColorFromColorModels = (imageToRemove) => {
+        const updatedImageArray = colorModels.filter((image) => image !== imageToRemove);
+        setColorModels(updatedImageArray);
+    }
     return (
         <View style={{ opacity: opacityBackground(), backgroundColor: 'white' }}>
             <TouchableOpacity onPress={goBack} style={{ padding: 20 }}>
@@ -474,8 +473,8 @@ const CreateProduct = (props) => {
                                                 justifyContent: 'center', alignItems: 'center',
                                                 borderRadius: 5, overflow: 'hidden', margin: 4
                                             }}>
-                                                    <ImageBackground style={{ width: 70, height: 70 }} source={item.image ? { uri: item.image } : null}>
-                                                        <TouchableOpacity onPress={() => removeImageFromImageArray(item)}>
+                                                    <ImageBackground style={{ width: 70, height: 70 }} source={{ uri: item.image }}>
+                                                        <TouchableOpacity onPress={() => removeColorFromColorModels(item)}>
                                                             <Image style={{
                                                                 position: 'absolute', top: 0, margin: 4,
                                                                 width: 25, height: 25, right: 0,
