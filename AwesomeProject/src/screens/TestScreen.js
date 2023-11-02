@@ -1,5 +1,5 @@
 import {View, Text, TouchableOpacity,ImageBackground, Alert,Image, TextInput, Easing} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import Slideshow from '../component/Slideshow/Slideshow';
 import SearchSuggestion from '../component/SearchSuggestions/SearchSuggestions';
 import NoResult from '../component/SearchSuggestions/NoResult';
@@ -9,11 +9,12 @@ import Searchbar from '../component/Seachbar/Searchbar';
 import Item from '../component/CategoryList/Item';
 import CategoryList from '../component/CategoryList/CategoryList';
 import Banner from '../component/Banner/Banner';
-import {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import StarRating, { StarRatingDisplay } from 'react-native-star-rating-widget';
+import DialogShopping from './personStore/DialogShopping';
+import DialogFeedback from '../component/DialogFeedback/DialogFeedback';
 // import useNavi
 const TestScreen = props => {
   // const navigation= useNavigation();
@@ -28,6 +29,7 @@ const TestScreen = props => {
   //     tabBarStyle: undefined
   //   });
   // }, [navigation]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [imageLink, setimageLink] = useState([]);
   const [star, setStar] = useState(0)
@@ -62,18 +64,20 @@ const removeImageFromImageArray = (imageToRemove) => {
   setimage(updatedImageArray);
 };
   const Upload = async () => {
-    const img = [];
-    for (i = 0; i < image.length; i++) {
-      const response = await fetch(image[i]);
-      const blob = await response.blob();
-      const filename = Date.now() + '.jpg';
-      const storageRef = ref(storage, filename);
-      const snapshot = await uploadBytes(storageRef, blob);
-      const url = await getDownloadURL(snapshot.ref);
-      img.push(url);
+    if(image.length>0){
+        const img = [];
+      for (i = 0; i < image.length; i++) {
+        const response = await fetch(image[i]);
+        const blob = await response.blob();
+        const filename = Date.now() + '.jpg';
+        const storageRef = ref(storage, filename);
+        const snapshot = await uploadBytes(storageRef, blob);
+        const url = await getDownloadURL(snapshot.ref);
+        img.push(url);
+      }
+      setimageLink(img);
+      setcheckimgLink(true);
     }
-    setimageLink(img);
-    setcheckimgLink(true);
   };
   const getImageFromLibrary = async () => {
     if (canOpenImagePicker) {
@@ -96,12 +100,21 @@ const removeImageFromImageArray = (imageToRemove) => {
 
       // Thực hiện xử lý với ảnh đã chọn ở đây
       // Ví dụ: lưu vào mảng
-      let imgArr=[]
-      for(let i = 0; i<selectedImages.length;i++)
-      {
-        imgArr.push(selectedImages[i].uri)
+      if(image.length<=7){
+          let imgArr=[]
+        for(let i = 0; i<selectedImages.length;i++)
+        {
+          imgArr.push(selectedImages[i].uri)
+        }
+        if(image.length>5)
+          imgArr=imgArr.slice(0,image.length-5);
+        else if(image.length>2&&image.length<5)
+          imgArr=imgArr.slice(0,7-image.length);
+
+        setimage([...image,...imgArr]);
+      }else{
+        
       }
-      setimage([...image,...imgArr]);
     }
     setImagePickerVisible(false);
     setCanOpenImagePicker(true);
@@ -110,14 +123,10 @@ const removeImageFromImageArray = (imageToRemove) => {
 
   const addFeedback = async () => {
     try {
-      const request = await AxiosIntance().post('/productAPI/addProduct', {
-        name: name,
-        price: price,
-        quantity: quantity,
-        categoryID: value,
-        detail: detail,
-        userID: '113',
-        image: imageLink,
+      const request = await AxiosIntance().post('Api/feedbackAPI/addFeedback', {
+        productID:"65291577c199df71b460f143", userID:"113", rating:star, feedback:text
+        // , reply
+        ,image:image
       });
       if (request.result) {
         ToastAndroid.show('Thêm bình luận thành công', ToastAndroid.SHORT);
@@ -129,6 +138,16 @@ const removeImageFromImageArray = (imageToRemove) => {
       ToastAndroid.show('Thêm thất bại', ToastAndroid.SHORT);
     }
   };
+  useEffect(() => {
+    
+  
+      if(checkimgLink)
+        addFeedback()
+    return () => {
+      
+    }
+  }, [checkimgLink])
+  
   return (
     <View>
       {/* <Slideshow
@@ -153,7 +172,25 @@ const removeImageFromImageArray = (imageToRemove) => {
       {/* <CategoryList/> */}
       {/* <Banner/> */}
 
-      <View style={{
+      <DialogFeedback 
+                //
+                
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+
+      />
+      <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible)}}>
+
+
+
+        <Text>Bình luận</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export default TestScreen;
+{/* <View style={{
         // backgroundColor: 'red',
         borderRadius:5,
         borderWidth:0.5,
@@ -191,75 +228,70 @@ const removeImageFromImageArray = (imageToRemove) => {
                   style={{width: 100, height: 110, borderRadius: 10}}
                   source={{uri: item}}>
                   {/* <Text>{item}</Text> */}
-                  <TouchableOpacity
-                    onPress={() => removeImageFromImageArray(item)}>
-                    <Image
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        margin: 4,
-                        width: 20,
-                        height: 20,
-                        right: 0,
-                        backgroundColor: 'white',
-                        borderRadius: 12.5,
-                      }}
-                      source={require('../images/deleteimg1.png')}
-                    />
-                  </TouchableOpacity>
-                </ImageBackground>
-              </View>
-            ))
-          ) : (
-            <View />
-          )}
-        </View>
-        <TextInput
-          style={{
-            borderWidth:0.5,
-            borderColor:'black',
-            margin: 10,
-            borderRadius: 10,
-            padding: 15,
-          }}
-          onChangeText={setText}
-          numberOfLines={5}
-          multiline={true}
-          textAlignVertical="top"
-          placeholder="Nhập ý kiến của bạn ở đây"
-        />
-        <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignSelf: 'flex-end',
-              alignItems: 'center',
-            }}>
-            <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={()=>getImageFromLibrary()}
-            >
-              <Image
-                style={{width: 30, height: 30}}
-                source={require('../images/gallery.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-               activeOpacity={0.7}
-              style={{
-                marginHorizontal: 10,
-                 backgroundColor: '#3669C9'
-                 ,borderRadius:10,padding:10
-                 }}
-                 onPress={()=>{checkStar();}}
-                 >
-              <Text style={{fontSize: 18,color:'white'}}>Gửi đánh giá</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </View>
-  );
-};
-
-export default TestScreen;
+//                   <TouchableOpacity
+//                     onPress={() => removeImageFromImageArray(item)}>
+//                     <Image
+//                       style={{
+//                         position: 'absolute',
+//                         top: 0,
+//                         margin: 4,
+//                         width: 20,
+//                         height: 20,
+//                         right: 0,
+//                         backgroundColor: 'white',
+//                         borderRadius: 12.5,
+//                       }}
+//                       source={require('../images/deleteimg1.png')}
+//                     />
+//                   </TouchableOpacity>
+//                 </ImageBackground>
+//               </View>
+//             ))
+//           ) : (
+//             <View />
+//           )}
+//         </View>
+//         <TextInput
+//           style={{
+//             borderWidth:0.5,
+//             borderColor:'black',
+//             margin: 10,
+//             borderRadius: 10,
+//             padding: 15,
+//           }}
+//           onChangeText={setText}
+//           numberOfLines={5}
+//           multiline={true}
+//           textAlignVertical="top"
+//           placeholder="Nhập ý kiến của bạn ở đây"
+//         />
+//         <View>
+//           <View
+//             style={{
+//               flexDirection: 'row',
+//               alignSelf: 'flex-end',
+//               alignItems: 'center',
+//             }}>
+//             <TouchableOpacity
+//             activeOpacity={0.8}
+//             onPress={()=>getImageFromLibrary()}
+//             >
+//               <Image
+//                 style={{width: 30, height: 30}}
+//                 source={require('../images/gallery.png')}
+//               />
+//             </TouchableOpacity>
+//             <TouchableOpacity
+//                activeOpacity={0.7}
+//               style={{
+//                 marginHorizontal: 10,
+//                  backgroundColor: '#3669C9'
+//                  ,borderRadius:10,padding:10
+//                  }}
+//                  onPress={()=>{checkStar();}}
+//                  >
+//               <Text style={{fontSize: 18,color:'white'}}>Gửi đánh giá</Text>
+//             </TouchableOpacity>
+//           </View>
+//         </View>
+// </View> */}
