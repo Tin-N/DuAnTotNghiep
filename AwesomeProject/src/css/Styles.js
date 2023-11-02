@@ -984,6 +984,12 @@ export const StyleDetailProduct = StyleSheet.create({
         width: 130,
         borderRadius: 25
     },
+    touchOpa2: {
+        backgroundColor: '#1351c4',
+        padding: 8,
+        borderRadius: 25,
+        width: 370
+    },
     image: {
         width: 25,
         height: 25,
@@ -994,7 +1000,7 @@ export const StyleDetailProduct = StyleSheet.create({
         textAlign: 'center',
         fontSize: 18,
         color: 'white',
-        fontFamily: 'TiltNeon-Regular'
+        fontFamily: 'TiltNeon-Regular',
     },
     separator: {
         height: 1,
