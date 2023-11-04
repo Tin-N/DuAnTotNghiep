@@ -6,9 +6,12 @@ export const AppContextProvider = (props) => {
     const {children} = props;
     const [isLogin, setisLogin] = useState(false);
     const [isOrder, setisOrder] = useState(false);
-    const [userID, setuserID] = useState('6543aef3e99b70c1f167b727')
+   
+
+    // Lấy thông tin User
+    const [userInfo, setuserInfo] = useState({}); 
     return (
-        <AppContext.Provider value={{isLogin, setisLogin, isOrder, setisOrder, userID, setuserID}}>
+        <AppContext.Provider value={{isLogin, setisLogin, isOrder, setisOrder,userInfo,setuserInfo  }}>
             {children}
         </AppContext.Provider>
     )

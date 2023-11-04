@@ -13,29 +13,69 @@ import {StyleLogin} from '../css/Styles.js';
 import {Image} from 'react-native';
 const windowWIdth = Dimensions.get('window').width;
 import {StyleSheet} from 'react-native';
-
+import AxiosIntance from '../utils/AxiosIntance';
 const UpdatePassword = () => {
   const [show, setshow] = useState(true);
   const [visible, setvisible] = useState(true);
   const [showCP, setshowCP] = useState(true);
   const [visibleCP, setvisibleCP] = useState(true);
+
+  const [oldPassword, setOldPassword] = React.useState("");
+  const [newPassword, setNewPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState(""); 
+
+    const UpdatePassword = async () => {
+      // console.log(oldPassword, newPassword, confirmPassword);
+     
+      if( newPassword==confirmPassword){
+        console.log(oldPassword, newPassword, confirmPassword);
+        try {
+          // http://localhost:3000/Api/UserApi/change-password?email=thuan141@gmail.com&oldPassword=thuan2&newPassword=thuan3
+          const response= await AxiosIntance().post("/UserApi/change-password?email=thuannt111@gmail.com&oldPassword="+oldPassword+"&newPassword="+newPassword);
+          // console.log(response, email, newPassword, confirmPassword, oldPassword);
+          console.log(response)
+          // console.log(emailUser, password );
+          if(response.result==true)
+          {
+            console.log( "Do if"+newPassword, confirmPassword );
+            // await AsyncStorage.setItem("token",response.returnData.data.token);
+            // ToastAndroid.show("check thanhf coong ",ToastAndroid.SHORT);
+            // console.log(email);
+            // console.log(emailUser, password );
+            // ToastAndroid.show("Đăng nhập thành công",ToastAndroid.SHORT);
+            // // setisLogin(true);
+            // // setuserInfo(response.user);
+            // // navigation.navigate('Product');
+            // // console.log(response);
+    
+          }else{
+            console.log( "check thất bại"+response );
+
+            ToastAndroid.show("check thất bại",ToastAndroid.LONG);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      return
+    }
+
   return (
     <View>
-      
       <Text style={StyleLogin.HeadingTextCP}>Update Password</Text>
-
       <Text style={StyleLogin.HintText}>
         Complete the following final data to enter the Savvy Shop application
       </Text>
-
+      
       <View>
-        <Text style={StyleLogin.textHint}>New Password</Text>
+        <Text style={StyleLogin.textHint}>Old Password </Text>
 
         <View style={StyleLogin.input}>
           <TextInput
             style={StyleLogin.TextInputUP}
             placeholder="Enter your password"
             underlineColorAndroid="transparent"
+            onChangeText={setOldPassword}
             secureTextEntry={visible}></TextInput>
 
           <TouchableOpacity
@@ -56,15 +96,36 @@ const UpdatePassword = () => {
         </View>
       </View>
 
-      <View style={StyleLogin.UPContainerWarning}>
-        <Image
-          source={require('../images/icon/warning.png')}
-          style={StyleLogin.iconWarning}></Image>
-        <Text style={StyleLogin.TextWarning}>
-          {' '}
-          Mật khẩu phải có 6 ký tự trở lên{' '}
-        </Text>
+
+      <View>
+        <Text style={StyleLogin.textHint}>New Password</Text>
+
+        <View style={StyleLogin.input}>
+          <TextInput
+            style={StyleLogin.TextInputUP}
+            placeholder="Enter your password"
+            underlineColorAndroid="transparent"
+            onChangeText={setNewPassword}
+            secureTextEntry={visible}></TextInput>
+
+          <TouchableOpacity
+            onPress={() => {
+              setvisible(!visible);
+              setshow(!show);
+            }}
+            style={StyleLogin.CTIcon}>
+            <Image
+              source={
+                show === false
+                  ? require('../images/icon/view.png')
+                  : require('../images/icon/hide.png')
+              }
+              style={StyleLogin.HideShowIcon}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
+
 
       <View>
         <Text style={StyleLogin.textHint}> Confirm New Password</Text>
@@ -74,6 +135,7 @@ const UpdatePassword = () => {
             style={StyleLogin.TextInputUP}
             placeholder="Enter your password"
             underlineColorAndroid="transparent"
+            onChangeText={setConfirmPassword}
             secureTextEntry={visible}></TextInput>
 
           <TouchableOpacity
@@ -94,7 +156,7 @@ const UpdatePassword = () => {
         </View>
       </View>
       <View style={StyleLogin.ButtonUP}>
-        <TouchableOpacity style={StyleLogin.buttonShape}>
+        <TouchableOpacity style={StyleLogin.buttonShape} onPress={UpdatePassword}>
           <Text style={StyleLogin.TextButton}>Save Update</Text>
         </TouchableOpacity>
       </View>

@@ -40,13 +40,19 @@ import TestScreen from './src/screens/TestScreen';
 const Stack = createNativeStackNavigator()
 const App = () => {
   return (
-    // <DetailProduct/>
+
+
     <AppContextProvider>
       <NavigationContainer>
-        <AppNavigator />
+        {/* <AppNavigator/> */}
+        {/* <SignIn/> */}
+        {/* <ResetPassword/> */}
+        <UpdatePassword/>
       </NavigationContainer>
     </AppContextProvider>
     // <Order />
+
+
   )
 }
 

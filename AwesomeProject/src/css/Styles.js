@@ -548,6 +548,14 @@ export const StyleLogin = StyleSheet.create({
     header: {
         color: COLOR.primary,
     },
+    HeadingTextCP:{
+        color: COLOR.background,
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginTop: '20%',
+        justifyContent: 'space-between',
+        marginHorizontal: 20,
+    },
     HeadingText: {
         color: COLOR.background,
         fontSize: 80,
