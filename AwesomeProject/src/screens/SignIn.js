@@ -25,34 +25,46 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [emailUser, setEmailUser] = React.useState("");
   const [password, setPassword] = React.useState("");
-  // const {setisLogin}= useContext(AppContext);
-  // const {setuserInfo}= useContext(AppContext);
-  // const navigation=useNavigation();
+  // Lấy thông tin user từ context    
+  const {setuserInfo, userInfo}= useContext(AppContext);
+
 
   const Signin = async () => {
     try {
-      console.log(emailUser, password );
+      // console.log(emailUser, password );
       const response= await AxiosIntance().post("/UserApi/login?email="+ emailUser + "&password="+ password);
       
       // console.log(emailUser, password );
-      if(response.user)
+      if(response.user )
       {
+        
+        // lấy thông tin user từ context (id)
+        const _id = response.user.id;
+        setuserInfo({...userInfo, ...response.user});
+
+
         // console.log(emailUser, password );
-        await AsyncStorage.setItem("token",response.returnData.data.token);
+        // await AsyncStorage.setItem("token",response.returnData.data.token);
         // ToastAndroid.show("Đăng nhập ",ToastAndroid.SHORT);
-        ToastAndroid.show("Đăng nhập thành công",ToastAndroid.SHORT);
+        // ToastAndroid.show("Đăng nhập thành công",ToastAndroid.SHORT);
+        // console.log(userInfo);
         // setisLogin(true);
         // setuserInfo(response.user);
         // navigation.navigate('Product');
         // console.log(response);
-
+        // console.log("UserInfor "+ id);
+       
+        
       }else{
         // ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);
       }
     } catch (error) {
       console.log(error);
     }
+    console.log("UserInfor "+ userInfo._id);// log ra ID
   }
+     
+  
 
   return (
     <View>
