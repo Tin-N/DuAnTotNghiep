@@ -1,17 +1,18 @@
-import {View,Modal,Pressable, Text, TouchableOpacity,ImageBackground, Alert,Image, TextInput, Easing} from 'react-native';
-import React, {useState,useEffect} from 'react';
+import {View,Modal,Pressable, Text, TouchableOpacity,ImageBackground, Alert,Image,ToastAndroid, TextInput, Easing} from 'react-native';
+import React, {useState,useEffect,useRef} from 'react';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
-import StarRating, { StarRatingDisplay } from 'react-native-star-rating-widget';
+import AxiosIntance from '../../utils/AxiosIntance';
+import { storage } from '../../utils/FirebaseConfig';
+
 const DialogFeedback = (props)=>
 {   
     const {productID,userID,setCheck
-        ,modalVisible, setModalVisible
+        ,modalVisible, setModalVisible,star
     }=props;
     const [imageLink, setimageLink] = useState([]);
-    const [star, setStar] = useState(0)
     const [checkimgLink, setcheckimgLink] = useState(false);
     const [image, setimage] = useState([]);
 
@@ -24,28 +25,44 @@ const DialogFeedback = (props)=>
     const [canOpenImagePicker, setCanOpenImagePicker] = useState(true);
 
 
+// 
+    const [textInputHeight, setTextInputHeight] = useState(null);
+    const textInputRef = useRef();
+    const previousHeight = useRef(null);
+
 
 //  Hammm
-const checkStar=()=>{
-    if(star==0){
-  
-      Alert.alert(
-        'Chú ý',
-        'Vui lòng bình chọn sao trước khi gửi đánh giá.'
-        ,undefined
-        ,{cancelable:false}    
-        )
-  
-    }else{
-      console.log(text);
-      setModalVisible(!modalVisible);
 
-    }
+const HandleMarginDialog=(marginTop)=>{ 
+  if(textInputHeight>marginTop){
+    marginTop-=15;
   }
+  return marginTop
+}
+
+const handleLayout = (e) => {
+  const { height } = e.nativeEvent.layout;
+  setTextInputHeight(height);
+}
+
+
   const removeImageFromImageArray = (imageToRemove) => {
     const updatedImageArray = image.filter((image) => image !== imageToRemove);
     setimage(updatedImageArray);
   };
+
+  const checkSendData=()=>{
+   if(text.length>0){
+    if(image.length>0){
+      Upload();
+    }else{
+      addFeedback();
+      console.log("HELOOOOOOOOOOOOOOOO");
+    }
+   }else{
+    Alert.alert("Chú ý","Cần nhập bình luận.");
+   }
+  }
     const Upload = async () => {
       if(image.length>0){
           const img = [];
@@ -103,14 +120,25 @@ const checkStar=()=>{
       setCanOpenImagePicker(true);
     }
     };
-  
+    useEffect(() => {
+      HandleMarginDialog(200);
+    
+      return () => {
+        
+      }
+    }, [textInputHeight])
+    
     const addFeedback = async () => {
+      let options={
+        productID:"65291577c199df71b460f143", userID:"113", rating:star, feedback:text
+        // , reply
+        
+      }
+      if(imageLink.length>0){
+        options={...options,image:imageLink}
+      }
       try {
-        const request = await AxiosIntance().post('Api/feedbackAPI/addFeedback', {
-          productID:"65291577c199df71b460f143", userID:"113", rating:star, feedback:text
-          // , reply
-          ,image:image
-        });
+        const request = await AxiosIntance().post('/feedbackAPI/addFeedback', options);
         if (request.result) {
           ToastAndroid.show('Thêm bình luận thành công', ToastAndroid.SHORT);
         }
@@ -119,6 +147,7 @@ const checkStar=()=>{
       } catch (error) {
         console.log(error);
         ToastAndroid.show('Thêm thất bại', ToastAndroid.SHORT);
+        setModalVisible(false);
       }
     };
     useEffect(() => {
@@ -134,10 +163,15 @@ const checkStar=()=>{
 
 
     return(
-        <View >
+       
 
         <Modal
-        style={{height:300,width:300, borderRadius:10}}
+        style={{
+          height:300,
+          width:300,
+           borderRadius:0,
+          // alignSelf:'center'           
+          }}
         animationType="slide"
         transparent={true}
         visible={modalVisible}>
@@ -153,7 +187,9 @@ const checkStar=()=>{
                     borderWidth:1,
                     // elevation:1,
                     borderColor:'#b1b1b1ff',
-                    margin:10,
+                    marginTop:HandleMarginDialog(200),
+                    // alignSelf:'center',
+                    margin:20,
                     
                     padding: 10}}>
 
@@ -165,30 +201,13 @@ const checkStar=()=>{
                             <Text style={{fontSize:20,marginVertical:6}}>Đánh giá sản phẩm</Text>
 
                             <Pressable
-                                onPress={() => setModalVisible(!modalVisible)}>
+                                onPress={() => setModalVisible(false)}>
                                 <Icon name='close' size={24} color={'black'} />
                             </Pressable>
                         </View>
-                    <Text style={{fontSize:16,marginVertical:5}}>Điểm đánh giá</Text>
-
-                    <View style={{flexDirection:'row',marginVertical:3,alignItems:'center'}}>
-                    <StarRating
-                        maxStars={5}
-                        rating={star}
-                        onChange={setStar}
-                        enableHalfStar={false}
-                        starSize={25}
-                        enableSwiping={true}
-                        animationConfig={{
-                            scale:1.3,duration:100,
-                            easing:Easing.elastic(10)
-                        }}
-                        />
-                            <Text>( {star} sao )</Text>
 
                     </View>
-                    </View>
-                    
+                    <Text>{textInputHeight}</Text>
                     <View style={{width:"100%",flexWrap:'wrap',flexDirection:'row'}}>
                     {image.length > 0 ? (
                         image.map(item => (
@@ -229,9 +248,11 @@ const checkStar=()=>{
                 borderRadius: 10,
                 padding: 15,
             }}
+            onLayout={handleLayout}
             onChangeText={setText}
-            numberOfLines={5}
             multiline={true}
+            scrollEnabled={true}
+            numberOfLines={8}
             textAlignVertical="top"
             placeholder="Nhập ý kiến của bạn ở đây"
             />
@@ -258,7 +279,7 @@ const checkStar=()=>{
                     backgroundColor: '#3669C9'
                     ,borderRadius:10,padding:10
                     }}
-                    onPress={()=>{checkStar();}}
+                    onPress={()=>checkSendData()}
                     >
                 <Text style={{fontSize: 18,color:'white'}}>Gửi đánh giá</Text>
                 </TouchableOpacity>
@@ -269,7 +290,6 @@ const checkStar=()=>{
         </View>
     </Modal>
 
-        </View>
     );
 }
 export default DialogFeedback;

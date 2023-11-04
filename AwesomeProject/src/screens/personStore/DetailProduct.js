@@ -1,5 +1,5 @@
 
-import { View, Text, Image, TouchableOpacity, ImageBackground, Modal, ToastAndroid } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ImageBackground, Modal, ToastAndroid, Easing } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { StyleDetailProduct } from '../../css/Styles'
 import { Dimensions } from 'react-native';
@@ -10,10 +10,10 @@ import { formatPrice } from '../../../Agro';
 
 import { ScrollView, FlatList } from 'react-native';
 import StarRating from 'react-native-star-rating-widget';
-import StarRatingDisplay from 'react-native-star-rating-widget';
 import ItemFeedBack from './ItemFeedBack';
 import { StyleDialogShopping } from '../../css/Styles';
 import { LogBox } from 'react-native';
+import DialogFeedback from '../../component/DialogFeedback/DialogFeedback';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const DetailProduct = (props) => {
@@ -23,6 +23,9 @@ const DetailProduct = (props) => {
     const [productPrice, setProductPrice] = useState('');
     const [dataProduct, setDataProduct] = useState({});
     const [imageProduct, setImageProduct] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
+    const [star, setStar] = useState(0);
+
 
     const [dataFeedback, setDataFeedback] = useState([]);
     const [dataColor, setDataColor] = useState([]);
@@ -38,7 +41,12 @@ const DetailProduct = (props) => {
 
 
 
-
+    const checkStar=()=>{
+        if(star>0){
+            // console.log(text);
+            setModalVisible(true);
+      }
+    }
     const heartHandler = async() => {
         console.log(favorite);
         if(heart)
@@ -328,6 +336,32 @@ const DetailProduct = (props) => {
                     <Text style={{ padding: 15, fontSize: 20, fontFamily: 'TiltNeon-Regular' }}>{detail}</Text>
                 </View>
                 <View style={StyleDetailProduct.line}></View>
+                <Text style={{fontSize:16,marginVertical:5,marginHorizontal:10}}>Điểm đánh giá</Text>
+
+                    <View style={{flexDirection:'row',marginVertical:3,alignItems:'center'}}>
+
+                            <StarRating
+                                
+                                maxStars={5}
+                                rating={star}
+                                onChange={setStar}
+                                enableHalfStar={false}
+                                onRatingEnd={()=>checkStar()}
+                                starSize={25}
+                                enableSwiping={true}
+                                animationConfig={{
+                                    scale:1.3,duration:100,
+                                    easing:Easing.elastic(10)
+                                }}
+                                />
+                                <Text>( {star} sao )</Text>
+
+                            </View>
+
+               
+
+                <View style={StyleDetailProduct.line}></View>
+
                 <View style={{ marginBottom: 100 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ margin: 10, fontSize: 18 }}>
@@ -348,6 +382,25 @@ const DetailProduct = (props) => {
                         ItemSeparatorComponent={Separator} />
                 </View>
             </ScrollView>
+
+
+                    <View
+                    style={{
+                    width:'100%',
+                    backgroundColor:'red',
+                    justifyContent:'center',
+                     alignItems:'center',}}
+                    >
+
+
+                    <DialogFeedback
+                                modalVisible={modalVisible}
+                                setModalVisible={setModalVisible}
+                                star={star}
+                                setStar={setStar}
+                            />
+                    </View>
+           
             <View style={StyleDetailProduct.bottom}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <View style={{ paddingLeft: 10, paddingRight: 10, }}>

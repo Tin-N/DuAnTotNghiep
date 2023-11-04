@@ -9,12 +9,16 @@ import { ScrollView } from 'react-native';
 import AxiosIntance from '../../utils/AxiosIntance';
 import StarRating from 'react-native-star-rating-widget';
 import { LogBox } from 'react-native';
+import { SwipeProvider } from 'react-native-swipe-item';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const DetailFeedback = (props) => {
     const { navigation } = props;
     const { route } = props;
     const { params } = route;
+
+    const [star, setStar] = useState(0);// Review star
+
     const [star11, setStar11] = useState(0);
     const [star22, setStar22] = useState(0);
     const [star33, setStar33] = useState(0);
@@ -30,6 +34,7 @@ const DetailFeedback = (props) => {
     const [percentRating4, setpercentRating4] = useState(0);
     const [percentRating5, setpercentRating5] = useState(0);
     const [rating, setRating] = useState(0);
+    const [check, setCheck] = useState(false)
     const onHandle = () => {
         navigation.goBack();
     }
@@ -47,7 +52,7 @@ const DetailFeedback = (props) => {
         getFeedback();
         return () => {
         }
-    }, [params.itemId])
+    }, [params.itemId,check])
     const Separator = () => {
         return <View style={StyleDetailFeedback.separator} />;
     };
@@ -176,13 +181,15 @@ const DetailFeedback = (props) => {
                     </View>
                 </View>
                 {dataFeedback.length > 0 ? <View style={{ paddingBottom: 90 }}>
+
                     <FlatList
                         data={dataFeedback}
                         showsHorzontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
-                        renderItem={({ item }) => <ItemFeedBack dataFeedback={item} />}
+                        renderItem={({ item }) => <ItemFeedBack dataFeedback={item} check={check} setCheck={setCheck} />}
                         keyExtractor={item => item._id}
                         ItemSeparatorComponent={Separator} />
+
                     <TouchableOpacity style={StyleDetailFeedback.touchOpa}>
                         <Text style={{ fontWeight: 'bold' }}>
                             See more
