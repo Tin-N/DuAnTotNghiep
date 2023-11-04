@@ -534,9 +534,9 @@ export const StyleOrder = StyleSheet.create({
         width: 5 * width / 100,
     },
     checkBoxOrder: {
-
         position: 'relative',
-        top: '50%',
+        alignSelf: 'center',
+        marginTop: 50,
     },
     pressableBuy: {
         height: 52,
