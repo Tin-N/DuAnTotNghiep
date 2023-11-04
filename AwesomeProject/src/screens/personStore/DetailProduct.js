@@ -1,6 +1,7 @@
 
 import { View, Text, Image, TouchableOpacity, ImageBackground, Modal, ToastAndroid, Easing } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect ,useContext} from 'react'
+
 import { StyleDetailProduct } from '../../css/Styles'
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen')
@@ -14,9 +15,11 @@ import ItemFeedBack from './ItemFeedBack';
 import { StyleDialogShopping } from '../../css/Styles';
 import { LogBox } from 'react-native';
 import DialogFeedback from '../../component/DialogFeedback/DialogFeedback';
+import { AppContext } from '../../utils/AppContext';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const DetailProduct = (props) => {
+    console.log("Detail Product Rendered")
     const { navigation } = props;
     const { route } = props;
     const { params } = route;
@@ -26,6 +29,8 @@ const DetailProduct = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [star, setStar] = useState(0);
 
+    const { userID } = useContext(AppContext)
+    const [ownerID, setownerID] = useState()
 
     const [dataFeedback, setDataFeedback] = useState([]);
     const [dataColor, setDataColor] = useState([]);
@@ -35,7 +40,6 @@ const DetailProduct = (props) => {
     const [percentRating, setPercentRating] = useState(0);
     const [heart, setHeart] = useState(false);
     const [isDialogVisible, setDialogVisible] = useState(false);
-
     // favoriteID
     const [favorite, setFavorite] = useState({})
 
@@ -47,34 +51,32 @@ const DetailProduct = (props) => {
             setModalVisible(true);
       }
     }
-    const heartHandler = async() => {
+    const heartHandler = async () => {
         console.log(favorite);
-        if(heart)
-        {
+        if (heart) {
             console.log("Aiyooooo");
-
-            const response= await AxiosIntance().post("/favoriteApi/deleteFavorite?id="+favorite._id);
-            if(response.result)
-            {
+            const response = await AxiosIntance().post("/favoriteApi/deleteFavorite?id=" + favorite._id);
+            if (response.result) {
                 setFavorite({});
-                ToastAndroid.show("Gỡ khỏi ưu thích thành công",ToastAndroid.SHORT);
+                ToastAndroid.show("Gỡ khỏi ưu thích thành công", ToastAndroid.SHORT);
                 setHeart(!heart);
-            }else{
-                ToastAndroid.show("Gỡ khỏi ưu thích không thành công",ToastAndroid.SHORT);
+            } else {
+                ToastAndroid.show("Gỡ khỏi ưu thích không thành công", ToastAndroid.SHORT);
             }
-        }else{
-            const response= await AxiosIntance().post("/favoriteApi/addFavorite?userID="+"113"+"&productID="+params.itemId);
-            if(response.result)
-            {
-                ToastAndroid.show("Thích thành công",ToastAndroid.SHORT);
+        } else {
+            const response = await AxiosIntance().post("/favoriteApi/addFavorite?userID=" + "113" + "&productID=" + params.itemId);
+            if (response.result) {
+                ToastAndroid.show("Thích thành công", ToastAndroid.SHORT);
                 setHeart(!heart);
                 setFavorite(response.favorite)
 
-            }else{
-                ToastAndroid.show("Thêm vào ưu thích không thành công",ToastAndroid.SHORT);
+            } else {
+                ToastAndroid.show("Thêm vào ưu thích không thành công", ToastAndroid.SHORT);
             }
         }
     }
+    const [check, setCheck] = useState(null);
+
     const handlerDetail = () => {
         navigation.navigate("DetailFeedback", { itemId: params.itemId })
     }
@@ -84,6 +86,7 @@ const DetailProduct = (props) => {
     const Separator = () => {
         return <View style={StyleDetailProduct.separator} />;
     };
+
     useEffect(() => {
         navigation.getParent()?.setOptions({
             tabBarStyle: {
@@ -94,6 +97,7 @@ const DetailProduct = (props) => {
             tabBarStyle: undefined
         });
     }, [navigation]);
+
     useEffect(() => {
         const getDetails = async () => {
             const response = await AxiosIntance().get('/productAPI/getProductByID?id=' + params.itemId);
@@ -104,27 +108,20 @@ const DetailProduct = (props) => {
                 setProductPrice(response.products.price);
                 setImageProduct(response.products.image[0]);
                 setDetail(response.products.detail);
+                setownerID(response.products.userID)
             }
         }
 
-
         // Get favorite 
-
-        const getFavorite =async()=>{
-            const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID="+"113"+"&productID="+params.itemId);
-            if(response.result){
+        const getFavorite = async () => {
+            const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + "113" + "&productID=" + params.itemId);
+            if (response.result) {
                 setFavorite(response.favorite);
-                if(Object.keys(response.favorite).length>0){
+                if (Object.keys(response.favorite).length > 0) {
                     setHeart(!heart);
                 }
             }
         }
-
-
-
-
-
-
 
         const getFeedback = async () => {
             const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId);
@@ -186,7 +183,46 @@ const DetailProduct = (props) => {
         return () => {
         }
     }, [])
+
     const MyDialog = ({ isVisible, onClose }) => {
+        const [selectedColor, setSelectedColor] = useState(null);
+        const [selectedSize, setSelectedSize] = useState(null);
+        const [colorChoosen, setColorChoosen] = useState('');
+        const [sizeChoosen, setSizeChoosen] = useState('');
+        const [imageColor, setimageColor] = useState('')
+        const [quantity, setQuantity] = useState(1);
+        const [productID, setproductID] = useState(params.itemId)
+        console.log("this is productID" + productID);
+        const quantityHandler = (updateQuantity) => {
+            if (updateQuantity == "+") {
+                setQuantity(quantity + 1);
+            } else if (updateQuantity == "-" && quantity >= 2) {
+                setQuantity(quantity - 1);
+            }
+        }
+
+        const addToCart = async () => {
+            const optionsInCart = {
+                colorChoosen,
+                sizeChoosen
+            }
+            const productsInCart = {
+                ownerID,
+                productID,
+                quantity,
+                optionsInCart
+            }
+            try {
+                const response = await AxiosIntance().post('/cart/add', { userID: userID, products: productsInCart })
+                if (response) {
+                    console.log("Thêm vào giỏ hàng thành công")
+                }
+            } catch (error) {
+                console.log("Lỗi thêm vào giỏ hàng: " + error)
+            }
+
+        }
+
         return (
             <Modal
                 animationType="slide"
@@ -201,7 +237,7 @@ const DetailProduct = (props) => {
                         <Image source={require('../../images/close.png')} />
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', padding: 10 }}>
-                        <Image style={{ width: 100, height: 100, borderRadius: 5 }} source={imageProduct ? { uri: imageProduct } : null} />
+                        <Image style={{ width: 100, height: 100, borderRadius: 5 }} source={imageColor != '' ? { uri: imageColor } : { uri: imageProduct }} />
                         <View style={{ marginLeft: 10 }}>
                             <View>
                                 <View style={{ flexDirection: 'row' }}>
@@ -218,35 +254,127 @@ const DetailProduct = (props) => {
                                 <Text style={{ fontSize: 20, textDecorationLine: 'line-through' }}>
                                     199.000 đ
                                 </Text>
+                                <View>
+                                    {
+                                        colorChoosen != '' || sizeChoosen != '' ?
+                                            <View>
+                                                <Text>Kích cỡ: {sizeChoosen} {colorChoosen}</Text>
+                                            </View>
+                                            : <View>
+                                            </View>
+                                    }
+                                </View>
                             </View>
                         </View>
                     </View>
                     <View style={StyleDialogShopping.line}>
                     </View>
-                    <View>
-                        {
-                            dataColor.length > 0 ?
-                                <View style={{ padding: 10 }}>
-                                    <Text style={{ fontSize: 23, color: 'black' }}>Nhóm màu</Text>
-                                    <View style={{ flexDirection: 'row', marginTop: 10, flexWrap: 'wrap' }}>
-                                        {dataColor.map(item => (
-                                            <View key={item._id} style={{
-                                                margin: 5,
-                                                justifyContent: 'center',
-                                                alignItems: 'center', borderWidth: 1, borderRadius: 5, overflow: 'hidden',
-                                                backgroundColor:'#f7f5f5'
-                                            }}>
-                                                <Image style={{ width: 110, height: 100 }} source={item.image ? { uri: item.image } : null} />                               
+                    <ScrollView showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        overScrollMode='never'>
+                        <View>
+                            {
+                                dataColor.length > 0 ?
+                                    <View style={{ padding: 10 }}>
+                                        <Text style={{ fontSize: 21, color: 'black' }}>Nhóm màu</Text>
+                                        <View style={{ flexDirection: 'row', marginTop: 10, flexWrap: 'wrap', marginLeft: -5 }}>
+                                            {dataColor.map(item => (
+                                                <TouchableOpacity activeOpacity={1} key={item._id} onPress={() => {
+                                                    setSelectedColor(item._id);
+                                                    setColorChoosen(item.title);
+                                                    setimageColor(item.image)
+                                                }}
+                                                    style={[
+                                                        {
+                                                            margin: 5,
+                                                            justifyContent: 'center',
+                                                            alignItems: 'center', borderWidth: 1.5, borderRadius: 5, overflow: 'hidden',
+                                                            backgroundColor: '#f7f5f5', borderColor: '#EEEEEE'
+                                                        },
+                                                        selectedColor === item._id && { borderColor: item.color }
+                                                    ]}>
+                                                    <Image style={{ width: 105, height: 100 }} source={item.image ? { uri: item.image } : null} />
                                                     <Text style={{
                                                         height: 30, textAlign: 'center',
-                                                        paddingTop: 5, width:'auto'
+                                                        paddingTop: 5, width: 'auto'
                                                     }}>{item.title}
                                                     </Text>
-                                            </View>
-                                        ))}
+                                                </TouchableOpacity>
+                                            ))}
+                                        </View>
+                                        <View style={StyleDialogShopping.line}>
+                                        </View>
                                     </View>
-                                </View>
-                                : <View />
+                                    : <View />
+                            }
+                        </View>
+                        <View>
+                            {
+                                dataSize.length > 0 ?
+                                    <View style={{ padding: 10 }}>
+                                        <Text style={{ fontSize: 21, color: '#000000' }}>Kích cỡ</Text>
+                                        <View style={{ flexDirection: 'row', marginTop: 10, flexWrap: 'wrap', marginLeft: -5 }}>
+                                            {dataSize.map(item => (
+                                                <TouchableOpacity activeOpacity={1} key={item._id} onPress={() => {
+                                                    setSelectedSize(item._id);
+                                                    setSizeChoosen(item.size)
+                                                }}
+                                                    style={[
+                                                        {
+                                                            margin: 5,
+                                                            justifyContent: 'center',
+                                                            alignItems: 'center', borderWidth: 0.5, borderRadius: 5, overflow: 'hidden',
+                                                            backgroundColor: '#f7f5f5', borderColor: '#EEEEEE'
+                                                        },
+                                                        selectedSize === item._id && { borderColor: '#4c4b4b' }
+                                                    ]}>
+                                                    <Text style={{
+                                                        backgroundColor: '#EEEEEE', width: 70,
+                                                        padding: 8, textAlign: 'center'
+                                                    }}>{item.size}</Text>
+                                                </TouchableOpacity>
+                                            ))}
+                                        </View>
+                                        <View style={StyleDialogShopping.line}>
+                                        </View>
+                                    </View>
+                                    : <View />
+                            }
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10, marginLeft: 250 }}>
+                            <TouchableOpacity onPress={() => quantityHandler("-")} style={{
+                                width: 35, height: 30,
+                                backgroundColor: '#EEEEEE', alignItems: 'center',
+                            }}>
+                                <Text style={{ fontSize: 20 }}>-</Text>
+                            </TouchableOpacity>
+                            <Text style={{ padding: 5, fontSize: 20 }}>{quantity}</Text>
+                            <TouchableOpacity onPress={() => quantityHandler("+")} style={{
+                                width: 35, height: 30,
+                                backgroundColor: '#EEEEEE', alignItems: 'center'
+                            }}>
+                                <Text style={{ fontSize: 20 }}>+</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                    <View style={{ padding: 10, position: 'absolute', bottom: 0, flex: 1 }}>
+                        {
+                            check == true ? <TouchableOpacity style={StyleDetailProduct.touchOpa2}>
+                                <Text style={StyleDetailProduct.textButton}>Mua ngay</Text>
+                            </TouchableOpacity>
+                                :
+                                <LinearGradient
+                                    start={{ x: 0, y: 0.5 }} // Điểm bắt đầu của gradient (trái)
+                                    end={{ x: 1, y: 0.5 }}   // Điểm kết thúc của gradient (phải)
+                                    colors={['#3669C9', '#070723']}
+                                    style={{ padding: 8, borderRadius: 25, flex: 1 }}
+                                >
+                                    <TouchableOpacity onPress={addToCart} style={{ width: 355 }}>
+                                        <Text style={StyleDetailProduct.textButton}>
+                                            Thêm vào giỏ hàng
+                                        </Text>
+                                    </TouchableOpacity>
+                                </LinearGradient>
                         }
                     </View>
                 </View>
@@ -312,7 +440,7 @@ const DetailProduct = (props) => {
                         <TouchableOpacity onPress={heartHandler}>
                             <Image style={{ width: 30, height: 30, marginRight: 15 }}
                                 source={
-                                    heart==true ?
+                                    heart == true ?
                                         require('../../images/heart.png') : require('../../images/unheart.png')
                                 } />
                         </TouchableOpacity>
@@ -414,9 +542,12 @@ const DetailProduct = (props) => {
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', marginLeft: 10 }}>
-                    <TouchableOpacity onPress={() => setDialogVisible(true)} style={StyleDetailProduct.touchOpa}>
+                    <TouchableOpacity onPress={() => {
+                        setDialogVisible(true);
+                        setCheck(true)
+                    }} style={StyleDetailProduct.touchOpa}>
                         <Text style={StyleDetailProduct.textButton}>
-                            Buy Now
+                            Mua ngay
                         </Text>
                         <MyDialog isVisible={isDialogVisible} onClose={() => setDialogVisible(false)} />
                     </TouchableOpacity>
@@ -426,9 +557,12 @@ const DetailProduct = (props) => {
                         colors={['#3669C9', '#070723']}
                         style={{ padding: 8, width: 130, borderRadius: 25, marginLeft: 5 }}
                     >
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={() => {
+                            setDialogVisible(true);
+                            setCheck(false)
+                        }}>
                             <Text style={StyleDetailProduct.textButton}>
-                                Add to Cart
+                                Giỏ hàng
                             </Text>
                         </TouchableOpacity>
                     </LinearGradient>
@@ -437,5 +571,4 @@ const DetailProduct = (props) => {
         </View>
     )
 }
-
 export default DetailProduct;

@@ -117,29 +117,43 @@ const OrderItem = (props) => {
                 />
             </View>
 
-            <View style={StyleOrder.header}>
-                <Image style={StyleOrder.imageFlatList} source={{ uri: imageUri }} />
-                <View>
-                    <Text numberOfLines={2} style={StyleOrder.textNameFlatList}>{productName}</Text>
-                    <Text numberOfLines={2} style={StyleOrder.textInfoFlatList}>{categoryID}</Text>
-                    <Text numberOfLines={2} style={StyleOrder.textInfoFlatList}>${productPrice}</Text>
+            <View >
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Entypo name='shop' size={24} />
+                        <Text style={{ marginLeft: 10 }}>Tên Shop</Text>
+                    </View>
+                    <Pressable>
+                        <Text>Xóa</Text>
+                    </Pressable>
                 </View>
-            </View>
 
-            <View style={[StyleOrder.header, StyleOrder.function]}>
-                <Pressable onPress={() => decreaseQuantity(data.productID, quantity)}>
-                    <Icon name='trash-outline' size={24} />
-                </Pressable>
-                <Text>{quantity}</Text>
-                <Pressable onPress={() => increaseQuantity(data.productID, quantity)}>
-                    <Icon name='add' size={24} />
-                </Pressable>
-            </View>
+                {/* <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gary'}}/> */}
 
-            <View style={[StyleOrder.header, StyleOrder.function]}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={StyleOrder.header}>
+                        <Image style={StyleOrder.imageFlatList} source={{ uri: imageUri }} />
+                        <View>
+                            <Text numberOfLines={2} style={StyleOrder.textNameFlatList}>{productName}</Text>
+                            <Text numberOfLines={2} style={StyleOrder.textInfoFlatList}>{categoryID}</Text>
+                            <Text numberOfLines={2} style={StyleOrder.textInfoFlatList}>${productPrice}</Text>
+                        </View>
+                    </View>
 
+                    <View style={[StyleOrder.header, StyleOrder.function]}>
+                        <Pressable onPress={() => decreaseQuantity(data.productID, quantity)}>
+                            <Icon name='trash-outline' size={24} />
+                        </Pressable>
+                        <Text>{quantity}</Text>
+                        <Pressable onPress={() => increaseQuantity(data.productID, quantity)}>
+                            <Icon name='add' size={24} />
+                        </Pressable>
+                    </View>
 
-                <Text>{itemTotalCost}</Text>
+                    <View style={[StyleOrder.header, StyleOrder.function]}>
+                        <Text>{itemTotalCost}</Text>
+                    </View>
+                </View>
             </View>
         </View>
     );

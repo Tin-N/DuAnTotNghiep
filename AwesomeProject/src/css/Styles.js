@@ -534,9 +534,9 @@ export const StyleOrder = StyleSheet.create({
         width: 5 * width / 100,
     },
     checkBoxOrder: {
-
         position: 'relative',
-        top: '50%',
+        alignSelf: 'center',
+        marginTop: 50,
     },
     pressableBuy: {
         height: 52,
@@ -547,6 +547,14 @@ export const StyleOrder = StyleSheet.create({
 export const StyleLogin = StyleSheet.create({
     header: {
         color: COLOR.primary,
+    },
+    HeadingTextCP:{
+        color: COLOR.background,
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginTop: '20%',
+        justifyContent: 'space-between',
+        marginHorizontal: 20,
     },
     HeadingText: {
         color: COLOR.background,
@@ -984,6 +992,12 @@ export const StyleDetailProduct = StyleSheet.create({
         width: 130,
         borderRadius: 25
     },
+    touchOpa2: {
+        backgroundColor: '#1351c4',
+        padding: 8,
+        borderRadius: 25,
+        width: 370
+    },
     image: {
         width: 25,
         height: 25,
@@ -994,7 +1008,7 @@ export const StyleDetailProduct = StyleSheet.create({
         textAlign: 'center',
         fontSize: 18,
         color: 'white',
-        fontFamily: 'TiltNeon-Regular'
+        fontFamily: 'TiltNeon-Regular',
     },
     separator: {
         height: 1,
