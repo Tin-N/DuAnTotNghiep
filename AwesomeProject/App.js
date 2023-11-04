@@ -40,12 +40,16 @@ import HomeStore from './src/screens/personStore/HomeStore';
 
 const App = () => {
   return (
-    // <AppContextProvider>
-    //   <NavigationContainer>
-    //     <AppNavigator/>
-    //   </NavigationContainer>
-    // </AppContextProvider>
-    <Order />
+    <AppContextProvider>
+      <NavigationContainer>
+        {/* <AppNavigator/> */}
+        {/* <SignIn/> */}
+        {/* <ResetPassword/> */}
+        <UpdatePassword/>
+      </NavigationContainer>
+    </AppContextProvider>
+    // <Order />
+
   )
 }
 

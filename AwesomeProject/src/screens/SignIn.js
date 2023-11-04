@@ -16,7 +16,7 @@ import {StyleLogin} from '../css/Styles.js';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import AxiosIntance from '../utils/AxiosIntance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import {UserContext} from '../utils/Context';
+import {UserContext} from '../utils/Context';
 import {useNavigation} from '@react-navigation/native'
 import { AppContext } from '../utils/AppContext';
 const SignIn = () => {
@@ -25,24 +25,26 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [emailUser, setEmailUser] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const {setisLogin}= useContext(AppContext);
-  const {setuserInfo}= useContext(AppContext);
-  const navigation=useNavigation();
+  // const {setisLogin}= useContext(AppContext);
+  // const {setuserInfo}= useContext(AppContext);
+  // const navigation=useNavigation();
 
   const Signin = async () => {
     try {
+      console.log(emailUser, password );
       const response= await AxiosIntance().post("/UserApi/login?email="+ emailUser + "&password="+ password);
+      
       // console.log(emailUser, password );
       if(response.user)
       {
-        console.log(emailUser, password );
-        // await AsyncStorage.setItem("token",response.returnData.data.token);
+        // console.log(emailUser, password );
+        await AsyncStorage.setItem("token",response.returnData.data.token);
         // ToastAndroid.show("Đăng nhập ",ToastAndroid.SHORT);
-        // ToastAndroid.show("Đăng nhập thành công",ToastAndroid.SHORT);
-        setisLogin(true);
-        setuserInfo(response.user);
-        navigation.navigate('Product');
-        console.log(response);
+        ToastAndroid.show("Đăng nhập thành công",ToastAndroid.SHORT);
+        // setisLogin(true);
+        // setuserInfo(response.user);
+        // navigation.navigate('Product');
+        // console.log(response);
 
       }else{
         // ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);
@@ -68,7 +70,7 @@ const SignIn = () => {
           <TextInput
             style={StyleLogin.TextInputUP}
             placeholder="Clavi@gmail.com"
-            keyboardType="default"
+            // keyboardType="default"
             onChangeText={setEmailUser}
           />
         </View>
