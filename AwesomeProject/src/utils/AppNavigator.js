@@ -13,9 +13,12 @@ import ProductDetail from '../screens/ProductDetail';
 import SearchStore from '../screens/personStore/SearchStore';
 import ItemHomeStore from '../screens/personStore/ItemHomeStore';
 import DetailFeedback from '../screens/personStore/DetailFeedback';
+import CensorshipProductItem from '../screens/CensorshipProductItem';
+import CensorshipProduct from '../screens/CensorshipProduct';
+import CensorshipDetailProduct from '../screens/CensorshipDetailProduct';
 
 const Tab = createBottomTabNavigator();
-const Stack= createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const User = () => {
     return (
@@ -35,6 +38,17 @@ const ProductHome = () => {
         </Stack.Navigator>
     )
 }
+
+
+const censorshipProduct = () => {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='CensorshipProduct'>
+            <Stack.Screen name='CensorshipProduct' component={CensorshipProduct}></Stack.Screen>
+            <Stack.Screen name='CensorshipDetailProduct' component={CensorshipDetailProduct}></Stack.Screen>
+        </Stack.Navigator>
+    )
+}
+
 const Main = () => {
     return (
         <Tab.Navigator
@@ -50,6 +64,8 @@ const Main = () => {
                         iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
                     } else if (route.name === 'SignUp') {
                         iconName = focused ? 'people-sharp' : 'people-outline';
+                    }else if (route.name === 'Test') {
+                        iconName = focused ? 'people-sharp' : 'people-outline';
                     }
                     return <Icon1 name={iconName} size={size} color={color} />
                 },
@@ -60,16 +76,17 @@ const Main = () => {
             <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Order" component={Order} />
             <Tab.Screen name="SignUp" component={SignUp} />
+            <Tab.Screen name="Test" component={censorshipProduct} />
         </Tab.Navigator>
     )
 }
 
 const AppNavigator = () => {
-    const {isLogin} = useContext(AppContext);
+    const { isLogin } = useContext(AppContext);
     return (
         <>
             {
-                isLogin == true ? <User/> : <Main/>
+                isLogin == true ? <User /> : <Main />
             }
         </>
     )

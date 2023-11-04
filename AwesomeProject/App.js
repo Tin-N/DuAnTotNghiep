@@ -29,15 +29,19 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './src/utils/AppNavigator';
 import CategoryManager from './src/screens/CategoryManager';
 import CensorshipProduct from './src/screens/CensorshipProduct';
+import CensorshipDetailProduct from './src/screens/CensorshipDetailProduct';
+
 const App = () => {
   return (
-    // <AppContextProvider>
-    //   <NavigationContainer>
-    //     <AppNavigator/>
-    //   </NavigationContainer>
-    // </AppContextProvider>
+    <AppContextProvider>
+      <NavigationContainer>
+        <AppNavigator/>
+      </NavigationContainer>
+    </AppContextProvider>
+
+  // <CensorshipDetailProduct/>
     // <CategoryManager/>
-     <CensorshipProduct/> // shop: ten, anh | product: detail | ko duyet: thong bao ko duyet | giao dien
+    // <CensorshipProduct/> // shop: ten, anh | product: detail | ko duyet: thong bao ko duyet | giao dien
   )
 }
 

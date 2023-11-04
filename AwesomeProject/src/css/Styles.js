@@ -376,6 +376,7 @@ export const StyleSearch = StyleSheet.create({
         marginTop: 30
     }
 });
+
 export const StyleBanner = StyleSheet.create({
     secondText: {
         fontFamily: 'DMSans-VariableFont_opsz,wght',
@@ -584,35 +585,35 @@ export const StyleCategory = StyleSheet.create({
 export const SytleCategoryManager = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        height: 95*height/100,
+        height: 95 * height / 100,
         width: width,
     },
-    viewTop:{
+    viewTop: {
         flexDirection: 'row',
         margin: 10,
     },
-    textInput:{
-        width: width*75/100,
+    textInput: {
+        width: width * 75 / 100,
         borderWidth: 0.2,
         borderRadius: 5,
         padding: 5,
         height: 52,
         marginRight: 5,
     },
-    pressable:{
+    pressable: {
         borderRadius: 10,
         height: 52,
-        width: width*20/100,
+        width: width * 20 / 100,
         backgroundColor: '#3669C9',
         padding: 15,
     },
-    textPressable:{
+    textPressable: {
         textAlign: 'center',
         color: 'white',
     },
 
     //item
-    containerItem:{
+    containerItem: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderWidth: 0.2,
@@ -620,16 +621,16 @@ export const SytleCategoryManager = StyleSheet.create({
         margin: 5,
         padding: 5,
     },
-    textNameItem:{
+    textNameItem: {
         fontSize: 18,
         marginTop: 5,
         color: 'black',
     },
-    viewPressableModal:{
+    viewPressableModal: {
         flexDirection: 'row',
         justifyContent: 'flex-end'
     },
-    pressableModal:{
+    pressableModal: {
         borderRadius: 10,
         height: 52,
         width: width * 0.25,
@@ -642,6 +643,117 @@ export const SytleCategoryManager = StyleSheet.create({
     textPressableModal: {
         fontSize: 14,
         textAlign: 'center',
+    },
+});
+
+export const StyleCensorshipProduct = StyleSheet.create({
+    //item product
+    viewBorder: {
+        margin: 10,
+        borderWidth: 0.2,
+        borderRadius: 15,
+        padding: 10,
+    },
+    viewInfoShop: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    imageShop: {
+        width: 50,
+        height: 50,
+    },
+    textName: {
+        color: 'black',
+        fontSize: 18,
+        marginTop: 10,
+    },
+    line: {
+        borderWidth: 0.2,
+        color: '#FFFFFF',
+        marginBottom: 15,
+        marginTop: 15,
+    },
+    imageProduct: {
+        width: 150,
+        height: 150,
+    },
+    infoProduct: {
+        marginLeft: 20,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    textInfoProduct: {
+        color: 'black',
+        fontSize: 14,
+    },
+    textItemDetail: {
+        color: '#3669C9',
+        fontSize: 14,
+        left: '120%',
+    },
+    viewButtonFuncItem: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+    pressable: {
+        borderWidth: 0.2,
+        borderRadius: 5,
+        padding: 10,
+        alignSelf: 'center',
+        backgroundColor: '#3669C9',
+    },
+    textPressable: {
+        color: 'white',
+    },
+
+    //Detail Product
+    container: {
+        height: "100%",
+        backgroundColor: 'white',
+    },
+    viewHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 5,
+    },
+    textHeader: {
+        color: 'black',
+        fontSize: 18,
+        marginBottom: 5,
+    },
+    viewInfo: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '95%',
+        margin: 10,
+    },
+    imageDetailProduct: {
+        width: '100%',
+        height: "70%",
+    },
+    textDetail: {
+        width: '100%',
+        height: "10%",
+        color: 'black',
+        fontSize: 14,
+        marginBottom: 5,
+    },
+    viewButtonFuncDetail: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        bottom: 10,
+    },
+    pressableDetailProduct: {
+        borderWidth: 0.2,
+        borderRadius: 5,
+        padding: 10,
+        alignSelf: 'center',
+        backgroundColor: '#3669C9',
+        width: '45%',
+    },
+    textPressableDetail: {
+        color: 'white',
+        alignSelf: 'center',
     },
 });
 

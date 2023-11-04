@@ -1,11 +1,30 @@
 import { Pressable, StyleSheet, Text, View, Image, ToastAndroid } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AxiosIntance from '../utils/AxiosIntance';
-import { StyleCategory } from '../css/Styles';
+import { StyleCategory, StyleCensorshipProduct } from '../css/Styles';
+import CensorshipDetailProduct from './CensorshipDetailProduct';
 
 const CensorshipProductItem = (props) => {
-  const { dulieu1 } = props;
-  console.log(dulieu1.userID);
+  const {dulieu1, navigation} = props;
+  const [user, setuser] = useState([])
+
+  const onDetailProduct = () =>{
+    navigation.navigate("CensorshipDetailProduct", { itemId: dulieu1._id});
+  }
+
+  useEffect(() => {
+    const getInfoUser = async () => {
+      const reponse = await AxiosIntance().get('/UserApi/get-by-id/?id=' + dulieu1.userID);
+      if (reponse) {
+        setuser(reponse.user);
+        console.log(user);
+      }
+    }
+    getInfoUser();
+
+    return () => {
+    }
+  }, [])
 
   const censorshipProduct = async () => {
     const reponse = await AxiosIntance().post('/productAPI/check-product-by-id/' + dulieu1._id);
@@ -16,38 +35,41 @@ const CensorshipProductItem = (props) => {
       ToastAndroid.show('kiểm duyệt sản phẩm bị lỗi', ToastAndroid.SHORT);
     }
   }
+
   return (
-    <View style={{ margin: 10, borderWidth: 0.2, borderRadius: 15, padding: 10 }}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Image source={{ uri: dulieu1.image[0] }} style={{ width: 50, height: 50, }} />
+    <View style={StyleCensorshipProduct.viewBorder}>
+      <View style={StyleCensorshipProduct.viewInfoShop}>
+        <Image source={{ uri: dulieu1.image[0] }} style={StyleCensorshipProduct.imageShop} />
         <View style={{ marginLeft: 20 }}>
-          <Text style={{ color: 'black', fontSize: 18 }}>{dulieu1.name}</Text>
+          <Text style={StyleCensorshipProduct.textName}>{user.fullname}</Text>
         </View>
       </View>
 
-      <View style={{ borderWidth: 0.2, color: '#FFFFFF', marginBottom: 15, marginTop: 15 }} />
+      <View style={StyleCensorshipProduct.line} />
 
-      <View style={{ flexDirection: 'row',}}>
-        <Image source={{ uri: dulieu1.image[0] }} style={{ width: 150, height: 150, }} />
-        <View style={{ marginLeft: 20, flexDirection: 'column', justifyContent: 'space-between' }}>
+      <View style={{ flexDirection: 'row', }}>
+        <Image source={{ uri: dulieu1.image[0] }} style={StyleCensorshipProduct.imageProduct} />
+        <View style={StyleCensorshipProduct.infoProduct}>
           <View>
-            <Text style={{ color: 'black', fontSize: 18 }}>{dulieu1.name}</Text>
-            <Text style={{ color: 'black', fontSize: 14 }}>Giá: {dulieu1.price}</Text>
-            <Text style={{ color: 'black', fontSize: 14 }}>Loại: {dulieu1.categoryID}</Text>
+            <Text style={StyleCensorshipProduct.textInfoProduct}>{dulieu1.name}</Text>
+            <Text style={StyleCensorshipProduct.textInfoProduct}>Giá: {dulieu1.price}</Text>
+            <Text style={StyleCensorshipProduct.textInfoProduct}>Loại: {dulieu1.categoryID}</Text>
           </View>
-          <Text style={{ color: '#3669C9', fontSize: 14, left: '100%' }}>Xem chi tiết</Text>
+          <Pressable onPress={onDetailProduct}>
+            <Text style={StyleCensorshipProduct.textItemDetail}>Xem chi tiết</Text>
+          </Pressable>
         </View>
       </View>
 
-      <View style={{ borderWidth: 0.2, color: '#FFFFFF', marginBottom: 15, marginTop: 15 }} />
+      <View style={StyleCensorshipProduct.line} />
 
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', }}>
+      <View style={StyleCensorshipProduct.viewButtonFuncItem}>
         {/* <Pressable style={{borderWidth: 0.2, borderRadius: 5, padding: 10, alignSelf: 'center'}}>
           <Text>Từ chối</Text>
         </Pressable> */}
-        <Pressable onPress={censorshipProduct} style={{ borderWidth: 0.2, borderRadius: 5, padding: 10, alignSelf: 'center', backgroundColor: '#3669C9' }}>
-          <Text style={{ color: 'white' }}>Duyệt</Text>
-        </Pressable>
+        <Pressable onPress={censorshipProduct} style={StyleCensorshipProduct.pressable}>
+          <Text style={StyleCensorshipProduct.textPressable}>Duyệt</Text>
+        </Pressable>z
       </View>
     </View>
   )

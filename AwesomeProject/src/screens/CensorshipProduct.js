@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react'
 import AxiosIntance from '../utils/AxiosIntance';
 import CensorshipProductItem from './CensorshipProductItem';
 
-const CensorshipProduct = () => {
+const CensorshipProduct = (props) => {
+    const { navigation } = props;
     const [censorshipProduct, setcensorshipProduct] = useState([]);
     const [changeCensorshipProduct, setchangeCensorshipProduct] = useState(false)
     useEffect(() => {
@@ -28,7 +29,7 @@ const CensorshipProduct = () => {
         <View>
             <FlatList
                 data={censorshipProduct}
-                renderItem={({ item }) => <CensorshipProductItem dulieu1={item} changeCensorshipProductFun={changeCensorshipProductFun}/>}
+                renderItem={({ item }) => <CensorshipProductItem dulieu1={item} navigation={navigation} changeCensorshipProductFun={changeCensorshipProductFun}/>}
                 keyExtractor={item => item._id}
             />
         </View>
