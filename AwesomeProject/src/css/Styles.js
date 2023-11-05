@@ -540,7 +540,7 @@ export const StyleOrder = StyleSheet.create({
     },
     pressableBuy: {
         height: 52,
-        backgroundColor: '#D44325',
+        backgroundColor: '#3669C9',
         padding: 5,
     },
 })

@@ -115,7 +115,11 @@ const OrderItem = (props) => {
     }, []);
 
     return (
-        <View style={StyleOrder.header}>
+        <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            marginTop: 5
+        }}>
             <View style={StyleOrder.viewCheckBoxOrder}>
                 {/* <Pressable onPress={toggleCheck}>
                     {isCheck ? <MaterialIcons name='check-box' size={24} color={'green'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
@@ -139,7 +143,7 @@ const OrderItem = (props) => {
             </View>
 
             <View >
-                {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Entypo name='shop' size={24} />
                         <Text style={{ marginLeft: 10 }}>Tên Shop</Text>
@@ -147,7 +151,7 @@ const OrderItem = (props) => {
                     <Pressable>
                         <Text>Xóa</Text>
                     </Pressable>
-                </View> */}
+                </View>
 
                 {/* <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gary'}}/> */}
 

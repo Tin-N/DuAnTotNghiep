@@ -66,6 +66,7 @@ const Order = () => {
     )
   }
   // View giỏ hàng
+
   const MyCart = () => {
     return (
       <FlatList
@@ -87,7 +88,7 @@ const Order = () => {
       console.log(isCartChanged)
     } else {
       setisCartChanged(true)
-      console.log(isCartChanged)  
+      console.log(isCartChanged)
     }
   }
 
@@ -143,20 +144,20 @@ const Order = () => {
 
   return (
     <View style={StyleOrder.container}>
+      <View>
+        {/* header */}
+        <View style={StyleOrder.header}>
+          <Text style={StyleOrder.textHeader}>My Cart</Text>
+          <Pressable >
+            <Icon name='ellipsis-vertical' size={24} color={"black"} />
+          </Pressable>
+        </View>
 
-      {/* header */}
-      <View style={StyleOrder.header}>
-        <Text style={StyleOrder.textHeader}>My Cart</Text>
-        <Pressable >
-          <Icon name='ellipsis-vertical' size={24} color={"black"} />
-        </Pressable>
+        {/* co san pham thi hien list san pham khong thi hien hinh anh */}
+        <View style={{ height: 600 }}>
+          {!userCart ? <MyCartIsEmpty /> : <MyCart />}
+        </View>
       </View>
-
-      {/* co san pham thi hien list san pham khong thi hien hinh anh */}
-      <View style={{ height: 500 }}>
-        {!userCart ? <MyCartIsEmpty /> : <MyCart />}
-      </View>
-
 
       <View>
         {/* Order Process */}
