@@ -724,16 +724,14 @@ export const StyleCensorshipProduct = StyleSheet.create({
     viewInfo: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: '95%',
         margin: 10,
     },
     imageDetailProduct: {
         width: '100%',
-        height: "70%",
+        height: 400,
     },
-    textDetail: {
+    textDetail: {   
         width: '100%',
-        height: "10%",
         color: 'black',
         fontSize: 14,
         marginBottom: 5,

@@ -8,8 +8,13 @@ const CensorshipProductItem = (props) => {
   const {dulieu1, navigation} = props;
   const [user, setuser] = useState([])
 
+  console.log(props.setchangeCensorshipProduct + props.changeCensorshipProduct);
+
   const onDetailProduct = () =>{
-    navigation.navigate("CensorshipDetailProduct", { itemId: dulieu1._id});
+    navigation.navigate("CensorshipDetailProduct", { itemId: dulieu1._id, 
+                                                    setchangeCensorshipProduct: props.setchangeCensorshipProduct,
+                                                    changeCensorshipProduct: props.changeCensorshipProduct});
+    
   }
 
   useEffect(() => {
@@ -17,11 +22,9 @@ const CensorshipProductItem = (props) => {
       const reponse = await AxiosIntance().get('/UserApi/get-by-id/?id=' + dulieu1.userID);
       if (reponse) {
         setuser(reponse.user);
-        console.log(user);
       }
     }
     getInfoUser();
-
     return () => {
     }
   }, [])
@@ -69,7 +72,7 @@ const CensorshipProductItem = (props) => {
         </Pressable> */}
         <Pressable onPress={censorshipProduct} style={StyleCensorshipProduct.pressable}>
           <Text style={StyleCensorshipProduct.textPressable}>Duyệt</Text>
-        </Pressable>z
+        </Pressable>
       </View>
     </View>
   )

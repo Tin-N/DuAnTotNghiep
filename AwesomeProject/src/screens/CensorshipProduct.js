@@ -6,11 +6,12 @@ import CensorshipProductItem from './CensorshipProductItem';
 const CensorshipProduct = (props) => {
     const { navigation } = props;
     const [censorshipProduct, setcensorshipProduct] = useState([]);
-    const [changeCensorshipProduct, setchangeCensorshipProduct] = useState(false)
+    const [changeCensorshipProduct, setchangeCensorshipProduct] = useState(false);
+
     useEffect(() => {
         const getCensorshipProduct = async () => {
             const reponse = await AxiosIntance().get('/productAPI/get-product-censorship');
-            
+
             if (reponse) {
                 setcensorshipProduct(reponse.product);
             }
@@ -19,7 +20,7 @@ const CensorshipProduct = (props) => {
         return () => {
 
         }
-    }, [changeCensorshipProduct])
+    }, [changeCensorshipProduct, censorshipProduct])
 
     function changeCensorshipProductFun() {
         setchangeCensorshipProduct(!changeCensorshipProduct);
@@ -29,7 +30,10 @@ const CensorshipProduct = (props) => {
         <View>
             <FlatList
                 data={censorshipProduct}
-                renderItem={({ item }) => <CensorshipProductItem dulieu1={item} navigation={navigation} changeCensorshipProductFun={changeCensorshipProductFun}/>}
+                renderItem={({ item }) => <CensorshipProductItem dulieu1={item} navigation={navigation} 
+                                            changeCensorshipProductFun={changeCensorshipProductFun} 
+                                            changeCensorshipProduct={changeCensorshipProduct}
+                                            setchangeCensorshipProduct={setchangeCensorshipProduct}/>}
                 keyExtractor={item => item._id}
             />
         </View>
