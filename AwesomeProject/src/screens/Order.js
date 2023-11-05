@@ -87,8 +87,7 @@ const Order = () => {
       console.log(isCartChanged)
     } else {
       setisCartChanged(true)
-      console.log(isCartChanged)
-
+      console.log(isCartChanged)  
     }
   }
 

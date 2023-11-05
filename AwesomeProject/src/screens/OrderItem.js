@@ -72,6 +72,7 @@ const OrderItem = (props) => {
                         .put(`cart/update/${userID}/${data._id}`,
                             { quantity: newQuantity, totalItemCost: newItemTotalCost })
                     handleCartChanged();
+
                 } catch (error) {
                     console.error('Lỗi khi xử lý sản phẩm:', error);
                     throw error;
