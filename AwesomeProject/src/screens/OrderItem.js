@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, Pressable, ToastAndroid, Alert } from 'r
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { StyleOrder } from '../css/Styles';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AxiosIntance from '../utils/AxiosIntance';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
