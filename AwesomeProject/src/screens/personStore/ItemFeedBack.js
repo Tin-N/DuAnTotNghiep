@@ -2,6 +2,8 @@ import { View, Text, Image, TextInput, TouchableOpacity,ImageBackground } from '
 import React, { useEffect, useState } from 'react'
 import { FlatList } from 'react-native';
 import { LogBox } from 'react-native';
+import { getStorage, ref, deleteObject } from "firebase/storage";
+import { storage } from '../../utils/FirebaseConfig';
 import { SwipeItem, SwipeButtonsContainer, SwipeProvider } from 'react-native-swipe-item';
 
 import ImageViewer from '../../component/ImageViewer/ImageViewerDialog';
@@ -15,10 +17,21 @@ const ItemFeedBack = (props) => {
     const [roleId, setRoleId] = useState(1);
     const [image, setimage] = useState("");
     const [isModalVisible, setModalVisible] = useState(false);
+ 
     const deleteFeedback = async ()=>{
         const response= await AxiosIntance().post("/feedbackAPI/deleteFeedback?id="+dataFeedback._id);
         if(response.result){
             setCheck(!check);
+        }
+    }
+
+    const deleteImageArr =async ()=>{
+        if(dataFeedback.image.length>0){
+            for(let i=0 ;i<dataFeedback.image.length;i++){
+                deleteObject(ref(storage, dataFeedback.image[i]));
+                console.log("Ok r ddos");
+            }
+            deleteFeedback();
         }
     }
     useEffect(() => {
@@ -86,7 +99,7 @@ const ItemFeedBack = (props) => {
                     <Image style={{ marginTop: 5 }} source={imageStar} />
                        {
                         dataFeedback.userID=="113"? 
-                        <TouchableOpacity onPress={()=>deleteFeedback()}>
+                        <TouchableOpacity onPress={()=>deleteImageArr()}>
                         <Image source={require('../../images/bin.png')} style={{width:20,height:20}}></Image>
                         </TouchableOpacity>:<View/>
                        }

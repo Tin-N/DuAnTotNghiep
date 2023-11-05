@@ -44,10 +44,10 @@ const App = () => {
 
     <AppContextProvider>
       <NavigationContainer>
-        {/* <AppNavigator/> */}
+        <AppNavigator/>
         {/* <SignIn/> */}
         {/* <ResetPassword/> */}
-        <UpdatePassword/>
+        {/* <UpdatePassword/> */}
       </NavigationContainer>
     </AppContextProvider>
     // <Order />
