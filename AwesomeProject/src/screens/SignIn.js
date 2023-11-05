@@ -27,6 +27,7 @@ const SignIn = () => {
   const [password, setPassword] = React.useState("");
   // Lấy thông tin user từ context    
   const {setuserInfo, userInfo}= useContext(AppContext);
+  const { userID, setuserID}= useContext(AppContext);
 
 
   const Signin = async () => {
@@ -39,29 +40,15 @@ const SignIn = () => {
       {
         
         // lấy thông tin user từ context (id)
-        const _id = response.user.id;
+        const _id = response.user._id;
         setuserInfo({...userInfo, ...response.user});
-
-
-        // console.log(emailUser, password );
-        // await AsyncStorage.setItem("token",response.returnData.data.token);
-        // ToastAndroid.show("Đăng nhập ",ToastAndroid.SHORT);
-        // ToastAndroid.show("Đăng nhập thành công",ToastAndroid.SHORT);
-        // console.log(userInfo);
-        // setisLogin(true);
-        // setuserInfo(response.user);
-        // navigation.navigate('Product');
-        // console.log(response);
-        // console.log("UserInfor "+ id);
-       
-        
+        setuserID(_id);
       }else{
         // ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);
       }
     } catch (error) {
-      console.log(error);
+      console.log("Đăng nhập thất bại: " + error);
     }
-    console.log("UserInfor "+ userInfo._id);// log ra ID
   }
      
   

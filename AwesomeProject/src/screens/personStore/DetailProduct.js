@@ -1,6 +1,6 @@
 
 import { View, Text, Image, TouchableOpacity, ImageBackground, Modal, ToastAndroid, Easing } from 'react-native'
-import React, { useState, useEffect ,useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { StyleDetailProduct } from '../../css/Styles'
 import { Dimensions } from 'react-native';
@@ -16,6 +16,7 @@ import { StyleDialogShopping } from '../../css/Styles';
 import { LogBox } from 'react-native';
 import DialogFeedback from '../../component/DialogFeedback/DialogFeedback';
 import { AppContext } from '../../utils/AppContext';
+const ObjectID = require('bson-objectid');
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const DetailProduct = (props) => {
@@ -45,11 +46,11 @@ const DetailProduct = (props) => {
 
 
 
-    const checkStar=()=>{
-        if(star>0){
+    const checkStar = () => {
+        if (star > 0) {
             // console.log(text);
             setModalVisible(true);
-      }
+        }
     }
     const heartHandler = async () => {
         console.log(favorite);
@@ -192,6 +193,7 @@ const DetailProduct = (props) => {
         const [imageColor, setimageColor] = useState('')
         const [quantity, setQuantity] = useState(1);
         const [productID, setproductID] = useState(params.itemId)
+        const [itemTotalCost, setitemTotalCost] = useState(0)
         console.log("this is productID" + productID);
         const quantityHandler = (updateQuantity) => {
             if (updateQuantity == "+") {
@@ -210,17 +212,56 @@ const DetailProduct = (props) => {
                 ownerID,
                 productID,
                 quantity,
-                optionsInCart
+                optionsInCart,
+                itemTotalCost
             }
             try {
-                const response = await AxiosIntance().post('/cart/add', { userID: userID, products: productsInCart })
+                const response = await AxiosIntance().post('/cart/add',
+                    { userID: userID, products: productsInCart })
                 if (response) {
                     console.log("Thêm vào giỏ hàng thành công")
                 }
             } catch (error) {
                 console.log("Lỗi thêm vào giỏ hàng: " + error)
             }
+        }
 
+        const orderNow = async () => {
+            const objectId = new ObjectID();
+            console.log(objectId)
+
+            const orderDetailResponse = await AxiosIntance().post('/orderdetail/add', { orderDetailID: objectId, products: productsInCart, totalCost: itemTotalCost });
+            console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
+
+            const OrderPost = async () => {
+                if (orderDetailResponse.error == false) {
+                    const orderResponse = await AxiosIntance().post('/order/add', { orderDetailID: objectId, orderDate: new Date(), deliveryStatus: 'Pending' });
+                    console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
+                    ToastAndroid.show("Đặt hàng thành công", ToastAndroid.SHORT);
+
+                }
+            }
+
+            Alert.alert(
+                'Thông báo',
+                'Bạn có muốn mua những sản phẩm này?', // Nội dung thông báo
+                [
+                    {
+                        text: 'Cancel', // Chữ hiển thị trên nút Cancel
+                        onPress: () => {
+                            // Xử lý khi người dùng chọn "Cancel"
+                            console.log('Bạn đã chọn Cancel');
+                        }
+                    },
+                    {
+                        text: 'OK', // Chữ hiển thị trên nút OK
+                        onPress: () => {
+                            // Xử lý khi người dùng chọn "OK"
+                            OrderPost()
+                        },
+                    },
+                ]
+            );
         }
 
         return (
@@ -359,7 +400,7 @@ const DetailProduct = (props) => {
                     </ScrollView>
                     <View style={{ padding: 10, position: 'absolute', bottom: 0, flex: 1 }}>
                         {
-                            check == true ? <TouchableOpacity style={StyleDetailProduct.touchOpa2}>
+                            check == true ? <TouchableOpacity onPress={orderNow} style={StyleDetailProduct.touchOpa2}>
                                 <Text style={StyleDetailProduct.textButton}>Mua ngay</Text>
                             </TouchableOpacity>
                                 :
@@ -464,29 +505,29 @@ const DetailProduct = (props) => {
                     <Text style={{ padding: 15, fontSize: 20, fontFamily: 'TiltNeon-Regular' }}>{detail}</Text>
                 </View>
                 <View style={StyleDetailProduct.line}></View>
-                <Text style={{fontSize:16,marginVertical:5,marginHorizontal:10}}>Điểm đánh giá</Text>
+                <Text style={{ fontSize: 16, marginVertical: 5, marginHorizontal: 10 }}>Điểm đánh giá</Text>
 
-                    <View style={{flexDirection:'row',marginVertical:3,alignItems:'center'}}>
+                <View style={{ flexDirection: 'row', marginVertical: 3, alignItems: 'center' }}>
 
-                            <StarRating
-                                
-                                maxStars={5}
-                                rating={star}
-                                onChange={setStar}
-                                enableHalfStar={false}
-                                onRatingEnd={()=>checkStar()}
-                                starSize={25}
-                                enableSwiping={true}
-                                animationConfig={{
-                                    scale:1.3,duration:100,
-                                    easing:Easing.elastic(10)
-                                }}
-                                />
-                                <Text>( {star} sao )</Text>
+                    <StarRating
 
-                            </View>
+                        maxStars={5}
+                        rating={star}
+                        onChange={setStar}
+                        enableHalfStar={false}
+                        onRatingEnd={() => checkStar()}
+                        starSize={25}
+                        enableSwiping={true}
+                        animationConfig={{
+                            scale: 1.3, duration: 100,
+                            easing: Easing.elastic(10)
+                        }}
+                    />
+                    <Text>( {star} sao )</Text>
 
-               
+                </View>
+
+
 
                 <View style={StyleDetailProduct.line}></View>
 
@@ -512,23 +553,24 @@ const DetailProduct = (props) => {
             </ScrollView>
 
 
-                    <View
-                    style={{
-                    width:'100%',
-                    backgroundColor:'red',
-                    justifyContent:'center',
-                     alignItems:'center',}}
-                    >
+            <View
+                style={{
+                    width: '100%',
+                    backgroundColor: 'red',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
 
 
-                    <DialogFeedback
-                                modalVisible={modalVisible}
-                                setModalVisible={setModalVisible}
-                                star={star}
-                                setStar={setStar}
-                            />
-                    </View>
-           
+                <DialogFeedback
+                    modalVisible={modalVisible}
+                    setModalVisible={setModalVisible}
+                    star={star}
+                    setStar={setStar}
+                />
+            </View>
+
             <View style={StyleDetailProduct.bottom}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <View style={{ paddingLeft: 10, paddingRight: 10, }}>

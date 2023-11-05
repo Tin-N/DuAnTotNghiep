@@ -1,33 +1,33 @@
 import { StyleSheet, Text, View, Image, Pressable, ToastAndroid, Alert } from 'react-native';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { StyleOrder } from '../css/Styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AxiosIntance from '../utils/AxiosIntance';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { memo } from "react"
+import { AppContext } from '../utils/AppContext';
 
 const OrderItem = (props) => {
-    const { data, itemSelectedData, itemDeselectedData, updateItemData } = props;
+    const { data, cartChanged } = props;
     const [quantity, setQuantity] = useState(data.quantity);
     const [productName, setProductName] = useState('Tên Sản Phẩm');
     const [imageUri, setImageUri] = useState();
     const [categoryID, setCategoryID] = useState('Gán');
-    const [isCheck, setIsCheck] = useState(false); // chọn sản phẩm
+    const [isCheck, setIsCheck] = useState(data.isSelected); // chọn sản phẩm
     const [productPrice, setproductPrice] = useState(50)
     let itemTotalCost = quantity * productPrice;
+    const userID = '6041c523d4f6a5db0f82e870';
 
-    // console.log("Item Rendered: " + data.productID);
     useEffect(() => {
         (async () => {
             try {
-                const response = await AxiosIntance().get(`/productAPI/getProductByID?id=${data.productID}`);
-                console.log("Response: " + response)
-                if (response.result == true) {
-                    setProductName(response.products.name);
-                    setproductPrice(response.products.price)
-                    setImageUri(response.products.image[0]);
-                    setCategoryID(response.products.categoryID);
+                const productResponse = await AxiosIntance().get(`/productAPI/getProductByID?id=${data.productID}`);
+                if (productResponse.result == true) {
+                    setProductName(productResponse.products.name);
+                    setproductPrice(productResponse.products.price)
+                    setImageUri(productResponse.products.image[0]);
+                    setCategoryID(productResponse.products.categoryID);
                 }
             } catch (error) {
                 console.log("lỗi lấy dữ liệu: " + error)
@@ -35,29 +35,45 @@ const OrderItem = (props) => {
         })();
     }, []);
 
-    const increaseQuantity = useCallback((productID, quantity) => {
+    const handleCartChanged = () => {
+        cartChanged()
+    }
+
+    const increaseQuantity = useCallback(async (quantity) => {
         try {
             console.log("Tăng số lượng");
             let newQuantity = quantity + 1;
             setQuantity(newQuantity);
             const newItemTotalCost = newQuantity * productPrice
-            updateItemData(productID, newQuantity, newItemTotalCost)
-            console.log(data.productID, newQuantity, newItemTotalCost);
+            try {
+                const response = await AxiosIntance()
+                    .put(`cart/update/${userID}/${data._id}`,
+                        { quantity: newQuantity, totalItemCost: newItemTotalCost })
+            } catch (error) {
+                console.error('Lỗi khi xử lý sản phẩm:', error);
+                throw error;
+            }
         } catch (error) {
             console.log(error);
             throw error
         }
     }, []);
 
-    const decreaseQuantity = useCallback((productID, quantity) => {
+    const decreaseQuantity = useCallback(async (quantity) => {
         if (quantity > 1) {
             try {
                 console.log("Giảm số lượng");
                 let newQuantity = quantity - 1;
                 setQuantity(newQuantity);
                 const newItemTotalCost = newQuantity * productPrice
-                updateItemData(productID, newQuantity, newItemTotalCost)
-                console.log(data.productID, newQuantity, newItemTotalCost);
+                try {
+                    const response = await AxiosIntance()
+                        .put(`cart/update/${userID}/${data._id}`,
+                            { quantity: newQuantity, totalItemCost: newItemTotalCost })
+                } catch (error) {
+                    console.error('Lỗi khi xử lý sản phẩm:', error);
+                    throw error;
+                }
             } catch (error) {
                 console.log(error);
                 throw error
@@ -70,25 +86,26 @@ const OrderItem = (props) => {
         }
     }, []);
 
-    const itemSelectedProcess = useCallback((productID, quantity, itemTotalCost) => {
+    const itemSelectedProcess = useCallback(async () => {
         try {
-            let products = {
-                productID: productID,
-                quantity: quantity,
-                itemTotalCost: itemTotalCost,
-            }
-            itemSelectedData(products);
+            const response = await AxiosIntance()
+                .put(`cart/update/${userID}/${data._id}`,
+                    { isSelected: true })
+            handleCartChanged();
         } catch (error) {
             console.error('Lỗi khi xử lý sản phẩm:', error);
             throw error;
         }
     }, []);
 
-    const itemDeSelectedProcess = useCallback((productID) => {
+    const itemDeSelectedProcess = useCallback(async () => {
         try {
-            itemDeselectedData(productID)
+            const response = await AxiosIntance()
+                .put(`cart/update/${userID}/${data._id}`,
+                    { isSelected: false })
+            handleCartChanged();
         } catch (error) {
-            console.error('Lỗi khi xử lý bỏ chọn sản phẩm:', error);
+            console.error('Lỗi khi xử lý sản phẩm:', error);
             throw error;
         }
     }, []);
@@ -108,9 +125,9 @@ const OrderItem = (props) => {
                         } else setIsCheck(isCheck == false)
 
                         if (!isCheck) {
-                            itemSelectedProcess(data.productID, quantity, itemTotalCost);
+                            itemSelectedProcess();
                         } else {
-                            itemDeSelectedProcess(data.productID, quantity, itemTotalCost);
+                            itemDeSelectedProcess();
                         }
                     }}
                     iconComponent={isCheck ? <MaterialIcons name='check-box' size={24} color={'#3669C9'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
@@ -118,7 +135,7 @@ const OrderItem = (props) => {
             </View>
 
             <View >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Entypo name='shop' size={24} />
                         <Text style={{ marginLeft: 10 }}>Tên Shop</Text>
@@ -126,7 +143,7 @@ const OrderItem = (props) => {
                     <Pressable>
                         <Text>Xóa</Text>
                     </Pressable>
-                </View>
+                </View> */}
 
                 {/* <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gary'}}/> */}
 
@@ -141,11 +158,11 @@ const OrderItem = (props) => {
                     </View>
 
                     <View style={[StyleOrder.header, StyleOrder.function]}>
-                        <Pressable onPress={() => decreaseQuantity(data.productID, quantity)}>
+                        <Pressable onPress={() => decreaseQuantity(quantity)}>
                             <Icon name='trash-outline' size={24} />
                         </Pressable>
                         <Text>{quantity}</Text>
-                        <Pressable onPress={() => increaseQuantity(data.productID, quantity)}>
+                        <Pressable onPress={() => increaseQuantity(quantity)}>
                             <Icon name='add' size={24} />
                         </Pressable>
                     </View>
