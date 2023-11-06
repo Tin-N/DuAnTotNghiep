@@ -18,11 +18,12 @@ const Order = () => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const [isCheckBox, setisCheckBox] = useState(false);
-  const [userCart, setuserCart] = useState()
+  const [userCart, setuserCart] = useState([])
   const [productsSelected, setproductsSelected] = useState([])
   const [totalCost, settotalCost] = useState(0)
   const [isCartChanged, setisCartChanged] = useState(1)
 
+  // const userID = useContext(AppContext);
   const userID = "6041c523d4f6a5db0f82e870";
 
   console.log("render")
@@ -99,15 +100,30 @@ const Order = () => {
       const objectId = new ObjectID();
       console.log(objectId)
 
-      const orderDetailResponse = await AxiosIntance().post('/orderdetail/add', { orderDetailID: objectId, products: productsSelected, totalCost: totalCost });
-      console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
+      const orderDetailResponse = await AxiosIntance().post('/orderdetail/add',
+        {
+          orderDetailID: objectId,
+          products: productsSelected,
+          totalCost: totalCost
+        });
+      // console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
 
       const OrderPost = async () => {
         if (orderDetailResponse.error == false) {
-          const orderResponse = await AxiosIntance().post('/order/add', { orderDetailID: objectId, orderDate: new Date(), deliveryStatus: 'Pending' });
-          console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
-          ToastAndroid.show("Đặt hàng thành công", ToastAndroid.SHORT);
-
+          const orderResponse = await AxiosIntance().post('/order/add',
+            {
+              orderDetailID: objectId,
+              orderDate: new Date(),
+              deliveryStatus: {
+                deliveryStatusTimeChange: orderDate,
+                status: 'Pending'
+              },
+              paymentStatus: 'Unpaid',
+              paymentMethods: 'COD',
+              ownerID: [...new Set(productsSelected.map(product => product.ownerID))]
+            });
+          // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
+          ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
         }
       }
 

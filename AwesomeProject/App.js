@@ -40,8 +40,6 @@ import TestScreen from './src/screens/TestScreen';
 const Stack = createNativeStackNavigator()
 const App = () => {
   return (
-
-
     <AppContextProvider>
       <NavigationContainer>
         <AppNavigator/>
@@ -50,9 +48,6 @@ const App = () => {
         {/* <UpdatePassword/> */}
       </NavigationContainer>
     </AppContextProvider>
-    // <Order />
-
-
   )
 }
 

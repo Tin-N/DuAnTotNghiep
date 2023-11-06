@@ -18,6 +18,8 @@ const OrderItem = (props) => {
     const [isCheck, setIsCheck] = useState(data.isSelected); // chọn sản phẩm
     const [productPrice, setproductPrice] = useState(50)
     let itemTotalCost = quantity * productPrice;
+
+    // const userID = useContext(AppContext);
     const userID = '6041c523d4f6a5db0f82e870';
 
     useEffect(() => {
@@ -70,7 +72,7 @@ const OrderItem = (props) => {
                 const newItemTotalCost = newQuantity * productPrice
                 try {
                     const response = await AxiosIntance()
-                        .put(`cart/update/${userID}/${data._id}`,
+                        .put(`cart/update/${userID}/${data.productID}`,
                             { quantity: newQuantity, totalItemCost: newItemTotalCost })
                     handleCartChanged();
 
@@ -85,7 +87,7 @@ const OrderItem = (props) => {
         } else {
             Alert.alert('Thông báo', 'Số lượng không thể giảm thêm.', [
                 { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-                { text: 'OK', onPress: () => "Đây sẽ là chức năng xóa trong tương lai" },
+                { text: 'OK', onPress: () => deleteProductInCart },
             ]);
         }
     }, []);
@@ -93,7 +95,7 @@ const OrderItem = (props) => {
     const itemSelectedProcess = useCallback(async () => {
         try {
             const response = await AxiosIntance()
-                .put(`cart/update/${userID}/${data._id}`,
+                .put(`cart/update/${userID}/${data.productID}`,
                     { isSelected: true })
             handleCartChanged();
         } catch (error) {
@@ -105,7 +107,7 @@ const OrderItem = (props) => {
     const itemDeSelectedProcess = useCallback(async () => {
         try {
             const response = await AxiosIntance()
-                .put(`cart/update/${userID}/${data._id}`,
+                .put(`cart/update/${userID}/${data.productID}`,
                     { isSelected: false })
             handleCartChanged();
         } catch (error) {
@@ -113,6 +115,11 @@ const OrderItem = (props) => {
             throw error;
         }
     }, []);
+
+    const deleteProductInCart = async () => {
+        const response = await AxiosIntance()
+            .delete(`cart/deleteProduct/${userID}/${data.productID}`)
+    }
 
     return (
         <View style={{
@@ -148,7 +155,7 @@ const OrderItem = (props) => {
                         <Entypo name='shop' size={24} />
                         <Text style={{ marginLeft: 10 }}>Tên Shop</Text>
                     </View>
-                    <Pressable>
+                    <Pressable onPress={deleteProductInCart}>
                         <Text>Xóa</Text>
                     </Pressable>
                 </View>

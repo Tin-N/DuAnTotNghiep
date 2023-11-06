@@ -44,8 +44,6 @@ const DetailProduct = (props) => {
     // favoriteID
     const [favorite, setFavorite] = useState({})
 
-
-
     const checkStar = () => {
         if (star > 0) {
             // console.log(text);
@@ -123,7 +121,6 @@ const DetailProduct = (props) => {
                 }
             }
         }
-
         const getFeedback = async () => {
             const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId);
             if (response.result == true) {
@@ -175,6 +172,7 @@ const DetailProduct = (props) => {
                 setDataSize(response.size)
             }
         }
+
         getColorByProductID();
         getDetails();
         getFeedback();
@@ -194,7 +192,25 @@ const DetailProduct = (props) => {
         const [quantity, setQuantity] = useState(1);
         const [productID, setproductID] = useState(params.itemId)
         const [itemTotalCost, setitemTotalCost] = useState(0)
-        console.log("this is productID" + productID);
+        const [productPrice, setproductPrice] = useState(0)
+
+        useEffect(() => {
+            (async () => {
+                try {
+                    const productResponse = await AxiosIntance().get(`/productAPI/getProductByID?id=${productID}`);
+                    if (productResponse.result == true) {
+                        setproductPrice(productResponse.products.price)
+                    }
+                } catch (error) {
+                    console.log("lỗi lấy dữ liệu: " + error)
+                }
+            })();
+        }, []);
+
+        useEffect(() => {
+            setitemTotalCost(quantiy * productPrice)
+        }, [quantity])
+
         const quantityHandler = (updateQuantity) => {
             if (updateQuantity == "+") {
                 setQuantity(quantity + 1);
@@ -205,8 +221,8 @@ const DetailProduct = (props) => {
 
         const addToCart = async () => {
             const optionsInCart = {
-                colorChoosen,
-                sizeChoosen
+                color: colorChoosen,
+                size: sizeChoosen
             }
             const productsInCart = {
                 ownerID,
@@ -230,21 +246,33 @@ const DetailProduct = (props) => {
             const objectId = new ObjectID();
             console.log(objectId)
 
-            const orderDetailResponse = await AxiosIntance().post('/orderdetail/add', { orderDetailID: objectId, products: productsInCart, totalCost: itemTotalCost });
+            const orderDetailResponse = await AxiosIntance().post('/orderdetail/add',
+                {
+                    orderDetailID: objectId,
+                    products: productsInCart,
+                    totalCost: itemTotalCost
+                });
             console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
 
             const OrderPost = async () => {
                 if (orderDetailResponse.error == false) {
-                    const orderResponse = await AxiosIntance().post('/order/add', { orderDetailID: objectId, orderDate: new Date(), deliveryStatus: 'Pending' });
-                    console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
-                    ToastAndroid.show("Đặt hàng thành công", ToastAndroid.SHORT);
-
+                    const orderResponse = await AxiosIntance().post('/order/add',
+                        {
+                            orderDetailID: objectId,
+                            orderDate: new Date(),
+                            deliveryStatus: 'Pending',
+                            paymentStatus: 'Unpaid',
+                            paymentMethods: 'COD',
+                            ownerID: ownerID
+                        });
+                    // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
+                    ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
                 }
             }
 
             Alert.alert(
                 'Thông báo',
-                'Bạn có muốn mua những sản phẩm này?', // Nội dung thông báo
+                'Bạn có muốn mua sản phẩm này?', // Nội dung thông báo
                 [
                     {
                         text: 'Cancel', // Chữ hiển thị trên nút Cancel
@@ -552,7 +580,6 @@ const DetailProduct = (props) => {
                 </View>
             </ScrollView>
 
-
             <View
                 style={{
                     width: '100%',
@@ -561,8 +588,6 @@ const DetailProduct = (props) => {
                     alignItems: 'center',
                 }}
             >
-
-
                 <DialogFeedback
                     modalVisible={modalVisible}
                     setModalVisible={setModalVisible}
