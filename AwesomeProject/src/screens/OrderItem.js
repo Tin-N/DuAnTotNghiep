@@ -17,6 +17,8 @@ const OrderItem = (props) => {
     const [categoryID, setCategoryID] = useState('Gán');
     const [isCheck, setIsCheck] = useState(data.isSelected); // chọn sản phẩm
     const [productPrice, setproductPrice] = useState(50)
+    const [ownerID, setownerID] = useState()
+    const [ownerInfo, setownerInfo] = useState()
     let itemTotalCost = quantity * productPrice;
 
     // const userID = useContext(AppContext);
@@ -31,12 +33,19 @@ const OrderItem = (props) => {
                     setproductPrice(productResponse.products.price)
                     setImageUri(productResponse.products.image[0]);
                     setCategoryID(productResponse.products.categoryID);
+                    setownerID(productResponse.userID)
                 }
             } catch (error) {
                 console.log("lỗi lấy dữ liệu: " + error)
             }
         })();
     }, []);
+
+    // useEffect(async () => {
+    //     const response = await AxiosIntance().get(`/UserApi/get-by-id?id=654627d67137a3bf678fb544`);
+    //     setownerInfo(response.user);
+    //     console.log("owner info:" + response)
+    // }, [ownerID])
 
     const handleCartChanged = () => {
         cartChanged()
@@ -46,7 +55,6 @@ const OrderItem = (props) => {
         try {
             console.log("Tăng số lượng");
             let newQuantity = quantity + 1;
-            setQuantity(newQuantity);
             const newItemTotalCost = newQuantity * productPrice
             try {
                 const response = await AxiosIntance()
@@ -68,7 +76,6 @@ const OrderItem = (props) => {
             try {
                 console.log("Giảm số lượng");
                 let newQuantity = quantity - 1;
-                setQuantity(newQuantity);
                 const newItemTotalCost = newQuantity * productPrice
                 try {
                     const response = await AxiosIntance()
@@ -95,11 +102,11 @@ const OrderItem = (props) => {
     const itemSelectedProcess = useCallback(async () => {
         try {
             const response = await AxiosIntance()
-                .put(`cart/update/${userID}/${data.productID}`,
+                .put(`cart/update/${userID}/${data._id}`,
                     { isSelected: true })
             handleCartChanged();
         } catch (error) {
-            console.error('Lỗi khi xử lý sản phẩm:', error);
+            console.error('Lỗi không chọn được sản phẩm:', error);
             throw error;
         }
     }, []);
@@ -107,18 +114,18 @@ const OrderItem = (props) => {
     const itemDeSelectedProcess = useCallback(async () => {
         try {
             const response = await AxiosIntance()
-                .put(`cart/update/${userID}/${data.productID}`,
+                .put(`cart/update/${userID}/${data._id}`,
                     { isSelected: false })
             handleCartChanged();
         } catch (error) {
-            console.error('Lỗi khi xử lý sản phẩm:', error);
+            console.error('Lỗi không huỷ chọn được sản phẩm:', error);
             throw error;
         }
     }, []);
 
     const deleteProductInCart = async () => {
         const response = await AxiosIntance()
-            .delete(`cart/deleteProduct/${userID}/${data.productID}`)
+            .delete(`cart/deleteProduct/${userID}/${data._id}`)
     }
 
     return (
@@ -153,7 +160,7 @@ const OrderItem = (props) => {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Entypo name='shop' size={24} />
-                        <Text style={{ marginLeft: 10 }}>Tên Shop</Text>
+                        <Text style={{ marginLeft: 10 }}>Tên chủ sản phẩm</Text>
                     </View>
                     <Pressable onPress={deleteProductInCart}>
                         <Text>Xóa</Text>

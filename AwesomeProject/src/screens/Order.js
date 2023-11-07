@@ -26,15 +26,17 @@ const Order = () => {
   // const userID = useContext(AppContext);
   const userID = "6041c523d4f6a5db0f82e870";
 
-  console.log("render")
+  console.log("Order Render")
   // Lấy dữ liệu giỏ hàng của user
   useEffect(() => {
     (async () => {
       try {
         const response = await AxiosIntance().get(`/cart/getCartByUserID/${userID}`);
+        console.log(">>>>>>>>>> cart: " + userID);
         setuserCart(response);
+        console.log(">>>>>>>>>> cart: " + response);
       } catch (error) {
-        console.log("Order: Lỗi lấy dữ liệu: " + error)
+        console.log("Order: Lỗi lấy dữ liệu: " + error);
       }
     })();
   }, [isCartChanged]);
@@ -42,16 +44,16 @@ const Order = () => {
   // Các dữ liệu đã chọn
   useEffect(() => {
     if (userCart) {
-      const prodsSelected = userCart[0].products.filter(product => product.isSelected === true);
+      const prodsSelected = userCart.filter(product => product.isSelected === true);
       setproductsSelected(prodsSelected);
-      console.log(prodsSelected);
+      console.log("Product Selected: " + prodsSelected);
     }
   }, [userCart]);
 
   // Tính tổng tiền
   useEffect(() => {
     settotalCost(productsSelected.reduce((total, product) => total + product.itemTotalCost, 0))
-    console.log(">>>>>>>>>Total Cost: " + totalCost)
+    // console.log(">>>>>>>>>Total Cost: " + totalCost)
   }, [productsSelected])
 
   // View thông báo khi giỏ hàng trống
@@ -66,12 +68,12 @@ const Order = () => {
       </View>
     )
   }
-  // View giỏ hàng
 
+  // View giỏ hàng
   const MyCart = () => {
     return (
       <FlatList
-        data={userCart[0].products}
+        data={userCart}
         renderItem={
           ({ item }) =>
             <OrderItem data={item}
@@ -110,19 +112,17 @@ const Order = () => {
 
       const OrderPost = async () => {
         if (orderDetailResponse.error == false) {
+          const orderDate = new Date()
           const orderResponse = await AxiosIntance().post('/order/add',
             {
               orderDetailID: objectId,
-              orderDate: new Date(),
-              deliveryStatus: {
-                deliveryStatusTimeChange: orderDate,
-                status: 'Pending'
-              },
+              orderDate: orderDate,
+              deliveryStatus: 'Pending',
               paymentStatus: 'Unpaid',
               paymentMethods: 'COD',
               ownerID: [...new Set(productsSelected.map(product => product.ownerID))]
             });
-          // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
+          console.log("Đặt hàng thành công, Order Detail ID: ");
           ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
         }
       }
@@ -143,7 +143,7 @@ const Order = () => {
             onPress: () => {
               // Xử lý khi người dùng chọn "OK"
               OrderPost().then(async () => {
-                await AxiosIntance().put(`cart/removeSelectedProducts/${userID}`)
+                // await AxiosIntance().put(`cart/removeSelectedProducts/${userID}`)
               }).then(() => {
                 handleCartChanged()
               });

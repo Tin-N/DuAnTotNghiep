@@ -156,8 +156,6 @@ const DetailProduct = (props) => {
                     setPercentRating(((isrealRating / (response.feedbacks.length * 5)) * 5).toFixed(1));
                 }
                 countRating();
-            } else {
-                return;
             }
         }
         const getColorByProductID = async () => {
