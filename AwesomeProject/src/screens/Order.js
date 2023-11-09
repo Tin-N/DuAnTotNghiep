@@ -24,7 +24,8 @@ const Order = () => {
   const [isCartChanged, setisCartChanged] = useState(1)
 
   // const userID = useContext(AppContext);
-  const userID = "6041c523d4f6a5db0f82e870";
+  const userID = '654627d67137a3bf678fb544';
+  console.log(">>>>>>>>>>>>>>> Order: " + userID)
 
   console.log("Order Render")
   // Lấy dữ liệu giỏ hàng của user
@@ -53,7 +54,7 @@ const Order = () => {
   // Tính tổng tiền
   useEffect(() => {
     settotalCost(productsSelected.reduce((total, product) => total + product.itemTotalCost, 0))
-    // console.log(">>>>>>>>>Total Cost: " + totalCost)
+    console.log(">>>>>>>>>Total Cost: " + totalCost)
   }, [productsSelected])
 
   // View thông báo khi giỏ hàng trống
@@ -122,7 +123,7 @@ const Order = () => {
               paymentMethods: 'COD',
               ownerID: [...new Set(productsSelected.map(product => product.ownerID))]
             });
-          console.log("Đặt hàng thành công, Order Detail ID: ");
+          console.log("Đặt hàng thành công");
           ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
         }
       }

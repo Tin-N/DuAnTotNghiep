@@ -20,10 +20,10 @@ const ObjectID = require('bson-objectid');
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const DetailProduct = (props) => {
-    console.log("Detail Product Rendered")
     const { navigation } = props;
     const { route } = props;
     const { params } = route;
+    console.log(params)
     const [productPrice, setProductPrice] = useState('');
     const [dataProduct, setDataProduct] = useState({});
     const [imageProduct, setImageProduct] = useState('');
@@ -206,7 +206,7 @@ const DetailProduct = (props) => {
         }, []);
 
         useEffect(() => {
-            setitemTotalCost(quantiy * productPrice)
+            setitemTotalCost(quantity * productPrice)
         }, [quantity])
 
         const quantityHandler = (updateQuantity) => {
@@ -234,6 +234,7 @@ const DetailProduct = (props) => {
                     { userID: userID, products: productsInCart })
                 if (response) {
                     console.log("Thêm vào giỏ hàng thành công")
+                    
                 }
             } catch (error) {
                 console.log("Lỗi thêm vào giỏ hàng: " + error)

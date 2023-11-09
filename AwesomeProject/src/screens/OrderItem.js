@@ -16,13 +16,16 @@ const OrderItem = (props) => {
     const [imageUri, setImageUri] = useState();
     const [categoryID, setCategoryID] = useState('Gán');
     const [isCheck, setIsCheck] = useState(data.isSelected); // chọn sản phẩm
-    const [productPrice, setproductPrice] = useState(50)
+    const [productPrice, setproductPrice] = useState(0)
     const [ownerID, setownerID] = useState()
     const [ownerInfo, setownerInfo] = useState()
     let itemTotalCost = quantity * productPrice;
 
-    // const userID = useContext(AppContext);
-    const userID = '6041c523d4f6a5db0f82e870';
+    const appContextData = useContext(AppContext);
+    const userID = appContextData.userID;
+
+    // const userID = '654627d67137a3bf678fb544'
+    // console.log(">>>>userID: " + userID)
 
     useEffect(() => {
         (async () => {
@@ -58,8 +61,8 @@ const OrderItem = (props) => {
             const newItemTotalCost = newQuantity * productPrice
             try {
                 const response = await AxiosIntance()
-                    .put(`cart/update/${userID}/${data._id}`,
-                        { quantity: newQuantity, totalItemCost: newItemTotalCost })
+                    .put(`cart/update/${userID}/${data.productID}`,
+                        { quantity: newQuantity, itemTotalCost: newItemTotalCost })
                 handleCartChanged();
             } catch (error) {
                 console.error('Lỗi khi xử lý sản phẩm:', error);
@@ -80,7 +83,7 @@ const OrderItem = (props) => {
                 try {
                     const response = await AxiosIntance()
                         .put(`cart/update/${userID}/${data.productID}`,
-                            { quantity: newQuantity, totalItemCost: newItemTotalCost })
+                            { quantity: newQuantity, itemTotalCost: newItemTotalCost })
                     handleCartChanged();
 
                 } catch (error) {
@@ -102,7 +105,7 @@ const OrderItem = (props) => {
     const itemSelectedProcess = useCallback(async () => {
         try {
             const response = await AxiosIntance()
-                .put(`cart/update/${userID}/${data._id}`,
+                .put(`cart/update/${userID}/${data.productID}`,
                     { isSelected: true })
             handleCartChanged();
         } catch (error) {
@@ -114,7 +117,7 @@ const OrderItem = (props) => {
     const itemDeSelectedProcess = useCallback(async () => {
         try {
             const response = await AxiosIntance()
-                .put(`cart/update/${userID}/${data._id}`,
+                .put(`cart/update/${userID}/${data.productID}`,
                     { isSelected: false })
             handleCartChanged();
         } catch (error) {
