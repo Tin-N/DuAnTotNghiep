@@ -3,7 +3,7 @@ import {View, Image,TouchableOpacity,TextInput,Text} from 'react-native';
 
 import { StyleSearch } from '../../css/Styles'
 const Searchbar = (props) => {
-  const {onChangeText,onSubmitText,onClick,isSearch,handleClick,text}=props;
+  const {onChangeText,onSubmitText,onClick,isSearch,handleClick,text,styleInput,...customSetting}=props;
   const  handleClickTO=()=> {
       handleClick();
   }
@@ -13,7 +13,7 @@ const Searchbar = (props) => {
       
 
       <TextInput 
-      style={StyleSearch.textInput2}
+      style={[StyleSearch.textInput2,styleInput]}
       placeholder='Tìm kiếm bằng tên thực phẩm'
       onChangeText={onChangeText} 
       onTouchStart={()=>{
@@ -21,6 +21,7 @@ const Searchbar = (props) => {
         handleClickTO()}}
       onSubmitEditing={onSubmitText}
       value={text}
+      {...customSetting}
       />
         <TouchableOpacity 
         onPress={onSubmitText}

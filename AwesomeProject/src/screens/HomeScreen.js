@@ -1,5 +1,12 @@
-import {ScrollView, StyleSheet, Text, View, Image,TouchableOpacity} from 'react-native';
-import React, { useEffect,useState } from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {styleHome} from '../css/Styles';
 import Searchbar from '../component/Seachbar/Searchbar';
 import Slideshow from '../component/Slideshow/Slideshow';
@@ -8,85 +15,125 @@ import Banner from '../component/Banner/Banner';
 import {FetchData} from '../component/ProductList/data';
 import ProductList from '../component/ProductList/ProductList';
 import AxiosIntance from '../utils/AxiosIntance';
-import {useNavigation} from '@react-navigation/native'
-const HomeScreen = (props) => {
-  const navigation=useNavigation();
-  const [categoryData1, setcategoryData1] = useState([])
-  const [categoryData2, setcategoryData2] = useState([])
-  const [categoryData3, setcategoryData3] = useState([])
+import {useNavigation} from '@react-navigation/native';
+const HomeScreen = props => {
+  const navigation = useNavigation();
+  const [categoryData1, setcategoryData1] = useState([]);
+  const [categoryData2, setcategoryData2] = useState([]);
+  const [categoryData3, setcategoryData3] = useState([]);
 
-  const handleClick=()=> {
-    navigation.navigate("SearchScreen");
-    console.log("homeSceen");
-  }
+  const handleClick = () => {
+    navigation.navigate('SearchScreen');
+    console.log('homeSceen');
+  };
   useEffect(() => {
-    const getcategoryData1 = async()=>{
-      const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+"clothing"+"&limitData="+2+"&skipData="+0);
+    const getcategoryData1 = async () => {
+      const response = await AxiosIntance().get(
+        '/productAPI/getProductByCategoryID?id=' +
+          'clothing' +
+          '&limitData=' +
+          2 +
+          '&skipData=' +
+          0,
+      );
       console.log(response);
 
-      if(response.result)
-      {
+      if (response.result) {
         setcategoryData1(response.products);
       }
-    }
-    const getcategoryData2 = async()=>{
-      const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+"hello"+"&limitData="+2+"&skipData="+0);
-      console.log(response+"BBBBBBBBBBBBBBBBBBBBBBBBB");
+    };
+    const getcategoryData2 = async () => {
+      const response = await AxiosIntance().get(
+        '/productAPI/getProductByCategoryID?id=' +
+          'hello' +
+          '&limitData=' +
+          2 +
+          '&skipData=' +
+          0,
+      );
+      console.log(response + 'BBBBBBBBBBBBBBBBBBBBBBBBB');
 
-      if(response.result)
-      {
+      if (response.result) {
         setcategoryData2(response.products);
       }
-    }
-    const getcategoryData3 = async()=>{
-      const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+"pants"+"&limitData="+2+"&skipData="+0);
-      console.log(response+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-      if(response.result)
-      {
+    };
+    const getcategoryData3 = async () => {
+      const response = await AxiosIntance().get(
+        '/productAPI/getProductByCategoryID?id=' +
+          'pants' +
+          '&limitData=' +
+          2 +
+          '&skipData=' +
+          0,
+      );
+      console.log(response + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+      if (response.result) {
         setcategoryData3(response.products);
       }
-    }
+    };
     getcategoryData1();
     getcategoryData2();
     getcategoryData3();
-  }, [])
-  
+  }, []);
 
   return (
     <View>
       <ScrollView>
         {/* Top bar View */}
-        <View style={styleHome.topBarView}>
-          <Text style={styleHome.title}>Savvy shopping</Text>
-          <View style={styleHome.viewIcons}>
-            <Image
-              style={[styleHome.icons,{height:20,width:20,margin:10}]}
-              source={require('../images/icon/notification.png')}
-            />
-            <Image
-              style={[styleHome.icons,{height:20,width:20,margin:10}]}
-              source={require('../images/icon/shopping-cart.png')}
+        <View style={{zIndex: 0,
+          
+          height:200,
+          backgroundColor:'purple',
+          borderBottomRightRadius:35,
+          borderBottomLeftRadius:35}}
+          
+          >
+          {/* <View style={{zIndex: 1, backgroundColor: 'white', height: 200}} /> */}
+
+          {/* Search bar */}
+
+          <View style={[styleHome.topBarView, {zIndex: 2}]}>
+            <Text style={styleHome.title}>Savvy</Text>
+            {/* <View style={styleHome.viewIcons}>
+                    <Image
+                      style={[styleHome.icons,{height:20,width:20,margin:10}]}
+                      source={require('../images/icon/notification.png')}
+                    />
+                    <Image
+                      style={[styleHome.icons,{height:20,width:20,margin:10}]}
+                      source={require('../images/icon/shopping-cart.png')}
+                    />
+                  </View> */}
+            <View style={{width: '76%'}}>
+              <Searchbar
+                onClick={true}
+                handleClick={handleClick}
+                isSearch={false}
+                placeholderTextColor={"white"}
+              />
+            </View>
+          </View>
+
+          {/* Slideshow */}
+
+          <View
+            style={{
+              marginTop: 30,
+              height: 150,
+              zIndex: 3,
+            }}>
+            <Slideshow
+              imagesource={images}
+              paginationEnabled={false}
+              isAutoSroll={true}
+              width={'100%'}
+              flex={0.7}
+              heightRate={0.25}
+              widthRate={1}
             />
           </View>
         </View>
-        {/* Search bar */}
-        <Searchbar
-        onClick={true} 
-        handleClick={handleClick}
-        isSearch={false}
-        />
-
-        {/* Slideshow */}
-
-        <Slideshow
-          imagesource={images}
-          paginationEnabled={false}
-          isAutoSroll={false}
-          width={'90%'}
-          flex={0.7}
-          heightRate={0.3}
-          widthRate={0.8}
-        />
+        <View style={{marginBottom:70}}/>
         {/* Category */}
         <View style={styleHome.CategoryView}>
           <Text style={styleHome.titleCategory}>Category</Text>
@@ -125,16 +172,17 @@ const HomeScreen = (props) => {
           {/* BestSeller View */}
           <View style={styleHome.CategoryView}>
             <Text style={styleHome.titleCategory}>Best Sellers</Text>
-            <TouchableOpacity activeOpacity={0.6} 
-              onPress={()=>{
-                navigation.navigate("DetailList",{item:{
-                  name:"sortPrice",
-                  value:true,
-                }})
-              }}
-
-            >
-            <Text style={styleHome.text}>See all</Text>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => {
+                navigation.navigate('DetailList', {
+                  item: {
+                    name: 'sortPrice',
+                    value: true,
+                  },
+                });
+              }}>
+              <Text style={styleHome.text}>See all</Text>
             </TouchableOpacity>
           </View>
           <Banner
@@ -146,7 +194,7 @@ const HomeScreen = (props) => {
             OpacitySecondText={0.5}
           />
           <ProductList
-          infinitiveScroll={false}
+            infinitiveScroll={false}
             data={categoryData1}
             styleView={{
               width: '100%',
@@ -160,22 +208,21 @@ const HomeScreen = (props) => {
           {/* New Product */}
           <View style={styleHome.CategoryView}>
             <Text style={styleHome.titleCategory}>New Product</Text>
-            <TouchableOpacity activeOpacity={0.6}
-            
-            onPress={()=>{
-              navigation.navigate("DetailList",{item:{
-                name:"sortNew",
-                value:true,
-              }})
-            }}
-            
-            >
-            <Text style={styleHome.text}>See all</Text>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => {
+                navigation.navigate('DetailList', {
+                  item: {
+                    name: 'sortNew',
+                    value: true,
+                  },
+                });
+              }}>
+              <Text style={styleHome.text}>See all</Text>
             </TouchableOpacity>
           </View>
           <ProductList
-                    infinitiveScroll={false}
-
+            infinitiveScroll={false}
             data={categoryData1}
             styleView={{
               width: '100%',
@@ -190,22 +237,21 @@ const HomeScreen = (props) => {
 
           <View style={styleHome.CategoryView}>
             <Text style={styleHome.titleCategory}>Top Product</Text>
-            <TouchableOpacity activeOpacity={0.6}
-            
-            onPress={()=>{
-              navigation.navigate("DetailList",{item:{
-                name:"sortRating",
-                value:true,
-              }})
-            }}
-            
-            >
-            <Text style={styleHome.text}>See all</Text>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => {
+                navigation.navigate('DetailList', {
+                  item: {
+                    name: 'sortRating',
+                    value: true,
+                  },
+                });
+              }}>
+              <Text style={styleHome.text}>See all</Text>
             </TouchableOpacity>
           </View>
           <ProductList
-                    infinitiveScroll={false}
-
+            infinitiveScroll={false}
             data={categoryData2}
             styleView={{
               width: '100%',
@@ -220,13 +266,8 @@ const HomeScreen = (props) => {
 
           <View style={styleHome.CategoryView}>
             <Text style={styleHome.titleCategory}>Discount Product</Text>
-            <TouchableOpacity activeOpacity={0.6}
-            
-            
-            
-            
-            >
-            <Text style={styleHome.text}>See all</Text>
+            <TouchableOpacity activeOpacity={0.6}>
+              <Text style={styleHome.text}>See all</Text>
             </TouchableOpacity>
           </View>
           <ProductList

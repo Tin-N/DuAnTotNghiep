@@ -472,19 +472,21 @@ export const StyleBanner =  StyleSheet.create({
         // View
     topBarView:{
         height:50,
+        marginTop:20,
+        marginBottom:10,
         padding:10,
-        paddingLeft:30,
+        paddingLeft:20,
         flexDirection:'row',
         alignItems:'center',
         // backgroundColor:'red'
     },
     title:{
-        color:'#000000',
-        fontSize:15,
-        textAlign:'center',
+        color:'#fefefe',
+        fontSize:20,
+        textAlignVertical:'center',
         fontWeight:'700',
-        width:'80%',
-        justifyContent:'flex-end',
+        width:'16%',
+        justifyContent:'center',
     },
     viewIcons:{
         width:'20%',

@@ -131,19 +131,23 @@ const DetailList = (props) => {
   
   return (
     <View>
-        <Text style={{color:'black'}}>{isLoading.toString()}</Text>
-      <View style={styleHome.topBarView}>
-      <TouchableOpacity onPress={handleClick}>
+        {/*<Text style={{color:'black'}}>{isLoading.toString()}</Text>*/}
+      <View style={[styleHome.topBarView,{marginVertical:10}]}>
+      <TouchableOpacity
+      style={{marginLeft:-10}}
+      onPress={handleClick}>
             <Image
                 style={styleSearchScreen.icons}
                 source={require('../images/icon/previous-ic.png')}
                 />
          </TouchableOpacity>
-            <Searchbar
+            <View style={{marginLeft:5,width:"90%"}}>
+              <Searchbar
             onChangeText={onChangeText}
             onClick={false}
             onSubmitText={onSubmitText}
             />
+            </View>
             <View style={styleHome.viewIcons}>
             <TouchableOpacity activeOpacity={1}/>
               
@@ -161,6 +165,7 @@ const DetailList = (props) => {
             {
               data.length>0?
                 <View
+                style={{paddingBottom:30}}
             >
                         <ProductList
                         count={countData}

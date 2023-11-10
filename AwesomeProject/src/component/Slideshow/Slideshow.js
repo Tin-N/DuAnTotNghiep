@@ -91,7 +91,7 @@ const Slideshow = props => {
   useEffect(() => {
     if (autoScroll) {
       const timeoutId = setTimeout(() => {
-        if (index < images.length - 1) {
+        if (index < imageSource.length - 1) {
           setIndex(prevIndex => prevIndex + 1);
           flatListRef.current.scrollToIndex({animated: true, index: index + 1});
         } else {
@@ -141,7 +141,7 @@ const Slideshow = props => {
         )}
       />
       <Pagination
-        data={images}
+        data={imageSource}
         indexP={index}
         // Hàm setnewIndex đã được gắn trước
         setNewIndex={scrollToIndex}

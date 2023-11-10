@@ -22,6 +22,27 @@ const ProductList = (props) => {
      }
     }   
     };
+    const FooterLoading = () => {
+
+
+      return(
+        <View style={{marginVertical:20}}>
+            { 
+            (isLoadingmini&&infinitiveScroll) ?
+              <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                <ActivityIndicator
+                      color={"blue"}
+                      size={'small'}
+                      />
+                    <Text style={{marginLeft:5}}>Loading...</Text>
+                    </View>
+                    :
+                <View/>
+                
+                }
+          </View>
+          )
+    }
   return (
     <View style={[styleView]}>
       <FlatList
@@ -29,6 +50,7 @@ const ProductList = (props) => {
       data={data} // data sẽ truyền thằng vào nếu data1 rỗng
       renderItem={({item})=>(<ItemList data={item}/>)}
       onEndReachedThreshold={1}
+      ListFooterComponent={FooterLoading}
       onMomentumScrollBegin = {() => {this.onEndReachedCalledDuringMomentum = false;}}
       onEndReached = {() => {
     if (!this.onEndReachedCalledDuringMomentum) {
@@ -37,18 +59,7 @@ const ProductList = (props) => {
     }
   }}
       />
-     {
-        (isLoadingmini&&infinitiveScroll) ?
-        <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-          <ActivityIndicator
-                color={"blue"}
-                size={'small'}
-                />
-              <Text style={{marginLeft:5}}>Loading...</Text>
-              </View>
-              :
-          <View/>
-      }           
+            
  
 </View>
                     
