@@ -9,14 +9,18 @@ const ProductList = (props) => {
 
 
     const handleLoadMore = () => {
-      if(count.length>=data.length){
-        if (!isLoading&&infinitiveScroll) {
-          setIsLoading(true);
-          loadMoreData()
-          };
+     if(typeof count!=='undefined')
+     {
+      if(count>data.length){
+        console.log("Aiyaaa1");
+
+        if (infinitiveScroll) {
+          console.log("Aiyaaa2");
+          
+          loadMoreData();
       }
-      
-      
+     }
+    }   
     };
   return (
     <View style={[styleView]}>
@@ -24,8 +28,14 @@ const ProductList = (props) => {
       {...customSetting}
       data={data} // data sẽ truyền thằng vào nếu data1 rỗng
       renderItem={({item})=>(<ItemList data={item}/>)}
-      onEndReached={handleLoadMore}
       onEndReachedThreshold={1}
+      onMomentumScrollBegin = {() => {this.onEndReachedCalledDuringMomentum = false;}}
+      onEndReached = {() => {
+    if (!this.onEndReachedCalledDuringMomentum) {
+      handleLoadMore();    // LOAD MORE DATA
+      this.onEndReachedCalledDuringMomentum = true;
+    }
+  }}
       />
      {
         (isLoadingmini&&infinitiveScroll) ?

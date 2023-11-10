@@ -1,5 +1,5 @@
 import {View, Text, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState,memo} from 'react';
 import {StyleHomeStore} from '../../css/Styles';
 const ItemList = props => {
   const {data} = props;
@@ -69,4 +69,4 @@ const ItemList = props => {
   );
 };
 
-export default ItemList;
+export default memo(ItemList);

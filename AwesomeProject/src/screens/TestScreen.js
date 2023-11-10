@@ -11,17 +11,9 @@ import CategoryList from '../component/CategoryList/CategoryList';
 import Banner from '../component/Banner/Banner';
 import Pagination from '../component/Pagination/Pagination';
 import SearchFilter from '../component/Filter/SearchFilter';
+import { calculateTimeDifference } from '../../Agro';
 const TestScreen = () => {
 
-  const [valueFilter, setValueFilter] = useState([])
-
-  useEffect(() => {
-    console.log(valueFilter);
-  // ToastAndroid.show(valueFilter[0],ToastAndroid.LONG)
-    return () => {
-      
-    }
-  }, [valueFilter])
   
 //   const [data, setdata] = useState([]);
 //   const [column, setcolumn] = useState(2)
@@ -45,6 +37,35 @@ const TestScreen = () => {
     
 //   }
 // }, [page]);
+
+
+
+ // Lấy timestamp
+
+const TextTime= (props)=>{
+
+  const {startDay,endDay}=props;
+  const [Time, setTime] = useState("");
+  const now = new Date(); // Lấy thời gian hiện tại
+  const threeDaysFromNow = new Date(now);
+  threeDaysFromNow.setDate(now.getDate() + 3); // Thêm 3 ngày
+  
+  const futureTimestamp = threeDaysFromNow.getTime();
+  
+  useEffect(() => {
+    // Sử dụng setTimeout để thay đổi giá trị text sau 1 giây
+    // Xóa timer khi component unmount hoặc dependency thay đổi (nếu cần)
+    let timer = setInterval(() => {
+  
+      console.log("HElllooo");
+      setTime(calculateTimeDifference(new Date().getTime(),endDay));
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+  return(
+    <Text>Thời gian còn lại: {Time}</Text>
+  )
+}
   return (
     <View  style={{width:'100%',height:'100%',justifyContent:'center',alignItems:'center'}}>
       {/* <ProductList 
@@ -58,7 +79,12 @@ const TestScreen = () => {
               <FlatList
               
               /> */}
-              <SearchFilter onSubmit={setValueFilter}/>
+              {/* <SearchFilter onSubmit={setValueFilter}/> */}
+             <TextTime/>
+
+              {/* <Text>1635870123000 - thời gian bắt đầu = Ngày 4 tháng 11 năm 2021, 09:55:23 AM.</Text> */}
+              {/* <Text>1635870123000 - thời gian bắt đầu = Ngày 2 tháng 9 năm 2022, 11:15:23 AM</Text> */}
+
     </View>
   );
 };

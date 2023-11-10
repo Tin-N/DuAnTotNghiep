@@ -41,15 +41,15 @@ const App = () => {
     // <TestScreen/>
     // <FilterScreen/>
     // <HomeStore/>
-    // <AppContextProvider>
-    //   <NavigationContainer>
-    //     <AppNavigator/>
-    //   </NavigationContainer>
-    // </AppContextProvider>
+    <AppContextProvider>
+      <NavigationContainer>
+        <AppNavigator/>
+      </NavigationContainer>
+    </AppContextProvider>
     // <SearchStore/>
   // <SearchScreen/>
   // <ProductScreen/>
-  <Tesst/>
+  // <Tesst/>
   // <Item/>
   )
 }

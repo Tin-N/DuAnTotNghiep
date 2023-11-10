@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, Text, View, Image} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, Image,TouchableOpacity} from 'react-native';
 import React, { useEffect,useState } from 'react';
 import {styleHome} from '../css/Styles';
 import Searchbar from '../component/Seachbar/Searchbar';
@@ -97,7 +97,7 @@ const HomeScreen = (props) => {
         <View>{/* May be get a list when u click the category */}</View>
 
         {/* Feature product */}
-        <View>
+        {/* <View>
                 <View style={styleHome.CategoryView}>
                     <Text style={styleHome.titleCategory}>Featured Product</Text>
                     <Text style={styleHome.text}>See all</Text>
@@ -120,12 +120,22 @@ const HomeScreen = (props) => {
                     horizontal
                     showsHorizontalScrollIndicator={false}
                 />
-        </View>
+        </View> */}
         <View>
           {/* BestSeller View */}
           <View style={styleHome.CategoryView}>
             <Text style={styleHome.titleCategory}>Best Sellers</Text>
+            <TouchableOpacity activeOpacity={0.6} 
+              onPress={()=>{
+                navigation.navigate("DetailList",{item:{
+                  name:"sortPrice",
+                  value:true,
+                }})
+              }}
+
+            >
             <Text style={styleHome.text}>See all</Text>
+            </TouchableOpacity>
           </View>
           <Banner
             BackgroundColor={'#3669C9'}
@@ -150,7 +160,18 @@ const HomeScreen = (props) => {
           {/* New Product */}
           <View style={styleHome.CategoryView}>
             <Text style={styleHome.titleCategory}>New Product</Text>
+            <TouchableOpacity activeOpacity={0.6}
+            
+            onPress={()=>{
+              navigation.navigate("DetailList",{item:{
+                name:"sortNew",
+                value:true,
+              }})
+            }}
+            
+            >
             <Text style={styleHome.text}>See all</Text>
+            </TouchableOpacity>
           </View>
           <ProductList
                     infinitiveScroll={false}
@@ -169,7 +190,18 @@ const HomeScreen = (props) => {
 
           <View style={styleHome.CategoryView}>
             <Text style={styleHome.titleCategory}>Top Product</Text>
+            <TouchableOpacity activeOpacity={0.6}
+            
+            onPress={()=>{
+              navigation.navigate("DetailList",{item:{
+                name:"sortRating",
+                value:true,
+              }})
+            }}
+            
+            >
             <Text style={styleHome.text}>See all</Text>
+            </TouchableOpacity>
           </View>
           <ProductList
                     infinitiveScroll={false}
@@ -188,7 +220,14 @@ const HomeScreen = (props) => {
 
           <View style={styleHome.CategoryView}>
             <Text style={styleHome.titleCategory}>Discount Product</Text>
+            <TouchableOpacity activeOpacity={0.6}
+            
+            
+            
+            
+            >
             <Text style={styleHome.text}>See all</Text>
+            </TouchableOpacity>
           </View>
           <ProductList
             data={categoryData3}
