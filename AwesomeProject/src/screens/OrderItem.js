@@ -16,7 +16,7 @@ const OrderItem = (props) => {
     const [imageUri, setImageUri] = useState();
     const [categoryID, setCategoryID] = useState('Gán');
     const [isCheck, setIsCheck] = useState(data.isSelected); // chọn sản phẩm
-    const [productPrice, setproductPrice] = useState(0)
+    const [productPrice, setproductPrice] = useState(data.itemTotalCost/data.quantity)
     const [ownerID, setownerID] = useState()
     const [ownerInfo, setownerInfo] = useState()
     let itemTotalCost = quantity * productPrice;
@@ -24,31 +24,21 @@ const OrderItem = (props) => {
     const appContextData = useContext(AppContext);
     const userID = appContextData.userID;
 
-    // const userID = '654627d67137a3bf678fb544'
-    // console.log(">>>>userID: " + userID)
-
     useEffect(() => {
         (async () => {
             try {
                 const productResponse = await AxiosIntance().get(`/productAPI/getProductByID?id=${data.productID}`);
                 if (productResponse.result == true) {
                     setProductName(productResponse.products.name);
-                    setproductPrice(productResponse.products.price)
                     setImageUri(productResponse.products.image[0]);
                     setCategoryID(productResponse.products.categoryID);
                     setownerID(productResponse.userID)
                 }
             } catch (error) {
-                console.log("lỗi lấy dữ liệu: " + error)
+                console.log("Order item: lỗi lấy dữ liệu: " + error)
             }
         })();
     }, []);
-
-    // useEffect(async () => {
-    //     const response = await AxiosIntance().get(`/UserApi/get-by-id?id=654627d67137a3bf678fb544`);
-    //     setownerInfo(response.user);
-    //     console.log("owner info:" + response)
-    // }, [ownerID])
 
     const handleCartChanged = () => {
         cartChanged()
@@ -56,9 +46,11 @@ const OrderItem = (props) => {
 
     const increaseQuantity = useCallback(async (quantity) => {
         try {
-            console.log("Tăng số lượng");
-            let newQuantity = quantity + 1;
+            console.log("productPrice: " + productPrice)   
+            let newQuantity = quantity + 1; 
             const newItemTotalCost = newQuantity * productPrice
+            console.log("newItemTotalCost: " + newItemTotalCost)   
+
             try {
                 const response = await AxiosIntance()
                     .put(`cart/update/${userID}/${data.productID}`,
@@ -77,7 +69,6 @@ const OrderItem = (props) => {
     const decreaseQuantity = useCallback(async (quantity) => {
         if (quantity > 1) {
             try {
-                console.log("Giảm số lượng");
                 let newQuantity = quantity - 1;
                 const newItemTotalCost = newQuantity * productPrice
                 try {
@@ -85,7 +76,6 @@ const OrderItem = (props) => {
                         .put(`cart/update/${userID}/${data.productID}`,
                             { quantity: newQuantity, itemTotalCost: newItemTotalCost })
                     handleCartChanged();
-
                 } catch (error) {
                     console.error('Lỗi khi xử lý sản phẩm:', error);
                     throw error;
@@ -95,12 +85,17 @@ const OrderItem = (props) => {
                 throw error
             }
         } else {
-            Alert.alert('Thông báo', 'Số lượng không thể giảm thêm.', [
-                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-                { text: 'OK', onPress: () => deleteProductInCart },
+            Alert.alert('Thông báo', 'Số lượng không thể giảm thêm. Bạn có muốn xoá sản phẩm này khỏi giỏ hàng?', [
+                { text: 'Huỷ', onPress: () => console.log('Cancel Pressed') },
+                { text: 'Xoá', onPress: () => deleteProductInCart() },
             ]);
         }
     }, []);
+
+    const deleteProductInCart = async () => {
+        const response = await AxiosIntance()
+            .delete(`cart/deleteProduct/${userID}/${data.productID}`).then(handleCartChanged())
+    }
 
     const itemSelectedProcess = useCallback(async () => {
         try {
@@ -125,11 +120,6 @@ const OrderItem = (props) => {
             throw error;
         }
     }, []);
-
-    const deleteProductInCart = async () => {
-        const response = await AxiosIntance()
-            .delete(`cart/deleteProduct/${userID}/${data._id}`)
-    }
 
     return (
         <View style={{

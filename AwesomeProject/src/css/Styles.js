@@ -67,88 +67,88 @@ export const StyleHomeStore = StyleSheet.create({
         flexDirection: 'row',
         marginLeft: 30,
         marginRight: 30,
-      },
-      textTitle: {
+    },
+    textTitle: {
         textAlign: 'center',
         color: 'black',
         fontSize: 20,
         paddingLeft: 110,
         marginTop: -6,
-      },
-      touchOpa: {
+    },
+    touchOpa: {
         marginLeft: 75,
-      },
-      line: {
+    },
+    line: {
         borderWidth: 1,
         opacity: 0.03,
         marginTop: 20,
-      },
-      boxSeller: {
+    },
+    boxSeller: {
         marginTop: 30,
         paddingLeft: 30,
         paddingRight: 30,
         flexDirection: 'row',
-      },
-      infoSeller: {
+    },
+    infoSeller: {
         flexDirection: 'row',
-      },
-      boxNameSeller: {
+    },
+    boxNameSeller: {
         width: 218,
         marginLeft: 20,
-      },
-      boxRate: {
+    },
+    boxRate: {
         flexDirection: 'row',
         paddingTop: 10,
-      },
-      textRate: {
+    },
+    textRate: {
         fontSize: 20,
         color: 'black',
         marginTop: -5,
         paddingLeft: 5,
-      },
-      boxLocate: {
+    },
+    boxLocate: {
         flexDirection: 'row',
         marginLeft: 30,
         marginTop: 20,
-      },
-      boxProductStore: {
+    },
+    boxProductStore: {
         flexDirection: 'row',
         marginTop: 20,
         marginLeft: 30,
         justifyContent: 'space-between',
         marginRight: 30,
-      },
-      textTitleProduct: {
+    },
+    textTitleProduct: {
         fontSize: 15,
-      },
-      textCountProduct: {
+    },
+    textCountProduct: {
         color: 'black',
         fontSize: 13,
-      },
-      textitleProductSelling: {
+    },
+    textitleProductSelling: {
         fontSize: 20,
         color: 'black',
-      },
-      productSelling: {
+    },
+    productSelling: {
         marginTop: 15,
         marginLeft: 30,
         marginRight: 30,
-      },
-      boxSelling: {
+    },
+    boxSelling: {
         backgroundColor: 'FAFAFA',
         paddingLeft: 30,
         paddingRight: 30,
-      },
-      boxProduct: {
+    },
+    boxProduct: {
         backgroundColor: 'white',
         borderRadius: 10,
         padding: 10,
         margin: 3,
-      },
-      reviewsProduct: {
+    },
+    reviewsProduct: {
         flexDirection: 'row',
         alignItems: 'center',
-      },
+    },
 });
 export const StyleShipper = StyleSheet.create({
     line: {
@@ -420,13 +420,13 @@ export const StyleDetailFeedback = StyleSheet.create({
 })
 export const StyleDialogShopping = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
         marginTop: 250,
         borderRadius: 5,
-        marginLeft:30,
-        marginRight:30,
-        backgroundColor:'white',
-        padding:10, borderWidth:1, height: 'auto'
+        marginLeft: 30,
+        marginRight: 30,
+        backgroundColor: 'white',
+        padding: 10, borderWidth: 1, height: 'auto'
     },
     line: {
         borderWidth: 1,
@@ -437,17 +437,17 @@ export const StyleDialogShopping = StyleSheet.create({
         flex: 1,
         marginTop: 300,
         borderRadius: 5,
-        marginLeft:30,
-        marginRight:30,
-        backgroundColor:'white',
-        padding:10, borderWidth:1, height:150
+        marginLeft: 30,
+        marginRight: 30,
+        backgroundColor: 'white',
+        padding: 10, borderWidth: 1, height: 150
     },
     containerShopping: {
-        flex:1,
+        flex: 1,
         marginTop: 150,
-        borderTopLeftRadius: 10, borderTopRightRadius:10,
-        backgroundColor:'white',
-        padding:10, borderWidth:1
+        borderTopLeftRadius: 10, borderTopRightRadius: 10,
+        backgroundColor: 'white',
+        padding: 10, borderWidth: 1
     }
 
 
@@ -548,7 +548,7 @@ export const StyleLogin = StyleSheet.create({
     header: {
         color: COLOR.primary,
     },
-    HeadingTextCP:{
+    HeadingTextCP: {
         color: COLOR.background,
         fontSize: 30,
         fontWeight: 'bold',
@@ -732,7 +732,7 @@ export const StyleLogin = StyleSheet.create({
     },
 
     //Welcome
-   
+
 
     //Welcome 
     HeadingTextWelcome: {
@@ -1013,6 +1013,18 @@ export const StyleDetailProduct = StyleSheet.create({
     separator: {
         height: 1,
         padding: 10
+    }, 
+    outOfQuantityButon: {
+        border: 1,
+        textAlign: 'center',
+        fontSize: 18,
+        color: 'black',
+        fontFamily: 'TiltNeon-Regular',
+    },
+    disabledTouchable: {
+        backgroundColor: '#e4e4e4',
+        padding: 8,
+        width: width - 90
     }
 })
 

@@ -23,21 +23,17 @@ const Order = () => {
   const [totalCost, settotalCost] = useState(0)
   const [isCartChanged, setisCartChanged] = useState(1)
 
-  // const userID = useContext(AppContext);
-  const userID = '654627d67137a3bf678fb544';
-  console.log(">>>>>>>>>>>>>>> Order: " + userID)
+  const appContextData = useContext(AppContext);
+  const userID = appContextData.userID;
 
-  console.log("Order Render")
   // Lấy dữ liệu giỏ hàng của user
   useEffect(() => {
     (async () => {
       try {
         const response = await AxiosIntance().get(`/cart/getCartByUserID/${userID}`);
-        console.log(">>>>>>>>>> cart: " + userID);
         setuserCart(response);
-        console.log(">>>>>>>>>> cart: " + response);
       } catch (error) {
-        console.log("Order: Lỗi lấy dữ liệu: " + error);
+        console.log("Order: lỗi lấy dữ liệu: " + error);
       }
     })();
   }, [isCartChanged]);
@@ -46,15 +42,19 @@ const Order = () => {
   useEffect(() => {
     if (userCart) {
       const prodsSelected = userCart.filter(product => product.isSelected === true);
-      setproductsSelected(prodsSelected);
-      console.log("Product Selected: " + prodsSelected);
+      const prodsWithDeliveryStatus = prodsSelected.map(product => ({
+        ...product,
+        deliveryStatus: 'Pending',
+      }));
+      setproductsSelected(prodsWithDeliveryStatus);
+      // console.log("Product Selected: " + prodsSelected);
     }
   }, [userCart]);
 
   // Tính tổng tiền
   useEffect(() => {
     settotalCost(productsSelected.reduce((total, product) => total + product.itemTotalCost, 0))
-    console.log(">>>>>>>>>Total Cost: " + totalCost)
+    // console.log(">>>>>>>>>Total Cost: " + totalCost)
   }, [productsSelected])
 
   // View thông báo khi giỏ hàng trống
@@ -118,7 +118,6 @@ const Order = () => {
             {
               orderDetailID: objectId,
               orderDate: orderDate,
-              deliveryStatus: 'Pending',
               paymentStatus: 'Unpaid',
               paymentMethods: 'COD',
               ownerID: [...new Set(productsSelected.map(product => product.ownerID))]
@@ -144,7 +143,7 @@ const Order = () => {
             onPress: () => {
               // Xử lý khi người dùng chọn "OK"
               OrderPost().then(async () => {
-                // await AxiosIntance().put(`cart/removeSelectedProducts/${userID}`)
+                await AxiosIntance().put(`cart/removeSelectedProducts/${userID}`)
               }).then(() => {
                 handleCartChanged()
               });

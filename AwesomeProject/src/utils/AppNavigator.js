@@ -58,6 +58,7 @@ const Main = () => {
                 headerShown: false,
                 tabBarShowLabel: true,
                 tabBarHideOnKeyboard: true,
+                unmountOnBlur: true,
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
                     if (route.name === 'Home') {
@@ -75,7 +76,6 @@ const Main = () => {
         >
             <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Order" component={Order} />
-
         </Tab.Navigator>
     )
 }
