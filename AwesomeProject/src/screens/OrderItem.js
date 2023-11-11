@@ -150,7 +150,7 @@ const OrderItem = (props) => {
             </View>
 
             <View >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Entypo name='shop' size={24} />
                         <Text style={{ marginLeft: 10 }}>Tên chủ sản phẩm</Text>
@@ -158,7 +158,7 @@ const OrderItem = (props) => {
                     <Pressable onPress={deleteProductInCart}>
                         <Text>Xóa</Text>
                     </Pressable>
-                </View>
+                </View> */}
 
                 {/* <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gary'}}/> */}
 

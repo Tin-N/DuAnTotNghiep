@@ -237,14 +237,16 @@ const DetailProduct = (props) => {
             }
             try {
                 const response = await AxiosIntance().post('/cart/add',
-                    { userID: userID, products: productsInCart })
+                    { userID: userID, products: productsInCart, quantity })
                 if (response) {
                     console.log("Thêm vào giỏ hàng thành công");
-                    // Refresh lại giỏ hàng
+                    setDialogVisible(false)
+                    ToastAndroid.show("Thêm vào giỏ hàng thành công", ToastAndroid.SHORT);
                 }
             } catch (error) {
                 console.log("Lỗi thêm vào giỏ hàng: " + error)
             }
+
         }
 
         const orderNow = async () => {
@@ -270,6 +272,7 @@ const DetailProduct = (props) => {
                             paymentMethods: 'COD',
                             ownerID: ownerID
                         });
+                    setDialogVisible(False)
                     // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
                     ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
                 }

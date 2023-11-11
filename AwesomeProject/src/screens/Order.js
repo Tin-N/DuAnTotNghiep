@@ -25,6 +25,7 @@ const Order = () => {
 
   const appContextData = useContext(AppContext);
   const userID = appContextData.userID;
+  console.log(">>>>>>>>> UserID: " + userID);
 
   // Lấy dữ liệu giỏ hàng của user
   useEffect(() => {
@@ -89,10 +90,8 @@ const Order = () => {
   const handleCartChanged = () => {
     if (isCartChanged) {
       setisCartChanged(false)
-      console.log(isCartChanged)
     } else {
       setisCartChanged(true)
-      console.log(isCartChanged)
     }
   }
 
@@ -143,7 +142,8 @@ const Order = () => {
             onPress: () => {
               // Xử lý khi người dùng chọn "OK"
               OrderPost().then(async () => {
-                await AxiosIntance().put(`cart/removeSelectedProducts/${userID}`)
+                console.log(productsSelected)
+                await AxiosIntance().delete(`cart/deleteProductsSelected/${userID}`)
               }).then(() => {
                 handleCartChanged()
               });
@@ -170,7 +170,7 @@ const Order = () => {
         </View>
 
         {/* co san pham thi hien list san pham khong thi hien hinh anh */}
-        <View style={{ height: 600 }}>
+        <View style={{ height: 560 }}>
           {!userCart ? <MyCartIsEmpty /> : <MyCart />}
         </View>
       </View>
@@ -179,7 +179,7 @@ const Order = () => {
         {/* Order Process */}
         <View style={{ bottom: 100 }}>
           <View style={StyleOrder.tillte}>
-            <Image source={require('../images/cost.png')} />
+            <Image style={{width:40, height:40}} source={require('../images/icons8-coin-50.png')} />
             {!productsSelected
               ? <Text style={StyleOrder.textTillte}>Bạn chưa chọn sản phầm nào</Text>
               : <Text style={StyleOrder.textTillte}>Bạn đã chọn {productsSelected.length} sản phẩm</Text>}
