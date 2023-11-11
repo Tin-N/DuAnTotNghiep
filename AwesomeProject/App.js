@@ -33,15 +33,15 @@ import CensorshipDetailProduct from './src/screens/CensorshipDetailProduct';
 
 const App = () => {
   return (
-    <AppContextProvider>
-      <NavigationContainer>
-        <AppNavigator/>
-      </NavigationContainer>
-    </AppContextProvider>
+    // <AppContextProvider>
+    //   <NavigationContainer>
+    //     <AppNavigator />
+    //   </NavigationContainer>
+    // </AppContextProvider>
 
-  // <CensorshipDetailProduct/>
-    // <CategoryManager/>
-    // <CensorshipProduct/> // shop: ten, anh | product: detail | ko duyet: thong bao ko duyet | giao dien
+    // <CensorshipDetailProduct/>
+     <CategoryManager/>
+    // <CensorshipProduct/> // ko duyet: thong bao ko duyet, xoa | giao dien
   )
 }
 

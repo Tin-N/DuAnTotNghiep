@@ -656,7 +656,7 @@ export const StyleCensorshipProduct = StyleSheet.create({
     },
     viewInfoShop: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+
     },
     imageShop: {
         width: 50,

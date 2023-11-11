@@ -7,11 +7,9 @@ import { StyleOrder, SytleCategoryManager } from '../css/Styles';
 
 const CategoryManager = () => {
   const [categoryManager, setcategoryManager] = useState([]);
-
-  const [categoryManagerName, setcategoryManagerName] = useState({});
-
+  const [categoryManagerNameAdd, setcategoryManagerNameAdd] = useState({});
   const [changeCategoryManager, setchangeCategoryManager] = useState(false);
-
+  const name = [];
   useEffect(() => {
     const getCategoryManager = async () => {
       const reponse = await AxiosIntance().get('/Category/getCategory');
@@ -24,19 +22,22 @@ const CategoryManager = () => {
     }
   }, [changeCategoryManager])
 
-  console.log(categoryManager);
+  for (let i = 0; i < categoryManager.length; i++) {
+    const category = categoryManager[i].name;
+    name.push(category);
+  }
 
   const addCategoryManager = async () => { 
-    console.log(categoryManager.name);
-    if (categoryManagerName != "" && categoryManagerName != categoryManager.name) {
-      const reponse = await AxiosIntance().post('/Category/addCategory', { name: categoryManagerName });
+    if (categoryManagerNameAdd != "" && name.includes(categoryManagerNameAdd) == false) {
+      const reponse = await AxiosIntance().post('/Category/addCategory', { name: categoryManagerNameAdd });
       if (reponse) {
         changeCategoryManagerFun();
-        setcategoryManagerName("")
         ToastAndroid.show('Thêm thành công', ToastAndroid.SHORT);
       } else {
         ToastAndroid.show('Thêm thất bại', ToastAndroid.SHORT);
       }
+    }else{
+      ToastAndroid.show('Bạn đang bỏ trống hoặc đã có danh mục này', ToastAndroid.SHORT);
     }
     changeCategoryManagerFun();
   }
@@ -48,7 +49,7 @@ const CategoryManager = () => {
   return (
     <View style={SytleCategoryManager.container}>
       <View style={SytleCategoryManager.viewTop}>
-        <TextInput placeholder= 'Danh mục' onChangeText={setcategoryManagerName} style={SytleCategoryManager.textInput}/>
+        <TextInput placeholder= 'Danh mục' onChangeText={setcategoryManagerNameAdd} style={SytleCategoryManager.textInput}/>
         <Pressable onPress={addCategoryManager} style={SytleCategoryManager.pressable} >
           <Text style={SytleCategoryManager.textPressable}>Thêm</Text>
         </Pressable>

@@ -7,11 +7,11 @@ import { StyleCensorshipProduct } from '../css/Styles';
 const CensorshipDetailProduct = (props) => {
   const { route, navigation } = props;
   const { params } = route;
-  const [productDetail, setproductDetail] = useState([]);
 
+  const [productDetail, setproductDetail] = useState([]);
   useEffect(() => {
     const getProductDetail = async () => {
-      const reponse = await AxiosIntance().get('/productAPI/getProductByID?id=' + params.itemId);
+      const reponse = await AxiosIntance().get('/productAPI/getProductByID?id=' + params.productId);
       if (reponse) {
         setproductDetail(reponse.products);
       }
@@ -22,17 +22,55 @@ const CensorshipDetailProduct = (props) => {
     }
   }, [])
 
-  const censorshipProduct = async () => {
-    const reponse = await AxiosIntance().post('/productAPI/check-product-by-id/' + params.itemId);
+  //thong bao dong y duyet san pham
+  const acceptNotification = async () => {
+    const reponse = await AxiosIntance().post('/notificationApi/notification', {userID: params.userID, productID: params.productId, notification: "Sản phẩm đã được kiểm duyệt"});
     if (reponse) {
-      navigation.navigate("CensorshipProduct", );
+      //navigation.navigate("CensorshipProduct");
+    } else {
+      ToastAndroid.show('Thong bao bi loi', ToastAndroid.SHORT);
+    }
+  }
+
+  //Dong y duyet san pham
+  const censorshipProduct = async () => {
+    const reponse = await AxiosIntance().post('/productAPI/check-product-by-id/' + params.productId);
+    if (reponse) {
+      acceptNotification();
+      params.setchangeCensorshipProduct(!params.changeCensorshipProduct);
+      console.log(params.changeCensorshipProduct);
+      navigation.navigate("CensorshipProduct");
       ToastAndroid.show('Sản phẩm đã được kiểm duyệt', ToastAndroid.SHORT);
     } else {
       ToastAndroid.show('kiểm duyệt sản phẩm bị lỗi', ToastAndroid.SHORT);
     }
   }
 
+  //thong bao tu choi duyet san pham
+  const rejectNotification = async () => {
+    const reponse = await AxiosIntance().post('/notificationApi/notification', {userID: params.userID, productID: params.productId, notification: "Sản phẩm đã vi phạm quy định"});
+    if (reponse) {
+      //navigation.navigate("CensorshipProduct");
+    } else {
+      ToastAndroid.show('Thong bao bi loi', ToastAndroid.SHORT);
+    }
+  }
+  
+  // tu choi san pham => isApproved = 3
+  const rejectProduct = async () =>{
+    const reponse = await AxiosIntance().post('/productAPI/rejectProduct-by-id/' + params.productId);
+    if (reponse) {
+      rejectNotification();
+      params.setchangeCensorshipProduct(!params.changeCensorshipProduct);
+      navigation.navigate("CensorshipProduct");
+      ToastAndroid.show('Sản phẩm đã được từ chối', ToastAndroid.SHORT);
+    } else {
+      ToastAndroid.show('Sản phẩm đã được từ chối', ToastAndroid.SHORT);
+    }
+  }
+
   const onBack = () => {
+    params.setchangeCensorshipProduct(!params.changeCensorshipProduct);
     navigation.navigate("CensorshipProduct",);
   }
 
@@ -47,17 +85,20 @@ const CensorshipDetailProduct = (props) => {
       </View>
 
       <View style={StyleCensorshipProduct.viewInfo}>
-        <ScrollView style={{height: '90%', marginBottom: 10}}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          overScrollMode='never'
+          style={{ height: '90%', marginBottom: 10 }}>
           <Image style={StyleCensorshipProduct.imageDetailProduct} source={{ uri: 'http://nhatminhdecor.com/wp-content/uploads/2019/01/chup-anh-voi-phong-nen-vai-trang-1.jpg' }} />
           <Text style={StyleCensorshipProduct.textDetail}>{productDetail.detail}</Text>
         </ScrollView>
 
         <View style={StyleCensorshipProduct.viewButtonFuncDetail}>
-          <Pressable style={StyleCensorshipProduct.pressableDetailProduct}>
+          <Pressable style={StyleCensorshipProduct.pressableDetailProduct} onPress={rejectProduct}>
             <Text style={StyleCensorshipProduct.textPressableDetail}>Từ chối</Text>
           </Pressable>
-          <Pressable style={StyleCensorshipProduct.pressableDetailProduct}>
-            <Text style={StyleCensorshipProduct.textPressableDetail} onPress={censorshipProduct}>Duyệt</Text>
+          <Pressable style={StyleCensorshipProduct.pressableDetailProduct} onPress={censorshipProduct}>
+            <Text style={StyleCensorshipProduct.textPressableDetail}>Duyệt</Text>
           </Pressable>
         </View>
       </View>

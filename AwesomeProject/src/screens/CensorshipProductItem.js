@@ -5,16 +5,16 @@ import { StyleCategory, StyleCensorshipProduct } from '../css/Styles';
 import CensorshipDetailProduct from './CensorshipDetailProduct';
 
 const CensorshipProductItem = (props) => {
-  const {dulieu1, navigation} = props;
-  const [user, setuser] = useState([])
+  const { dulieu1, navigation } = props;
+  const [user, setuser] = useState([]);
 
-  console.log(props.setchangeCensorshipProduct + props.changeCensorshipProduct);
-
-  const onDetailProduct = () =>{
-    navigation.navigate("CensorshipDetailProduct", { itemId: dulieu1._id, 
-                                                    setchangeCensorshipProduct: props.setchangeCensorshipProduct,
-                                                    changeCensorshipProduct: props.changeCensorshipProduct});
-    
+  console.log(dulieu1.userID);
+  const onDetailProduct = () => {
+    navigation.navigate("CensorshipDetailProduct", {
+      productId: dulieu1._id, userId: dulieu1.userID,
+      changeCensorshipProduct: props.changeCensorshipProduct,
+      setchangeCensorshipProduct: props.setchangeCensorshipProduct
+    });
   }
 
   useEffect(() => {
