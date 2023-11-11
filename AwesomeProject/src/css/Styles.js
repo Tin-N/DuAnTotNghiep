@@ -506,8 +506,7 @@ export const StyleBanner =  StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         marginTop:0,
-        marginLeft:20,
-        marginRight:20,
+       
         marginBottom:8,
 
         alignItems:'center'

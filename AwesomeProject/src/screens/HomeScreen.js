@@ -5,6 +5,7 @@ import {
   View,
   Image,
   TouchableOpacity,
+  StatusBar
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styleHome} from '../css/Styles';
@@ -78,6 +79,8 @@ const HomeScreen = props => {
 
   return (
     <View>
+            <StatusBar backgroundColor={"purple"} animated={true}/>
+
       <ScrollView>
         {/* Top bar View */}
         <View style={{zIndex: 0,

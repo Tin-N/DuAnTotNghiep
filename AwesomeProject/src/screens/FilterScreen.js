@@ -1,4 +1,4 @@
-import { View, Text, ScrollView,Image, TouchableOpacity,ToastAndroid, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView,Image, TouchableOpacity,ToastAndroid, ActivityIndicator,LogBox,StatusBar } from 'react-native'
 import React,{useState,useEffect} from 'react'
 import ProductList from '../component/ProductList/ProductList'
 import SearchFilter from '../component/Filter/SearchFilter'
@@ -6,6 +6,7 @@ import { styleHome,styleSearchScreen } from '../css/Styles'
 import NoResult from '../component/SearchSuggestions/NoResult';
 import {useNavigation,useRoute} from '@react-navigation/native'
 import AxiosIntance from '../utils/AxiosIntance'
+import { formatString } from '../../Agro'
 const FilterScreen = (props) => {
   const route =useRoute();
   const { searchText } = route.params;
@@ -60,12 +61,12 @@ const FilterScreen = (props) => {
   }
 
   useEffect(() => {
-    
+    LogBox.ignoreAllLogs();
     Load();
     console.log(page);
 
     return () => {
-      
+
     }
   }, [page])
   
@@ -121,18 +122,23 @@ const FilterScreen = (props) => {
     }
   }, [valueFilter]);
   return (
+    
     <View>
-      <View style={styleHome.topBarView}>
+      <View style={[styleHome.topBarView,{justifyContent:'space-between',alignItems:'center',borderColor:'white',borderWidth:0.5  }]}>
       <TouchableOpacity onPress={handleClick}>
             <Image
                 style={styleSearchScreen.icons}
                 source={require('../images/icon/previous-ic.png')}
                 />
          </TouchableOpacity>
-            <Text style={styleHome.title}>
-              Kết quả tìm kiếm: {searchText} 
+            <Text style={[styleHome.title,{color:"black",marginHorizontal:12,width:"75%"}]}
+            numberOfLines={3}
+          
+            ellipsizeMode='head'
+            >
+              Từ khóa: {searchText}
               </Text>
-            <View style={styleHome.viewIcons}>
+            <View>
             <TouchableOpacity  style={styleHome.icons} onPress={()=>setModalVisible((!modalVisible))}>
               <Image
                   style={styleHome.icons}
@@ -158,6 +164,7 @@ const FilterScreen = (props) => {
             {
               data.length>0?
                 <View>
+                  
                         <ProductList
                         count={countData}
                       data={data}
