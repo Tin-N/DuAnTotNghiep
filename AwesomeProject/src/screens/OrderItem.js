@@ -16,7 +16,7 @@ const OrderItem = (props) => {
     const [imageUri, setImageUri] = useState();
     const [categoryID, setCategoryID] = useState('Gán');
     const [isCheck, setIsCheck] = useState(data.isSelected); // chọn sản phẩm
-    const [productPrice, setproductPrice] = useState(data.itemTotalCost/data.quantity)
+    const [productPrice, setproductPrice] = useState(data.itemTotalCost / data.quantity)
     const [ownerID, setownerID] = useState()
     const [ownerInfo, setownerInfo] = useState()
     let itemTotalCost = quantity * productPrice;
@@ -46,10 +46,10 @@ const OrderItem = (props) => {
 
     const increaseQuantity = useCallback(async (quantity) => {
         try {
-            console.log("productPrice: " + productPrice)   
-            let newQuantity = quantity + 1; 
+            console.log("productPrice: " + productPrice)
+            let newQuantity = quantity + 1;
             const newItemTotalCost = newQuantity * productPrice
-            console.log("newItemTotalCost: " + newItemTotalCost)   
+            console.log("newItemTotalCost: " + newItemTotalCost)
 
             try {
                 const response = await AxiosIntance()
@@ -125,7 +125,12 @@ const OrderItem = (props) => {
         <View style={{
             flexDirection: 'row',
             justifyContent: 'space-evenly',
-            marginTop: 5
+            marginTop: 5,
+            borderLeftWidth: 0.35,
+            borderRightWidth: 0.35,
+            borderBottomWidth: 0.15,
+            borderRadius: 10,
+            flex: 1
         }}>
             <View style={StyleOrder.viewCheckBoxOrder}>
                 {/* <Pressable onPress={toggleCheck}>
@@ -172,7 +177,7 @@ const OrderItem = (props) => {
                         </View>
                     </View>
 
-                    <View style={[StyleOrder.header, StyleOrder.function]}>
+                    <View style={[StyleOrder.function, { flexDirection: 'row', justifyContent: 'space-between' }]}>
                         <Pressable onPress={() => decreaseQuantity(quantity)}>
                             <Icon name='trash-outline' size={24} />
                         </Pressable>
@@ -182,8 +187,8 @@ const OrderItem = (props) => {
                         </Pressable>
                     </View>
 
-                    <View style={[StyleOrder.header, StyleOrder.function]}>
-                        <Text>{itemTotalCost}</Text>
+                    <View style={[StyleOrder.header, StyleOrder.function, { marginLeft: 5 }]}>
+                        <Text numberOfLines={1} style={{ fontSize: 15, color: '#008000' }}>$ {itemTotalCost}</Text>
                     </View>
                 </View>
             </View>

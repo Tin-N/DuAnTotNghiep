@@ -32,6 +32,7 @@ const Order = () => {
     (async () => {
       try {
         const response = await AxiosIntance().get(`/cart/getCartByUserID/${userID}`);
+        console.log("userCart: " + response)
         setuserCart(response);
       } catch (error) {
         console.log("Order: lỗi lấy dữ liệu: " + error);
@@ -162,7 +163,7 @@ const Order = () => {
     <View style={StyleOrder.container}>
       <View>
         {/* header */}
-        <View style={StyleOrder.header}>
+        <View style={[StyleOrder.header, { borderBottomWidth: 0.2, paddingBottom: 10 }]}>
           <Text style={StyleOrder.textHeader}>My Cart</Text>
           <Pressable >
             <Icon name='ellipsis-vertical' size={24} color={"black"} />
@@ -170,16 +171,16 @@ const Order = () => {
         </View>
 
         {/* co san pham thi hien list san pham khong thi hien hinh anh */}
-        <View style={{ height: 560 }}>
-          {!userCart ? <MyCartIsEmpty /> : <MyCart />}
+        <View style={{ height: 550 }}>
+          {userCart.length === 0 ? <MyCartIsEmpty /> : <MyCart />}
         </View>
       </View>
 
       <View>
         {/* Order Process */}
         <View style={{ bottom: 100 }}>
-          <View style={StyleOrder.tillte}>
-            <Image style={{width:40, height:40}} source={require('../images/icons8-coin-50.png')} />
+          <View style={[StyleOrder.tillte, { marginLeft: -6, marginRight: -6, borderTopWidth: 0.3, borderTopLeftRadius: 10, borderTopRightRadius: 10, borderLeftWidth: 1, borderRightWidth: 1 }]}>
+            <Image style={{ width: 40, height: 40 }} source={require('../images/icons8-coin-50.png')} />
             {!productsSelected
               ? <Text style={StyleOrder.textTillte}>Bạn chưa chọn sản phầm nào</Text>
               : <Text style={StyleOrder.textTillte}>Bạn đã chọn {productsSelected.length} sản phẩm</Text>}

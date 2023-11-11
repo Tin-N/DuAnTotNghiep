@@ -509,8 +509,8 @@ export const StyleOrder = StyleSheet.create({
         width: 219,
     },
     imageFlatList: {
-        height: 80,
-        width: 59,
+        height: 70,
+        width: 70,
     },
     textNameFlatList: {
         width: 25 * width / 100,
@@ -536,7 +536,7 @@ export const StyleOrder = StyleSheet.create({
     checkBoxOrder: {
         position: 'relative',
         alignSelf: 'center',
-        marginTop: 50,
+        flex: 1,
     },
     pressableBuy: {
         height: 52,
