@@ -51,12 +51,13 @@ const ManageProduct = (props) => {
   )
 }
 const ListProduct = (props) => {
-  const [dataProduct, setDataProduct] = useState([]);
-  const [loadData, setLoadData] = useState(true);
-  const [dataChanged, setDataChanged] = useState();
-  const {navigation} = props;
+  const [dataProduct, setDataProduct] = useState([])
+  const [loadData, setLoadData] = useState(true)
+  const [page, setPage] = useState(0)
+  const [size, setSize] = useState(6)
+  const { navigation } = props;
   const updateProductHandler = (productID) => {
-    navigation.navigate('UpdateProduct', {itemId: productID})
+    navigation.navigate('UpdateProduct', { itemId: productID })
   }
   const checkLoadData = () => {
     setLoadData(!loadData);
@@ -88,11 +89,12 @@ const ListProduct = (props) => {
   useEffect(() => {
     try {
       const getAllProductByUserID = async () => {
-        const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + '113' + '&isShow=true&page=1&size=6');
-        console.log(">>>>>>>>>" + response.products);
-        if (response.result) {
-          setDataProduct(response.products);
-          setDataChanged(response.products.length);
+        const response = await AxiosIntance().get(
+          "/productAPI/getListProductSelling?id=" + '113' + '&isShow=true&page=' + page + '&size=' + size);
+          console.log(">>>size: " + size);
+          console.log(">>>page: " + page);
+          if (response.result) {
+          setDataProduct([...dataProduct, ...response.products]);
         }
       }
       getAllProductByUserID();
@@ -101,7 +103,7 @@ const ListProduct = (props) => {
     }
     return () => {
     }
-  }, [loadData, dataChanged])
+  }, [loadData])
   return (
     <View style={{ backgroundColor: 'white' }}>
       <TouchableOpacity style={{
@@ -137,9 +139,9 @@ const ListProduct = (props) => {
                       <Text>Saleoff: {item.saleOff}</Text>
                     </View>
                     <View>
-                      <TouchableOpacity 
-                      onPress={() => updateProductHandler(item._id)}
-                      style={{ backgroundColor: '#3669C9', width: 100, padding: 5 }}>
+                      <TouchableOpacity
+                        onPress={() => updateProductHandler(item._id)}
+                        style={{ backgroundColor: '#3669C9', width: 100, padding: 5 }}>
                         <Text style={{ textAlign: 'center', color: 'white' }}>
                           Sửa thông tin
                         </Text>
@@ -158,6 +160,19 @@ const ListProduct = (props) => {
                 ))}
             </View> : <View />
         }
+        <TouchableOpacity
+          onPress={() => {setPage(page + 6), checkLoadData() }}
+          style={{
+            marginLeft: 20, marginRight: 20,
+            alignItems: 'center', marginTop: 5, borderWidth: 2,
+            padding: 6, borderRadius: 5, borderColor: '#3669C9',
+            justifyContent: 'center', marginTop: 10
+          }}>
+          <Text style={{
+            marginLeft: 5, textAlign: 'center',
+            color: '#3669C9', fontSize: 18
+          }}>Xem Thêm</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View >
   )
@@ -165,6 +180,8 @@ const ListProduct = (props) => {
 const ListProductNoDisplay = () => {
   const [dataProduct, setDataProduct] = useState([]);
   const [loadData, setLoadData] = useState();
+  const [page, setPage] = useState(1)
+  const [size, setSize] = useState(6)
   const checkLoadData = () => {
     setLoadData(!loadData);
   }
@@ -195,10 +212,9 @@ const ListProductNoDisplay = () => {
   useEffect(() => {
     try {
       const getAllProductByUserID = async () => {
-        const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + '113' + '&isShow=false&page=1&size=6');
-        console.log(">>>>>>>>>" + response.products);
+        const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + '113' + '&isShow=false&page=' + page + '&size=' + size);
         if (response.result) {
-          setDataProduct(response.products);
+          setDataProduct([...dataProduct, ...response.products]);
         }
       }
       getAllProductByUserID();
@@ -253,6 +269,19 @@ const ListProductNoDisplay = () => {
                 ))}
             </View> : <View />
         }
+        <TouchableOpacity
+          onPress={() => { setPage(page+6), checkLoadData() }}
+          style={{
+            marginLeft: 20, marginRight: 20,
+            alignItems: 'center', marginTop: 5, borderWidth: 2,
+            padding: 6, borderRadius: 5, borderColor: '#3669C9',
+            justifyContent: 'center', marginTop: 10
+          }}>
+          <Text style={{
+            marginLeft: 5, textAlign: 'center',
+            color: '#3669C9', fontSize: 18
+          }}>Xem Thêm</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View >
   )
