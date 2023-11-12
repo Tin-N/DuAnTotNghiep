@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "342074766227",
+    "project_id": "duantotnghiep-2d27a",
+    "storage_bucket": "duantotnghiep-2d27a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342074766227:android:8370713f22eb5cc3392e66",
+        "android_client_info": {
+          "package_name": "org.reactjs.native.example.awesomeproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ_pGpp2mtWS2Az5cYLOsp0FizoVoTpdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

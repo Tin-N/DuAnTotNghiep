@@ -4,17 +4,24 @@
  *
  * @format
  */
+<<<<<<< HEAD
 // import path from 'path';
+=======
+
+>>>>>>> dev
 module.exports = {
   transformer: {
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
-        inlineRequires: false,
+        inlineRequires: true,
       },
     }),
   },
+<<<<<<< HEAD
   resolver: {
     sourceExts: ['js', 'json', 'ts', 'tsx'],
   }
+=======
+>>>>>>> dev
 };

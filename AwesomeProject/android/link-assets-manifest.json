@@ -8,6 +8,9 @@
     {
       "path": "assets/fonts/DMSans-VariableFont_opsz,wght.ttf",
       "sha1": "bd912858c0f8887c01a56b09e6b1ca1cf81418ee"
+    },{
+      "path": "src/assets/fonts/TiltNeon-Regular.ttf",
+      "sha1": "cc1463b48374c4a6c85bb8bc713b2e5b76b70b29"
     }
   ]
 }
