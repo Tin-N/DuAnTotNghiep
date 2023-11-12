@@ -8,6 +8,7 @@ import AxiosIntance from '../utils/AxiosIntance';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { memo } from "react"
 import { AppContext } from '../utils/AppContext';
+import LinearGradient from 'react-native-linear-gradient';
 
 const OrderItem = (props) => {
     const { data, cartChanged } = props;
@@ -122,23 +123,26 @@ const OrderItem = (props) => {
     }, []);
 
     return (
-        <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            marginTop: 5,
-            borderLeftWidth: 0.35,
-            borderRightWidth: 0.35,
-            borderBottomWidth: 0.15,
-            borderRadius: 10,
-            flex: 1
-        }}>
+        <View
+            // start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }}
+            // locations={[0, 0.5, 0.6]}
+            // colors={['#FAF3D4', '#E3DAB3', '#DBCF97']}
+            style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: 5,
+                marginRight: 8,
+                borderWidth: 0.35,
+                borderRadius: 5,
+                flex: 1
+            }}>
             <View style={StyleOrder.viewCheckBoxOrder}>
                 {/* <Pressable onPress={toggleCheck}>
                     {isCheck ? <MaterialIcons name='check-box' size={24} color={'green'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
                 </Pressable> */}
                 <BouncyCheckbox
                     style={StyleOrder.checkBoxOrder}
-                    fillColor='white'
+                    fillColor='#FAF3D4'
                     onPress={() => {
                         if (!isCheck) {
                             setIsCheck(!isCheck)
@@ -154,22 +158,23 @@ const OrderItem = (props) => {
                 />
             </View>
 
-            <View >
+            <View>
                 {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Entypo name='shop' size={24} />
-                        <Text style={{ marginLeft: 10 }}>Tên chủ sản phẩm</Text>
+                        <Text style={{ marginLeft: 10, fontSize: 18, fontWeight: 'bold', color: 'black' }}>Tên chủ sản phẩm</Text>
                     </View>
                     <Pressable onPress={deleteProductInCart}>
-                        <Text>Xóa</Text>
+                        <Text style={{ color: '#3669C9' }}>Xóa</Text>
                     </Pressable>
-                </View> */}
+                </View>
 
-                {/* <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gary'}}/> */}
+                <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gary', marginBottom: 5, marginTop: 5, }} /> */}
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={StyleOrder.header}>
-                        <Image style={StyleOrder.imageFlatList} source={{ uri: imageUri }} />
+                        <Image style={StyleOrder.imageFlatList} source={{ uri: imageUri } } />
+                        
                         <View>
                             <Text numberOfLines={2} style={StyleOrder.textNameFlatList}>{productName}</Text>
                             <Text numberOfLines={2} style={StyleOrder.textInfoFlatList}>{categoryID}</Text>
@@ -193,6 +198,7 @@ const OrderItem = (props) => {
                 </View>
             </View>
         </View>
+
     );
 };
 

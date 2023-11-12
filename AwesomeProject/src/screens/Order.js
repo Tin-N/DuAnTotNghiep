@@ -173,10 +173,11 @@ const Order = () => {
         {/* co san pham thi hien list san pham khong thi hien hinh anh */}
         <View style={{ height: 550 }}>
           {userCart.length === 0 ? <MyCartIsEmpty /> : <MyCart />}
+
         </View>
       </View>
 
-      <View>
+      <View style={{ marginRight: 10 }}>
         {/* Order Process */}
         <View style={{ bottom: 100 }}>
           <View style={[StyleOrder.tillte, { marginLeft: -6, marginRight: -6, borderTopWidth: 0.3, borderTopLeftRadius: 10, borderTopRightRadius: 10, borderLeftWidth: 1, borderRightWidth: 1 }]}>
