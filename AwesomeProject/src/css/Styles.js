@@ -531,7 +531,8 @@ export const StyleOrder = StyleSheet.create({
         alignItems: 'center'
     },
     viewCheckBoxOrder: {
-        width: 5 * width / 100,
+        marginLeft:3,
+        width: 10 * width / 100,
     },
     checkBoxOrder: {
         position: 'relative',

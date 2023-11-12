@@ -1,18 +1,18 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-// import { useNavigation } from '@react-navigation/native'; // Import useNavigation từ thư viện React Navigation
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation từ thư viện React Navigation
 
 const ActionBar = ({ title }) => {
-//   const navigation = useNavigation(); // Sử dụng useNavigation để truy cập đối tượng điều hướng
+  const navigation = useNavigation(); // Sử dụng useNavigation để truy cập đối tượng điều hướng
 
   const handleBackPress = () => {
-    // navigation.goBack(); // Chuyển về màn hình trước đó
+    navigation.goBack(); // Chuyển về màn hình trước đó
   };
 
   return (
     <View style={styles.actionBar}>
       <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
-        <Image style={{ width: 25, height: 25 }} source={require('../images/3994376_arrow_back_left_navigation_previous_icon.png')} />
+        <Image style={{ marginLeft:-15, width: 25, height: 25 }} source={require('../images/3994376_arrow_back_left_navigation_previous_icon.png')} />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
     </View> 
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     padding: 10,
     alignItems: 'center',
+    borderBottomWidth: 0.5
   },
   backButton: {
     padding: 10,

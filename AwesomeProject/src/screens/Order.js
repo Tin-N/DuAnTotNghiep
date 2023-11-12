@@ -10,6 +10,7 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import AxiosIntance from '../utils/AxiosIntance'
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 const ObjectID = require('bson-objectid');
+import ActionBar from './ActionBar'
 import { memo } from "react"
 
 const Order = () => {
@@ -163,20 +164,16 @@ const Order = () => {
     <View style={StyleOrder.container}>
       <View>
         {/* header */}
-        <View style={[StyleOrder.header, { borderBottomWidth: 0.2, paddingBottom: 10 }]}>
-          <Text style={StyleOrder.textHeader}>My Cart</Text>
-          <Pressable >
-            <Icon name='ellipsis-vertical' size={24} color={"black"} />
-          </Pressable>
-        </View>
+        <ActionBar title={"Cart"}/>
 
         {/* co san pham thi hien list san pham khong thi hien hinh anh */}
         <View style={{ height: 550 }}>
           {userCart.length === 0 ? <MyCartIsEmpty /> : <MyCart />}
+
         </View>
       </View>
 
-      <View>
+      <View style={{ marginRight: 10 }}>
         {/* Order Process */}
         <View style={{ bottom: 100 }}>
           <View style={[StyleOrder.tillte, { marginLeft: -6, marginRight: -6, borderTopWidth: 0.3, borderTopLeftRadius: 10, borderTopRightRadius: 10, borderLeftWidth: 1, borderRightWidth: 1 }]}>
