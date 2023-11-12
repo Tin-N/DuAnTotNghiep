@@ -44,67 +44,67 @@ import StatisticSellerScreen from './src/screens/personStore/StatisticSellerScre
 
 
 const App = () => {
-  const [modalVisible, setModalVisible] = useState(false)
-  const {height}=Dimensions.get('screen').height;
+  // const [modalVisible, setModalVisible] = useState(false)
+  // const {height}=Dimensions.get('screen').height;
   
-  const Dialog = ({modalVisible, setModalVisible}) =>{
-      const [count, setcount] = useState(3) // 3 là số giây vừa muốn làm việc gì đó
-    useEffect(() => {
-      // sau 3 giay thi tru
-    const time =  setInterval(() => {
-      setcount(prevCount => prevCount - 1);
-      }, 1000);
+  // const Dialog = ({modalVisible, setModalVisible}) =>{
+  //     const [count, setcount] = useState(3) // 3 là số giây vừa muốn làm việc gì đó
+  //   useEffect(() => {
+  //     // sau 3 giay thi tru
+  //   const time =  setInterval(() => {
+  //     setcount(prevCount => prevCount - 1);
+  //     }, 1000);
 
-      //  Het thoi gian thi se lam gi do 
-      if(count==0&&modalVisible){
-        clearInterval(time);
-        setModalVisible(false);
+  //     //  Het thoi gian thi se lam gi do 
+  //     if(count==0&&modalVisible){
+  //       clearInterval(time);
+  //       setModalVisible(false);
 
-        //  Lenh chuyen huong o day
+  //       //  Lenh chuyen huong o day
 
-        Alert.alert("Tieu de ","Da chuyen man hinh");
-      }
-      return () => {
-        clearInterval(time);
-      }
-    }, [count])
+  //       Alert.alert("Tieu de ","Da chuyen man hinh");
+  //     }
+  //     return () => {
+  //       clearInterval(time);
+  //     }
+  //   }, [count])
     
-    return(
-      <View  style={{height:height,justifyContent:'center',alignItems:'center'}}>
-        <Modal
+  //   return(
+  //     <View  style={{height:height,justifyContent:'center',alignItems:'center'}}>
+  //       <Modal
         
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible(!modalVisible);
-          }}
+  //         animationType="slide"
+  //         transparent={true}
+  //         visible={modalVisible}
+  //         onRequestClose={() => {
+  //           Alert.alert('Modal has been closed.');
+  //           setModalVisible(!modalVisible);
+  //         }}
   
-        >
+  //       >
   
-          <Text>Màn hình sẽ được chuyển tới trang khác trong {count} s</Text>
-        </Modal>
-      </View>
-    )
-  }
+  //         <Text>Màn hình sẽ được chuyển tới trang khác trong {count} s</Text>
+  //       </Modal>
+  //     </View>
+  //   )
+  // }
   return (
   // <WelcomeScreen/>
     // <StatisticSellerScreen/>
-    // <AppContextProvider>
-    //   <NavigationContainer>
-    //     <AppNavigator/>
-    //   </NavigationContainer>
-    // </AppContextProvider>
+    <AppContextProvider>
+      <NavigationContainer>
+        <AppNavigator/>
+      </NavigationContainer>
+    </AppContextProvider>
     // <SearchStore/>
-    <View>
-      <View>
-      <Dialog modalVisible={modalVisible}  setModalVisible={setModalVisible}/>
-      </View>
-      <TouchableOpacity onPress={()=>setModalVisible(!modalVisible)}>
-        <Text>Helloo</Text>
-      </TouchableOpacity>
-    </View>
+    // <View>
+    //   <View>
+    //   <Dialog modalVisible={modalVisible}  setModalVisible={setModalVisible}/>
+    //   </View>
+    //   <TouchableOpacity onPress={()=>setModalVisible(!modalVisible)}>
+    //     <Text>Helloo</Text>
+    //   </TouchableOpacity>
+    // </View>
   )
 }
 
