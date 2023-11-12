@@ -35,6 +35,8 @@ import HomeStore from './src/screens/personStore/HomeStore';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CreateProduct from './src/screens/personStore/CreateProduct';
+import ManageProduct from './src/screens/personStore/ManageProduct';
+import UpdateProduct from './src/screens/personStore/UpdateProduct';
 const Stack = createNativeStackNavigator()
 const App = () => {
   return (
@@ -43,7 +45,7 @@ const App = () => {
         <AppNavigator/>
       </NavigationContainer>
     </AppContextProvider>
-    // <CreateProduct/>
+    // <UpdateProduct/>
   )
 }
 

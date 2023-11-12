@@ -4,7 +4,7 @@ import { StyleHomeStore, StyleLogin } from '../../css/Styles'
 import { FlatList } from 'react-native';
 import ItemHomeStore from './ItemHomeStore';
 import { ScrollView } from 'react-native';
-import AxiosIntance from '../../utils/AxiosIntance';import { LogBox } from 'react-native';
+import AxiosIntance from '../../utils/AxiosIntance'; import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const HomeStore = (props) => {
@@ -16,7 +16,7 @@ const HomeStore = (props) => {
     useEffect(() => {
         try {
             const getAllProductByUserID = async () => {
-                const response = await AxiosIntance().get("/productAPI/getAllProductByUserID?id=" + '113');
+                const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + '113' + '&isShow=true');
                 if (response.result) {
                     setDataProduct(response.products);
                     setProductID(response.products._id);
@@ -33,6 +33,9 @@ const HomeStore = (props) => {
     const createHandler = () => {
         navigation.navigate('CreateProduct');
     }
+    const sellerManageHandler = () => {
+        navigation.navigate('ManageProduct');
+    }
     return (
         <View>
             <TouchableOpacity onPress={createHandler} style={{
@@ -44,7 +47,9 @@ const HomeStore = (props) => {
                 <Text style={{ fontSize: 30, color: 'white' }}>+</Text>
             </TouchableOpacity>
             <View style={StyleHomeStore.menu}>
-                <Image source={require('../../images/backic.png')} />
+                <TouchableOpacity onPress={sellerManageHandler}>
+                    <Image source={require('../../images/backic.png')} />
+                </TouchableOpacity>
                 <Text style={StyleHomeStore.textTitle}>
                     Info Seller
                 </Text>

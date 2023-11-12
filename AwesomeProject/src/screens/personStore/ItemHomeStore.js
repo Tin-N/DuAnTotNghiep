@@ -4,6 +4,7 @@ import { StyleHomeStore } from '../../css/Styles'
 import { formatPrice } from '../../../Agro'
 import AxiosIntance from '../../utils/AxiosIntance'
 import { LogBox } from 'react-native';
+import { TextWithLimit } from '../../component/SearchSuggestions/SearchItem'
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const ItemHomeStore = (props) => {
@@ -37,17 +38,15 @@ const ItemHomeStore = (props) => {
     <View style={[StyleHomeStore.boxProduct]}>
       <TouchableOpacity onPress={handleOnClick}>
         <Image source={{ uri: dulieu.image[0] }} style={{ height: 150, width: 140, borderRadius: 10, borderWidth: 1 }} />
-        <Text style={{
+        {/* <Text style={{
           fontFamily: 'DM Sans',
           maxWidth: 200,
           flex: 1,
           flexWrap: 'nowrap'
         }}>
           {dulieu.name}
-        </Text>
-        <Text style={{ color: '#3669C9' }}>
-          Giá: {salePrice}đ
-        </Text>
+        </Text> */}
+        <TextWithLimit text={dulieu.name} limit={17}/>
         <Text>
           Kho: {dulieu.quantity}
         </Text>
@@ -58,7 +57,7 @@ const ItemHomeStore = (props) => {
             flex: 1,
             flexWrap: 'nowrap',
             fontSize: 15,
-            marginTop: 4
+            marginTop: 4, color:'black'
           }}>
             {dulieu.sold} đã bán
           </Text>

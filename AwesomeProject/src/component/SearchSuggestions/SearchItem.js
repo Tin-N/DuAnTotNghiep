@@ -1,20 +1,20 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 import {StyleSearchSuggestions} from '../../css/Styles';
+export const TextWithLimit=({ text, limit }) => {
+  // Kiểm tra xem văn bản có vượt quá giới hạn không
+  if (text.length > limit) {
+    // Nếu vượt quá, cắt văn bản và thêm dấu ba chấm
+    const truncatedText = text.slice(0, limit) + '...';
+    
+    return <Text style={StyleSearchSuggestions.text}>{truncatedText}</Text>;
+  }
+
+  // Nếu không vượt quá, hiển thị văn bản gốc
+  return <Text style={StyleSearchSuggestions.text}>{text}</Text>;
+}
 const SearchItem = props => {
   const {source, SearchItem, enableDelete} = props;
-  const TextWithLimit=({ text, limit }) => {
-    // Kiểm tra xem văn bản có vượt quá giới hạn không
-    if (text.length > limit) {
-      // Nếu vượt quá, cắt văn bản và thêm dấu ba chấm
-      const truncatedText = text.slice(0, limit) + '...';
-      
-      return <Text style={StyleSearchSuggestions.text}>{truncatedText}</Text>;
-    }
-  
-    // Nếu không vượt quá, hiển thị văn bản gốc
-    return <Text style={StyleSearchSuggestions.text}>{text}</Text>;
-  }
   return (
     <View style={StyleSearchSuggestions.WholeViewInItem}>
       <View style={StyleSearchSuggestions.viewInside}>

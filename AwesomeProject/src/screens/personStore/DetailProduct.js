@@ -1,16 +1,17 @@
 import { View, Text, Image, TouchableOpacity, ImageBackground, Modal } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { StyleDetailProduct } from '../../css/Styles'
 import { Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('screen')
+const { width } = Dimensions.get('screen')
 import LinearGradient from 'react-native-linear-gradient';
 import AxiosIntance from '../../utils/AxiosIntance';
 import { formatPrice } from '../../../Agro';
 import { ScrollView, FlatList } from 'react-native';
 import StarRating from 'react-native-star-rating-widget';
-import StarRatingDisplay from 'react-native-star-rating-widget';
 import ItemFeedBack from './ItemFeedBack';
 import { StyleDialogShopping } from '../../css/Styles';
+import { Animated } from 'react-native';
+import { calculateTimeDifference } from '../../../Agro';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
@@ -30,6 +31,51 @@ const DetailProduct = (props) => {
     const [heart, setHeart] = useState(false);
     const [isDialogVisible, setDialogVisible] = useState(false);
     const [check, setCheck] = useState(null);
+    const [bannerSale, setBannerSale] = useState('none');
+    const slideAnim = useRef(new Animated.Value(-100)).current;
+    useEffect(() => {
+        Animated.timing(
+            slideAnim,
+            {
+                toValue: 0,
+                duration: 2000,
+                useNativeDriver: true
+            }
+        ).start();
+    }, [slideAnim]);
+    const TextTime = (props) => {
+        const { startDay, endDay } = props;
+        const [Time, setTime] = useState("");
+        const [remainingTime] = useState("")
+        const now = new Date(); // Lấy thời gian hiện tại
+        const threeDaysFromNow = new Date(now);
+        threeDaysFromNow.setDate(now.getDate() + 3); // Thêm 3 ngày
+        useEffect(() => {
+            // Sử dụng setTimeout để thay đổi giá trị text sau 1 giây
+            // Xóa timer khi component unmount hoặc dependency thay đổi (nếu cần)
+            let timer = setInterval(() => {
+                const onSaleTime = calculateTimeDifference(startDay, new Date().getTime(), endDay);               
+                const validationTime = (endDay - new Date().getTime());
+                if (validationTime < 0) {
+
+                } else {
+                    setTime(onSaleTime.formattedTimeReamaining);
+                }
+            }, 1000);
+            return () => clearTimeout(timer);
+        }, []);
+        return (
+            <View style={{ justifyContent: 'center', alignContent: 'center', marginLeft: 110 }}>
+                <Text style={{ color: 'white', textAlign: 'center', fontSize:15 }}>Kết thúc sau</Text>
+                <Text style={{ color: 'white', textAlign: 'center', fontWeight:'bold' }}>{Time}</Text>
+            </View>
+        )
+    }
+    const opacityBackground = () => {
+        if (isDialogVisible == true)
+            return 0.5
+        return 1
+    }
     const heartHandler = () => {
         setHeart(!heart);
     }
@@ -129,12 +175,11 @@ const DetailProduct = (props) => {
         const [sizeChoosen, setSizeChoosen] = useState('');
         const [imageColor, setimageColor] = useState('')
         const [quantity, setQuantity] = useState(1);
-        console.log("this is productID" + productID);
         const quantityHandler = (updateQuantity) => {
-            if(updateQuantity == "+"){
-                setQuantity(quantity+1);
-            }else if(updateQuantity == "-" && quantity >= 2){
-                setQuantity(quantity-1);
+            if (updateQuantity == "+") {
+                setQuantity(quantity + 1);
+            } else if (updateQuantity == "-" && quantity >= 2) {
+                setQuantity(quantity - 1);
             }
         }
         return (
@@ -255,15 +300,19 @@ const DetailProduct = (props) => {
                                     : <View />
                             }
                         </View>
-                        <View style={{flexDirection:'row', alignItems:'center', marginTop:10, marginLeft:250}}>
-                            <TouchableOpacity onPress={() => quantityHandler("-")} style={{width:35, height:30, 
-                                backgroundColor:'#EEEEEE', alignItems:'center',}}>
-                                <Text style={{fontSize:20}}>-</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10, marginLeft: 250 }}>
+                            <TouchableOpacity onPress={() => quantityHandler("-")} style={{
+                                width: 35, height: 30,
+                                backgroundColor: '#EEEEEE', alignItems: 'center',
+                            }}>
+                                <Text style={{ fontSize: 20 }}>-</Text>
                             </TouchableOpacity>
-                            <Text style={{padding:5, fontSize:20}}>{quantity}</Text>
-                            <TouchableOpacity onPress={() => quantityHandler("+")} style={{width:35, height:30, 
-                                backgroundColor:'#EEEEEE', alignItems:'center'}}>
-                                <Text style={{fontSize:20}}>+</Text>
+                            <Text style={{ padding: 5, fontSize: 20 }}>{quantity}</Text>
+                            <TouchableOpacity onPress={() => quantityHandler("+")} style={{
+                                width: 35, height: 30,
+                                backgroundColor: '#EEEEEE', alignItems: 'center'
+                            }}>
+                                <Text style={{ fontSize: 20 }}>+</Text>
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
@@ -279,7 +328,7 @@ const DetailProduct = (props) => {
                                     colors={['#3669C9', '#070723']}
                                     style={{ padding: 8, borderRadius: 25, flex: 1 }}
                                 >
-                                    <TouchableOpacity style={{width:355}}>
+                                    <TouchableOpacity style={{ width: 355 }}>
                                         <Text style={StyleDetailProduct.textButton}>
                                             Thêm vào giỏ hàng
                                         </Text>
@@ -292,7 +341,7 @@ const DetailProduct = (props) => {
         );
     };
     return (
-        <View style={{ height: 785, backgroundColor: 'white' }}>
+        <View style={{ flex: 1, backgroundColor: 'white', opacity: opacityBackground() }}>
             <View style={StyleDetailProduct.menu}>
                 <TouchableOpacity onPress={back}>
                     <Image source={require('../../images/backic.png')} />
@@ -302,19 +351,32 @@ const DetailProduct = (props) => {
                 </Text>
             </View>
             <ScrollView
-                stickyHeaderIndices={[1]}
                 showsVerticalScrollIndicator={false}
                 overScrollMode='never'>
                 <ImageBackground source={imageProduct ? { uri: imageProduct } : null} resizeMode='cover' style={{ width: width, height: 320 }}>
                 </ImageBackground>
-                <LinearGradient
-                    start={{ x: 0, y: 0.5 }} // Điểm bắt đầu của gradient (trái)
-                    end={{ x: 1.2, y: 0.5 }}   // Điểm kết thúc của gradient (phải)
-                    colors={['#000033', '#3669C9']}
-                    style={StyleDetailProduct.banner}
+                <Animated.View
+                    style={{
+                        ...StyleDetailProduct.banner,
+                        display: bannerSale,
+                        transform: [{ translateY: slideAnim }] // Sử dụng giá trị Animated cho thuộc tính transform
+                    }}
                 >
-                    <Text style={[StyleDetailProduct.titleBanner,]}>SavvyFlash Sale</Text>
-                </LinearGradient>
+                    <LinearGradient
+                        start={{ x: 0, y: 0.5 }}
+                        end={{ x: 1.2, y: 0.5 }}
+                        colors={['#000033', '#3669C9']}
+                        style={[StyleDetailProduct.banner,]}
+                    >
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={[StyleDetailProduct.titleBanner,]}>SavvyFlash Sale</Text>
+                            <TextTime
+                                startDay={1699592400000}
+                                endDay={1699678800000}
+                            />
+                        </View>
+                    </LinearGradient>
+                </Animated.View>
                 <View style={{ flexDirection: 'row', padding: 10 }}>
                     <Text style={StyleDetailProduct.textd}>
                         đ
@@ -433,7 +495,7 @@ const DetailProduct = (props) => {
                     </LinearGradient>
                 </View>
             </View>
-        </View>
+        </View >
     )
 }
 

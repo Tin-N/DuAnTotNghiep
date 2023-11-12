@@ -16,6 +16,8 @@ import DetailFeedback from '../screens/personStore/DetailFeedback';
 import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
 import DetailProduct from '../screens/personStore/DetailProduct';
 import CreateProduct from '../screens/personStore/CreateProduct';
+import ManageProduct from '../screens/personStore/ManageProduct';
+import UpdateProduct from '../screens/personStore/UpdateProduct';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const User = () => {
@@ -34,13 +36,26 @@ const ProductHome = () => {
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
             <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
-            <Stack.Screen name='DetailProduct' component={DetailProduct} />
+            <Stack.Screen name='DetailProduct'
+                options={{
+                    presentation: 'modal',
+                    animationTypeForReplace: 'push',
+                    animation: 'slide_from_right'
+                }} component={DetailProduct} />
             <Stack.Screen name='CreateProduct' component={CreateProduct}
                 options={{
                     presentation: 'modal',
                     animationTypeForReplace: 'push',
                     animation: 'slide_from_right'
                 }}></Stack.Screen>
+            <Stack.Screen name='ManageProduct' component={ManageProduct} />
+            <Stack.Screen name='UpdateProduct'
+                options={{
+                    presentation: 'modal',
+                    animationTypeForReplace: 'push',
+                    animation: 'slide_from_right'
+                }}
+                component={UpdateProduct} />
         </Stack.Navigator>
     )
 }

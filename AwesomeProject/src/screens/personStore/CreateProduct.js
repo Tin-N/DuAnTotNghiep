@@ -84,7 +84,6 @@ const CreateProduct = (props) => {
                     onClose();
                 }}
             >
-
                 <KeyboardAwareScrollView keyboardShouldPersistTaps='always'>
                     <View style={StyleDialogShopping.container}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
@@ -378,10 +377,10 @@ const CreateProduct = (props) => {
                         fontSize: 15, borderColor: '#CCCCCC',
                         borderWidth: 1, borderRadius: 8, paddingLeft: 10,
                         fontFamily: 'TiltNeon-Regular'
-                    }} placeholder='Tên sản phẩm' onChangeText={setName}></TextInput>
+                    }} placeholder='Tên sản phẩm' onChangeText={setName}/>
                     <View style={{ marginTop: 10, zIndex: 0 }}>
                         <View
-                            style={{
+                            style={{ zIndex:3, flexDirection:'row'
                             }}>
                             <DropDownPicker
                                 open={open}
@@ -391,15 +390,19 @@ const CreateProduct = (props) => {
                                 setValue={setValue}
                                 setItems={setItems}
                                 placeholder={'Danh mục'}
-                                style={{ borderColor: '#CCCCCC' }}
+                                props={{
+                                    activeOpacity: 1
+                                }}
+                                dropDownContainerStyle={{borderColor: '#CCCCCC'}}
+                                style={{ borderColor: '#CCCCCC',  zIndex:0}}
                             />
+                            <Image style={{marginTop:10,marginLeft:-55, zIndex:1, width:25, height:25}} source={require('../../images/category.png')}/>
                         </View>
                         <View style={{
                             alignItems: 'center',
                             justifyContent: 'center',
-                            zIndex: 0
                         }}>
-                            <Text style={{ zIndex: 0, display: 'none' }}>Danh mục: {value === null ? 'chưa có' : value}</Text>
+                            <Text style={{display: 'none' }}>Danh mục: {value === null ? 'chưa có' : value}</Text>
                         </View>
                         <View style={{
                             padding: 10,
@@ -508,7 +511,7 @@ const CreateProduct = (props) => {
                     </View>
                     <View style={{ marginLeft: 30, marginRight: 30 }}>
                         <TouchableOpacity onPress={Upload} style={{
-                            padding: 10, borderWidth: 1,
+                            padding: 10,
                             backgroundColor: '#3669C9', borderRadius: 5, marginTop: 10
                         }}>
                             <Text style={{ textAlign: 'center', fontSize: 15, color: 'white' }}>

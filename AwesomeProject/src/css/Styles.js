@@ -55,10 +55,7 @@ export const StyleSearchSuggestions = StyleSheet.create({
         flexDirection: 'row',
     },
     text: {
-        fontSize: 19,
-        lineHeight: 20,
-        letterSpacing: 0.2,
-        alignSelf: 'center',
+        
     },
 });
 export const StyleHomeStore = StyleSheet.create({
@@ -944,13 +941,14 @@ export const StyleDetailProduct = StyleSheet.create({
         backgroundColor: '#766f6f'
     },
     banner: {
-        width: width
+        width: width,
+        flexDirection:'row'
     },
     titleBanner: {
         padding: 10,
 
         color: 'white',
-        fontSize: 25,
+        fontSize: 20,
         fontFamily: 'TiltNeon-Regular'
     },
     textPrice: {
