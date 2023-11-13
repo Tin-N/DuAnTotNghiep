@@ -9,11 +9,9 @@ const AxiosIntance = (contentType = 'application/json') => {
 
         // 'http://172.16.117.18:3000/Api'// O truong  
 
-        // 'http://192.168.1.237:3000/api' // Quy
+        'http://192.168.1.237:3000/api' //Quy thu duc
          
-         'http://192.168.1.108:3000/api' // Quy
-
-        // 'http://192.168.1.190:3000/api' // Quy
+        // 'http://192.168.1.108:3000/api' // Quy que
     });
     axiosInstance.interceptors.request.use(
         async config => {

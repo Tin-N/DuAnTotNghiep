@@ -28,8 +28,9 @@ import { AppContextProvider } from './src/utils/AppContext';
 import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './src/utils/AppNavigator';
 import CategoryManager from './src/screens/CategoryManager';
-import CensorshipProduct from './src/screens/CensorshipProduct';
-import CensorshipDetailProduct from './src/screens/CensorshipDetailProduct';
+// import CensorshipProduct from './src/screens/CensorshipProduct';
+// import CensorshipDetailProduct from './src/screens/CensorshipDetailProduct';
+
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
     // <CensorshipDetailProduct/>
      <CategoryManager/>
     // <CensorshipProduct/> // ko duyet: thong bao ko duyet, xoa | giao dien
+
   )
 }
 

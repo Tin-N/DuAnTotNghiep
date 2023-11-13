@@ -1,8 +1,10 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-import { COLOR } from './Theme';
-import { Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('screen');
+
+import {COLOR} from './Theme';
+import {Dimensions} from 'react-native';
+const {width, height} = Dimensions.get('screen');
+console.log(25*width/100);
 export const StyleLogin = StyleSheet.create({
     header: {
         color: COLOR.primary,
@@ -20,7 +22,7 @@ export const StyleOrder = StyleSheet.create({
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        margin: 10,
+        margin: 5
     },
     textHeader: {
         fontSize: 25,
@@ -69,19 +71,21 @@ export const StyleOrder = StyleSheet.create({
         width: 59,
     },
     textNameFlatList: {
+        width: 25*width/100,
         fontSize: 20,
         fontStyle: 'bold',
         color: 'black',
         marginLeft: 5,
     },
     textInfoFlatList: {
+        width: 25*width/100,
         fontSize: 12,
         fontStyle: 'bold',
         color: '#AEAEAE',
         marginLeft: 5,
     },
     function: {
-        width: 100,
+        width: 20*width/100,
         alignItems: 'center'
     },
     checkBoxOrder: {

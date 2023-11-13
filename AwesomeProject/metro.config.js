@@ -4,11 +4,6 @@
  *
  * @format
  */
-<<<<<<< HEAD
-// import path from 'path';
-=======
-
->>>>>>> dev
 module.exports = {
   transformer: {
     getTransformOptions: async () => ({
@@ -18,10 +13,7 @@ module.exports = {
       },
     }),
   },
-<<<<<<< HEAD
   resolver: {
     sourceExts: ['js', 'json', 'ts', 'tsx'],
   }
-=======
->>>>>>> dev
 };
