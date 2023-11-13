@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Pressable, FlatList, TouchableOpacity, Switch, Alert, ToastAndroid } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable, FlatList, ActivityIndicator, Switch, Alert, ToastAndroid } from 'react-native'
 import React, { useContext, useState, useEffect, useCallback } from 'react'
 import { AppContext } from '../utils/AppContext'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -22,17 +22,17 @@ const Order = () => {
   const [productsSelected, setproductsSelected] = useState([])
   const [totalCost, settotalCost] = useState(0)
   const [isCartChanged, setisCartChanged] = useState(1)
+  const [isLoading, setisLoading] = useState(false)
 
   const appContextData = useContext(AppContext);
   const userID = appContextData.userID;
-  console.log(">>>>>>>>> UserID: " + userID);
 
   // Lấy dữ liệu giỏ hàng của user
   useEffect(() => {
     (async () => {
       try {
-        const response = await AxiosIntance().get(`/cart/getCartByUserID/${userID}`);
-        console.log("userCart: " + response)
+        const response = await AxiosIntance().get(`/cart/getCartByUserID/${userID}`)
+          .then(setisLoading(true));
         setuserCart(response);
       } catch (error) {
         console.log("Order: lỗi lấy dữ liệu: " + error);
@@ -163,18 +163,18 @@ const Order = () => {
     <View style={StyleOrder.container}>
       <View>
         {/* header */}
-        <View style={[StyleOrder.header, { borderBottomWidth: 0.2, paddingBottom: 10 }]}>
-          <Text style={StyleOrder.textHeader}>My Cart</Text>
-          <Pressable >
-            <Icon name='ellipsis-vertical' size={24} color={"black"} />
-          </Pressable>
-        </View>
-
+        <ActionBar title={"Cart"} />
         {/* co san pham thi hien list san pham khong thi hien hinh anh */}
-        <View style={{ height: 550 }}>
-          {userCart.length === 0 ? <MyCartIsEmpty /> : <MyCart />}
+        {isLoading
+          ? <View style={{ height: 550 }}>
+            {userCart.length != 0 ? <MyCart /> : <MyCartIsEmpty />}
+          </View>
+          : <View style={{ alignItems: 'center', marginTop: 220 }}>
+            <ActivityIndicator size='large' color="#0000ff" />
+            <Text>Loading...</Text>
+          </View>
+        }
 
-        </View>
       </View>
 
       <View style={{ marginRight: 10 }}>

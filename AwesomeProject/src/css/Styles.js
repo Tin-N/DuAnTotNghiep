@@ -1,26 +1,18 @@
 
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-<<<<<<< Updated upstream
+
 import { COLOR } from './Theme';
 import { Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
-
-
 const { width, height } = Dimensions.get('screen');
+
 export const StyleLogin1 = StyleSheet.create({
-
-=======
-import {COLOR} from './Theme';
-import {Dimensions} from 'react-native';
-const {width, height} = Dimensions.get('screen');
-
-export const StyleLogin = StyleSheet.create({
->>>>>>> Stashed changes
     header: {
         color: COLOR.primary,
     },
 });
+
 export const stylesNoResult = StyleSheet.create({
     view: {
         margin: 10,
