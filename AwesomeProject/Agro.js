@@ -20,6 +20,8 @@ export const calculateTimeDifference=(startTimestamp, oldTimestamp, newTimestamp
   let minutesSale = Math.floor((timeDifference / (1000 * 60)) % 60);
   let hoursSale = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
   let daysSale = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+
   const timeRemaining = startTimestamp - oldTimestamp;
   let secondsRemaining = Math.floor((timeRemaining / 1000) % 60);
   let minutesRemaining = Math.floor((timeRemaining / (1000 * 60)) % 60);
@@ -43,10 +45,13 @@ export const calculateTimeDifference=(startTimestamp, oldTimestamp, newTimestamp
   if(hoursSale < 10){
     hoursSale = `0${hoursSale}`
   }
-  const formattedTimeDifference = `${daysSale} ngày ${hoursSale}:${minutesSale}:${secondsSale}`;
-  const formattedTimeReamaining = `${daysRemaining} ngày ${hoursRemaining}:${minutesRemaining}:${secondsRemaining}`;
-  return {formattedTimeDifference: formattedTimeDifference,
-          formattedTimeReamaining: formattedTimeReamaining};
+  const formattedTimeDifference = `Kết thúc trong \n ${daysSale} ngày ${hoursSale}:${minutesSale}:${secondsSale}`;
+  const formattedTimeReamaining = `Bắt đầu sau \n ${daysRemaining} ngày ${hoursRemaining}:${minutesRemaining}:${secondsRemaining}`;
+  console.log(formattedTimeDifference,formattedTimeReamaining);
+
+  if(timeDifference>=0&&timeRemaining<0)
+  return formattedTimeDifference;
+  return formattedTimeReamaining;
 }
 export const checkTimetampRemaining=(oldTimestamp, newTimestamp)=> {  
   const time1 = Math.floor((oldTimestamp / (1000 * 60)));

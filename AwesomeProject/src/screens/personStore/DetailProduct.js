@@ -13,25 +13,37 @@ import { StyleDialogShopping } from '../../css/Styles';
 import { Animated } from 'react-native';
 import { calculateTimeDifference } from '../../../Agro';
 import { LogBox } from 'react-native';
+import { log } from 'console';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const DetailProduct = (props) => {
     const { navigation } = props;
     const { route } = props;
     const { params } = route;
+
+    // Product
     const [productPrice, setProductPrice] = useState('');
     const [dataProduct, setDataProduct] = useState({});
     const [imageProduct, setImageProduct] = useState('');
     const [dataFeedback, setDataFeedback] = useState([]);
     const [dataColor, setDataColor] = useState([]);
     const [dataSize, setDataSize] = useState([]);
+    
     const [detail, setDetail] = useState('');
-    const [feedbackLength, setFeedbackLenght] = useState();
     const [percentRating, setPercentRating] = useState(0);
+
+    // Feedback
+    const [feedbackLength, setFeedbackLenght] = useState();
+
+    // Favorite
     const [heart, setHeart] = useState(false);
     const [isDialogVisible, setDialogVisible] = useState(false);
     const [check, setCheck] = useState(null);
+    // Sales
     const [bannerSale, setBannerSale] = useState('none');
+    const [sale,setSale]=useState("");
+    //data sale 
+    const [sales,setSales]=useState([]);
     const slideAnim = useRef(new Animated.Value(-100)).current;
     useEffect(() => {
         Animated.timing(
@@ -54,20 +66,16 @@ const DetailProduct = (props) => {
             // Sử dụng setTimeout để thay đổi giá trị text sau 1 giây
             // Xóa timer khi component unmount hoặc dependency thay đổi (nếu cần)
             let timer = setInterval(() => {
-                const onSaleTime = calculateTimeDifference(startDay, new Date().getTime(), endDay);               
-                const validationTime = (endDay - new Date().getTime());
-                if (validationTime < 0) {
+                const onSaleTime = calculateTimeDifference(parseFloat(sales[0].startDay), new Date().getTime(), parseFloat(sales[0].endDay));               
 
-                } else {
-                    setTime(onSaleTime.formattedTimeReamaining);
-                }
+                    setTime(onSaleTime);
+                
             }, 1000);
             return () => clearTimeout(timer);
         }, []);
         return (
-            <View style={{ justifyContent: 'center', alignContent: 'center', marginLeft: 110 }}>
-                <Text style={{ color: 'white', textAlign: 'center', fontSize:15 }}>Kết thúc sau</Text>
-                <Text style={{ color: 'white', textAlign: 'center', fontWeight:'bold' }}>{Time}</Text>
+            <View style={{ justifyContent: 'center', alignContent: 'center', marginLeft: 100  }}>
+                <Text style={{ color: 'white', textAlign: 'center', fontWeight:'bold',fontSize:15  }}>{Time}</Text>
             </View>
         )
     }
@@ -161,6 +169,15 @@ const DetailProduct = (props) => {
                 setDataSize(response.size)
             }
         }
+        const getSalesCurrent = async () => {
+             const response = await AxiosIntance().get('/saleOffAPI/getSaleOffCurrent?productID=' + params.itemId);
+            if (response.result == true) {
+                setSales(response.saleOff);
+                setBannerSale("flex");
+                console.log(response.saleOff,params.itemId);
+            }
+        }
+        getSalesCurrent();
         getColorByProductID();
         getDetails();
         getFeedback();
