@@ -266,14 +266,10 @@ export const StyleSearch = StyleSheet.create({
     },
 
     textTitle: {
-
-
-
         textAlign: 'center',
         color: 'black',
         fontSize: 20,
         paddingLeft: 90,
-        marginTop: -6
     },
     images: {
         marginLeft: 80
@@ -293,10 +289,12 @@ export const StyleSearch = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',       
     },
+    boxSearch: {
+        width:'100%'
+    },
     viewSearchbar:{
         backgroundColor: '#c0c0c03c',
         alignSelf: 'center', 
-        width: '90%', 
         flexDirection: 'row',
         height:50,
         marginLeft:30,
@@ -316,15 +314,16 @@ export const StyleSearch = StyleSheet.create({
     },
     textInput2: {
         padding:10,
-        width:'90%',
+        width:'100%',
         borderRadius:10,
-        fontSize:15
+        fontSize:15, 
+        backgroundColor:'white'
     },
     textInput3: {
         paddingLeft:15,
         width:'90%',
         borderRadius:10,
-        fontSize:15
+        fontSize:15,
     },
     TouchableOpacity:{
         display:'flex',
@@ -471,22 +470,19 @@ export const StyleBanner =  StyleSheet.create({
 
         // View
     topBarView:{
-        height:50,
-        marginTop:20,
-        marginBottom:10,
-        padding:10,
+        padding:15,
         paddingLeft:20,
         flexDirection:'row',
         alignItems:'center',
-        // backgroundColor:'red'
+        backgroundColor:'#3669c9',
     },
     title:{
         color:'#fefefe',
-        fontSize:20,
+        fontSize:28,
         textAlignVertical:'center',
-        fontWeight:'700',
-        width:'16%',
+        fontWeight:'bold',
         justifyContent:'center',
+        marginLeft:45
     },
     viewIcons:{
         width:'20%',
@@ -505,21 +501,29 @@ export const StyleBanner =  StyleSheet.create({
     CategoryView:{
         flexDirection:'row',
         justifyContent:'space-between',
-        marginTop:0,
-       
-        marginBottom:8,
-
-        alignItems:'center'
+        marginTop:20,
+        alignItems:'center',
+        paddingLeft:25,
+        paddingRight:25
     },
     text:{
-        color:'#3669C9'
+        fontSize:15,
+        color:'white',
+        width:'100%',
+        textAlign:'center'
     },
     titleCategory:{
         color:'black',
-        fontWeight:'700',
-        fontSize:15
+        fontWeight:'500',
+        fontSize:25,
     },
-
+    touchSeeAll: {
+        padding:5,
+        width:80,
+        flexDirection:'row',
+        backgroundColor:'#3669c9',
+        borderRadius:5
+    }
 
  });
  export const styleSearchScreen = StyleSheet.create({

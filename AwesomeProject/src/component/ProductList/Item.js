@@ -33,22 +33,20 @@ const ItemList = props => {
   }, []);
 
   return (
-    <View style={StyleHomeStore.boxProduct}>
-      <Image style={{padding:5,width:160,height:180}} source={{uri:data.image[0]}} />
+    <View style={{padding:5, backgroundColor:'white', width:'100%', borderRadius:12}}>
+      <Image style={{padding:5,width:'100%',height:150, borderRadius:12}} source={{uri:data.image[0]}} />
       <Text
         style={{
-          marginVertical:10,
           textTransform:'uppercase',
           color: 'black',
-          fontWeight: 'bold',
           fontSize: 13,
           letterSpacing: 0.5,
-          lineHeight: 17,
-          marginBottom:name.length>=20?5:20
+          fontWeight:'500',
+          padding:3
         }}>
         {data.name}
       </Text>
-      <Text style={{marginLeft:10,color:'red',fontWeight:'700',fontSize:17,marginBottom:5}}>đ {data.price} </Text>
+      <Text style={{color:'red',fontWeight:'700',fontSize:17,padding:3}}>đ {data.price} </Text>
       <View style={StyleHomeStore.reviewsProduct}>
         <View style={{flexDirection: 'row'}}>
           <Image source={require('../../images/ProductList/star.png')} />

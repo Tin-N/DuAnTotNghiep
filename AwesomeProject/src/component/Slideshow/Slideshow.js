@@ -1,6 +1,6 @@
-import {StyleSheet, View, FlatList} from 'react-native';
-import React, {useRef, useState, useEffect} from 'react';
-import {images} from './images';
+import { StyleSheet, View, FlatList } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { images } from './images';
 import Pagination from './pagination';
 import SlideItems from './SlideItems';
 const Slideshow = props => {
@@ -13,6 +13,8 @@ const Slideshow = props => {
     heightRate,
     widthRate,
     paginationEnabled,
+    styleItem,
+    styleViewWelcome
   } = props;
   // Vị trí trong flatlist
   const [index, setIndex] = useState(0);
@@ -93,10 +95,10 @@ const Slideshow = props => {
       const timeoutId = setTimeout(() => {
         if (index < imageSource.length - 1) {
           setIndex(prevIndex => prevIndex + 1);
-          flatListRef.current.scrollToIndex({animated: true, index: index + 1});
+          flatListRef.current.scrollToIndex({ animated: true, index: index + 1 });
         } else {
           setIndex(0);
-          flatListRef.current.scrollToIndex({animated: true, index: 0});
+          flatListRef.current.scrollToIndex({ animated: true, index: 0 });
         }
         setrunning(!running);
       }, 3000); // Thời gian đặt trong milliseconds (ở đây là 3 giây)
@@ -108,7 +110,7 @@ const Slideshow = props => {
   }, [running, autoScroll]);
 
   // Lấy vị trí hiện tại của phần tử trong flatlist
-  const handleOnViewableItemsChanged = useRef(({viewableItems}) => {
+  const handleOnViewableItemsChanged = useRef(({ viewableItems }) => {
     setIndex(viewableItems[0].index);
   }).current;
 
@@ -116,12 +118,12 @@ const Slideshow = props => {
   // Hàm ref cuộn flatlist tới vị trí được chọn từ pagination
   const scrollToIndex = index => {
     // Sử dụng flatListRef để cuộn đến mục ở vị trí cụ thể
-    flatListRef.current.scrollToIndex({index, animated: true});
+    flatListRef.current.scrollToIndex({ index, animated: true });
   };
 
   // Slideshow view
   return (
-    <View>
+    <View style={styleViewWelcome ? styleViewWelcome: {}}>
       <FlatList
         ref={flatListRef}
         data={imageSource}
@@ -130,8 +132,9 @@ const Slideshow = props => {
         pagingEnabled
         snapToAlignment="center"
         showsHorizontalScrollIndicator={false}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <SlideItems
+            styleItem={styleItem}
             item={item}
             widthR={widthR}
             flexH={flexH}

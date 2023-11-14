@@ -12,17 +12,6 @@ const ItemHomeStore = (props) => {
     var salePricee = dulieu.price;
     setPriceProduct(formatPrice(dulieu.price));
     setSalePrice(formatPrice(salePricee * 0.9));
-    // const getFeedback = async () => {
-    //   const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?ProductID=' + dulieu.id);
-    //   console.log(dulieu._id + "xxxxxxxxxxxxxx");
-    //   if (response.result == true) {
-    //     ToastAndroid.show('getFeedback thành công', ToastAndroid.SHORT);
-    //     setCountFeedback(response.feedbacks.lenght)
-    //   } else {
-    //     ToastAndroid.show('getFeedback thất bại', ToastAndroid.SHORT);
-    //   }
-    // }
-    // getFeedback();
     return () => {
     }
   }, [dulieu]);
@@ -32,7 +21,6 @@ const ItemHomeStore = (props) => {
   return (
     <View style={StyleHomeStore.boxProduct}>
       <TouchableOpacity onPress={handleOnClick}>
-
         <Image source={{ uri: dulieu.image[0] }} style={{ height: 150, width: 140, borderRadius: 10, borderWidth: 1 }} />
         <Text style={{
           fontFamily: 'DM Sans',

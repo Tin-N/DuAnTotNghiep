@@ -18,7 +18,7 @@ import FilterScreen from '../screens/FilterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import DetailList from '../screens/DetailList';
 const Tab = createBottomTabNavigator();
-const Stack= createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const User = () => {
     return (
@@ -48,6 +48,20 @@ const Main = () => {
                 headerShown: false,
                 tabBarShowLabel: true,
                 tabBarHideOnKeyboard: true,
+                tabBarActiveTintColor: '#3669C9',
+                tabBarInactiveTintColor: 'black',
+                tabBarLabelStyle: {
+                },
+                tabBarStyle: {
+                    backgroundColor: '#FFFFFF',
+                    paddingBottom: 5,
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15,
+                    height: 60,
+                    position: 'absolute',
+                    borderTopWidth: 0,
+                    elevation: 10 // để thêm bóng cho Android
+                },
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
                     if (route.name === 'Home') {
@@ -61,6 +75,9 @@ const Main = () => {
                 },
                 tabBarActiveTintColor: '#3669C9',
                 tabBarInactiveTintColor: 'black',
+                tabBarIconStyle: {
+                    marginTop:8
+                }
             })}
         >
             <Tab.Screen name="Home" component={ProductHome} />
@@ -71,11 +88,11 @@ const Main = () => {
 }
 
 const AppNavigator = () => {
-    const {isLogin} = useContext(AppContext);
+    const { isLogin } = useContext(AppContext);
     return (
         <>
             {
-                isLogin == true ? <User/> : <Main/>
+                isLogin == true ? <User /> : <Main />
             }
         </>
     )

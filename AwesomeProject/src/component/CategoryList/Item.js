@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 
 const Item = props => {
-  const {data, indexP, setNewIndex} = props;
+  const { data, indexP, setNewIndex } = props;
   const [index, setindex] = useState();
   const [viewWidth, setViewWidth] = useState(0);
   const [isChosen, setIsChosen] = useState(false);
@@ -21,30 +21,14 @@ const Item = props => {
   }, [data.name.length]);
 
   return (
-    <View
-      style={{
-        borderColor: 'black',
-        borderWidth: 0.8,
-        padding: 2.5,
-        borderRadius: 5,
-        backgroundColor: 'white',
-        margin: 5
+    <View style={{alignItems:'center'}}>
+      <TouchableOpacity style={{
+        padding:20, backgroundColor: data.color, borderRadius:15
       }}>
-      <Text
-        onPress={() => {
-          onHandlePress(data.id);
-        }}
-        style={{
-          height:23,
-          color: 'black',
-          padding: 1,
-          width: viewWidth * 10.5,
-          textAlign: 'center',
-          textAlignVertical:'center',
-          fontSize: 15,
-        }}>
-        {data.name}
-      </Text>
+        <Image source={require('../../images/star.png')}/>
+      </TouchableOpacity>
+      <Text style={{fontFamily:'TiltNeon-Regular', 
+      marginTop:5, color:'black'}}>{data.name}</Text>
     </View>
   );
 };
