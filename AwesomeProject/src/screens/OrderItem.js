@@ -136,13 +136,13 @@ const OrderItem = (props) => {
                 borderRadius: 5,
                 flex: 1
             }}>
-            <View style={StyleOrder.viewCheckBoxOrder}>
+            <View style={[StyleOrder.viewCheckBoxOrder, { marginLeft: 3 }]}>
                 {/* <Pressable onPress={toggleCheck}>
                     {isCheck ? <MaterialIcons name='check-box' size={24} color={'green'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
                 </Pressable> */}
                 <BouncyCheckbox
                     style={StyleOrder.checkBoxOrder}
-                    fillColor='#FAF3D4'
+                    fillColor='white'
                     onPress={() => {
                         if (!isCheck) {
                             setIsCheck(!isCheck)
@@ -173,12 +173,12 @@ const OrderItem = (props) => {
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={StyleOrder.header}>
-                        <Image style={StyleOrder.imageFlatList} source={{ uri: imageUri } } />
-                        
+                        <Image style={StyleOrder.imageFlatList} source={{ uri: imageUri }} />
+
                         <View>
-                            <Text numberOfLines={2} style={StyleOrder.textNameFlatList}>{productName}</Text>
-                            <Text numberOfLines={2} style={StyleOrder.textInfoFlatList}>{categoryID}</Text>
-                            <Text numberOfLines={2} style={StyleOrder.textInfoFlatList}>${productPrice}</Text>
+                            <Text numberOfLines={1} style={StyleOrder.textNameFlatList}>{productName}</Text>
+                            <Text numberOfLines={1} style={StyleOrder.textInfoFlatList}>{categoryID}</Text>
+                            <Text numberOfLines={1} style={StyleOrder.textInfoFlatList}>$ {productPrice}</Text>
                         </View>
                     </View>
 
@@ -192,7 +192,7 @@ const OrderItem = (props) => {
                         </Pressable>
                     </View>
 
-                    <View style={[StyleOrder.header, StyleOrder.function, { marginLeft: 5 }]}>
+                    <View style={[StyleOrder.header, StyleOrder.function, { marginLeft: 5, marginBottom: 5 }]}>
                         <Text numberOfLines={1} style={{ fontSize: 15, color: '#008000' }}>$ {itemTotalCost}</Text>
                     </View>
                 </View>

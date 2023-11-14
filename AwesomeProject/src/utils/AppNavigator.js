@@ -17,16 +17,18 @@ import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
 import TestScreen from '../screens/TestScreen';
 // import TestScreen from '../screens/TestScreen/TestScreen'
 import DetailProduct from '../screens/personStore/DetailProduct';
-
+import ProductProcess from '../screens/personStore/ProductProcess'
 import CreateProduct from '../screens/personStore/CreateProduct';
+import SProductProcess from '../screens/personStore/Shiper/SProductProcess';
+import ProductProcessOverview from '../screens/personStore/ProdsProcessOverview';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const User = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='SignIn'>
-                        <Stack.Screen name='Product' component={ProductHome}></Stack.Screen>
-                        <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
-                        <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
+            <Stack.Screen name='Product' component={ProductHome}></Stack.Screen>
+            <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
+            <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
         </Stack.Navigator>
     )
 }
@@ -51,6 +53,16 @@ const ProductHome = () => {
         </Stack.Navigator>
     )
 }
+
+const ProductProcessStack = () => {
+    return (
+      <Stack.Navigator initialRouteName='Product Process Overview'>
+        <Stack.Screen name="Product Process Overview" component={ProductProcessOverview} />
+        <Stack.Screen name="Product Process" component={ProductProcess} />
+      </Stack.Navigator>
+    );
+  };
+
 const Main = () => {
     return (
         <Tab.Navigator
@@ -64,9 +76,11 @@ const Main = () => {
                     if (route.name === 'Home') {
                         iconName = focused ? 'home' : 'home-outline';
                     } else if (route.name === 'Order') {
-                        iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
+                        iconName = focused ? 'bag' : 'bag-handle-outline';
                     } else if (route.name === 'SignUp') {
                         iconName = focused ? 'people-sharp' : 'people-outline';
+                    } else if (route.name === 'Prod Process') {
+                        iconName = focused ? 'clipboard' : 'clipboard-outline';
                     }
                     return <Icon1 name={iconName} size={size} color={color} />
                 },
@@ -76,6 +90,8 @@ const Main = () => {
         >
             <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Order" component={Order} />
+            <Tab.Screen name="Prod Process" component={ProductProcessStack} />
+            <Tab.Screen name="Shipper" component={SProductProcess} />
         </Tab.Navigator>
     )
 }

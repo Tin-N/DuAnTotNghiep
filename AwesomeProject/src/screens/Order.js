@@ -10,6 +10,7 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import AxiosIntance from '../utils/AxiosIntance'
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 const ObjectID = require('bson-objectid');
+import ActionBar from './ActionBar'
 import { memo } from "react"
 
 const Order = () => {
@@ -116,6 +117,7 @@ const Order = () => {
           const orderDate = new Date()
           const orderResponse = await AxiosIntance().post('/order/add',
             {
+              userID,
               orderDetailID: objectId,
               orderDate: orderDate,
               paymentStatus: 'Unpaid',

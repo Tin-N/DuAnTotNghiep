@@ -255,6 +255,7 @@ const DetailProduct = (props) => {
 
             const orderDetailResponse = await AxiosIntance().post('/orderdetail/add',
                 {
+                    userID,
                     orderDetailID: objectId,
                     products: productsInCart,
                     totalCost: itemTotalCost

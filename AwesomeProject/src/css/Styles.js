@@ -509,13 +509,15 @@ export const StyleOrder = StyleSheet.create({
         width: 219,
     },
     imageFlatList: {
-        height: 70,
-        width: 70,
+        height: 60,
+        width: 60,
+        marginBottom: 6
     },
     textNameFlatList: {
         width: 25 * width / 100,
-        fontSize: 20,
+        fontSize: 17,
         fontStyle: 'bold',
+        fontWeight:'500',
         color: 'black',
         marginLeft: 5,
     },
