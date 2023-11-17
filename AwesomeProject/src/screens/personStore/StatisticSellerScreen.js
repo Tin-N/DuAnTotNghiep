@@ -13,7 +13,7 @@ const StatisticSellerScreen = () => {
     //   <Text>{formatPrice(20000000000)}</Text>
      <ScrollView
      style={{
-      backgroundColor:'#f2f2f2'
+      backgroundColor:'#f7f7f7'
      }}
      >
 
@@ -23,7 +23,15 @@ const StatisticSellerScreen = () => {
   styles.view,{
     paddingVertical:0,
   }]}>
-
+    <Text
+    style={{
+      textAlign:'center',
+      fontWeight:'bold',
+      fontSize:20,
+      marginTop:10,
+      color:'black'
+    }}
+    >Bảng chú thích</Text>
     <View style={styles.container}>
           <View style={styles.row}>
             <View style={styles.cell}>
@@ -60,10 +68,19 @@ const StatisticSellerScreen = () => {
           marginVertical:5
         }}
       >
+        <Text
+    style={{
+      textAlign:'center',
+      fontWeight:'bold',
+      fontSize:20,
+      marginTop:5,
+      color:'black'
+    }}
+    >BẢNG THỐNG KÊ SƠ BỘ</Text>
       <View
       style={{
         marginHorizontal:30,
-        marginVertical:20,
+        marginVertical:10,
         borderColor:'black',
         borderWidth:0.5,
         
@@ -79,7 +96,7 @@ const StatisticSellerScreen = () => {
           }}
         >
 
-
+          
         </View>
         <View style={{
           flexDirection:'row',
@@ -98,7 +115,7 @@ const StatisticSellerScreen = () => {
             marginLeft:5,
             color:'black'
           }}
-          >  200 cái</Text>
+          >  200 sp</Text>
         </View>
         <View
          style={{width:"100%",borderWidth:0.2}}
@@ -120,7 +137,7 @@ const StatisticSellerScreen = () => {
               color:'black'
 
             }}
-          >  10000000 đ</Text>
+          >  10000000đ</Text>
         </View>
       </View>
       </View>
@@ -166,7 +183,7 @@ const StatisticSellerScreen = () => {
               />
       </View> 
         <View
-          style={[styles.view,{marginBottom:20}]}
+          style={[styles.view,{paddingHorizontal:10,marginBottom:20}]}
         >
             {/* Table Head */}
             <Text
@@ -371,7 +388,7 @@ table_body_single_row:{
     padding: 7,
 },
 table_data:{  
-    fontSize: 11,
+    fontSize: 14,
 },
   view:{
     paddingVertical:30,
@@ -385,7 +402,7 @@ table_data:{
   ,
 
   container: {
-    padding:20,
+    padding:15,
     backgroundColor: '#fff',
   },
   row: {
@@ -411,6 +428,10 @@ const VietnameseCurrency=[
   {name:'1 T',value:"1 Tỷ"},
   {name:'1 Tr',value:"1 Triệu"},
   {name:'1 N',value:"1 Ngàn"},
+  {name:'đ',value:"Đồng"},
+  {name:'sp',value:"Sản phẩm"},
+
+
 ]
 const pointerConfig={
   pointerStripHeight: 300,
