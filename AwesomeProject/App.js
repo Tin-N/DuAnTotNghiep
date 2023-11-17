@@ -90,12 +90,12 @@ const App = () => {
   // }
   return (
   // <WelcomeScreen/>
-    // <StatisticSellerScreen/>
-    <AppContextProvider>
-      <NavigationContainer>
-        <AppNavigator/>
-      </NavigationContainer>
-    </AppContextProvider>
+     <StatisticSellerScreen/>
+    // <AppContextProvider>
+    //   <NavigationContainer>
+    //     <AppNavigator/>
+    //   </NavigationContainer>
+    // </AppContextProvider>
     // <SearchStore/>
     // <View>
     //   <View>
