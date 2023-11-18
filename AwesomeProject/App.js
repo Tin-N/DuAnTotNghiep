@@ -36,6 +36,7 @@ import WelcomeScreen from './src/screens/WelcomeScreen';
 import Item from './src/component/UserList/Item';
 import ActivateUserScreen from './src/screens/ActivateUserScreen';
 import StatisticSellerScreen from './src/screens/personStore/StatisticSellerScreen';
+import DetailChatScreen from './src/screens/personStore/DetailChatScreen';
 // import SearchScreen from './src/screens/SearchScreen';
 // import Category from './src/screens/Category';
 // import SearchStore from './src/screens/personStore/SearchStore';
@@ -90,13 +91,14 @@ const App = () => {
   // }
   return (
   // <WelcomeScreen/>
-     <StatisticSellerScreen/>
+    //  <StatisticSellerScreen/>
     // <AppContextProvider>
     //   <NavigationContainer>
     //     <AppNavigator/>
     //   </NavigationContainer>
     // </AppContextProvider>
-    // <SearchStore/>
+
+    <DetailChatScreen/>
     // <View>
     //   <View>
     //   <Dialog modalVisible={modalVisible}  setModalVisible={setModalVisible}/>
