@@ -15,17 +15,6 @@ const ItemHomeStore = (props) => {
     var salePricee = dulieu.price;
     setPriceProduct(formatPrice(salePricee));
     setSalePrice(formatPrice(Math.round(salePricee * 0.9)));
-    // const getFeedback = async () => {
-    //   const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?ProductID=' + dulieu.id);
-    //   console.log(dulieu._id + "xxxxxxxxxxxxxx");
-    //   if (response.result == true) {
-    //     ToastAndroid.show('getFeedback thành công', ToastAndroid.SHORT);
-    //     setCountFeedback(response.feedbacks.lenght)
-    //   } else {
-    //     ToastAndroid.show('getFeedback thất bại', ToastAndroid.SHORT);
-    //   }
-    // }
-    // getFeedback();
     return () => {
     }
   }, [dulieu]);

@@ -21,8 +21,13 @@ import ProductProcess from '../screens/personStore/ProductProcess'
 import CreateProduct from '../screens/personStore/CreateProduct';
 import SProductProcess from '../screens/personStore/Shiper/SProductProcess';
 import ProductProcessOverview from '../screens/personStore/ProdsProcessOverview';
+import SearchScreen from '../screens/SearchScreen';
+import FilterScreen from '../screens/FilterScreen';
+import HomeScreen from '../screens/HomeScreen';
+import DetailList from '../screens/DetailList';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
 const User = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='SignIn'>
@@ -35,9 +40,11 @@ const User = () => {
 
 const ProductHome = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='HomeStore'>
-            <Stack.Screen name='ProductList' component={HomeStore}></Stack.Screen>
-            {/* <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen> */}
+
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProductList'>
+            <Stack.Screen name='ProductList' component={HomeScreen}></Stack.Screen>
+            <Stack.Screen name='SearchScreen' component={SearchScreen}></Stack.Screen>
+            <Stack.Screen name='FilterScreen' component={FilterScreen}></Stack.Screen>
             <Stack.Screen name='SearchStore' component={SearchStore}></Stack.Screen>
             <Stack.Screen name='ProductDetail' component={ProductDetail}></Stack.Screen>
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
@@ -50,6 +57,8 @@ const ProductHome = () => {
                     animationTypeForReplace: 'push',
                     animation: 'slide_from_right'
                 }}></Stack.Screen>
+            <Stack.Screen name='DetailList' component={DetailList}></Stack.Screen>
+
         </Stack.Navigator>
     )
 }
@@ -71,6 +80,20 @@ const Main = () => {
                 tabBarShowLabel: true,
                 tabBarHideOnKeyboard: true,
                 unmountOnBlur: true,
+                tabBarActiveTintColor: '#3669C9',
+                tabBarInactiveTintColor: 'black',
+                tabBarLabelStyle: {
+                },
+                tabBarStyle: {
+                    backgroundColor: '#FFFFFF',
+                    paddingBottom: 5,
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15,
+                    height: 60,
+                    position: 'absolute',
+                    borderTopWidth: 0,
+                    elevation: 10 // để thêm bóng cho Android
+                },
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
                     if (route.name === 'Home') {
@@ -86,6 +109,9 @@ const Main = () => {
                 },
                 tabBarActiveTintColor: '#3669C9',
                 tabBarInactiveTintColor: 'black',
+                tabBarIconStyle: {
+                    marginTop:8
+                }
             })}
         >
             <Tab.Screen name="Home" component={ProductHome} />

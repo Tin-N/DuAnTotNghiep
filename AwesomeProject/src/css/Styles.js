@@ -1,7 +1,5 @@
-
-import { View, Text, StyleSheet } from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
-
 import { COLOR } from './Theme';
 import { Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
@@ -61,95 +59,6 @@ export const StyleSearchSuggestions = StyleSheet.create({
         alignSelf: 'center',
     },
 });
-export const StyleHomeStore = StyleSheet.create({
-    menu: {
-        paddingTop: 30,
-        flexDirection: 'row',
-        marginLeft: 30,
-        marginRight: 30,
-    },
-    textTitle: {
-        textAlign: 'center',
-        color: 'black',
-        fontSize: 20,
-        paddingLeft: 110,
-        marginTop: -6,
-    },
-    touchOpa: {
-        marginLeft: 75,
-    },
-    line: {
-        borderWidth: 1,
-        opacity: 0.03,
-        marginTop: 20,
-    },
-    boxSeller: {
-        marginTop: 30,
-        paddingLeft: 30,
-        paddingRight: 30,
-        flexDirection: 'row',
-    },
-    infoSeller: {
-        flexDirection: 'row',
-    },
-    boxNameSeller: {
-        width: 218,
-        marginLeft: 20,
-    },
-    boxRate: {
-        flexDirection: 'row',
-        paddingTop: 10,
-    },
-    textRate: {
-        fontSize: 20,
-        color: 'black',
-        marginTop: -5,
-        paddingLeft: 5,
-    },
-    boxLocate: {
-        flexDirection: 'row',
-        marginLeft: 30,
-        marginTop: 20,
-    },
-    boxProductStore: {
-        flexDirection: 'row',
-        marginTop: 20,
-        marginLeft: 30,
-        justifyContent: 'space-between',
-        marginRight: 30,
-    },
-    textTitleProduct: {
-        fontSize: 15,
-    },
-    textCountProduct: {
-        color: 'black',
-        fontSize: 13,
-    },
-    textitleProductSelling: {
-        fontSize: 20,
-        color: 'black',
-    },
-    productSelling: {
-        marginTop: 15,
-        marginLeft: 30,
-        marginRight: 30,
-    },
-    boxSelling: {
-        backgroundColor: 'FAFAFA',
-        paddingLeft: 30,
-        paddingRight: 30,
-    },
-    boxProduct: {
-        backgroundColor: 'white',
-        borderRadius: 10,
-        padding: 10,
-        margin: 3,
-    },
-    reviewsProduct: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-});
 export const StyleShipper = StyleSheet.create({
     line: {
         borderWidth: 1,
@@ -188,126 +97,7 @@ export const StyleShipper = StyleSheet.create({
     }
 
 });
-export const StyleSearch = StyleSheet.create({
-    menu: {
-        paddingTop: 50,
-        flexDirection: 'row',
-        marginLeft: 30,
-        marginRight: 30,
-    },
-    textTitle: {
-        textAlign: 'center',
-        color: 'black',
-        fontSize: 20,
-        paddingLeft: 90,
-        marginTop: -6
-    },
-    images: {
-        marginLeft: 80
-    },
-    touchOpa: {
-        marginLeft: 75
-    },
-    line: {
-        borderWidth: 1,
-        opacity: 0.03,
-        marginTop: 20
-    },
-    inputSearch: {
-        paddingLeft: 30,
-        paddingRight: 30,
-        paddingTop: 30,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    viewSearchbar: {
-        backgroundColor: '#c0c0c03c',
-        alignSelf: 'center',
-        width: '90%',
-        flexDirection: 'row',
-        height: 50,
-        marginLeft: 30,
-        borderRadius: 10,
-        marginRight: 30,
-        marginTop: 30,
-    }
-    ,
-    textInput: {
-        padding: 10,
-        width: '90%',
-        borderRadius: 10,
-        fontSize: 15
 
-    },
-    iconSearch: {
-        alignSelf: 'center'
-    },
-    boxSeller: {
-        marginTop: 30,
-        paddingLeft: 30,
-        paddingRight: 30,
-        flexDirection: 'row'
-    },
-    infoSeller: {
-        flexDirection: 'row',
-    },
-    boxNameSeller: {
-        width: 218,
-        marginLeft: 20
-    },
-    boxRate: {
-        flexDirection: 'row',
-        paddingTop: 10
-    },
-    textRate: {
-        fontSize: 20,
-        color: 'black',
-        marginTop: -5,
-        paddingLeft: 5
-    },
-    boxProductStore: {
-        flexDirection: 'row',
-        marginTop: 20,
-        marginLeft: 30,
-        justifyContent: 'space-between',
-        marginRight: 30
-    },
-    textTitleProduct: {
-        fontSize: 15
-    },
-    textCountProduct: {
-        color: 'black',
-        fontSize: 13
-    },
-    textitleProductSelling: {
-        fontSize: 20,
-        color: 'black'
-    },
-    productSelling: {
-        marginTop: 15,
-        marginLeft: 30,
-        marginRight: 30
-    },
-    boxSelling: {
-        backgroundColor: 'FAFAFA',
-        paddingLeft: 30,
-        paddingRight: 30,
-    },
-    boxProduct: {
-        backgroundColor: 'white',
-        borderRadius: 10,
-        padding: 10,
-        margin: 3,
-    },
-    reviewsProduct: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 5
-    },
-    flatlistHistory: {
-        marginTop: 30
-    }
-});
 export const StyleBanner = StyleSheet.create({
     secondText: {
         fontFamily: 'DMSans-VariableFont_opsz,wght',
@@ -449,6 +239,7 @@ export const StyleDialogShopping = StyleSheet.create({
         backgroundColor: 'white',
         padding: 10, borderWidth: 1
     }
+
 
 
 })
@@ -899,21 +690,6 @@ export const StyleDetailPersonFeedback = StyleSheet.create({
         marginTop: 20
     },
 })
-export const StyleSlider = StyleSheet.create({
-    container: {
-        alignItems: 'stretch',
-        justifyContent: 'flex-start',
-        margin: 16,
-        paddingBottom: 32,
-    },
-    sliderContainer: {
-        paddingVertical: 16,
-    },
-    titleContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})
 export const StyleDetailProduct = StyleSheet.create({
     menu: {
         flexDirection: 'row',
@@ -1030,126 +806,434 @@ export const StyleDetailProduct = StyleSheet.create({
     }
 })
 
-// HeadingTextWelcome: {
-//     paddingTop: '2%',
-// input: {
-//     placeholderTextColor: COLOR.TextPlaceHolder,
-//     height: 30,
-//     margin: 12,
-//     borderWidth: 1,
-//     borderColor: COLOR.borderColor,
-//     padding: 15,
-//     height: 55,
-//     justifyContent: 'space-between',
-//     borderRadius: 5,
-// },
-// buttonShape: {
-//     alignItems: 'center',
-//     jussifyContent: 'center',
-//     backgroundColor: COLOR.background,
-//     padding: 10,
-//     height: 55,
-//     width: '95%',
-//     marginHorizontal: 10,
-//     marginTop: 20,
-//     borderRadius: 30,
-//     // marginHorizontal: 10
-// },
-// TextButton: {
-//     fontSize: 20,
-//     paddingTop: 2,
-//     fontWeight: 'bold',
-//     height: 55,
-//     color: 'white',
-// },
-// text: {
-//     color: COLOR.TextHint,
-//     fontSize: 17,
-//     justifyContent: 'space-between',
-//     marginHorizontal: 16,
-//     marginTop: 15,
-//     // backgroundColor: 'red',
-//     textAlign: 'center',
-// },
-// FGcontainer: {
-//     flexDirection: 'row',
-//     width: '94%',
-//     marginHorizontal: 10,
-//     marginTop: 10,
-//     justifyContent: 'space-around',
-// },
-// FButton: {
-//     alignItems: 'center',
-//     backgroundColor: COLOR.Blue,
-//     padding: 10,
-//     height: 55,
-//     width: '46%',
-//     borderRadius: 10,
-//     marginHorizontal: 0,
-// },
-// GButton: {
-//     alignItems: 'center',
-//     borderWidth: 0.5,
-//     padding: 10,
-//     height: 55,
-//     width: '46%',
-//     borderRadius: 10,
-//     marginHorizontal: 0,
-// },
-// CbuttomText: {
-//     marginTop: '20%',
-//     flexDirection: 'row',
-//     justifyContent: 'center',
-//     width: '94%',
-//     marginHorizontal: 10,
-// },
-// CSbuttomText: {
-//     marginTop: '10%',
-//     flexDirection: 'row',
-//     justifyContent: 'center',
-//     width: '94%',
-//     marginHorizontal: 10,
-// },
-// ButtomText1: {
-//     fontSize: 20,
-//     fontWight: 'bold',
-//     // backgroundColor: 'red',
-// },
-// ButtomText2: {
-//     color: COLOR.Blue,
-//     fontSize: 20,
-//     fontWight: 'bold',
-//     fontStyle: 'italic',
-//     // backgroundColor: 'blue',
-//     textDecorationLine: 'underline',
-// },
-// SButtonShape: {
-//     alignItems: 'center',
-//     jussifyContent: 'center',
-//     backgroundColor: COLOR.background,
-//     padding: 10,
-//     height: 55,
-//     width: '94%',
-//     marginHorizontal: 10,
-//     marginTop: 20,
-//     borderRadius: 30,
-// },
-// RPBottomText: {
-//     textAlign: 'center',
-//     marginTop: "60%",
-//     fontSize: 20,
-//     color: 'black',
-//     fontWeight: 'bold',
-//     // backgroundColor: 'red',
-// },
-// RSPassInput: {
-//     placeholderTextColor: COLOR.TextPlaceHolder,
-//     height: 40,
-//     margin: 12,
-//     borderWidth: 1,
-//     borderColor: COLOR.borderColor,
-//     padding: 15,
-//     height: 55,
-//     justifyContent: 'space-between',
-//     borderRadius: 25,
-// },
+
+
+
+
+export const StyleHomeStore = StyleSheet.create({
+  container: {
+  },
+  menu: {
+      paddingTop: 50,
+      flexDirection: 'row',
+      marginLeft: 30,
+      marginRight: 30,
+  },
+  textTitle: {
+      textAlign: 'center',
+      color: 'black',
+      fontSize: 20,
+      paddingLeft: 110,
+      marginTop: -6
+  },
+  images: {
+      marginLeft: 80
+  },
+  touchOpa: {
+      marginLeft: 75
+  },
+  line: {
+      borderWidth: 1,
+      opacity: 0.03,
+      marginTop: 20
+  },
+  boxSeller: {
+      marginTop: 30,
+      paddingLeft: 30,
+      paddingRight: 30,
+      flexDirection: 'row'
+  },
+  infoSeller: {
+      flexDirection: 'row',
+  },
+  boxNameSeller: {
+      width: 218,
+      marginLeft: 20
+  },
+  boxRate: {
+      flexDirection: 'row',
+      paddingTop: 10
+  },
+  textRate: {
+      fontSize: 20,
+      color: 'black',
+      marginTop: -5,
+      paddingLeft: 5
+  },
+  boxLocate: {
+      flexDirection: 'row',
+      marginLeft: 30,
+      marginTop: 20
+  },
+  boxProductStore: {
+      flexDirection: 'row',
+      marginTop: 20,
+      marginLeft: 30,
+      justifyContent: 'space-between',
+      marginRight: 30
+  },
+  textTitleProduct: {
+      fontSize: 15
+  },
+  textCountProduct: {
+      color: 'black',
+      fontSize: 13
+  },
+  textitleProductSelling: {
+      fontSize: 20,
+      color: 'black'
+  },
+  productSelling: {
+      marginTop: 15,
+      marginLeft: 30,
+      marginRight: 30
+  },
+  boxSelling: {
+      backgroundColor: 'FAFAFA',
+      paddingLeft: 30,
+      paddingRight: 30,
+  },
+  boxProduct: {
+    width:180,
+    elevation:1,
+      backgroundColor: 'white',
+      borderRadius: 10,
+      padding: 10,
+      margin: 3,
+  },
+  reviewsProduct: {
+      flexDirection:'row',
+      alignItems:'center',
+      marginTop:5
+  }
+})
+
+export const StyleSearch = StyleSheet.create({
+    menu: {
+        paddingTop: 50,
+        flexDirection: 'row',
+        marginLeft: 30,
+        marginRight: 30,
+    },
+    
+
+    searchButton:{
+        marginLeft:5,
+        padding:15,
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'#3669C9',
+        borderRadius:30
+    },
+
+    textTitle: {
+        textAlign: 'center',
+        color: 'black',
+        fontSize: 20,
+        paddingLeft: 90,
+    },
+    images: {
+        marginLeft: 80
+    },
+    touchOpa: {
+        marginLeft: 75
+    },
+    line: {
+        borderWidth: 1,
+        opacity: 0.03,
+        marginTop: 20
+    },
+    inputSearch: {
+        paddingLeft:30,
+        paddingRight:30,
+        paddingTop:30,
+        flexDirection:'row',
+        alignItems:'center',       
+    },
+    boxSearch: {
+        width:'100%'
+    },
+    viewSearchbar:{
+        backgroundColor: '#c0c0c03c',
+        alignSelf: 'center', 
+        flexDirection: 'row',
+        height:50,
+        marginLeft:30,
+        borderRadius:10,
+        marginRight:30,
+        marginTop:10,
+      }
+    ,
+    textInput: {
+        paddingHorizontal:20,
+        padding:10,
+        width:'60%',
+        borderRadius:30,
+        fontSize:15,
+        borderWidth:0.8,
+        borderColor:'black'
+    },
+    textInput2: {
+        padding:10,
+        width:'100%',
+        borderRadius:10,
+        fontSize:15, 
+        backgroundColor:'white'
+    },
+    textInput3: {
+        paddingLeft:15,
+        width:'90%',
+        borderRadius:10,
+        fontSize:15,
+    },
+    TouchableOpacity:{
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'#3669C9',
+        width:"14%",
+        borderBottomRightRadius:5,
+        borderTopRightRadius:5
+    }
+    ,
+    iconSearch: {
+        alignSelf:'center'
+    },
+    boxSeller: {
+        marginTop: 30,
+        paddingLeft: 30,
+        paddingRight: 30,
+        flexDirection: 'row'
+    },
+    infoSeller: {
+        flexDirection: 'row',
+    },
+    boxNameSeller: {
+        width: 218,
+        marginLeft: 20
+    },
+    boxRate: {
+        flexDirection: 'row',
+        paddingTop: 10
+    },
+    textRate: {
+        fontSize: 20,
+        color: 'black',
+        marginTop: -5,
+        paddingLeft: 5
+    },
+    boxProductStore: {
+        flexDirection: 'row',
+        marginTop: 20,
+        marginLeft: 30,
+        justifyContent: 'space-between',
+        marginRight: 30
+    },
+    textTitleProduct: {
+        fontSize: 15
+    },
+    textCountProduct: {
+        color: 'black',
+        fontSize: 13
+    },
+    textitleProductSelling: {
+        fontSize: 20,
+        color: 'black'
+    },
+    productSelling: {
+        marginTop: 15,
+        marginLeft: 30,
+        marginRight: 30
+    },
+    boxSelling: {
+        backgroundColor: 'FAFAFA',
+        paddingLeft: 30,
+        paddingRight: 30,
+    },
+    boxProduct: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 10,
+        margin: 3,
+    },
+    reviewsProduct: {
+        flexDirection:'row',
+        alignItems:'center',
+        marginTop:5
+    },
+    flatlistHistory: {
+        marginTop:30
+    }
+});
+
+ 
+ export const styleHome=StyleSheet.create({
+    // Top bar
+
+        // View
+    topBarView:{
+        padding:15,
+        paddingLeft:20,
+        flexDirection:'row',
+        alignItems:'center',
+        backgroundColor:'#3669c9',
+    },
+    title:{
+        color:'#fefefe',
+        fontSize:28,
+        textAlignVertical:'center',
+        fontWeight:'bold',
+        justifyContent:'center',
+        marginLeft:45
+    },
+    viewIcons:{
+        width:'20%',
+        justifyContent:'flex-end',
+        flexDirection:'row',
+        marginRight:10,
+    },
+    icons:{
+        height:30,
+        width:30,
+        marginRight:10
+    },
+
+        // Category
+        
+    CategoryView:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        marginTop:20,
+        alignItems:'center',
+        paddingLeft:25,
+        paddingRight:25
+    },
+    text:{
+        fontSize:15,
+        color:'white',
+        width:'100%',
+        textAlign:'center'
+    },
+    titleCategory:{
+        color:'black',
+        fontWeight:'500',
+        fontSize:25,
+    },
+    touchSeeAll: {
+        padding:5,
+        width:80,
+        flexDirection:'row',
+        backgroundColor:'#3669c9',
+        borderRadius:5
+    }
+
+ });
+ export const styleSearchScreen = StyleSheet.create({
+    topBarView:{
+        // backgroundColor:'red',
+        flexDirection:'row',
+        height:50,
+        alignItems:'center',
+        justifyContent:'flex-start',
+    },
+  
+    title:{
+        fontWeight:'bold',
+        fontSize:20,
+        color:'black',
+        marginLeft:145,
+        width:'50%',
+        // backgroundColor:'blue'
+    }
+ })
+
+export const StyleCategory = StyleSheet.create({
+    textHeader: {
+        fontSize: 16,
+        color: 'black',
+    },
+    textTillte: {
+        fontSize: 25,
+        fontStyle: 'bold',
+        color: 'black',
+        marginLeft: 30
+    },
+    search: {
+        position: 'relative',
+        marginTop: 15,
+    },
+    textInput: {
+        height: 50,
+        width: 325,
+        backgroundColor: '#FAFAFA',
+        alignSelf: 'center',
+        padding: 15,
+    },
+    icon: {
+        position: 'absolute',
+        top: '25%',
+        right: '15%'
+    },
+    pressable: {
+        borderRadius: 10,
+        height: 52,
+        width: 325,
+        padding: 15,
+        borderWidth: 1,
+        alignSelf: 'center',
+    },
+    textPressable: {
+        fontSize: 14,
+        textAlign:'center',
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    modalView: {
+        margin: 10,
+        backgroundColor: 'white',
+        padding: 35,
+        elevation: 5,
+    },
+    filterSorting: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: width * 0.25,
+    },
+    pressableModal: {
+        borderRadius: 10,
+        height: 52,
+        width: width * 0.3,
+        padding: 15,
+        borderWidth: 1,
+        alignSelf: 'center',
+    },
+    textRang: {
+        fontSize: 14,
+        color: 'black',
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    });
+export const StyleSlider = StyleSheet.create({
+    container: {
+        alignItems: 'stretch',
+        justifyContent: 'flex-start',
+        margin: 16,
+        paddingBottom: 32,
+    },
+    sliderContainer: {
+        paddingVertical: 16,
+    },
+    titleContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
+
+
+export const styleProductScreen=StyleSheet.create({
+    
+});

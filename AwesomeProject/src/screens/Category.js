@@ -1,15 +1,13 @@
 import { StyleSheet, Text, View, Pressable, TextInput, FlatList, Modal, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { StyleCategory, StyleOrder } from '../css/Styles'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
-import CategoryItem from './CategoryItem'
-import { Slider } from '@miblanchard/react-native-slider';
-import SliderContainer from '../component/SliderContainer/damn'
+import { Slider } from "@miblanchard/react-native-slider";
+import SliderContainer from '../component/SliderContainer/SliderContainer'
 const Category = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [isFilter, setisFilter] = useState(false);
-
 
     const click = () => {
         setisFilter(true);
@@ -42,16 +40,16 @@ const Category = () => {
                 </Pressable>
             </View>
 
-            <View style={{ height: 500 }}>
+            {/* <View style={{ height: 580 }}>
                 <FlatList
                     data={data}
                     numColumns={2}
                     renderItem={({ item }) => <CategoryItem dulieu1={item} />}
                     keyExtractor={item => item._id}
                 />
-            </View>
+            </View> */}
 
-            <View style={{ marginBottom: 10 }}>
+            <View>
                 <Pressable style={StyleCategory.pressable} onPress={() => setModalVisible(true)}>
                     <Text style={StyleCategory.textPressable}>Filter & Sorting</Text>
                 </Pressable>
@@ -85,7 +83,7 @@ const Category = () => {
 
                             </View>
                             {
-                                isFilter == true ? <Filter /> : <Sorting />
+                                isFilter == false ? <Sorting2 /> : <Filter />
                             }
                             <View style={StyleOrder.header}>
                                 <Pressable style={StyleCategory.pressableModal}>
@@ -136,6 +134,7 @@ const Filter = () => {
                 <SliderContainer
                     sliderValue={[0, 10000000]}>
                     <Slider
+                        step={1000}
                         minimumValue={0}
                         maximumValue={10000000}
                     />
@@ -163,8 +162,7 @@ const Filter = () => {
 
     )
 }
-
-// const Filter = () => {
+// const Sorting = () => {
 //     return (
 //         <View>
 //             <View style={StyleOrder.header}>
@@ -189,7 +187,7 @@ const Filter = () => {
 //     )
 // }
 
-const Sorting = () => {
+const Sorting2 = () => {
     const [isCheck, setisCheck] = useState([]);
     const options = ["Name (A - Z)", "Name (Z - A)", "Harga (Rendah-Tinggi)", "Lokasi"];
     function pickOption(selectedCheck) {
