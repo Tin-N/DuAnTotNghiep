@@ -47,11 +47,12 @@ const ConfirmPhoneNum = (props) => {
       <Text
         style={StyleLogin.HintTextCP}>
         Enter the 4-digit code sent to {"\n"} email({maskedEmail})
+
       </Text>
 
  
       <View style= {{
-        marginTop: "0%",
+        marginTop: 20,
         flexDirection: 'row',
         width: '90%',
       }}>

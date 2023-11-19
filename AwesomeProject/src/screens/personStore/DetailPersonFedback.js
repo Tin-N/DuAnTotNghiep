@@ -1,8 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { StyleDetailPersonFeedback } from '../../css/Styles'
-const DetailPersonFedback = (props) => {
-    const {navigation} = props;
+const DetailPersonFedback = () => {
     return (
         <View>
             <View style={StyleDetailPersonFeedback.menu}>

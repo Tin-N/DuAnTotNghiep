@@ -13,10 +13,9 @@ import ProductDetail from '../screens/ProductDetail';
 import SearchStore from '../screens/personStore/SearchStore';
 import ItemHomeStore from '../screens/personStore/ItemHomeStore';
 import DetailFeedback from '../screens/personStore/DetailFeedback';
-import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
-import TestScreen from '../screens/TestScreen';
-// import TestScreen from '../screens/TestScreen/TestScreen'
-import DetailProduct from '../screens/personStore/DetailProduct';
+import CensorshipProductItem from '../screens/CensorshipProductItem';
+import CensorshipProduct from '../screens/CensorshipProduct';
+import CensorshipDetailProduct from '../screens/CensorshipDetailProduct';
 
 import ProfileUser from '../screens/ProfileUser';
 import CreateProduct from '../screens/personStore/CreateProduct';
@@ -37,6 +36,7 @@ import SearchScreen from '../screens/SearchScreen';
 import FilterScreen from '../screens/FilterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import DetailList from '../screens/DetailList';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -78,7 +78,6 @@ const Profile = () => {
 }
 const ProductHome = () => {
     return (
-
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProductList'>
             <Stack.Screen name='ProductList' component={HomeScreen}></Stack.Screen>
             <Stack.Screen name='SearchScreen' component={SearchScreen}></Stack.Screen>
@@ -96,10 +95,10 @@ const ProductHome = () => {
                     animation: 'slide_from_right'
                 }}></Stack.Screen>
             <Stack.Screen name='DetailList' component={DetailList}></Stack.Screen>
-
         </Stack.Navigator>
     )
 }
+
 
 const ProductProcessStack = () => {
     return (
@@ -109,6 +108,17 @@ const ProductProcessStack = () => {
       </Stack.Navigator>
     );
   };
+
+
+const censorshipProduct = () => {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='CensorshipProduct'>
+            <Stack.Screen name='CensorshipProduct' component={CensorshipProduct}></Stack.Screen>
+            <Stack.Screen name='CensorshipDetailProduct' component={CensorshipDetailProduct}></Stack.Screen>
+        </Stack.Navigator>
+    )
+}
+
 
 const Main = () => {
     return (
@@ -147,6 +157,9 @@ const Main = () => {
                         iconName = focused ? 'people-sharp' : 'people-outline';
                     } else if (route.name === 'Prod Process') {
                         iconName = focused ? 'clipboard' : 'clipboard-outline';
+
+                    }else if (route.name === 'Test') {
+                        iconName = focused ? 'people-sharp' : 'people-outline';
                     }
                     return <Icon1 name={iconName} size={size} color={color} />
                 },
@@ -159,15 +172,10 @@ const Main = () => {
         >
             <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Order" component={Order} />
-
             <Tab.Screen name="Profile" component={Profile} />
-
-
-
-
             <Tab.Screen name="Prod Process" component={ProductProcessStack} />
             <Tab.Screen name="Shipper" component={SProductProcess} />
-
+            <Tab.Screen name="Test" component={censorshipProduct} />
         </Tab.Navigator>
     )
 }
