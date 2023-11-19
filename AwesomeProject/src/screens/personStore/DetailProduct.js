@@ -511,14 +511,14 @@ const DetailProduct = (props) => {
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity onPress={heartHandler}>
-                            <Image style={{ width: 30, height: 30, marginRight: 15 }}
+                            {/* <Image style={{ width: 30, height: 30, marginRight: 15 }}
                                 source={
                                     heart == true ?
                                         require('../../images/heart.png') : require('../../images/unheart.png')
-                                } />
+                                } /> */}
                         </TouchableOpacity>
                         <TouchableOpacity>
-                            <Image style={{ width: 25, height: 25, marginTop: 3 }} source={require('../../images/messenger.png')} />
+                            {/* <Image style={{ width: 25, height: 25, marginTop: 3 }} source={require('../../images/messenger.png')} /> */}
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -595,7 +595,7 @@ const DetailProduct = (props) => {
                     </View>
                     <Image style={{ height: 45, marginTop: -4 }} source={require('../../images/lineheight.png')} />
                     <View style={{ paddingLeft: 10, paddingRight: 10 }}>
-                        <Image style={StyleDetailProduct.image} source={require('../../images/iconchat1.png')} />
+                        {/* <Image style={StyleDetailProduct.image} source={require('../../images/iconchat1.png')} /> */}
                         <Text style={{ fontSize: 12, textAlign: 'center' }}>Chat</Text>
                     </View>
                 </View>
