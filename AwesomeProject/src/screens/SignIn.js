@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TextInput,
+  Alert
 } from 'react-native';
 import React, {useState,useContext, ToastAndroid, } from 'react';
 import {COLOR} from '../css/Theme';
@@ -20,16 +21,37 @@ import {UserContext} from '../utils/Context';
 import {useNavigation} from '@react-navigation/native'
 import { AppContext } from '../utils/AppContext';
 const SignIn = () => {
-  const [show, setshow] = useState(true);
-  const [visible, setvisible] = useState(true);
+
   const [showPassword, setShowPassword] = useState(true);
   const [emailUser, setEmailUser] = React.useState("");
   const [password, setPassword] = React.useState("");
   // Lấy thông tin user từ context    
-  const {setuserInfo, userInfo}= useContext(AppContext);
+  const {setuserInfo, userInfo, userID, setuserID,setisLogin}= useContext(AppContext);
+  const navigation = useNavigation();
+  // regex
+  const validate = () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+[0-9._%+-]@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{11,}$/;
+    if(emailUser === "" || password === "")
+    {
+      Alert.alert("Error","Please enter full information");
+    }else if(!emailRegex.test(emailUser)){
+      Alert.alert("Email Error","Your email must have more than 16 characters, and must include numbers");
+    }else if(!passwordRegex.test(password)){
+      Alert.alert("Password Error","Your password must have more than 11 characters, and must include numbers");
+  }
+}
 
+  const moveToSignUp = () => {
+    navigation.navigate("SignUp");
+  }
 
-  const Signin = async () => {
+  const FGPassword = () => {
+    navigation.navigate("ResetPassword");
+  }
+
+  const SignIn = async () => {
+    validate();
     try {
       // console.log(emailUser, password );
       const response= await AxiosIntance().post("/UserApi/login?email="+ emailUser + "&password="+ password);
@@ -39,29 +61,25 @@ const SignIn = () => {
       {
         
         // lấy thông tin user từ context (id)
-        const _id = response.user.id;
+        const _id = response.user._id;
         setuserInfo({...userInfo, ...response.user});
+        setuserID(_id);
+        setisLogin(true)
+        console.log("UserID "+ response.user );// log ra ID
 
-
-        // console.log(emailUser, password );
-        // await AsyncStorage.setItem("token",response.returnData.data.token);
-        // ToastAndroid.show("Đăng nhập ",ToastAndroid.SHORT);
-        // ToastAndroid.show("Đăng nhập thành công",ToastAndroid.SHORT);
-        // console.log(userInfo);
-        // setisLogin(true);
-        // setuserInfo(response.user);
-        // navigation.navigate('Product');
-        // console.log(response);
-        // console.log("UserInfor "+ id);
+     
+        setuserInfo(response.user);
+        navigation.navigate("ProfileScreen");
        
         
       }else{
         // ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);
       }
+      
     } catch (error) {
       console.log(error);
     }
-    console.log("UserInfor "+ userInfo._id);// log ra ID
+  
   }
      
   
@@ -77,21 +95,19 @@ const SignIn = () => {
       {/* TextInput Email */}
       <View>
         <Text style={StyleLogin.textHint}>Email</Text>
-        
         <View style={StyleLogin.input}>
           <TextInput
             style={StyleLogin.TextInputUP}
             placeholder="Clavi@gmail.com"
-            // keyboardType="default"
             onChangeText={setEmailUser}
           />
         </View>
       </View>
       {/* TextInput Password */}
       <View>
-        <Text style={StyleLogin.textHint}>Password</Text>
+        <Text style={StyleLogin.textHintP}>Password</Text>
 
-        <View style={StyleLogin.input}>
+        <View style={StyleLogin.inputP}>
           <TextInput
             style={StyleLogin.TextInputUP}
             placeholder="Enter your password"
@@ -116,15 +132,14 @@ const SignIn = () => {
           </TouchableOpacity>
         </View>
         
-        <TouchableOpacity>
-          <Text style={StyleLogin.fgPass}>Forgot password</Text>
+        <TouchableOpacity onPress={FGPassword}>
+          <Text style={StyleLogin.fgPass} >Forgot password</Text>
         </TouchableOpacity>
         
 
-        <TouchableOpacity style={StyleLogin.buttonShape} onPress={Signin}>
+        <TouchableOpacity style={StyleLogin.buttonShape} onPress={SignIn}>
           <Text style={StyleLogin.TextButton}>Sign In</Text>
         </TouchableOpacity>
-        <Text style={StyleLogin.text}>Or</Text>
         <View style={StyleLogin.FGcontainer}>
           <TouchableOpacity style={StyleLogin.FButton}>
             <Image
@@ -143,7 +158,7 @@ const SignIn = () => {
           <Text style={StyleLogin.ButtomText1}>
             You don't have any account?
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={moveToSignUp}>
             <Text style={StyleLogin.ButtomText2}>SignUp</Text>
           </TouchableOpacity>
         </View>

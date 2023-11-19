@@ -15,29 +15,34 @@ const windowWIdth = Dimensions.get('window').width;
 import {StyleSheet} from 'react-native';
 import {StyleLogin} from '../css/Styles.js';
 import AxiosIntance from '../utils/AxiosIntance';
-
+import {useNavigation} from '@react-navigation/native'
 
 const SignUp = () => {
-  const [show, setshow] = useState(true);
-  const [visible, setvisible] = useState(true);
-
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
+
   const [confirmPass,setConfirmPass]=React.useState("");
   const [emailUser,setEmailUser]=React.useState("");
   const [password,setPassword]=React.useState("");
-//http://localhost:3000/api/UserApi/register?email=thuan1234@gmail.com&password=1234
+  const navigation = useNavigation();
 
-  const SignUp= async()=>{
+//http://localhost:3000/api/UserApi/register?email=thuan1234@gmail.com&password=1234
+  const moveToSignIn = () => {
+    navigation.navigate("SignIn");
+  }
+
+
+  const SignUpp= async()=>{
     if(password==confirmPass){
-      console.log(emailUser+password);
+      
       try {
+        
         const response= await AxiosIntance().post("/UserApi/register?email="+ emailUser + "&password="+ password);
-        console.log(response);
+        console.log(password);
         if(response.result==true)
         {
           ToastAndroid.show("Đăng ký thành công",ToastAndroid.SHORT);
-          // moveToLoggin();
+          navigation.navigate("SignIn");
           console.log(response);
         }
           else
@@ -72,7 +77,6 @@ const SignUp = () => {
 
         <View style={StyleLogin.input}>
           <TextInput
-            value={emailUser}
             style={StyleLogin.TextInputUP}
             placeholder="Enter your email"
             keyboardType="default"
@@ -101,7 +105,7 @@ const SignUp = () => {
             style={StyleLogin.CTIcon}>
             <Image
               source={
-                show === false
+                showPassword === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }
@@ -144,24 +148,25 @@ const SignUp = () => {
 
 
         <TouchableOpacity
-          style={StyleLogin.buttonShape} onPress={SignUp}>
-            
+          style={StyleLogin.buttonShape} onPress={SignUpp}>
           <Text
-            style={StyleLogin.TextButton}>
-            Sign In
+            style={StyleLogin.TetuxtButton}>
+            Sign Up
           </Text>
         </TouchableOpacity>
 
         <View
-          style={style=StyleLogin.CbuttomText}>
+          style={StyleLogin.CbuttomText}>
           <Text
             style={StyleLogin.ButtomText1}>
             You don't have any account?
           </Text>
-          <Text
-            style={StyleLogin.ButtomText2}>
-            SignUp
-          </Text>
+          <TouchableOpacity onPress={moveToSignIn}>
+            <Text
+              style={StyleLogin.ButtomText2}>
+              SignIn
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

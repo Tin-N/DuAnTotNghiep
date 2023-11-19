@@ -32,11 +32,13 @@ import DialogShopping from './src/screens/personStore/DialogShopping';
 import DetailPersonFedback from './src/screens/personStore/DetailPersonFedback';
 import DetailProduct from './src/screens/personStore/DetailProduct';
 import HomeStore from './src/screens/personStore/HomeStore';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CreateProduct from './src/screens/personStore/CreateProduct';
 import TestScreen from './src/screens/TestScreen';
+import ProfileUser from './src/screens/ProfileUser';
+import ProfileSeller from './src/screens/ProfileSeller';
+import Splash from './src/screens/Splash';
 const Stack = createNativeStackNavigator()
 const App = () => {
   return (
@@ -44,10 +46,14 @@ const App = () => {
 
     <AppContextProvider>
       <NavigationContainer>
-        {/* <AppNavigator/> */}
-        {/* <SignIn/> */}
+        <AppNavigator/>
+        {/* <ProfileUser/> */}
+        {/* <ProfileSeller/> */}
+        {/* <Splash/> */}
+        {/* <ConfirmPhoneNum/> */}
+        {/* <SignUp/>  */}
         {/* <ResetPassword/> */}
-        <UpdatePassword/>
+        {/* <UpdatePassword/> */}
       </NavigationContainer>
     </AppContextProvider>
     // <Order />

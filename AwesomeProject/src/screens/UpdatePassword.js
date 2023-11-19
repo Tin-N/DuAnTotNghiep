@@ -14,7 +14,7 @@ import {Image} from 'react-native';
 const windowWIdth = Dimensions.get('window').width;
 import {StyleSheet} from 'react-native';
 import AxiosIntance from '../utils/AxiosIntance';
-const UpdatePassword = () => {
+const UpdatePassword = (props) => {
   const [show, setshow] = useState(true);
   const [visible, setvisible] = useState(true);
   const [showCP, setshowCP] = useState(true);
@@ -23,21 +23,22 @@ const UpdatePassword = () => {
   const [oldPassword, setOldPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState(""); 
-
+  const {email} = props.route.params;
     const UpdatePassword = async () => {
       // console.log(oldPassword, newPassword, confirmPassword);
-     
+      
       if( newPassword==confirmPassword){
         console.log(oldPassword, newPassword, confirmPassword);
         try {
           // http://localhost:3000/Api/UserApi/change-password?email=thuan141@gmail.com&oldPassword=thuan2&newPassword=thuan3
-          const response= await AxiosIntance().post("/UserApi/change-password?email=thuannt111@gmail.com&oldPassword="+oldPassword+"&newPassword="+newPassword);
+          const response= await AxiosIntance().post("/UserApi/change-password?email="+email+"&oldPassword="+oldPassword+"&newPassword="+newPassword);
           // console.log(response, email, newPassword, confirmPassword, oldPassword);
           console.log(response)
           // console.log(emailUser, password );
           if(response.result==true)
           {
             console.log( "Do if"+newPassword, confirmPassword );
+            Alert.alert("Thay đổi mật khẩu thành công");
             // await AsyncStorage.setItem("token",response.returnData.data.token);
             // ToastAndroid.show("check thanhf coong ",ToastAndroid.SHORT);
             // console.log(email);
@@ -50,6 +51,7 @@ const UpdatePassword = () => {
     
           }else{
             console.log( "check thất bại"+response );
+            Alert.alert("Thay đổi mật khẩu thất bại");
 
             ToastAndroid.show("check thất bại",ToastAndroid.LONG);
           }
@@ -68,17 +70,17 @@ const UpdatePassword = () => {
       </Text>
       
       <View>
-        <Text style={StyleLogin.textHint}>Old Password </Text>
+        {/* <Text style={StyleLogin.textHint}>Old Password </Text> */}
 
         <View style={StyleLogin.input}>
-          <TextInput
+          {/* <TextInput
             style={StyleLogin.TextInputUP}
             placeholder="Enter your password"
             underlineColorAndroid="transparent"
             onChangeText={setOldPassword}
-            secureTextEntry={visible}></TextInput>
+            secureTextEntry={visible}></TextInput> */}
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {
               setvisible(!visible);
               setshow(!show);
@@ -92,7 +94,7 @@ const UpdatePassword = () => {
               }
               style={StyleLogin.HideShowIcon}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
 

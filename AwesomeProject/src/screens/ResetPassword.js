@@ -14,90 +14,73 @@ import {Image} from 'react-native';
 const windowWIdth = Dimensions.get('window').width;
 import {StyleSheet} from 'react-native';
 import AxiosIntance from '../utils/AxiosIntance';
-
-
+import {useNavigation} from '@react-navigation/native';
 const ResetPassword = () => {
   // const [text, onChangeText] = React.useState('Useless Text');
   // const [number, onChangeNumber] = React.useState('');
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
+  const navigation = useNavigation();
   // regex
-  const ResetPassword = async () => {
+  const GotoSignIn = () => {
+    navigation.navigate('SignIn');
+  }
+  const checkEmail = async () => {
     try {
-      
-      // http://localhost:3000/api/UserApi/check-email?
-      const response= await AxiosIntance().post("/UserApi/check-email?email="+ email);
-      
-      // console.log(emailUser, password );
-      if(response.user)
+      // http://localhost:3000/api/UserApi/email-verify?email=thuannicky1606@gmail.com
+      const response= await AxiosIntance().post("/UserApi/email-verify?email="+email);
+      console.log(response);
+      if(response)
       {
-        // // console.log(emailUser, password );
-        // await AsyncStorage.setItem("token",response.returnData.data.token);
-        // ToastAndroid.show("check thanhf coong ",ToastAndroid.SHORT);
         console.log(email);
-        // ToastAndroid.show("Đăng nhập thành công",ToastAndroid.SHORT);
-        // // setisLogin(true);
-        // // setuserInfo(response.user);
-        // // navigation.navigate('Product');
-        // // console.log(response);
+        navigation.navigate("ConfirmPhoneNum", {email: email});
+       
 
       }else{
-        ToastAndroid.show("check thất bại",ToastAndroid.SHORT);
+        // ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);
       }
+      
     } catch (error) {
       console.log(error);
     }
-  }
-
+  
+  };
 
   return (
     <View>
       {/* Text Savvy */}
-      <Text
-        style={style=StyleLogin.HeadingText}>
-        Savvy
-      </Text>
+      <Text style={(style = StyleLogin.HeadingText)}>Savvy</Text>
 
       {/* Text Welcome back! */}
-      <Text
-        style={style=StyleLogin.extraText}>
-        Reset Password
-      </Text>
+      <Text style={(style = StyleLogin.extraText)}>Reset Password</Text>
 
       {/* TextInput Email/Phone */}
       <View>
-        <Text
-          style={StyleLogin.textHint}>
-          Email/Phone
-        </Text>
+        <Text style={StyleLogin.textHint}>Email</Text>
         <TextInput
           style={StyleLogin.RSPassInput}
           onChangeText={setEmail}
           // value={number}
-          placeholder="+1 Phone Number/Email..........."
+          placeholder="+1 Email..........."
         />
       </View>
 
       <View>
         <TouchableOpacity
-          style={StyleLogin.SButtonShape} onPress={ResetPassword}>
-          <Text
-            style={StyleLogin.TextButton} >
-            Coutinue
-          </Text>
+          style={StyleLogin.SButtonShape}
+          onPress={checkEmail}>
+          <Text style={StyleLogin.TextButton}>Coutinue</Text>
         </TouchableOpacity>
+       
 
-        <Text style={StyleLogin.fgPass}>
-          Change Number?</Text>
-          <Text
-            style={StyleLogin.RPBottomText}>
+        <TouchableOpacity onPress={GotoSignIn}>
+          <Text style={StyleLogin.RPBottomText}>
             Continute without signing in
           </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 export default ResetPassword;

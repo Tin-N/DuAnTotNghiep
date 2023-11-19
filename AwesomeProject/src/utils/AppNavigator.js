@@ -17,20 +17,54 @@ import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
 import TestScreen from '../screens/TestScreen';
 // import TestScreen from '../screens/TestScreen/TestScreen'
 import DetailProduct from '../screens/personStore/DetailProduct';
-
+import ProfileUser from '../screens/ProfileUser';
 import CreateProduct from '../screens/personStore/CreateProduct';
+import SignIn from '../screens/SignIn';
+import Splash from '../screens/Splash';
+import WarningProfile from '../screens/WarningPorfile';
+import ProfileSeller from '../screens/ProfileSeller';
+import ProfileScreen from '../screens/ProfileScreen';
+import ResetPassword from '../screens/ResetPassword';
+import ConfirmPhoneNum from '../screens/ConfirmPhoneNum';
+import UpdatePassword from '../screens/UpdatePassword';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const User = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='SignIn'>
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='Splash'>
                         <Stack.Screen name='Product' component={ProductHome}></Stack.Screen>
                         <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
+                        <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
                         <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
+                        <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
+                        <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
+                        <Stack.Screen name='Splash' component={Splash}></Stack.Screen>                       
+                        <Stack.Screen name='WarningProfile' component={WarningProfile}></Stack.Screen>
+                        <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>                       
+                        <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
+                        <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
+
         </Stack.Navigator>
     )
 }
+const Profile = () => {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProfileScreen'>
+                        <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>   
+                        <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>                      
 
+                        <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
+                        <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
+                        <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
+                        <Stack.Screen name='WarningProfile' component={WarningProfile}></Stack.Screen>
+                        <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>                       
+                        <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
+                        <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
+                        
+
+        </Stack.Navigator>
+    )
+}
 const ProductHome = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='HomeStore'>
@@ -64,7 +98,7 @@ const Main = () => {
                         iconName = focused ? 'home' : 'home-outline';
                     } else if (route.name === 'Order') {
                         iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
-                    } else if (route.name === 'SignUp') {
+                    } else if (route.name === 'Profile') {
                         iconName = focused ? 'people-sharp' : 'people-outline';
                     }
                     return <Icon1 name={iconName} size={size} color={color} />
@@ -75,6 +109,9 @@ const Main = () => {
         >
             <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Order" component={Order} />
+            <Tab.Screen name="Profile" component={Profile} />
+
+
 
         </Tab.Navigator>
     )
@@ -85,7 +122,9 @@ const AppNavigator = () => {
     return (
         <>
             {
-                isLogin == true ? <User /> : <Main />
+                <Main />
+                // <User />
+                // <Main/>
             }
         </>
     )
