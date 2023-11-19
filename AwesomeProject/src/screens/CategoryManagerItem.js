@@ -17,11 +17,10 @@ const CategoryManagerItem = (props) => {
   const [imgLink, setImgLink] = useState("");
   const [modalVisibleColor, setModalVisibleColor] = useState(false);
   const [colorCategory, setcolorCategory] = useState({});
-  
+
+
   const updateCategoryManager = async () => {
-    if (img.length > 0) {
-      //thay ca 3
-      if (props.category.includes(categoryManagerNameItem) == false && categoryManagerNameItem != "") {
+      if (props.category.includes(categoryManagerNameItem) == false) {
         setModalVisible(false);
         const reponse = await AxiosIntance().post('/Category/' + params._id + '/update-by-id', { name: categoryManagerNameItem, images: imgLink, color: colorCategory.color });
         if (reponse) {
@@ -34,37 +33,26 @@ const CategoryManagerItem = (props) => {
         } else {
           ToastAndroid.show('Cập nhật thất bại', ToastAndroid.SHORT);
         }
-      } else {
-        //doi anh voi mau
-        setModalVisible(false);
-        const reponse = await AxiosIntance().post('/Category/' + params._id + '/update-by-id', { name: params.name, images: imgLink, color: colorCategory.color });
-        if (reponse) {
-          props.changeCategoryManager();
-          setImgLink("");
-          setImg("");
-          setcolorCategory("");
-          ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
-        } else {
-          ToastAndroid.show('Cập nhật thất bại', ToastAndroid.SHORT);
-        }
-      }
-    } else {
-      //name
-      if (props.category.includes(categoryManagerNameItem) == false) {
-        setModalVisible(false);
-        const reponse = await AxiosIntance().post('/Category/' + params._id + '/update-by-id', { name: categoryManagerNameItem, images: params.images, color: colorCategory.color });
-        if (reponse) {
-          props.changeCategoryManager();
-          setImgLink("");
-          setImg("");
-          setcolorCategory("");
-          ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
-        } else {
-          ToastAndroid.show('Cập nhật thất bại', ToastAndroid.SHORT);
-        }
-      }ToastAndroid.show('Trùng danh mục có sẵn', ToastAndroid.SHORT);
-    }
+    }else ToastAndroid.show('Trùng danh mục', ToastAndroid.SHORT);
   }
+
+// console.log(categoryManagerNameItem);
+//   const checkUpdateCategoryManager = async () => {
+//     if (img.length > 0) {
+//       //thay ca 3
+//       if (props.category.includes(categoryManagerNameItem) == false && categoryManagerNameItem != "") {
+//         updateCategoryManager(categoryManagerNameItem, imgLink, colorCategory.color);
+//       } else{
+//         //doi anh voi mau
+        
+//       }
+//     } else {
+//       //name
+//       if (props.category.includes(categoryManagerNameItem) == false) {
+//         updateCategoryManager(categoryManagerNameItem, params.images, params.color);
+//       }
+//     }
+//   }
 
   const deleteCategoryManager = async () => {
     const reponse = await AxiosIntance().post('/Category/' + params._id + '/delete');
