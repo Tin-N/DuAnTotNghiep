@@ -1,14 +1,17 @@
-import { StyleSheet, Text, View, Pressable, Image, ScrollView, ToastAndroid } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Image, ScrollView, ToastAndroid, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
 import AxiosIntance from '../utils/AxiosIntance';
 import { StyleCensorshipProduct } from '../css/Styles';
+
+const { width, height } = Dimensions.get('screen');
 
 const CensorshipDetailProduct = (props) => {
   const { route, navigation } = props;
   const { params } = route;
 
   const [productDetail, setproductDetail] = useState([]);
+  console.log(productDetail);
   useEffect(() => {
     const getProductDetail = async () => {
       const reponse = await AxiosIntance().get('/productAPI/getProductByID?id=' + params.productId);
@@ -24,7 +27,7 @@ const CensorshipDetailProduct = (props) => {
 
   //thong bao dong y duyet san pham
   const acceptNotification = async () => {
-    const reponse = await AxiosIntance().post('/notificationApi/notification', {userID: params.userID, productID: params.productId, notification: "Sản phẩm đã được kiểm duyệt"});
+    const reponse = await AxiosIntance().post('/notificationApi/notification', { userID: params.userID, productID: params.productId, notification: "Sản phẩm đã được kiểm duyệt" });
     if (reponse) {
       //navigation.navigate("CensorshipProduct");
     } else {
@@ -48,16 +51,16 @@ const CensorshipDetailProduct = (props) => {
 
   //thong bao tu choi duyet san pham
   const rejectNotification = async () => {
-    const reponse = await AxiosIntance().post('/notificationApi/notification', {userID: params.userID, productID: params.productId, notification: "Sản phẩm đã vi phạm quy định"});
+    const reponse = await AxiosIntance().post('/notificationApi/notification', { userID: params.userID, productID: params.productId, notification: "Sản phẩm đã vi phạm quy định" });
     if (reponse) {
       //navigation.navigate("CensorshipProduct");
     } else {
       ToastAndroid.show('Thong bao bi loi', ToastAndroid.SHORT);
     }
   }
-  
+
   // tu choi san pham => isApproved = 3
-  const rejectProduct = async () =>{
+  const rejectProduct = async () => {
     const reponse = await AxiosIntance().post('/productAPI/rejectProduct-by-id/' + params.productId);
     if (reponse) {
       rejectNotification();
@@ -90,7 +93,22 @@ const CensorshipDetailProduct = (props) => {
           overScrollMode='never'
           style={{ height: '90%', marginBottom: 10 }}>
           <Image style={StyleCensorshipProduct.imageDetailProduct} source={{ uri: 'http://nhatminhdecor.com/wp-content/uploads/2019/01/chup-anh-voi-phong-nen-vai-trang-1.jpg' }} />
-          <Text style={StyleCensorshipProduct.textDetail}>{productDetail.detail}</Text>
+          
+          <Text style={StyleCensorshipProduct.textDetailInfo}>Tên sản phẩm:</Text>
+          <Text style={[StyleCensorshipProduct.textDetailInfo, { marginLeft: 15 }]}>{productDetail.name}</Text>
+          
+          <View style={[StyleCensorshipProduct.viewHeader, {backgroundColor: '#d9dadb'}]}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon name='pricetags-outline' size={20} color={'black'} />
+              <Text style={[StyleCensorshipProduct.textDetailInfo, {margin: 5 }]}>Price</Text>
+            </View>
+            <Text style={{color: 'black', marginRight: 10, alignSelf: 'center'}}>{productDetail.price}</Text>
+          </View>
+          <View>
+            <Text style={[StyleCensorshipProduct.textDetailInfo, { fontWeight: '500' }]}>Mô tả:</Text>
+            <Text style={[StyleCensorshipProduct.textDetail, { marginLeft: 15 }]}>{productDetail.detail}</Text>
+          </View>
+
         </ScrollView>
 
         <View style={StyleCensorshipProduct.viewButtonFuncDetail}>

@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 
-import {COLOR} from './Theme';
-import {Dimensions} from 'react-native';
-const {width, height} = Dimensions.get('screen');
-console.log(25*width/100);
+import { COLOR } from './Theme';
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('screen');
+
 export const StyleLogin = StyleSheet.create({
     header: {
         color: COLOR.primary,
@@ -71,21 +71,21 @@ export const StyleOrder = StyleSheet.create({
         width: 59,
     },
     textNameFlatList: {
-        width: 25*width/100,
+        width: 25 * width / 100,
         fontSize: 20,
         fontStyle: 'bold',
         color: 'black',
         marginLeft: 5,
     },
     textInfoFlatList: {
-        width: 25*width/100,
+        width: 25 * width / 100,
         fontSize: 12,
         fontStyle: 'bold',
         color: '#AEAEAE',
         marginLeft: 5,
     },
     function: {
-        width: 20*width/100,
+        width: 20 * width / 100,
         alignItems: 'center'
     },
     checkBoxOrder: {
@@ -592,6 +592,19 @@ export const SytleCategoryManager = StyleSheet.create({
         height: 95 * height / 100,
         width: width,
     },
+    textHeader:{
+        color: 'black', 
+        fontSize: 20
+    },
+    touchableOpacity:{
+        backgroundColor: "white", 
+        alignItems: 'center', 
+        marginTop: 10,
+    },
+    imageTouchableOpacity:{
+        width: 150, 
+        height: 150,
+    },
     viewTop: {
         flexDirection: 'row',
         margin: 10,
@@ -603,6 +616,30 @@ export const SytleCategoryManager = StyleSheet.create({
         padding: 5,
         height: 52,
         marginRight: 5,
+    },
+    textInputSearch: {
+        width: width * 95 / 100,
+        borderWidth: 0.2,
+        borderRadius: 5,
+        padding: 5,
+        height: height * 7 / 100,
+        alignSelf: 'center',
+    },
+    iconSearch: {
+        position: 'absolute',
+        top: 20,
+        right: 15,
+    },
+    viewSeprate: {
+        marginTop: 15, marginBottom: 10,
+        padding: 0.5,
+        borderBottomWidth: 0.2,
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        shadowOffset: {
+            height: 0.5,
+            width: 1
+        }
     },
     pressable: {
         borderRadius: 10,
@@ -718,7 +755,6 @@ export const StyleCensorshipProduct = StyleSheet.create({
     viewHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 5,
     },
     textHeader: {
         color: 'black',
@@ -734,8 +770,14 @@ export const StyleCensorshipProduct = StyleSheet.create({
         width: '100%',
         height: 400,
     },
-    textDetail: {   
-        width: '100%',
+    textDetailInfo: {
+        color: 'black',
+        fontSize: 14,
+        marginBottom: 5,
+        fontWeight: '500'
+    },
+    textDetail: {
+        width: width*92/100,
         color: 'black',
         fontSize: 14,
         marginBottom: 5,

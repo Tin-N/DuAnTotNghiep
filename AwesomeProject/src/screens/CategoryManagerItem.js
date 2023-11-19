@@ -17,15 +17,52 @@ const CategoryManagerItem = (props) => {
   const [imgLink, setImgLink] = useState("");
   const [modalVisibleColor, setModalVisibleColor] = useState(false);
   const [colorCategory, setcolorCategory] = useState({});
-  // console.log(imgLink.length);
+  
   const updateCategoryManager = async () => {
-    setModalVisible(false);
-    const reponse = await AxiosIntance().post('/Category/' + params._id + '/update-by-id', { name: categoryManagerNameItem, images: imgLink, color: colorCategory.color});
-    if (reponse) {
-      props.changeCategoryManager();
-      ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+    if (img.length > 0) {
+      //thay ca 3
+      if (props.category.includes(categoryManagerNameItem) == false && categoryManagerNameItem != "") {
+        setModalVisible(false);
+        const reponse = await AxiosIntance().post('/Category/' + params._id + '/update-by-id', { name: categoryManagerNameItem, images: imgLink, color: colorCategory.color });
+        if (reponse) {
+          props.changeCategoryManager();
+          setImgLink("");
+          setImg("");
+          setcolorCategory("");
+          setcategoryManagerNameItem("");
+          ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show('Cập nhật thất bại', ToastAndroid.SHORT);
+        }
+      } else {
+        //doi anh voi mau
+        setModalVisible(false);
+        const reponse = await AxiosIntance().post('/Category/' + params._id + '/update-by-id', { name: params.name, images: imgLink, color: colorCategory.color });
+        if (reponse) {
+          props.changeCategoryManager();
+          setImgLink("");
+          setImg("");
+          setcolorCategory("");
+          ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show('Cập nhật thất bại', ToastAndroid.SHORT);
+        }
+      }
     } else {
-      ToastAndroid.show('Cập nhật thất bại', ToastAndroid.SHORT);
+      //name
+      if (props.category.includes(categoryManagerNameItem) == false) {
+        setModalVisible(false);
+        const reponse = await AxiosIntance().post('/Category/' + params._id + '/update-by-id', { name: categoryManagerNameItem, images: params.images, color: colorCategory.color });
+        if (reponse) {
+          props.changeCategoryManager();
+          setImgLink("");
+          setImg("");
+          setcolorCategory("");
+          ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show('Cập nhật thất bại', ToastAndroid.SHORT);
+        }
+      }ToastAndroid.show('Trùng danh mục có sẵn', ToastAndroid.SHORT);
     }
   }
 
@@ -49,24 +86,28 @@ const CategoryManagerItem = (props) => {
   }
 
   const Upload = async () => {
-    const response = await fetch(img);
-    const blob = await response.blob();
-    const filename = Date.now() + ".jpg";
-    const storageRef = ref(storage, filename);
-    const snapshot = await uploadBytes(storageRef, blob);
-    const url = await getDownloadURL(snapshot.ref);
-    setImgLink(url);
+    if (img.length > 0) {
+      const response = await fetch(img);
+      const blob = await response.blob();
+      const filename = Date.now() + ".jpg";
+      const storageRef = ref(storage, filename);
+      const snapshot = await uploadBytes(storageRef, blob);
+      const url = await getDownloadURL(snapshot.ref);
+      setImgLink(url);
+    } updateCategoryManager();
   }
 
 
   useEffect(() => {
-    if (imgLink.length > 0)
+    if (imgLink.length > 0) {
       updateCategoryManager();
+    } updateCategoryManager();
     return () => {
 
     }
   }, [imgLink])
 
+  //lay mau da chon
   const getColorCategory = (color) => {
     setcolorCategory(color);
     setModalVisibleColor(!modalVisibleColor);
@@ -91,7 +132,7 @@ const CategoryManagerItem = (props) => {
       </View>
 
       <View>
-        {/* dialog sua */}
+        {/* dialog sua category*/}
         <Modal
           animationType="slide"
           transparent={true}

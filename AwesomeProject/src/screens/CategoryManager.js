@@ -19,7 +19,8 @@ const CategoryManager = () => {
   const [imgLink, setImgLink] = useState("");
   const [modalVisibleColor, setModalVisibleColor] = useState(false);
   const [colorCategory, setcolorCategory] = useState({});
-  console.log(imgLink.length);
+
+
   //Hinh
   const getImageFromLibrary = async () => {
     const result = await launchImageLibrary();
@@ -40,7 +41,7 @@ const CategoryManager = () => {
   }
 
   //chon mau nen category
-  const getColorCategory = (color) =>{
+  const getColorCategory = (color) => {
     setcolorCategory(color);
     setModalVisibleColor(!modalVisibleColor);
   }
@@ -90,6 +91,8 @@ const CategoryManager = () => {
         changeCategoryManagerFun();
         ToastAndroid.show('Thêm thành công', ToastAndroid.SHORT);
         setImgLink("");
+        setImg("");
+        setcolorCategory("");
       } else {
         ToastAndroid.show('Thêm thất bại', ToastAndroid.SHORT);
       }
@@ -107,12 +110,17 @@ const CategoryManager = () => {
 
   return (
     <View style={SytleCategoryManager.container}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 5 }}>
+        <Icon name='arrow-back' size={25} color={'black'}/>
+        <Text style={SytleCategoryManager.textHeader}>Quản lí danh mục</Text>
+        <View></View>
+      </View>
 
-      <TouchableOpacity style={{ backgroundColor: "white", alignItems: 'center', marginTop: 10 }} onPress={() => getImageFromLibrary()}>
-        <Image style={{ width: 150, height: 150, backgroundColor: colorCategory.color }} source={img.length > 0 ? { uri: img } : require('../images/camera.png')} />
+      <TouchableOpacity style={SytleCategoryManager.touchableOpacity} onPress={() => getImageFromLibrary()}>
+        <Image style={[SytleCategoryManager.imageTouchableOpacity, {backgroundColor: colorCategory.color}]} source={img.length > 0 ? { uri: img } : require('../images/camera.png')} />
       </TouchableOpacity>
 
-      <TouchableOpacity style={{ backgroundColor: "white", alignItems: 'center', marginTop: 10 }} onPress={() => setModalVisibleColor(!modalVisibleColor)}>
+      <TouchableOpacity style={SytleCategoryManager.touchableOpacity} onPress={() => setModalVisibleColor(!modalVisibleColor)}>
         <Icon name='color-filter' size={40} color={colorCategory.color}/>
       </TouchableOpacity>
 
@@ -123,13 +131,19 @@ const CategoryManager = () => {
         </Pressable>
       </View>
 
+      {/* <View style={{ position: 'relative' }}>
+        <TextInput style={SytleCategoryManager.textInputSearch} placeholder='Tìm kiếm' />
+        <Icon name='search-outline' size={25} color={'black'} style={SytleCategoryManager.iconSearch} />
+      </View>
+      <View elevation={5} style={SytleCategoryManager.viewSeprate} /> */}
+
       <View>
         <FlatList
           style={{ height: 500 }}
           showsVerticalScrollIndicator={false}
           overScrollMode='never'
           data={categoryManagerNotDelete}
-          renderItem={({ item }) => <CategoryManagerItem dulieu1={[item]} changeCategoryManager={changeCategoryManagerFun} />}
+          renderItem={({ item }) => <CategoryManagerItem dulieu1={[item]} changeCategoryManager={changeCategoryManagerFun} category={name} />}
           keyExtractor={item => item._id}
         />
       </View>
@@ -141,7 +155,7 @@ const CategoryManager = () => {
           <View style={StyleCategory.centeredView}>
             <View style={StyleCategory.modalView}>
               <TriangleColorPicker
-                onColorSelected={color => getColorCategory({color})}
+                onColorSelected={color => getColorCategory({ color })}
                 style={{ height: 200, width: 300 }}
               />
               <View style={SytleCategoryManager.viewPressableModal}>
