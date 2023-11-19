@@ -16,9 +16,9 @@ import DetailFeedback from '../screens/personStore/DetailFeedback';
 import CensorshipProductItem from '../screens/CensorshipProductItem';
 import CensorshipProduct from '../screens/CensorshipProduct';
 import CensorshipDetailProduct from '../screens/CensorshipDetailProduct';
-
+import DetailProduct from '../screens/personStore/DetailProduct'
 import ProfileUser from '../screens/ProfileUser';
-import CreateProduct from '../screens/personStore/CreateProduct';
+// import CreateProduct from '../screens/personStore/CreateProduct';
 import SignIn from '../screens/SignIn';
 import Splash from '../screens/Splash';
 import WarningProfile from '../screens/WarningPorfile';
@@ -29,14 +29,13 @@ import ConfirmPhoneNum from '../screens/ConfirmPhoneNum';
 import UpdatePassword from '../screens/UpdatePassword';
 
 import ProductProcess from '../screens/personStore/ProductProcess'
-import CreateProduct from '../screens/personStore/CreateProduct';
 import SProductProcess from '../screens/personStore/Shiper/SProductProcess';
 import ProductProcessOverview from '../screens/personStore/ProdsProcessOverview';
 import SearchScreen from '../screens/SearchScreen';
 import FilterScreen from '../screens/FilterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import DetailList from '../screens/DetailList';
-
+import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

@@ -103,14 +103,14 @@ const SignUp = () => {
              setShowPassword(!showPassword)
             }}
             style={StyleLogin.CTIcon}>
-            <Image
+            {/* <Image
               source={
                 showPassword === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }
               style={StyleLogin.HideShowIcon}
-            />
+            /> */}
           </TouchableOpacity>
         </View>
         {/* TextInput Password */}
@@ -134,14 +134,14 @@ const SignUp = () => {
               setShowConfirmPassword(!showConfirmPassword)
             }}
             style={StyleLogin.CTIcon}>
-            <Image
+            {/* <Image
               source={
                 showConfirmPassword === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }
               style={StyleLogin.HideShowIcon}
-            />
+            /> */}
           </TouchableOpacity>
         </View>
          {/* TextInput Confirm Password */}

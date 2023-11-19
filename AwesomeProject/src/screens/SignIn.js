@@ -16,8 +16,6 @@ import {StyleSheet} from 'react-native';
 import {StyleLogin} from '../css/Styles.js';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import AxiosIntance from '../utils/AxiosIntance';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {UserContext} from '../utils/Context';
 import {useNavigation} from '@react-navigation/native'
 import { AppContext } from '../utils/AppContext';
 const SignIn = () => {
@@ -41,8 +39,6 @@ const SignIn = () => {
       Alert.alert("Password Error","Your password must have more than 11 characters, and must include numbers");
   }
 }
-  const {setuserInfo, userInfo}= useContext(AppContext);
-  const { userID, setuserID}= useContext(AppContext);
 
 
   const moveToSignUp = () => {
@@ -126,14 +122,14 @@ const SignIn = () => {
              setShowPassword(!showPassword)
             }}
             style={StyleLogin.CTIcon}>
-            <Image
+            {/* <Image
               source={
                 showPassword === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }
               style={StyleLogin.HideShowIcon}
-            />
+            /> */}
           </TouchableOpacity>
         </View>
         

@@ -183,7 +183,7 @@ const Order = () => {
         {/* Order Process */}
         <View style={{ bottom: 100 }}>
           <View style={[StyleOrder.tillte, { marginLeft: -6, marginRight: -6, borderTopWidth: 0.3, borderTopLeftRadius: 10, borderTopRightRadius: 10, borderLeftWidth: 1, borderRightWidth: 1 }]}>
-            <Image style={{ width: 40, height: 40 }} source={require('../images/icons8-coin-50.png')} />
+            {/* <Image style={{ width: 40, height: 40 }} source={require('../images/icons8-coin-50.png')} /> */}
             {!productsSelected
               ? <Text style={StyleOrder.textTillte}>Bạn chưa chọn sản phầm nào</Text>
               : <Text style={StyleOrder.textTillte}>Bạn đã chọn {productsSelected.length} sản phẩm</Text>}

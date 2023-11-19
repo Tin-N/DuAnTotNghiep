@@ -116,14 +116,14 @@ const UpdatePassword = (props) => {
               setshow(!show);
             }}
             style={StyleLogin.CTIcon}>
-            <Image
+            {/* <Image
               source={
                 show === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }
               style={StyleLogin.HideShowIcon}
-            />
+            /> */}
           </TouchableOpacity>
         </View>
       </View>
@@ -146,14 +146,14 @@ const UpdatePassword = (props) => {
               setshowCP(!showCP);
             }}
             style={StyleLogin.CTIcon}>
-            <Image
+            {/* <Image
               source={
                 showCP === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }
               style={StyleLogin.HideShowIcon}
-            />
+            /> */}
           </TouchableOpacity>
         </View>
       </View>
