@@ -17,8 +17,9 @@ const DetailFeedback = (props) => {
     const [star33, setStar33] = useState(0);
     const [star44, setStar44] = useState(0);
     const [star55, setStar55] = useState(0);
-    // const [dataFeedback, setDataFeedback] = useState([]);
+    const [dataFeedback, setDataFeedback] = useState([]);
     const [feedback, setFeedback] = useState('');
+    const [check, setCheck] = useState(true)
     const [lengthFeedback, setlengthFeedback] = useState(0);
     const [percentRating, setpercentRating] = useState(0);
     const [percentRating1, setpercentRating1] = useState(0);
@@ -30,67 +31,82 @@ const DetailFeedback = (props) => {
         navigation.navigate("HomeStore");
     }
     useEffect(() => {
-        // const getFeedback = async () => {
-        //     const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?productID=' + params.itemId);
-        //     if(response.result == true){
-        //         ToastAndroid('Lấy feedback thành công', ToastAndroid.SHORT);
-        //         setDataFeedback(response.feedbacks);
-        //     }else {
-        //         ToastAndroid('Lấy feedback thất bại', ToastAndroid.SHORT);
-        //     }
-        // }
-        // getFeedback();
-        const countRating = () => {
-            var star1 = 0;
-            var star2 = 0;
-            var star3 = 0;
-            var star4 = 0;
-            var star5 = 0;
-            var isrealRating = 0;
-            for (i = 0; i < dataFeedback.length; i++) {
-                if (dataFeedback[i].rating == 1) {
-                    star1++;
-                    setStar11(star1);
-                } else if (dataFeedback[i].rating == 2) {
-                    star2++;
-                    setStar22(star2);
-                } else if (dataFeedback[i].rating == 3) {
-                    star3++;
-                    setStar33(star3);
-                } else if (dataFeedback[i].rating == 4) {
-                    star4++;
-                    setStar44(star4);
-                } else if (dataFeedback[i].rating == 5) {
-                    star5++;
-                    setStar55(star5);
-                }
+        const getFeedback = async () => {
+            console.log("getFeedback");
+            const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId);
+            if(response.result == true){
+                ToastAndroid.show('Lấy feedback thành công', ToastAndroid.SHORT);
+                setDataFeedback(response.feedbacks);
+            }else {
+                ToastAndroid.show('Lấy feedback thất bại', ToastAndroid.SHORT);
             }
-            /*
-            Thuật toán tính tổng số lượng feedBack, phần trăm sao đánh giá theo từng loại
-            */
-            isrealRating = (star1 * 1 + star2 * 2 + star3 * 3 + star4 * 4 + star5 * 5)
-            setpercentRating(((isrealRating / (dataFeedback.length * 5)) * 5).toFixed(1))
-            setpercentRating1(star1 / dataFeedback.length)
-            setpercentRating2(star2 / dataFeedback.length)
-            setpercentRating3(star3 / dataFeedback.length)
-            setpercentRating4(star4 / dataFeedback.length)
-            setpercentRating5(star5 / dataFeedback.length)
-            // const result = percentRating+"";
-            // const lastResult = result.slice(0,3);
-            // const islastResult = parseFloat(lastResult);
-            // setpercentRating(islastResult);
-            // console.log(percentRating+"   "+ islastResult);
-
-            // setpercentRating(result);
-            //  setpercentRating(result);
-            setlengthFeedback(dataFeedback.length);
+            setCheck(false)
         }
-        countRating();
+        if(check)
+        getFeedback();
+    }, [check])
+    useEffect(() => {
+        
+        if (dataFeedback.length > 0) {
+            const countRating = () => {
+                var star1 = 0;
+                var star2 = 0;
+                var star3 = 0;
+                var star4 = 0;
+                var star5 = 0;
+                var isrealRating = 0;
+                for (i = 0; i < dataFeedback.length; i++) {
+                    if (dataFeedback[i].rating == 1) {
+                        star1++;
+                        setStar11(star1);
+                    } else if (dataFeedback[i].rating == 2) {
+                        star2++;
+                        setStar22(star2);
+                    } else if (dataFeedback[i].rating == 3) {
+                        star3++;
+                        setStar33(star3);
+                    } else if (dataFeedback[i].rating == 4) {
+                        star4++;
+                        setStar44(star4);
+                    } else if (dataFeedback[i].rating == 5) {
+                        star5++;
+                        setStar55(star5);
+                    }
+                }
+                /*
+                Thuật toán tính tổng số lượng feedBack, phần trăm sao đánh giá theo từng loại
+                */
+                isrealRating = (star1 * 1 + star2 * 2 + star3 * 3 + star4 * 4 + star5 * 5)
+                setpercentRating(((isrealRating / (dataFeedback.length * 5)) * 5).toFixed(1))
+                setpercentRating1(star1 / dataFeedback.length)
+                setpercentRating2(star2 / dataFeedback.length)
+                setpercentRating3(star3 / dataFeedback.length)
+                setpercentRating4(star4 / dataFeedback.length)
+                setpercentRating5(star5 / dataFeedback.length)
+                setlengthFeedback(dataFeedback.length);
+            }
+            countRating();
+        } else if (dataFeedback.length == 0) {
+            setpercentRating(0)
+            setpercentRating1(0)
+            setpercentRating2(0)
+            setpercentRating3(0)
+            setpercentRating4(0)
+            setpercentRating5(0)
+            setlengthFeedback(0)
+            setStar11(0)
+            setStar22(0)
+            setStar33(0)
+            setStar44(0)
+            setStar55(0)
+        }
         return () => {
         }
-    }, [])
+
+    }, [dataFeedback])
     return (
         <View>
+            <Text>{dataFeedback.length}</Text>
             <View style={StyleDetailFeedback.menu}>
                 <TouchableOpacity onPress={onHandle}>
                     <Image source={require('../../images/backic.png')} />
@@ -165,7 +181,7 @@ const DetailFeedback = (props) => {
                         data={dataFeedback}
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
-                        renderItem={({ item }) => <ItemFeedBack dataFeedback={item} />}
+                        renderItem={({ item }) => <ItemFeedBack dataFeedback={item}  setCheck={setCheck} check={check}/>}
                         keyExtractor={item => item.userID} />
                     <TouchableOpacity style={StyleDetailFeedback.touchOpa}>
                         <Text style={{ fontWeight: 'bold' }}>
@@ -179,84 +195,5 @@ const DetailFeedback = (props) => {
     )
 }
 
-export default DetailFeedback
-const dataFeedback = [
-    {
-        feedbackID: 1,
-        productID: 1,
-        userID: 1,
-        feedbackText: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
-        rating: 5,
-        dataReplyFeedback: [
-            {
-                userID: 2,
-                replyFeedbackId: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                userID: 3,
-                replyFeedbackId: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 2,
-        productID: 1,
-        userID: 2,
-        feedbackText: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
-        rating: 4,
-        dataReplyFeedback: [
-            {
-                userID: 2,
-                replyFeedbackId: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                userID: 3,
-                replyFeedbackId: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 3,
-        productID: 1,
-        userID: 3,
-        feedbackText: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
-        rating: 5,
-        dataReplyFeedback: [
-            {
-                userID: 2,
-                replyFeedbackId: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                userID: 3,
-                replyFeedbackId: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    },
-    {
-        feedbackID: 4,
-        productID: 1,
-        userID: 4,
-        feedbackText: 'Mới xài một ngày mà hư rồi nha  \nDanh gia shop 5 sao =))       \nMong shop xem lai tin nhan minh gui cho shop ',
-        rating: 3,
-        dataReplyFeedback: [
-            {
-                userID: 2,
-                replyFeedbackId: 1,
-                title: 'Cảm ơn bạn rất nhiều!'
-            },
-            {
-                userID: 3,
-                replyFeedbackId: 2,
-                title: 'Cảm ơn bạn rất nhiều!'
-            }
-        ]
-    }
-    
-]
+export default DetailFeedback;
 

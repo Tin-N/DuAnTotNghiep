@@ -24,6 +24,16 @@ const FilterScreen = (props) => {
     navigation.goBack();
   }
 
+  useEffect(() => {
+    navigation.getParent()?.setOptions({
+      tabBarStyle: {
+        display: "none"
+      }
+    });
+    return () => navigation.getParent()?.setOptions({
+      tabBarStyle: undefined
+    });
+  }, [navigation]);
   function createURLstring(objValue, arrValue, stringValue) {
     // if (typeof objValue !== 'object' || !Array.isArray(arrValue) || typeof stringValue !== 'string') {
     //   throw new Error('Giá trị không hợp lệ');
@@ -76,7 +86,7 @@ const FilterScreen = (props) => {
     }
     const Load = async ()=>{
       
-      if(isLoadingmini)
+      if(!true)
         setisLoading(true);
       
       
@@ -91,6 +101,9 @@ const FilterScreen = (props) => {
             console.log("Hellooo");
           }
           else if(page>1)
+          {
+
+          }
           setData([...data,...response.products]);
           
           setisLoading(false);
@@ -100,7 +113,7 @@ const FilterScreen = (props) => {
           setisLoading(false);
           ToastAndroid.show("Đã hết sản phẩm ",ToastAndroid.SHORT);
         }
-        setisLoadingmini(!isLoadingmini);
+        setisLoadingmini(false);
       } catch (error) {
         console.error("Error:", error);
         setisLoading(false);

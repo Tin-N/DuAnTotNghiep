@@ -2,6 +2,7 @@ import { View, Text, FlatList, ActivityIndicator } from 'react-native'
 import React,{useState} from 'react'
 import { Dimensions } from 'react-native'
 import ItemList from './Item';
+import ItemHomeStore from '../../screens/personStore/ItemHomeStore';
 const ProductList = (props) => {
     const { count,data,styleView,infinitiveScroll,loadMoreData,isLoadingmini, ...customSetting} = props
     const [data1, setData] = useState(data); // Sử dụng trực tiếp data
@@ -48,7 +49,7 @@ const ProductList = (props) => {
       <FlatList
       {...customSetting}
       data={data} // data sẽ truyền thằng vào nếu data1 rỗng
-      renderItem={({item})=>(<ItemList data={item}/>)}
+      renderItem={({item})=>(<ItemHomeStore dulieu={item}/>)}
       onEndReachedThreshold={1}
       ListFooterComponent={FooterLoading}
       onMomentumScrollBegin = {() => {this.onEndReachedCalledDuringMomentum = false;}}
