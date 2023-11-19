@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { StyleHomeStore } from '../../css/Styles'
 import { formatPrice } from '../../../Agro'
 import AxiosIntance from '../../utils/AxiosIntance'
+import { useNavigation } from '@react-navigation/native';
+
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const ItemHomeStore = (props) => {
-  const { dulieu, navigation } = props;
+  const { dulieu } = props;
+  const navigation=useNavigation();
   const [priceProduct, setPriceProduct] = useState('');
   const [salePrice, setSalePrice] = useState('');
   const [countFeedback, setCountFeedback] = useState();

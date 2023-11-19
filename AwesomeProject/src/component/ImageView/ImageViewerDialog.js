@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity,Text } from 'react-native';
-import Swiper from 'react-native-swiper';
 import Modal from 'react-native-modal';
 
 const  ImageViewer=({ imageUrl,isModalVisible,setModalVisible }) =>{
@@ -12,7 +11,10 @@ const  ImageViewer=({ imageUrl,isModalVisible,setModalVisible }) =>{
   return (
     <View>
 
-      <Modal isVisible={isModalVisible}
+      <Modal 
+      animationIn={"zoomIn"}
+      
+      isVisible={isModalVisible}
       backdropOpacity={1}
       >
 
@@ -25,7 +27,7 @@ const  ImageViewer=({ imageUrl,isModalVisible,setModalVisible }) =>{
             }} onPress={toggleModal}>
                 <Image 
                 style={{width:30,height:30}}
-                source={require('../../images/circle-xmark.png')}/>
+                source={require('../../images/deleteimg1.png')}/>
 
              
           </TouchableOpacity>

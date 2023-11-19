@@ -86,6 +86,8 @@ const ProductHome = () => {
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
             <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
+            <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
+
             <Stack.Screen name='DetailProduct' component={DetailProduct} />
             {/* <Stack.Screen name='CreateProduct' component={CreateProduct}
                 options={{

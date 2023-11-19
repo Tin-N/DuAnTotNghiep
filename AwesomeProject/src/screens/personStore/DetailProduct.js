@@ -21,6 +21,7 @@ LogBox.ignoreAllLogs();
 const DetailProduct = (props) => {
     const { navigation } = props;
     const { route } = props;
+    const {isLogin}=useContext(AppContext);
     const { params } = route;
     console.log(params)
     const [productPrice, setProductPrice] = useState('');
@@ -584,6 +585,7 @@ const DetailProduct = (props) => {
             }}>
                 <DialogFeedback
                     modalVisible={modalVisible} setModalVisible={setModalVisible} star={star} setStar={setStar}
+                    productID={params.itemId} userID={"113"}
                 />
             </View>
 

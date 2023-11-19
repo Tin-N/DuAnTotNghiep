@@ -1,13 +1,39 @@
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity,ImageBackground } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { getStorage, ref, deleteObject } from "firebase/storage";
+import { storage } from '../../utils/FirebaseConfig';
 import { FlatList } from 'react-native';
+import { LogBox } from 'react-native';
+import { SwipeItem, SwipeButtonsContainer, SwipeProvider } from 'react-native-swipe-item';
 
+import ImageViewer from '../../component/ImageView/ImageViewerDialog';
+import AxiosIntance from '../../utils/AxiosIntance';
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 
 const ItemFeedBack = (props) => {
-    const { dataFeedback } = props;
+    const { dataFeedback,setCheck,check } = props;
     const [shopFeedBack, setShopFeedBack] = useState("wsdf")
-    const [roleId, setRoleId] = useState(1)
+    const [roleId, setRoleId] = useState(1);
+    const [image, setimage] = useState("");
+    const [isModalVisible, setModalVisible] = useState(false);
+    const deleteFeedback = async ()=>{
+        const response= await AxiosIntance().post("/feedbackAPI/deleteFeedback?id="+dataFeedback._id);
+        if(response.result){
+            setCheck(!check);
+        }
+    }
 
+    
+    const deleteImageArr =async ()=>{
+        if(dataFeedback.image.length>0){
+            for(let i=0 ;i<dataFeedback.image.length;i++){
+                deleteObject(ref(storage, dataFeedback.image[i]));
+                console.log("Ok r ddos");
+            }
+            deleteFeedback();
+        }
+    }
     useEffect(() => {
         setShopFeedBack("2");
         setRoleId(2);
@@ -15,125 +41,108 @@ const ItemFeedBack = (props) => {
 
     const [imageStar, setimageStar] = useState(require('../../images/close.png'))
     useEffect(() => {
-        const starImage = () => {
-            if (dataFeedback.rating == 1) {
-                setimageStar(require('../../images/1star.png'))
-                return
+        try {
+            const starImage = () => {
+                if (dataFeedback.rating == 1) {
+                    setimageStar(require('../../images/1star.png'))
+                    return
+                }
+                if (dataFeedback.rating == 2) {
+                    setimageStar(require('../../images/2star.png'))
+                    return
+                } if (dataFeedback.rating == 3) {
+                    setimageStar(require('../../images/3star.png'))
+                    return
+                } if (dataFeedback.rating == 4) {
+                    setimageStar(require('../../images/4star.png'))
+                    return
+                } if (dataFeedback.rating == 5) {
+                    setimageStar(require('../../images/5star.png'))
+                    return
+                }
             }
-            if (dataFeedback.rating == 2) {
-                setimageStar(require('../../images/2star.png'))
-                return
-            } if (dataFeedback.rating == 3) {
-                setimageStar(require('../../images/3star.png'))
-                return
-            } if (dataFeedback.rating == 4) {
-                setimageStar(require('../../images/4star.png'))
-                return
-            } if (dataFeedback.rating == 5) {
-                setimageStar(require('../../images/5star.png'))
-                return
-            }
+            starImage();
+        } catch (error) {   
         }
-        starImage();
+        
         return () => {
         }
     }, [])
 
+    let string="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+ 
 
     return (
-        <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
+
+        <View         
+    
+         style={{ marginHorizontal: 20,
+          marginVertical: 5}}>
+            <View>
             <View style={{ flexDirection: 'row' }}>
                 <Image source={require('../../images/avatarPersonStore.png')} />
                 <View style={{ marginLeft: 10 }}>
-                    <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row' }}>
                         <Text style={{ color: 'black', width: 100 }}>
                             Nguyễn Văn Tin
                         </Text>
-                        <Text style={{ marginLeft: 50 }}>
+                        <Text style={{ marginLeft: 50,paddingRight:10 }}>
                             ngày 10 tháng 3 2023
                         </Text>
+                        
                     </View>
-                    <Image style={{ marginTop: 10 }} source={imageStar} />
+                   <View style={{marginVertical:10,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+
+                   
+                    <Image style={{ marginTop: 5 }} source={imageStar} />
+                       {
+                        dataFeedback.userID=="113"? 
+                        <TouchableOpacity onPress={()=>deleteImageArr()}>
+                        <Image source={require('../../images/bin.png')} style={{width:20,height:20}}></Image>
+                        </TouchableOpacity>:<View/>
+                       }
+                   </View>
                 </View>
             </View>
             <View style={{ paddingLeft: 57 }}>
-                <Text style={{ letterSpacing: 0.3 }}>
-                    {dataFeedback.feedbackText}
+            <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                {dataFeedback.image.length > 0 ? (
+                            dataFeedback.image.map(item => (
+                            <View style={{borderRadius: 5, overflow: 'hidden', margin: 5}}>
+                                <TouchableOpacity onPress={()=>{setimage(item);setModalVisible(true)}}>
+                                    <Image
+                                    style={{width: 80, height: 80, borderRadius: 10}}
+                                    source={{uri: item}}>
+                                    
+                                    </Image>
+                                </TouchableOpacity>
+
+                            </View>
+                            ))
+                        ) : (
+                            <View />
+                        )}
+
+
+            </View>
+
+                {
+                (image.length>0)&&(isModalVisible)?<ImageViewer imageUrl={image} isModalVisible={isModalVisible} setModalVisible={setModalVisible}/>
+                :<View/>
+
+                }
+
+                <Text style={{ letterSpacing: 0.3, fontFamily: 'TiltNeon-Regular' }}>
+                    {dataFeedback.feedback}
+
                 </Text>
+              
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 30 }}>
-                <View style={{ marginLeft: 50, flexDirection: 'row', width: '33%', justifyContent: 'space-around', alignItems: 'center' }}>
-                    <Image source={require('../../images/like.png')} style={{ width: 13, height: 13 }}></Image>
-                    <Text>50 lượt thích</Text>
-                </View>
-                <TouchableOpacity>
-                    <Text >Trả lời()</Text>
-                </TouchableOpacity>
+         
             </View>
-            {/* <FlatList
-            data = {dataReplyFeedback}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => 
-            (
-                <View style={{
-                    marginLeft: 55,
-                    marginTop: 5,
-                    backgroundColor: '#eaeaea',
-                    padding: 10,
-                    display: 'none'
-                }}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <View style={{}}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ color: 'black', width: 120 }}>
-                                    Chủ shop bố đời
-                                </Text>
-                                <Text style={{ marginLeft: 20 }}>
-                                    ngày 10 tháng 3 2023
-                                </Text>
-                            </View>
-                            <View>
-                                {
-                                    (roleId == 1) && (shopFeedBack !== null) ?
-                                        <Text style={{ fontSize: 13, padding: 5 }}>
-                                            Ke mm chu, ngu thi chet chu toi tinh gi =))
-                                        </Text>
-                                        :
-                                        <View />
-    
-                                }
-    
-                                {
-                                    (roleId == 2) && (shopFeedBack !== null) ?
-                                        <Text style={{ fontSize: 13, padding: 5 }}>
-                                            Ke mm chu, ngu thi chet chu toi tinh gi =))
-                                        </Text>
-                                        :
-                                        <View>
-                                            <TextInput
-                                                multiline={true}
-                                                placeholder='Hay dien thong tin'
-                                                style={{
-                                                    justifyContent: 'flex-start',
-                                                    widtth: 100
-                                                }}
-                                            />
-                                            <TouchableOpacity style={{ alignSelf: 'flex-end', padding: 2, margin: 2 }}>
-                                                <Text style={{ fontSize: 16, fontWeight: '500' }}>Đăng</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                }
-                            </View>
-                        </View>
-                    </View>
-                </View>
-            )
-            }
-            keyExtractor={item => item.feedbackID}/> */}
+          
 
         </View>
     )
-}
-
-export default ItemFeedBack
+            }
+    export default  ItemFeedBack;
