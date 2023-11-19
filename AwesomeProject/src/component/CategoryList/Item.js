@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 
-const Item = (props) => {
-    const {data,indexP,setNewIndex} = props
-    const [index, setindex] = useState()
+const Item = props => {
+  const { data, indexP, setNewIndex } = props;
+  const [index, setindex] = useState();
   const [viewWidth, setViewWidth] = useState(0);
   const [isChosen, setIsChosen] = useState(false);
   const onHandlePress = index => {
     setNewIndex(index);
-     // Gọi hàm callback để truyền dữ liệu lên cha
+    // Gọi hàm callback để truyền dữ liệu lên cha
   };
   useEffect(() => {
     // Đợi đến khi đoạn văn bản đã được hiển thị và có kích thước thật sự.
@@ -16,26 +16,19 @@ const Item = (props) => {
       setViewWidth(data.name.length);
     }
     if (data.name.length > 15) {
-        setViewWidth(data.name.length-5);
-      }
+      setViewWidth(data.name.length - 5);
+    }
   }, [data.name.length]);
 
-
   return (
-    <View style={{
-    margin:5,
-    borderColor:'black',
-    borderWidth:1.5,
-    padding:2,
-    borderRadius:5,
-    backgroundColor:  'white',
-
-     }}>
-      <Text 
-        onPress={() => {onHandlePress(data.id);}}
-        style={{ padding:1,width: (viewWidth*11), 
-        textAlign:'center',alignContent:'center',
-        justifyContent:'center', fontSize:15}}>{data.name}</Text>
+    <View style={{alignItems:'center'}}>
+      <TouchableOpacity style={{
+        padding:20, backgroundColor: data.color, borderRadius:15
+      }}>
+        <Image source={require('../../images/star.png')}/>
+      </TouchableOpacity>
+      <Text style={{fontFamily:'TiltNeon-Regular', 
+      marginTop:5, color:'black'}}>{data.name}</Text>
     </View>
   );
 };

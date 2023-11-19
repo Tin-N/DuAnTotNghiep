@@ -33,13 +33,12 @@ const Banner = (props) => {
 
             if (typeof Text1 !== 'undefined')
             {
-                if(text.length >22)
+                if(Text1.length >22)
                 {
-                    let text1=text.toString().slice(0,23)+"...";
+                    let text1=Text1.toString().slice(0,23)+"...";
                     setText(text1);
-                    console.log(text.length)
                 }else
-                    setText(text)
+                    setText(Text1)
 
 
             }else{
@@ -67,7 +66,7 @@ const Banner = (props) => {
 
     return (
         <View style={[StyleBanner.WholeView,{backgroundColor:backgroundColor}]}>
-           <View style={{width:"65%",justifyContent:'center',paddingLeft:30}}>
+           <View style={{width:"65%",justifyContent:'center',paddingLeft:10}}>
             <Text style={[StyleBanner.title,{color:primaryTextColor}]}>{text}</Text>
             <View style={{flexDirection:'row',marginTop:3}}>
                 <Text style={[StyleBanner.secondText,{opacity:opacitySecondText,color:secondTextColor}]}>Mua ngay</Text>

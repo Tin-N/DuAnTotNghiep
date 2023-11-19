@@ -30,9 +30,9 @@ const SearchStore = () => {
                 <TouchableOpacity>
                     <Image style={StyleSearch.iconSearch} source={require('../../images/search.png')} />
                 </TouchableOpacity> */}
-                <TextInput style={StyleSearch.textInput} placeholder='Bàn phím cơ gaming' />
+                <TextInput style={[StyleSearch.textInput,{}]} placeholder='Bàn phím cơ gaming' />
                 <TouchableOpacity style={StyleSearch.searchButton}>
-                    <Text style={{ color: 'white', marginLeft: 18, marginRight: 18 }}>
+                    <Text style={{ color: 'white',fontSize:15, marginLeft: 18, marginRight: 18 }}>
                         Tìm Kiếm
                     </Text>
                 </TouchableOpacity>

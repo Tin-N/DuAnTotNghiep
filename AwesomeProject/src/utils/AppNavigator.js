@@ -17,6 +17,7 @@ import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
 import TestScreen from '../screens/TestScreen';
 // import TestScreen from '../screens/TestScreen/TestScreen'
 import DetailProduct from '../screens/personStore/DetailProduct';
+
 import ProfileUser from '../screens/ProfileUser';
 import CreateProduct from '../screens/personStore/CreateProduct';
 import SignIn from '../screens/SignIn';
@@ -27,8 +28,19 @@ import ProfileScreen from '../screens/ProfileScreen';
 import ResetPassword from '../screens/ResetPassword';
 import ConfirmPhoneNum from '../screens/ConfirmPhoneNum';
 import UpdatePassword from '../screens/UpdatePassword';
+
+import ProductProcess from '../screens/personStore/ProductProcess'
+import CreateProduct from '../screens/personStore/CreateProduct';
+import SProductProcess from '../screens/personStore/Shiper/SProductProcess';
+import ProductProcessOverview from '../screens/personStore/ProdsProcessOverview';
+import SearchScreen from '../screens/SearchScreen';
+import FilterScreen from '../screens/FilterScreen';
+import HomeScreen from '../screens/HomeScreen';
+import DetailList from '../screens/DetailList';
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
 const User = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='Splash'>
@@ -43,8 +55,7 @@ const User = () => {
                         <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>                       
                         <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
                         <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
-
-        </Stack.Navigator>
+        </Stack.Navigator>            
     )
 }
 const Profile = () => {
@@ -67,9 +78,11 @@ const Profile = () => {
 }
 const ProductHome = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='HomeStore'>
-            <Stack.Screen name='ProductList' component={HomeStore}></Stack.Screen>
-            {/* <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen> */}
+
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProductList'>
+            <Stack.Screen name='ProductList' component={HomeScreen}></Stack.Screen>
+            <Stack.Screen name='SearchScreen' component={SearchScreen}></Stack.Screen>
+            <Stack.Screen name='FilterScreen' component={FilterScreen}></Stack.Screen>
             <Stack.Screen name='SearchStore' component={SearchStore}></Stack.Screen>
             <Stack.Screen name='ProductDetail' component={ProductDetail}></Stack.Screen>
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
@@ -82,9 +95,21 @@ const ProductHome = () => {
                     animationTypeForReplace: 'push',
                     animation: 'slide_from_right'
                 }}></Stack.Screen>
+            <Stack.Screen name='DetailList' component={DetailList}></Stack.Screen>
+
         </Stack.Navigator>
     )
 }
+
+const ProductProcessStack = () => {
+    return (
+      <Stack.Navigator initialRouteName='Product Process Overview'>
+        <Stack.Screen name="Product Process Overview" component={ProductProcessOverview} />
+        <Stack.Screen name="Product Process" component={ProductProcess} />
+      </Stack.Navigator>
+    );
+  };
+
 const Main = () => {
     return (
         <Tab.Navigator
@@ -92,26 +117,56 @@ const Main = () => {
                 headerShown: false,
                 tabBarShowLabel: true,
                 tabBarHideOnKeyboard: true,
+                unmountOnBlur: true,
+                tabBarActiveTintColor: '#3669C9',
+                tabBarInactiveTintColor: 'black',
+                tabBarLabelStyle: {
+                },
+                tabBarStyle: {
+                    backgroundColor: '#FFFFFF',
+                    paddingBottom: 5,
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15,
+                    height: 60,
+                    position: 'absolute',
+                    borderTopWidth: 0,
+                    elevation: 10 // để thêm bóng cho Android
+                },
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
                     if (route.name === 'Home') {
                         iconName = focused ? 'home' : 'home-outline';
                     } else if (route.name === 'Order') {
+
                         iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
                     } else if (route.name === 'Profile') {
+
+                        iconName = focused ? 'bag' : 'bag-handle-outline';
+                    } else if (route.name === 'SignUp') {
+
                         iconName = focused ? 'people-sharp' : 'people-outline';
+                    } else if (route.name === 'Prod Process') {
+                        iconName = focused ? 'clipboard' : 'clipboard-outline';
                     }
                     return <Icon1 name={iconName} size={size} color={color} />
                 },
                 tabBarActiveTintColor: '#3669C9',
                 tabBarInactiveTintColor: 'black',
+                tabBarIconStyle: {
+                    marginTop:8
+                }
             })}
         >
             <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Order" component={Order} />
+
             <Tab.Screen name="Profile" component={Profile} />
 
 
+
+
+            <Tab.Screen name="Prod Process" component={ProductProcessStack} />
+            <Tab.Screen name="Shipper" component={SProductProcess} />
 
         </Tab.Navigator>
     )

@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ToastAndroid } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react'
 import { StyleHomeStore, StyleLogin } from '../../css/Styles'
 import { FlatList } from 'react-native';
@@ -18,7 +18,7 @@ const HomeStore = (props) => {
     useEffect(() => {
         try {
             const getAllProductByUserID = async () => {
-                const response = await AxiosIntance().get("/productAPI/getAllProductByUserID?id=" + '113');
+                const response = await AxiosIntance().get("/productAPI/getAllProductByUserID?id=654627d67137a3bf678fb544");
                 if (response.result) {
                     setDataProduct(response.products);
                     setProductID(response.products._id);

@@ -41,6 +41,9 @@ const SignIn = () => {
       Alert.alert("Password Error","Your password must have more than 11 characters, and must include numbers");
   }
 }
+  const {setuserInfo, userInfo}= useContext(AppContext);
+  const { userID, setuserID}= useContext(AppContext);
+
 
   const moveToSignUp = () => {
     navigation.navigate("SignUp");
@@ -64,6 +67,7 @@ const SignIn = () => {
         const _id = response.user._id;
         setuserInfo({...userInfo, ...response.user});
         setuserID(_id);
+
         setisLogin(true)
         console.log("UserID "+ response.user );// log ra ID
 
@@ -72,14 +76,15 @@ const SignIn = () => {
         navigation.navigate("ProfileScreen");
        
         
+
       }else{
         // ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);
       }
       
     } catch (error) {
-      console.log(error);
+      console.log("Đăng nhập thất bại: " + error);
     }
-  
+
   }
      
   

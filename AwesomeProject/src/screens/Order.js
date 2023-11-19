@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Pressable, FlatList, TouchableOpacity, Switch, Alert } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable, FlatList, ActivityIndicator, Switch, Alert, ToastAndroid } from 'react-native'
 import React, { useContext, useState, useEffect, useCallback } from 'react'
 import { AppContext } from '../utils/AppContext'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -10,6 +10,7 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import AxiosIntance from '../utils/AxiosIntance'
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 const ObjectID = require('bson-objectid');
+import ActionBar from './ActionBar'
 import { memo } from "react"
 
 const Order = () => {
@@ -18,26 +19,46 @@ const Order = () => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const [isCheckBox, setisCheckBox] = useState(false);
-  const [products, setproducts] = useState([]);
-  const [total, settotal] = useState(0)
+  const [userCart, setuserCart] = useState([])
+  const [productsSelected, setproductsSelected] = useState([])
+  const [totalCost, settotalCost] = useState(0)
+  const [isCartChanged, setisCartChanged] = useState(1)
+  const [isLoading, setisLoading] = useState(false)
 
-  const [userCart, setuserCart] = useState()
-  const userID = "5f87cf3a2a3a2f45babc64c3";
-
-  console.log(">>>>> Order.js Render <<<<<")
-
+  const appContextData = useContext(AppContext);
+  const userID = appContextData.userID;
 
   // Lấy dữ liệu giỏ hàng của user
   useEffect(() => {
     (async () => {
       try {
-        const response = await AxiosIntance().get(`/cart/getCartByUserID/${userID}`);
-        setuserCart(response[0].products);
+        const response = await AxiosIntance().get(`/cart/getCartByUserID/${userID}`)
+          .then(setisLoading(true));
+        setuserCart(response);
       } catch (error) {
-        console.log("Lỗi lấy dữ liệu: " + error)
+        console.log("Order: lỗi lấy dữ liệu: " + error);
       }
     })();
-  }, []);
+  }, [isCartChanged]);
+
+  // Các dữ liệu đã chọn
+  useEffect(() => {
+    if (userCart) {
+      const prodsSelected = userCart.filter(product => product.isSelected === true);
+      const prodsWithDeliveryStatus = prodsSelected.map(product => ({
+        ...product,
+        deliveryStatus: 'Pending',
+      }));
+      setproductsSelected(prodsWithDeliveryStatus);
+      // console.log("Product Selected: " + prodsSelected);
+    }
+  }, [userCart]);
+
+  // Tính tổng tiền
+  useEffect(() => {
+    settotalCost(productsSelected.reduce((total, product) => total + product.itemTotalCost, 0))
+    // console.log(">>>>>>>>>Total Cost: " + totalCost)
+  }, [productsSelected])
 
   // View thông báo khi giỏ hàng trống
   const MyCartIsEmpty = () => {
@@ -51,6 +72,7 @@ const Order = () => {
       </View>
     )
   }
+
   // View giỏ hàng
   const MyCart = () => {
     return (
@@ -59,10 +81,7 @@ const Order = () => {
         renderItem={
           ({ item }) =>
             <OrderItem data={item}
-              itemSelectedData={handleItemSeletedFromOrderItem}
-              itemDeselectedData={handleItemDeselectedFromOrderItem}
-              updateItemData={handleUpdateItemSelected}
-
+              cartChanged={handleCartChanged}
             />
         }
         keyExtractor={item => item.productID}
@@ -70,58 +89,43 @@ const Order = () => {
     )
   }
 
-  const handleItemSeletedFromOrderItem = useCallback((productsReceived) => {
-    setproducts([...products, productsReceived]);
-
-    console.log("Product đã chọn " + productsReceived)
-  }, [products])
-
-  const handleItemDeselectedFromOrderItem = useCallback((productIDReceived) => {
-    setproducts(products => products.filter(product => product.productID !== productIDReceived));
-  }, [products])
-
-  const handleUpdateItemSelected = useCallback((productID, quantity, itemTotalCost) => {
-    const cloneProducts = [...products];
-
-    const existingProductIndex = cloneProducts.findIndex(item => item.productID === productID);
-
-    if (existingProductIndex !== -1) {
-      cloneProducts[existingProductIndex].quantity = quantity;
-      cloneProducts[existingProductIndex].itemTotalCost = itemTotalCost;
-
-      setproducts(cloneProducts);
+  const handleCartChanged = () => {
+    if (isCartChanged) {
+      setisCartChanged(false)
     } else {
-      return;
+      setisCartChanged(true)
     }
-  }, [products])
-
-  // Tính tổng tiền
-  useEffect(() => {
-    // Sử dụng reduce để tính tổng itemTotalCost của tất cả các mục trong mảng products
-    settotal(products.reduce((prevTotalValue, product) => {
-      console.log(">>>>>>>>>>" + product.itemTotalCost)
-      return prevTotalValue + product.itemTotalCost;
-    }, 0))
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>" + products.itemTotalCost)
-    console.log("Total: " + total)
-  }, [products])
+  }
 
   // Hàm xử lý chức năng đặt hàng
   const OrderFunc = async () => {
     console.log("-------------------------------------------------")
     try {
-      console.log("Current Products" + products)
-
       const objectId = new ObjectID();
       console.log(objectId)
-      
-      const orderDetailResponse = await AxiosIntance().post('/orderdetail/add', { orderDetailID: objectId, products: products, totalCost: total });
-      console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
+
+      const orderDetailResponse = await AxiosIntance().post('/orderdetail/add',
+        {
+          orderDetailID: objectId,
+          products: productsSelected,
+          totalCost: totalCost
+        });
+      // console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
 
       const OrderPost = async () => {
         if (orderDetailResponse.error == false) {
-          const orderResponse = await AxiosIntance().post('/order/add', { orderDetailID: objectId, orderDate: new Date(), deliveryStatus: 'Pending' });
-          console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
+          const orderDate = new Date()
+          const orderResponse = await AxiosIntance().post('/order/add',
+            {
+              userID,
+              orderDetailID: objectId,
+              orderDate: orderDate,
+              paymentStatus: 'Unpaid',
+              paymentMethods: 'COD',
+              ownerID: [...new Set(productsSelected.map(product => product.ownerID))]
+            });
+          console.log("Đặt hàng thành công");
+          ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
         }
       }
 
@@ -140,9 +144,11 @@ const Order = () => {
             text: 'OK', // Chữ hiển thị trên nút OK
             onPress: () => {
               // Xử lý khi người dùng chọn "OK"
-              OrderPost().then(() => {
-                setproducts([]);
-                // Hàm xóa dữ liệu trên cart của user sẽ được thêm ở đây
+              OrderPost().then(async () => {
+                console.log(productsSelected)
+                await AxiosIntance().delete(`cart/deleteProductsSelected/${userID}`)
+              }).then(() => {
+                handleCartChanged()
               });
             },
           },
@@ -157,29 +163,30 @@ const Order = () => {
 
   return (
     <View style={StyleOrder.container}>
-
-      {/* header */}
-      <View style={StyleOrder.header}>
-        <Text style={StyleOrder.textHeader}>My Cart</Text>
-        <Pressable >
-          <Icon name='ellipsis-vertical' size={24} color={"black"} />
-        </Pressable>
-      </View>
-
-      {/* co san pham thi hien list san pham khong thi hien hinh anh */}
-      <View style={{ height: 500 }}>
-        {!userCart ? <MyCartIsEmpty /> : <MyCart />}
-      </View>
-
-
       <View>
+        {/* header */}
+        <ActionBar title={"Cart"} />
+        {/* co san pham thi hien list san pham khong thi hien hinh anh */}
+        {isLoading
+          ? <View style={{ height: 550 }}>
+            {userCart.length != 0 ? <MyCart /> : <MyCartIsEmpty />}
+          </View>
+          : <View style={{ alignItems: 'center', marginTop: 220 }}>
+            <ActivityIndicator size='large' color="#0000ff" />
+            <Text>Loading...</Text>
+          </View>
+        }
+
+      </View>
+
+      <View style={{ marginRight: 10 }}>
         {/* Order Process */}
         <View style={{ bottom: 100 }}>
-          <View style={StyleOrder.tillte}>
-            <Image source={require('../images/cost.png')} />
-            {total == 0
+          <View style={[StyleOrder.tillte, { marginLeft: -6, marginRight: -6, borderTopWidth: 0.3, borderTopLeftRadius: 10, borderTopRightRadius: 10, borderLeftWidth: 1, borderRightWidth: 1 }]}>
+            <Image style={{ width: 40, height: 40 }} source={require('../images/icons8-coin-50.png')} />
+            {!productsSelected
               ? <Text style={StyleOrder.textTillte}>Bạn chưa chọn sản phầm nào</Text>
-              : <Text style={StyleOrder.textTillte}>Bạn đã chọn {products.length} sản phẩm</Text>}
+              : <Text style={StyleOrder.textTillte}>Bạn đã chọn {productsSelected.length} sản phẩm</Text>}
             <Switch
               trackColor={{ false: '#767577', true: '#3669C9' }}
               thumbColor={isEnabled ? '#18039E' : '#f4f3f4'}
@@ -194,7 +201,7 @@ const Order = () => {
               onPress={() => setisCheckBox(!isCheckBox)}
               iconComponent={isCheckBox ? <MaterialIcons name='check-box' size={24} color={'#3669C9'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
             />
-            <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: {total}</Text>
+            <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: {totalCost}</Text>
 
             <Pressable onPress={OrderFunc} style={StyleOrder.pressableBuy}>
               <Text style={[StyleOrder.textTillte, { color: 'white', marginTop: 5 }]}>Mua Hàng</Text>

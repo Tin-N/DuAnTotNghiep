@@ -1,12 +1,12 @@
-export const fetchingData =() =>{
+export const fetchingData = () => {
     const data = [
-        {id:0,name:'Tất cả'},
-        {id:1,name:'Áo'},
-        {id:2,name:'Trang sức'},
-        {id:3,name:'Quần âu'},
-        {id:4,name:'Thời trang thể thao'},
-        {id:5,name:'Dụng cụ thể thao'},
-        {id:6,name:'Phụ kiện máy tính - laptop'}
+        { id: 0, name: 'Category', color: '#F0EAFC' },
+        { id: 1, name: 'Sneaker', color: '#FCEEEA' },
+        { id: 2, name: 'Sports', color: '#F5E6F8' },
+        { id: 3, name: 'Clothing', color: '#F3ECFC' },
+        { id: 4, name: 'Food', color: '#FCEEEA' },
+        { id: 5, name: 'Quần âu', color: '#F3ECFC' },
+        { id: 6, name: 'Quần âu', color: '#F3ECFC' },
     ]
     return data;
 }

@@ -2,7 +2,7 @@ export const FetchData = ()=>{
     const dataProduct00 = [
         {
             _idProduct: 1,
-            nameProduct: "Bánh gạo",
+            nameProduct: "Bánh gạo cực mạnh topping đầy đủ ngon bá cháy bọ chét",
             priceProduct: 30000,
             rationProduct: 4.6,
             reviewsProduct: 86
