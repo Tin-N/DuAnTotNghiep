@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, TextInput, Clipboard, ToastAndroid, Modal } from 'react-native'
+import { View, Text, Image, TouchableOpacity, TextInput, ToastAndroid, Modal, StyleSheet } from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen')
@@ -13,6 +13,7 @@ import { StyleDialogShopping } from '../../css/Styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { fromHsv } from 'react-native-color-picker';
 import { ColorPicker, TriangleColorPicker } from 'react-native-color-picker';
+import Icon1 from 'react-native-vector-icons/Ionicons';
 // import { ColorPicker, TriangleColorPicker } from 'react-native-color-picker'
 import { Axios } from 'axios';
 const CreateProduct = (props) => {
@@ -30,6 +31,7 @@ const CreateProduct = (props) => {
     const [quantity, setQuantity] = useState(0);
     const [uerID, setUserID] = useState('');
     const [detail, setDetail] = useState('');
+    const [heightTextInputDetail, setHeightTextInputDetail] = useState(0);
     const [imageLink, setimageLink] = useState([])
     const [imageLink2, setimageLink2] = useState([])
     const [checkimgLink, setcheckimgLink] = useState(false);
@@ -317,10 +319,19 @@ const CreateProduct = (props) => {
         setColorModels(updatedImageArray);
     }
     return (
-        <View style={{ opacity: opacityBackground(), backgroundColor: 'white' }}>
-            <TouchableOpacity onPress={goBack} style={{ padding: 20 }}>
-                <Image source={require('../../images/close.png')} />
-            </TouchableOpacity>
+        <View style={{
+            opacity: opacityBackground(), backgroundColor: 'white',
+            width: '100%', height: '100%'
+        }}>
+            <View style={styles.menu}>
+                <TouchableOpacity onPress={goBack}>
+                    <Icon1 name="chevron-back-outline" size={23}></Icon1>
+                </TouchableOpacity>
+                <Text style={styles.titleMenu}>
+                    Thêm sản phẩm mới
+                </Text>
+            </View>
+            <KeyboardAwareScrollView>
             <ScrollView showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 overScrollMode='never'
@@ -369,18 +380,26 @@ const CreateProduct = (props) => {
                         }}>(Ảnh đầu tiên sẽ là ảnh đại diện sản phẩm)</Text>
                     </View>
                 </View>
+                <View style={{ backgroundColor: '#f3f3f3' }}>
+                    <Text style={styles.titleBox}>
+                        Thông tin cho sản phẩm
+                    </Text>
+                </View>
                 <View style={{
-                    marginLeft: 30, marginRight: 30, padding: 10,
-                    borderWidth: 1, borderColor: '#CCCCCC', borderRadius: 5
+                    marginLeft: 10, marginRight: 10, padding: 10, borderRadius: 5
                 }}>
-                    <TextInput style={{
-                        fontSize: 15, borderColor: '#CCCCCC',
-                        borderWidth: 1, borderRadius: 8, paddingLeft: 10,
-                        fontFamily: 'TiltNeon-Regular'
-                    }} placeholder='Tên sản phẩm' onChangeText={setName}/>
+                    <View>
+                        <Text style={{ fontSize: 15 }}>Tên sản phẩm*</Text>
+                        <TextInput
+                            onChangeText={setName}
+                            style={styles.textInput}
+                        />
+                    </View>
                     <View style={{ marginTop: 10, zIndex: 0 }}>
+                        <Text style={{ fontSize: 15 }}>Danh mục hiển th*</Text>
                         <View
-                            style={{ zIndex:3, flexDirection:'row'
+                            style={{
+                                zIndex: 3, flexDirection: 'row', marginTop: 5
                             }}>
                             <DropDownPicker
                                 open={open}
@@ -389,54 +408,63 @@ const CreateProduct = (props) => {
                                 setOpen={setOpen}
                                 setValue={setValue}
                                 setItems={setItems}
-                                placeholder={'Danh mục'}
+                                placeholder={'Chưa chọn'}
                                 props={{
                                     activeOpacity: 1
                                 }}
-                                dropDownContainerStyle={{borderColor: '#CCCCCC'}}
-                                style={{ borderColor: '#CCCCCC',  zIndex:0}}
+                                dropDownContainerStyle={{ borderColor: '#CCCCCC' }}
+                                style={{ borderColor: '#CCCCCC', zIndex: 0 }}
                             />
-                            <Image style={{marginTop:10,marginLeft:-55, zIndex:1, width:25, height:25}} source={require('../../images/category.png')}/>
+                            <Image style={{ marginTop: 10, marginLeft: -55, zIndex: 1, width: 25, height: 25 }} source={require('../../images/category.png')} />
                         </View>
                         <View style={{
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}>
-                            <Text style={{display: 'none' }}>Danh mục: {value === null ? 'chưa có' : value}</Text>
+                            <Text style={{ display: 'none' }}>Danh mục: {value === null ? 'chưa có' : value}</Text>
                         </View>
-                        <View style={{
-                            padding: 10,
-                            borderWidth: 1, borderColor: '#CCCCCC', borderRadius: 5, marginTop: 20
-                        }}>
-                            <TextInput onChangeText={setDetail} placeholder='Mô tả sản phẩm' multiline={true} numberOfLines={5}></TextInput>
+                        <View>
+                            <Text style={{ fontSize: 15, marginTop: 10 }}>Mô tả*</Text>
+                            <View style={{ width: '100%', flexDirection: 'row' }}>
+                                <TextInput
+                                    maxLength={200}
+                                    onChangeText={setDetail}
+                                    onContentSizeChange={event => {
+                                        setHeightTextInputDetail(event.nativeEvent.contentSize.height);
+                                    }}
+                                    style={[
+                                        styles.textInputDetail,
+                                        { height: Math.max(100, heightTextInputDetail) },
+                                    ]}
+                                    multiline={true}
+                                />
+                                <Text style={{ fontSize: 15, position: 'absolute', right: 0, padding: 10 }}>{detail.length}/200</Text>
+                            </View>
+
                         </View>
                     </View>
                 </View>
-                <View>
-                    <View style={{ marginLeft: 30, marginRight: 30, padding: 10 }}>
-                        <Text style={{ fontSize: 20, color: 'black', fontFamily: 'TiltNeon-Regular' }}>
-                            Giá thành và số lượng
-                        </Text>
-                    </View>
-                    <View style={{
-                        marginLeft: 30, marginRight: 30, padding: 5,
-                        borderWidth: 1, borderColor: '#CCCCCC', borderRadius: 5
-                    }}>
+                <Text style={{ paddingLeft: 20 }}>Giá thành và số lượng*</Text>
+                <View style={{
+                    marginLeft: 20, marginRight: 20, padding: 10,
+                    borderWidth: 1, borderColor: '#CCCCCC', borderRadius: 5, marginTop: 5, marginBottom: 20
+                }}>
+                    <View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <TextInput onChangeText={setPrice} style={{
                                 fontSize: 15, borderColor: '#CCCCCC',
                                 borderBottomWidth: 1, borderRadius: 8, paddingLeft: 10,
-                                fontFamily: 'TiltNeon-Regular', width: 260
+                                fontFamily: 'TiltNeon-Regular', width: 280
                             }}></TextInput>
                             <Text style={{ fontSize: 15, color: 'black', textAlign: 'center' }}>
-                                Giá
+                                đ Giá
                             </Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <TextInput onChangeText={setQuantity} style={{
                                 fontSize: 15, borderColor: '#CCCCCC',
                                 borderRadius: 8, paddingLeft: 10,
-                                fontFamily: 'TiltNeon-Regular', width: 260
+                                fontFamily: 'TiltNeon-Regular', width: 280
                             }}></TextInput>
                             <Text style={{ fontSize: 15, color: 'black', textAlign: 'center' }}>
                                 S.lượng
@@ -444,86 +472,118 @@ const CreateProduct = (props) => {
                         </View>
                     </View>
                 </View>
-                <View style={{ paddingBottom: 100 }}>
-
-                    <View style={{ marginLeft: 30, marginRight: 30, padding: 10 }}>
-                        <Text style={{ fontSize: 20, color: 'black', fontFamily: 'TiltNeon-Regular' }}>
-                            Các biến thể sản phẩm
-                        </Text>
-                    </View>
-                    <View style={{
-                        marginLeft: 30, marginRight: 30, padding: 5,
-                        borderWidth: 1, borderColor: '#CCCCCC', borderRadius: 5
-                    }}>
-                        <View>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <Text style={{ color: 'black', }}>
-                                    Nhóm màu
-                                </Text>
-                                <TouchableOpacity onPress={() => setDialogVisible(true)}>
-                                    <Text>Thêm vào</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View>
-                                <MyDialog isVisible={isDialogVisible} onClose={() => setDialogVisible(false)} />
-                            </View>
-                            <Text>Đã thêm: {colorModels.length}</Text>
-                            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                                {
-                                    colorModels.length > 0 ?
-                                        colorModels.map(item => (
-                                            <View style={{
-                                                justifyContent: 'center', alignItems: 'center',
-                                                borderRadius: 5, overflow: 'hidden', margin: 4
-                                            }}>
-                                                    <ImageBackground style={{ width: 70, height: 70 }} source={{ uri: item.image }}>
-                                                        <TouchableOpacity onPress={() => removeColorFromColorModels(item)}>
-                                                            <Image style={{
-                                                                position: 'absolute', top: 0, margin: 4,
-                                                                width: 25, height: 25, right: 0,
-                                                                backgroundColor: 'white', borderRadius: 12.5
-                                                            }} source={require('../../images/deleteimg1.png')} />
-                                                        </TouchableOpacity>
-                                                    </ImageBackground>
-                                                    <Text style={{
-                                                        padding: 3,
-                                                        margin: 2,
-                                                        marginTop: 6
-                                                    }}>{item.title}</Text>
-                                            </View>
-                                        )) : <View></View>
-                                }
-                            </View>
-
-                        </View>
-                        <View>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <Text style={{ color: 'black' }}>
-                                    Kích cỡ
-                                </Text>
-                                <TouchableOpacity onPress={() => setDialogVisible2(true)}>
-                                    <Text>Thêm vào</Text>
-                                </TouchableOpacity>
-                                <MyDialog2 isVisible2={isDialogVisible2} onClose2={() => setDialogVisible2(false)} />
-                            </View>
-                            <Text>Đã thêm: {sizeModels.length}</Text>
-                        </View>
-                    </View>
-                    <View style={{ marginLeft: 30, marginRight: 30 }}>
-                        <TouchableOpacity onPress={Upload} style={{
-                            padding: 10,
-                            backgroundColor: '#3669C9', borderRadius: 5, marginTop: 10
-                        }}>
-                            <Text style={{ textAlign: 'center', fontSize: 15, color: 'white' }}>
-                                Trưng bày sản phẩm
+                <View style={{ backgroundColor: '#f3f3f3' }}>
+                    <Text style={styles.titleBox}>
+                        Thêm biến thể cho sản phẩm
+                    </Text>
+                </View>
+                <View style={{
+                    marginLeft: 20, marginRight: 20, padding: 10,
+                    borderWidth: 1, borderColor: '#CCCCCC', borderRadius: 5, 
+                    marginTop: 20, marginBottom:50
+                }}>
+                    <View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Text style={{ color: 'black', fontSize: 18 }}>
+                                Nhóm màu
                             </Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity onPress={() => setDialogVisible(true)}>
+                                <Text>Thêm vào</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View>
+                            <MyDialog isVisible={isDialogVisible} onClose={() => setDialogVisible(false)} />
+                        </View>
+                        <Text>Đã thêm: {colorModels.length}</Text>
+                        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                            {
+                                colorModels.length > 0 ?
+                                    colorModels.map(item => (
+                                        <View style={{
+                                            justifyContent: 'center', alignItems: 'center',
+                                            borderRadius: 5, overflow: 'hidden', margin: 4
+                                        }}>
+                                            <ImageBackground style={{ width: 70, height: 70 }} source={{ uri: item.image }}>
+                                                <TouchableOpacity onPress={() => removeColorFromColorModels(item)}>
+                                                    <Image style={{
+                                                        position: 'absolute', top: 0, margin: 4,
+                                                        width: 25, height: 25, right: 0,
+                                                        backgroundColor: 'white', borderRadius: 12.5
+                                                    }} source={require('../../images/deleteimg1.png')} />
+                                                </TouchableOpacity>
+                                            </ImageBackground>
+                                            <Text style={{
+                                                padding: 3,
+                                                margin: 2,
+                                                marginTop: 6
+                                            }}>{item.title}</Text>
+                                        </View>
+                                    )) : <View></View>
+                            }
+                        </View>
+
+                    </View>
+                    <View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Text style={{ color: 'black', fontSize: 18 }}>
+                                Kích cỡ
+                            </Text>
+                            <TouchableOpacity onPress={() => setDialogVisible2(true)}>
+                                <Text>Thêm vào</Text>
+                            </TouchableOpacity>
+                            <MyDialog2 isVisible2={isDialogVisible2} onClose2={() => setDialogVisible2(false)} />
+                        </View>
+                        <Text>Đã thêm: {sizeModels.length}</Text>
                     </View>
                 </View>
             </ScrollView>
-
+            </KeyboardAwareScrollView>
+            <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+                <TouchableOpacity onPress={Upload} style={{
+                    padding: 5,
+                    backgroundColor: '#3669C9', marginTop: 10
+                }}>
+                    <Text style={{ textAlign: 'center', fontSize: 20, color: 'white', fontFamily: 'TiltNeon-Regular' }}>
+                        Thêm sản phẩm
+                    </Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
 
 export default CreateProduct
+const styles = StyleSheet.create({
+    menu: {
+        flexDirection: 'row', alignItems: 'center',
+        borderBottomWidth: 0.2, padding: 10
+    },
+    titleMenu: {
+        fontSize: 20, fontFamily: 'TiltNeon-Regular', color: 'black', marginLeft: 15
+    },
+    titleBox: {
+        color: 'black', fontSize: 20,
+        fontFamily: 'TiltNeon-Regular', textAlign: 'left', padding: 5, paddingLeft: 20
+    },
+    textInput: {
+        fontSize: 20,
+        borderColor: '#CCCCCC',
+        borderWidth: 1,
+        borderRadius: 8,
+        paddingLeft: 10,
+        fontFamily: 'TiltNeon-Regular',
+        marginTop: 5,
+    },
+    textInputDetail: {
+        width: '100%',
+        fontSize: 15,
+        borderColor: '#CCCCCC',
+        borderWidth: 1,
+        borderRadius: 8,
+        paddingLeft: 10,
+        fontFamily: 'TiltNeon-Regular',
+        marginTop: 5,
+        textAlignVertical: 'top',
+        paddingTop: 15
+    }
+})

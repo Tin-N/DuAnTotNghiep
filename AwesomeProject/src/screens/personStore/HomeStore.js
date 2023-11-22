@@ -5,6 +5,8 @@ import { FlatList } from 'react-native';
 import ItemHomeStore from './ItemHomeStore';
 import { ScrollView } from 'react-native';
 import AxiosIntance from '../../utils/AxiosIntance'; import { LogBox } from 'react-native';
+import Icon1 from 'react-native-vector-icons/Ionicons';
+import { TextInput } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const HomeStore = (props) => {
@@ -13,6 +15,11 @@ const HomeStore = (props) => {
     const [productID, setProductID] = useState('');
     const [sold, setSold] = useState(0);
     const [columns, setColumns] = useState(2);
+    const ItemSeparatorComponent = () => {
+        return (
+            <View style={{}} />
+        )
+    }
     useEffect(() => {
         try {
             const getAllProductByUserID = async () => {
@@ -30,37 +37,40 @@ const HomeStore = (props) => {
         return () => {
         }
     }, [])
-    const createHandler = () => {
-        navigation.navigate('CreateProduct');
-    }
     const sellerManageHandler = () => {
         navigation.navigate('ManageProduct');
     }
     return (
-        <View>
-            <TouchableOpacity onPress={createHandler} style={{
+        <View style={{ backgroundColor: 'white' }}>
+            {/* <TouchableOpacity onPress={createHandler} style={{
                 height: 50, width: 50,
                 borderRadius: 25, backgroundColor: '#3669C9',
                 position: 'absolute', bottom: 80, zIndex: 5, alignItems: 'center',
                 justifyContent: 'center', right: 0, margin: 10
             }}>
                 <Text style={{ fontSize: 30, color: 'white' }}>+</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View style={StyleHomeStore.menu}>
-                <TouchableOpacity onPress={sellerManageHandler}>
-                    <Image source={require('../../images/backic.png')} />
-                </TouchableOpacity>
-                <Text style={StyleHomeStore.textTitle}>
-                    Info Seller
-                </Text>
-                <TouchableOpacity style={StyleHomeStore.touchOpa}>
-                    <Image source={require('../../images/search.png')} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginLeft: 10 }}>
-                    <Image source={require('../../images/cardic.png')} />
-                </TouchableOpacity>
+                <View style={{
+                    flexDirection: 'row', width: '100%',
+                    alignItems: 'center', justifyContent: 'space-around'
+                }}>
+                    <TouchableOpacity onPress={sellerManageHandler}>
+                        <Icon1 name="chevron-back-outline" size={27.5} color='white'></Icon1>
+                    </TouchableOpacity>
+                    <View style={{
+                        width: '90%', flexDirection: 'row',
+                        alignItems: 'center', justifyContent: 'space-around'
+                    }}>
+                        <TextInput style={{
+                            backgroundColor: 'white', paddingLeft: 20,
+                            height: 42.7, width: '80%', borderRadius: 20
+                        }} placeholder='Tìm kiếm trong cửa hàng' />
+                        <Icon1 style={{ backgroundColor: '#3669c9', padding: 7, borderRadius: 6 }}
+                            name="cart-outline" size={27.5} color='white'></Icon1>
+                    </View>
+                </View>
             </View>
-            <View style={StyleHomeStore.line}></View>
             <ScrollView
                 alwaysBounceVertical={false}
                 bounces={false}
@@ -123,20 +133,22 @@ const HomeStore = (props) => {
                 </View>
                 <View style={[StyleHomeStore.line, { marginLeft: 30, marginRight: 30 }]}>
                 </View>
-                <View style={StyleHomeStore.productSelling}>
-                    <Text style={StyleHomeStore.textitleProductSelling}>
-                        Sản phẩm đang bán
-                    </Text>
-                </View>
-                <View style={StyleHomeStore.boxSelling}>
-                    <FlatList
-                        data={dataProduct}
-                        numColumns={columns}
-                        bounces={false}
-                        nestedScrollEnabled={true}
-                        renderItem={({ item }) => <ItemHomeStore dulieu={item} navigation={navigation} />}
-                        keyExtractor={item => item._id}
-                    />
+                <View style={{backgroundColor: '#F1F5F8'}}>
+                    <View style={StyleHomeStore.productSelling}>
+                        <Text style={StyleHomeStore.textitleProductSelling}>
+                            Sản phẩm đang bán
+                        </Text>
+                    </View>
+                    <View style={StyleHomeStore.boxSelling}>
+                        <FlatList
+                            data={dataProduct}
+                            numColumns={columns}
+                            ItemSeparatorComponent={ItemSeparatorComponent}
+                            nestedScrollEnabled={true}
+                            renderItem={({ item }) => <ItemHomeStore dulieu={item} navigation={navigation} />}
+                            keyExtractor={item => item._id}
+                        />
+                    </View>
                 </View>
             </ScrollView>
         </View>

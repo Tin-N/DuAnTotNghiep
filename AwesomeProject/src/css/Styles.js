@@ -60,10 +60,11 @@ export const StyleSearchSuggestions = StyleSheet.create({
 });
 export const StyleHomeStore = StyleSheet.create({
     menu: {
-        paddingTop: 30,
+        backgroundColor:'#3669c9',
         flexDirection: 'row',
-        marginLeft: 30,
-        marginRight: 30,
+        padding:10,
+        width:'100%',
+        alignItems:'center', justifyContent: 'space-around'
       },
       textTitle: {
         textAlign: 'center',
@@ -132,15 +133,13 @@ export const StyleHomeStore = StyleSheet.create({
         marginRight: 30,
       },
       boxSelling: {
-        backgroundColor: 'FAFAFA',
         paddingLeft: 30,
         paddingRight: 30,
       },
       boxProduct: {
         backgroundColor: 'white',
         borderRadius: 10,
-        padding: 10,
-        margin: 3,
+        margin:5, overflow:'hidden'
       },
       reviewsProduct: {
         flexDirection: 'row',
@@ -427,7 +426,7 @@ export const StyleDialogShopping = StyleSheet.create({
     },
     line: {
         borderWidth: 1,
-        opacity: 0.03,
+        opacity: 0.05,
         marginTop: 20
     },
     container2: {
@@ -921,10 +920,11 @@ export const StyleSlider = StyleSheet.create({
 export const StyleDetailProduct = StyleSheet.create({
     menu: {
         flexDirection: 'row',
-        marginLeft: 30,
-        marginRight: 30,
+        paddingLeft: 30,
+        paddingRight: 30,
         paddingTop: 20,
-        paddingBottom: 15
+        paddingBottom: 15,
+        borderBottomWidth:0.2
     },
     textTitle: {
         textAlign: 'center',

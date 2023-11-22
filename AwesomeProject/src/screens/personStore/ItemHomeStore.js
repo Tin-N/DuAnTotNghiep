@@ -12,22 +12,10 @@ const ItemHomeStore = (props) => {
   const [priceProduct, setPriceProduct] = useState('');
   const [salePrice, setSalePrice] = useState('');
   const [countFeedback, setCountFeedback] = useState();
-
   useEffect(() => {
     var salePricee = dulieu.price;
     setPriceProduct(formatPrice(salePricee));
     setSalePrice(formatPrice(Math.round(salePricee * 0.9)));
-    // const getFeedback = async () => {
-    //   const response = await AxiosIntance.get('/feedbackAPI/getFeedbackByProductID?ProductID=' + dulieu.id);
-    //   console.log(dulieu._id + "xxxxxxxxxxxxxx");
-    //   if (response.result == true) {
-    //     ToastAndroid.show('getFeedback thành công', ToastAndroid.SHORT);
-    //     setCountFeedback(response.feedbacks.lenght)
-    //   } else {
-    //     ToastAndroid.show('getFeedback thất bại', ToastAndroid.SHORT);
-    //   }
-    // }
-    // getFeedback();
     return () => {
     }
   }, [dulieu]);
@@ -37,7 +25,7 @@ const ItemHomeStore = (props) => {
   return (
     <View style={[StyleHomeStore.boxProduct]}>
       <TouchableOpacity onPress={handleOnClick}>
-        <Image source={{ uri: dulieu.image[0] }} style={{ height: 150, width: 140, borderRadius: 10, borderWidth: 1 }} />
+        <Image source={{ uri: dulieu.image[0] }} style={{ height: 160, width: 155,  }} />
         {/* <Text style={{
           fontFamily: 'DM Sans',
           maxWidth: 200,
@@ -46,18 +34,19 @@ const ItemHomeStore = (props) => {
         }}>
           {dulieu.name}
         </Text> */}
-        <TextWithLimit text={dulieu.name} limit={17}/>
-        <Text>
-          Kho: {dulieu.quantity}
-        </Text>
+        <View style={{padding:5}}>
+          <TextWithLimit text={dulieu.name} limit={17} />
+          <Text>
+            Kho: {dulieu.quantity}
+          </Text>
+        </View>
         <View>
           <Text style={{
             fontFamily: 'TiltNeon-Regular',
             maxWidth: 200,
             flex: 1,
             flexWrap: 'nowrap',
-            fontSize: 15,
-            marginTop: 4, color:'black'
+            fontSize: 15, color: 'black', marginLeft:5
           }}>
             {dulieu.sold} đã bán
           </Text>

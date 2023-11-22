@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, ImageBackground, Modal } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ImageBackground, Modal, ToastAndroid } from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
 import { StyleDetailProduct } from '../../css/Styles'
 import { Dimensions } from 'react-native';
@@ -12,6 +12,7 @@ import ItemFeedBack from './ItemFeedBack';
 import { StyleDialogShopping } from '../../css/Styles';
 import { Animated } from 'react-native';
 import { calculateTimeDifference } from '../../../Agro';
+import Icon1 from 'react-native-vector-icons/Ionicons';
 import { LogBox } from 'react-native';
 import { log } from 'console';
 LogBox.ignoreLogs(['Warning: ...']);
@@ -28,7 +29,7 @@ const DetailProduct = (props) => {
     const [dataFeedback, setDataFeedback] = useState([]);
     const [dataColor, setDataColor] = useState([]);
     const [dataSize, setDataSize] = useState([]);
-    
+
     const [detail, setDetail] = useState('');
     const [percentRating, setPercentRating] = useState(0);
 
@@ -41,16 +42,19 @@ const DetailProduct = (props) => {
     const [check, setCheck] = useState(null);
     // Sales
     const [bannerSale, setBannerSale] = useState('none');
-    const [sale,setSale]=useState("");
+    const [sales, setSales] = useState([]);
+    const [percentSales, setPercentSales] = useState(0);
+    const [endDate, setendDate] = useState();
+    const [startDate, setstartDate] = useState();
+    const [onProductSaleOff, setonProductSaleOff] = useState(false);
     //data sale 
-    const [sales,setSales]=useState([]);
     const slideAnim = useRef(new Animated.Value(-100)).current;
     useEffect(() => {
         Animated.timing(
             slideAnim,
             {
                 toValue: 0,
-                duration: 2000,
+                duration: 1000,
                 useNativeDriver: true
             }
         ).start();
@@ -58,27 +62,51 @@ const DetailProduct = (props) => {
     const TextTime = (props) => {
         const { startDay, endDay } = props;
         const [Time, setTime] = useState("");
-        const [remainingTime] = useState("")
+        const [remainingTime] = useState("");
         const now = new Date(); // Lấy thời gian hiện tại
         const threeDaysFromNow = new Date(now);
         threeDaysFromNow.setDate(now.getDate() + 3); // Thêm 3 ngày
         useEffect(() => {
-            // Sử dụng setTimeout để thay đổi giá trị text sau 1 giây
-            // Xóa timer khi component unmount hoặc dependency thay đổi (nếu cần)
-            let timer = setInterval(() => {
-                const onSaleTime = calculateTimeDifference(parseFloat(sales[0].startDay), new Date().getTime(), parseFloat(sales[0].endDay));               
-
-                    setTime(onSaleTime);
-                
-            }, 1000);
-            return () => clearTimeout(timer);
-        }, []);
+            if (sales.length != 0 && sales[0].endDay > new Date().getTime()) {
+                console.log(">>>>sale: " + sales[0].endDay);
+                let timer = setInterval(() => {
+                    const onSaleTime = calculateTimeDifference(parseFloat(sales[0].startDay), new Date().getTime(), parseFloat(sales[0].endDay));
+                    setTime(onSaleTime)
+                    console.log(">>>>>dawdawdaw " + sales[0].startDay + " " + new Date().getTime())
+                    // if (sales[0].startDay > new Date().getTime()){
+                    //     setonProductSaleOff(false)
+                    //         setonProductSaleOff(true)
+                    // }
+                    if (typeof onSaleTime === "undefined") {
+                        setBannerSale('none')
+                    }
+                }, 1000);
+                return () => clearTimeout(timer);
+            }
+        }, [])
         return (
-            <View style={{ justifyContent: 'center', alignContent: 'center', marginLeft: 100  }}>
-                <Text style={{ color: 'white', textAlign: 'center', fontWeight:'bold',fontSize:15  }}>{Time}</Text>
+            <View style={{ justifyContent: 'center', alignContent: 'center', marginLeft: 100 }}>
+                <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 15 }}>{Time}</Text>
             </View>
         )
     }
+    useEffect(() => {
+        const getSalesCurrent = async () => {
+            const response = await AxiosIntance().get('/saleOffAPI/getSaleOffCurrent?productID=' + params.itemId);
+            if (response.result == true && response.saleOff.length != 0) {
+                setSales(response.saleOff);
+                setendDate(response.saleOff.endDay);
+                setstartDate(response.saleOff.startDay);
+                setPercentSales(response.saleOff[0].saleOff)
+                setBannerSale("flex");
+            } else {
+
+            }
+        }
+        getSalesCurrent();
+        return () => {
+        }
+    }, [])
     const opacityBackground = () => {
         if (isDialogVisible == true)
             return 0.5
@@ -169,15 +197,6 @@ const DetailProduct = (props) => {
                 setDataSize(response.size)
             }
         }
-        const getSalesCurrent = async () => {
-             const response = await AxiosIntance().get('/saleOffAPI/getSaleOffCurrent?productID=' + params.itemId);
-            if (response.result == true) {
-                setSales(response.saleOff);
-                setBannerSale("flex");
-                console.log(response.saleOff,params.itemId);
-            }
-        }
-        getSalesCurrent();
         getColorByProductID();
         getDetails();
         getFeedback();
@@ -216,20 +235,25 @@ const DetailProduct = (props) => {
                         <Image style={{ width: 100, height: 100, borderRadius: 5 }} source={imageColor != '' ? { uri: imageColor } : { uri: imageProduct }} />
                         <View style={{ marginLeft: 10 }}>
                             <View>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={{
-                                        marginLeft: 0, fontSize: 30,
-                                        color: '#3669C9', fontWeight: 'bold'
-                                    }}>
-                                        {formatPrice(productPrice)}
-                                    </Text>
-                                    <Text style={{ marginLeft: 0, fontSize: 20, color: '#3669C9', marginLeft: 4, paddingTop: 8 }}>
-                                        đ
-                                    </Text>
+                                <View>
+                                    {
+                                        sales.length > 0 ?
+                                            <View>
+                                                <Text style={StyleDetailProduct.textPrice}>
+                                                    {formatPrice(productPrice - (productPrice * percentSales).toFixed(0))} đ
+                                                </Text>
+                                                <Text style={{fontSize:18, textDecorationLine:'line-through'}}>
+                                                    {formatPrice(productPrice)}đ
+                                                </Text>
+                                            </View>
+                                            :
+                                            <View style={{ }}>
+                                                <Text style={StyleDetailProduct.textPrice}>
+                                                    {formatPrice(productPrice)} đ
+                                                </Text>
+                                            </View>
+                                    }
                                 </View>
-                                <Text style={{ fontSize: 20, textDecorationLine: 'line-through' }}>
-                                    199.000 đ
-                                </Text>
                                 <View>
                                     {
                                         colorChoosen != '' || sizeChoosen != '' ?
@@ -299,14 +323,15 @@ const DetailProduct = (props) => {
                                                         {
                                                             margin: 5,
                                                             justifyContent: 'center',
-                                                            alignItems: 'center', borderWidth: 0.5, borderRadius: 5, overflow: 'hidden',
-                                                            backgroundColor: '#f7f5f5', borderColor: '#EEEEEE'
+                                                            alignItems: 'center', borderWidth: 0.5,
+                                                            borderRadius: 5, overflow: 'hidden',
+                                                            backgroundColor: '#f7f5f5', borderColor: '#EEEEEE',
                                                         },
                                                         selectedSize === item._id && { borderColor: '#4c4b4b' }
                                                     ]}>
                                                     <Text style={{
-                                                        backgroundColor: '#EEEEEE', width: 70,
-                                                        padding: 8, textAlign: 'center'
+                                                        marginLeft: 20, marginRight: 20,
+                                                        padding: 3, textAlign: 'center', marginTop: 5, marginBottom: 5
                                                     }}>{item.size}</Text>
                                                 </TouchableOpacity>
                                             ))}
@@ -317,20 +342,25 @@ const DetailProduct = (props) => {
                                     : <View />
                             }
                         </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10, marginLeft: 250 }}>
-                            <TouchableOpacity onPress={() => quantityHandler("-")} style={{
-                                width: 35, height: 30,
-                                backgroundColor: '#EEEEEE', alignItems: 'center',
-                            }}>
-                                <Text style={{ fontSize: 20 }}>-</Text>
-                            </TouchableOpacity>
-                            <Text style={{ padding: 5, fontSize: 20 }}>{quantity}</Text>
-                            <TouchableOpacity onPress={() => quantityHandler("+")} style={{
-                                width: 35, height: 30,
-                                backgroundColor: '#EEEEEE', alignItems: 'center'
-                            }}>
-                                <Text style={{ fontSize: 20 }}>+</Text>
-                            </TouchableOpacity>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center', marginTop: 10,
+                            marginLeft: 10, width: 350, justifyContent: 'space-between'
+                        }}>
+                            <Text style={{ fontSize: 18, color: 'black' }}>Số lượng</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <TouchableOpacity onPress={() => quantityHandler("-")} style={{
+                                    backgroundColor: '#EEEEEE'
+                                }}>
+                                    <Icon1 name='remove-outline' size={15} style={{ padding: 3 }} />
+                                </TouchableOpacity>
+                                <Text style={{ padding: 5, fontSize: 20 }}>{quantity}</Text>
+                                <TouchableOpacity onPress={() => quantityHandler("+")} style={{
+                                    backgroundColor: '#EEEEEE'
+                                }}>
+                                    <Icon1 name='add-outline' size={15} style={{ padding: 3 }} />
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </ScrollView>
                     <View style={{ padding: 10, position: 'absolute', bottom: 0, flex: 1 }}>
@@ -386,27 +416,38 @@ const DetailProduct = (props) => {
                         style={[StyleDetailProduct.banner,]}
                     >
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={[StyleDetailProduct.titleBanner,]}>SavvyFlash Sale</Text>
+                            <Text style={[StyleDetailProduct.titleBanner,]}>Shopping Sale</Text>
                             <TextTime
-                                startDay={1699592400000}
-                                endDay={1699678800000}
+                                startDay={startDate}
+                                endDay={endDate}
                             />
                         </View>
                     </LinearGradient>
                 </Animated.View>
-                <View style={{ flexDirection: 'row', padding: 10 }}>
-                    <Text style={StyleDetailProduct.textd}>
-                        đ
-                    </Text>
-                    <Text style={StyleDetailProduct.textPrice}>
-                        {formatPrice(productPrice)}
-                    </Text>
-                    <Text style={StyleDetailProduct.textSalePrice}>
-                        đ230,000
-                    </Text>
-                    <Text style={StyleDetailProduct.textBoxSale}>
-                        -37%
-                    </Text>
+                <View>
+                    {
+                        sales.length > 0 ?
+                            <View style={{ flexDirection: 'row', padding: 10 }}>
+                                <Text style={StyleDetailProduct.textd}>
+                                    đ
+                                </Text>
+                                <Text style={StyleDetailProduct.textPrice}>
+                                    {formatPrice(productPrice - (productPrice * percentSales).toFixed(0))}
+                                </Text>
+                                <Text style={StyleDetailProduct.textSalePrice}>
+                                    đ{productPrice}
+                                </Text>
+                                <Text style={StyleDetailProduct.textBoxSale}>
+                                    {percentSales * 100}%
+                                </Text>
+                            </View>
+                            :
+                            <View style={{ flexDirection: 'row', padding: 10 }}>
+                                <Text style={StyleDetailProduct.textPrice}>
+                                    {formatPrice(productPrice)}
+                                </Text>
+                            </View>
+                    }
                 </View>
                 <View style={{ padding: 10 }}>
                     <Text style={{ color: 'black', fontFamily: 'TiltNeon-Regular', fontSize: 20 }}>
