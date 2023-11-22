@@ -512,14 +512,14 @@ const DetailProduct = (props) => {
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity onPress={heartHandler}>
-                            {/* <Image style={{ width: 30, height: 30, marginRight: 15 }}
+                            <Image style={{ width: 30, height: 30, marginRight: 15 }}
                                 source={
                                     heart == true ?
-                                        require('../../images/heart.png') : require('../../images/unheart.png')
-                                } /> */}
+                                        require('../../images/heart.jpg') : require('../../images/unheart.jpg')
+                                } />
                         </TouchableOpacity>
                         <TouchableOpacity>
-                            {/* <Image style={{ width: 25, height: 25, marginTop: 3 }} source={require('../../images/messenger.png')} /> */}
+                            <Image style={{ width: 25, height: 25, marginTop: 3 }} source={require('../../images/messenger.jpg')} />
                         </TouchableOpacity>
                     </View>
                 </View>
