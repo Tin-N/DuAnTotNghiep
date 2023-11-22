@@ -27,6 +27,7 @@ const Order = () => {
 
   const appContextData = useContext(AppContext);
   const userID = appContextData.userID;
+  const userAddress = appContextData.userAddress;
 
   // Lấy dữ liệu giỏ hàng của user
   useEffect(() => {
@@ -122,7 +123,8 @@ const Order = () => {
               orderDate: orderDate,
               paymentStatus: 'Unpaid',
               paymentMethods: 'COD',
-              ownerID: [...new Set(productsSelected.map(product => product.ownerID))]
+              ownerID: [...new Set(productsSelected.map(product => product.ownerID))],
+              userAddress
             });
           console.log("Đặt hàng thành công");
           ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
@@ -150,6 +152,16 @@ const Order = () => {
               }).then(() => {
                 handleCartChanged()
               });
+
+              async () => {
+                try {
+                  await AxiosIntance().put(`productAPI/updateQuantityOrdered`, {
+                    productsToUpdate: productsSelected
+                  })
+                } catch (error) {
+                  
+                }
+              }
             },
           },
         ]

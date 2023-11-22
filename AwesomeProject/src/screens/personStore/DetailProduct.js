@@ -30,7 +30,8 @@ const DetailProduct = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [star, setStar] = useState(0);
 
-    const { userID } = useContext(AppContext)
+    const { userID } = useContext(AppContext);
+    const {userAddress} = useContext(AppContext);
     const [ownerID, setownerID] = useState()
 
     const [dataFeedback, setDataFeedback] = useState([]);
@@ -212,6 +213,19 @@ const DetailProduct = (props) => {
             })();
         }, []);
 
+        const optionsInCart = {
+            color: colorChoosen,
+            size: sizeChoosen
+        }
+
+        const productsInCart = {
+            ownerID,
+            productID,
+            quantity,
+            optionsInCart,
+            itemTotalCost
+        }
+
         useEffect(() => {
             setitemTotalCost(quantity * productPrice)
         }, [quantity])
@@ -225,17 +239,6 @@ const DetailProduct = (props) => {
         }
 
         const addToCart = async () => {
-            const optionsInCart = {
-                color: colorChoosen,
-                size: sizeChoosen
-            }
-            const productsInCart = {
-                ownerID,
-                productID,
-                quantity,
-                optionsInCart,
-                itemTotalCost
-            }
             try {
                 const response = await AxiosIntance().post('/cart/add',
                     { userID: userID, products: productsInCart, quantity })
@@ -254,11 +257,20 @@ const DetailProduct = (props) => {
             const objectId = new ObjectID();
             console.log(objectId)
 
+            const productToOrder = {
+                ownerID,
+                productID,
+                quantity,
+                optionsInCart,
+                itemTotalCost,
+                deliveryStatus: 'Pending'
+            }
+
             const orderDetailResponse = await AxiosIntance().post('/orderdetail/add',
                 {
                     userID,
                     orderDetailID: objectId,
-                    products: productsInCart,
+                    products: productToOrder,
                     totalCost: itemTotalCost
                 });
             console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
@@ -272,9 +284,10 @@ const DetailProduct = (props) => {
                             deliveryStatus: 'Pending',
                             paymentStatus: 'Unpaid',
                             paymentMethods: 'COD',
-                            ownerID: ownerID
+                            ownerID: ownerID,
+                            userAddress
                         });
-                    setDialogVisible(False)
+                    setDialogVisible(false)
                     // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
                     ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
                 }
@@ -295,7 +308,17 @@ const DetailProduct = (props) => {
                         text: 'OK', // Chữ hiển thị trên nút OK
                         onPress: () => {
                             // Xử lý khi người dùng chọn "OK"
-                            OrderPost()
+                            OrderPost();
+
+                            async () => {
+                                try {
+                                  await AxiosIntance().put(`productAPI/updateQuantityOrdered`, {
+                                    productsToUpdate: productsSelected
+                                  })
+                                } catch (error) {
+                                  
+                                }
+                              }
                         },
                     },
                 ]
