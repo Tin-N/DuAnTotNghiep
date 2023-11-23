@@ -5,51 +5,20 @@ import { Dimensions } from 'react-native';
 import AxiosIntance from '../../../utils/AxiosIntance'
 import { AppContext } from '../../../utils/AppContext';
 const { width, height } = Dimensions.get('screen');
+
 const SProductProcessItem = (props) => {
     const data = props.data;
-    const productDetailChanged = props.productDetailChanged
-    const productID = data.productID;
     const appContextData = useContext(AppContext);
     const userID = appContextData.userID;
-    const [productName, setProductName] = useState('Tên Sản Phẩm');
-    const [imageUri, setImageUri] = useState();
-    const [productPrice, setproductPrice] = useState(data.itemTotalCost)
-    const [quantity, setquantity] = useState(data.quantity)
-    const [orderDetailID, setorderDetailID] = useState()
-    // console.log("orderDetailID: " + JSON.stringify(orderDetailID))
+    const [ownerID, setownerID] = useState();
+    const [customerID, setcustomerID] = useState()
+    const [paymentMethods, setpaymentMethods] = useState()
+    const [paymentStatus, setpaymentStatus] = useState()
 
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const productResponse = await AxiosIntance().get(`/productAPI/getProductByID?id=${productID}`);
-                if (productResponse.result == true) {
-                    setProductName(productResponse.products.name);
-                    setImageUri(productResponse.products.image[0]);
-                }
-                const response = await AxiosIntance().get(`/orderdetail/getOrderDetailByOwner/${userID}`)
-                setorderDetailID(response.responseData[0].orderDetailID)
-            } catch (error) {
-                console.log("ProductProcessItem: lỗi lấy dữ liệu: " + error)
-            }
-        })();
-    }, []);
-
-    const handleProductDetailChanged = () => {
-        productDetailChanged()
-    }
-
-    const handleSuccess = async () => {
-        const res = await AxiosIntance()
-            .put(`/orderdetail/update/updateProductDeliveryStatus/${orderDetailID}/${userID}/${productID}`
-                , { deliveryStatus: 'Delivered' })
-        handleProductDetailChanged()
-    }
-
-    const handleFailure = () => {
+    const handleDeliverySuccess = () => {
         Alert.alert(
             'Thông báo',
-            'Bạn có muốn từ chối sản phẩm này?',
+            'Bạn có chắc đã hoàn vận chuyển tất cả sản phẩm này?',
             [
                 {
                     text: 'Cancel',
@@ -60,34 +29,74 @@ const SProductProcessItem = (props) => {
                 {
                     text: 'OK',
                     onPress: async () => {
-                        const res = await AxiosIntance()
-                            .put(`/orderdetail/update/updateProductDeliveryStatus/${orderDetailID}/${userID}/${productID}`
-                                , { deliveryStatus: 'Return' })
-                        handleProductDetailChanged()
+                        try {
+                            const response1 = await AxiosIntance().put(`/orderdetail/updateDeliveryStatus/${data.orderDetailID}`, {
+                                deliveryStatus: 'Delivered'
+                            })
+                            const res2 = await Ax
+                            console.log(response)
+                        } catch (error) {
+                            console.log("SProductProcessItem: error: " + error);
+                        }
+
                     },
                 },
             ]
         );
     }
 
-    return (
-        <View style={{ width: 45 * width / 100, borderWidth: 0.2, margin: 10, padding: 10, backgroundColor: '#F6F6F6', borderRadius: 3 }}>
-            <Image source={{ uri: "http://nhatminhdecor.com/wp-content/uploads/2019/01/chup-anh-voi-phong-nen-vai-trang-1.jpg" }} style={{ alignSelf: 'center', width: 130, height: 150, backgroundColor: 'red', zIndex: 4 }} />
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await AxiosIntance().get(`/order/getOrderByOrderDetailID/${data.orderDetailID}`)
+                setcustomerID(response.data[0].userID)
+                setownerID(response.data[0].ownerID)
+                setpaymentMethods(response.data[0].paymentMethods)
+                setpaymentStatus(response.data[0].paymentStatus)
+            } catch (error) {
+                console.log("SProductProcessItem: lỗi lấy dữ liệu order: " + error);
+            }
+        })();
+    }, []);
 
-            <Text style={{ color: 'black', fontSize: 15, marginBottom: 5, marginTop: 5, fontWeight: '500' }} numberOfLines={1}>{productName}</Text>
-            <Text>Số Lượng: {quantity}</Text>
-            <Text style={{ fontSize: 10 }}>orderDetailID: {orderDetailID}</Text>
-            <Text style={{ fontSize: 10 }}>productID: {productID}</Text>
-            <Text style={{ fontSize: 10 }}>deliveryStatus: {data.deliveryStatus}</Text>
-            <Text style={{ color: '#008000', marginBottom: 3, marginTop: 3, textAlign: 'right' }}>$ {productPrice}</Text>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+    return (
+        <View style={{ borderWidth: 2, borderRadius: 5, margin: 10, padding: 15, backgroundColor: '#ebf6fc' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignContent: 'center', marginBottom: 15 }}>
+                <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, padding: 5 }}>
+                    <Text style={{ textAlign: 'center' }}>Người Bán: {ownerID}</Text>
+                </View>
+                <View style={{ borderBottomWidth: 0.5, width: 40 * width / 100, padding: 5 }}>
+                    <Text style={{ textAlign: 'center' }}> Order Detail ID: {data.orderDetailID}</Text>
+                </View>
             </View>
-            <Pressable onPress={handleSuccess} style={{ alignItems: 'center', borderWidth: 0.5, borderRadius: 5, borderColor: '#3669C9', backgroundColor: '#6495ED', padding: 5 }}>
-                <Text style={{ textAlign: 'center', color: 'white', fontStyle: 'bold', fontSize: 15, fontWeight: '370' }}>Giao Hàng Thành Công</Text>
-            </Pressable>
-            <Pressable onPress={handleFailure} style={{ marginTop: 5, alignItems: 'center', borderWidth: 0.5, borderRadius: 5, borderColor: '#3669C9', backgroundColor: '#6495ED', padding: 5 }}>
-                <Text style={{ textAlign: 'center', color: 'white', fontStyle: 'bold', fontSize: 15, fontWeight: '370' }}>Hàng Trả Về</Text>
-            </Pressable>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignContent: 'center' }}>
+                <View>
+                    <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, marginBottom: 15, padding: 5 }}>
+                        <Text style={{ textAlign: 'center' }}>Người Mua: {customerID}</Text>
+                    </View>
+                    <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, marginBottom: 15, padding: 5 }}>
+                        <Text style={{ textAlign: 'center' }}>Payment Methods: {paymentMethods}</Text>
+                    </View>
+                    <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, padding: 5 }}>
+                        <Text style={{ textAlign: 'center' }}>Payment Status: {paymentStatus}</Text>
+                    </View>
+                </View>
+                <View style={{ flexDirection: "column", justifyContent: 'space-between' }}>
+                    <View style={{ borderWidth: 0.5, borderRadius: 5, padding: 5, flexDirection: 'row', width: 35 * width / 100 }}>
+                        <Text style={{ textAlign: 'center' }}>Số lượng: {data.products.length}</Text>
+                    </View>
+                    <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, padding: 5 }}>
+                        <Text style={{ textAlign: 'center' }}>Địa chỉ: </Text>
+                    </View>
+                    <Pressable style={{ borderWidth: 0.5, borderRadius: 5, padding: 5, backgroundColor: '#87C4FF' }}>
+                        <Text style={{ textAlign: 'center', color: 'white' }}>Xem chi tiết</Text>
+                    </Pressable>
+                    <Pressable onPress={handleDeliverySuccess} style={{ borderWidth: 0.5, borderRadius: 5, padding: 5, backgroundColor: '#39A7FF' }}>
+                        <Text style={{ textAlign: 'center', color: 'white' }}>Hoàn tất vận chuyển</Text>
+                    </Pressable>
+                </View>
+
+            </View>
         </View>
     )
 }
