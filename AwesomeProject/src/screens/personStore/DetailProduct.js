@@ -1,9 +1,11 @@
+
 import { View, Text, Image, TouchableOpacity, ImageBackground, Modal, ToastAndroid, Easing, Alert } from 'react-native'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
+
 
 import { StyleDetailProduct } from '../../css/Styles'
 import { Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('screen')
+const { width } = Dimensions.get('screen')
 import LinearGradient from 'react-native-linear-gradient';
 import AxiosIntance from '../../utils/AxiosIntance';
 import { formatPrice } from '../../../Agro';
@@ -12,18 +14,30 @@ import { ScrollView, FlatList } from 'react-native';
 import StarRating from 'react-native-star-rating-widget';
 import ItemFeedBack from './ItemFeedBack';
 import { StyleDialogShopping } from '../../css/Styles';
+import { Animated } from 'react-native';
+import { calculateTimeDifference } from '../../../Agro';
+import Icon1 from 'react-native-vector-icons/Ionicons';
 import { LogBox } from 'react-native';
+
 import DialogFeedback from '../../component/DialogFeedback/DialogFeedback';
 import { AppContext } from '../../utils/AppContext';
 const ObjectID = require('bson-objectid');
+
+
+
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const DetailProduct = (props) => {
     const { navigation } = props;
     const { route } = props;
-    const {isLogin}=useContext(AppContext);
+    const { isLogin } = useContext(AppContext);
     const { params } = route;
+
     console.log(params)
+
+
+    // Product
+
     const [productPrice, setProductPrice] = useState('');
     const [dataProduct, setDataProduct] = useState({});
     const [imageProduct, setImageProduct] = useState('');
@@ -37,11 +51,17 @@ const DetailProduct = (props) => {
     const [dataFeedback, setDataFeedback] = useState([]);
     const [dataColor, setDataColor] = useState([]);
     const [dataSize, setDataSize] = useState([]);
+
     const [detail, setDetail] = useState('');
-    const [feedbackLength, setFeedbackLenght] = useState();
     const [percentRating, setPercentRating] = useState(0);
+
+    // Feedback
+    const [feedbackLength, setFeedbackLenght] = useState();
+
+    // Favorite
     const [heart, setHeart] = useState(false);
     const [isDialogVisible, setDialogVisible] = useState(false);
+
     const [productQuantity, setproductQuantity] = useState(0)
 
     // favoriteID
@@ -52,6 +72,79 @@ const DetailProduct = (props) => {
             // console.log(text);
             setModalVisible(true);
         }
+    }
+    const [check, setCheck] = useState(null);
+    // Sales
+    const [bannerSale, setBannerSale] = useState('none');
+    const [sales, setSales] = useState([]);
+    const [percentSales, setPercentSales] = useState(0);
+    const [endDate, setendDate] = useState();
+    const [startDate, setstartDate] = useState();
+    const [onProductSaleOff, setonProductSaleOff] = useState(false);
+    //data sale 
+    const slideAnim = useRef(new Animated.Value(-100)).current;
+    useEffect(() => {
+        Animated.timing(
+            slideAnim,
+            {
+                toValue: 0,
+                duration: 1000,
+                useNativeDriver: true
+            }
+        ).start();
+    }, [slideAnim]);
+    const TextTime = (props) => {
+        const { startDay, endDay } = props;
+        const [Time, setTime] = useState("");
+        const [remainingTime] = useState("");
+        const now = new Date(); // Lấy thời gian hiện tại
+        const threeDaysFromNow = new Date(now);
+        threeDaysFromNow.setDate(now.getDate() + 3); // Thêm 3 ngày
+        useEffect(() => {
+            if (sales.length != 0 && sales[0].endDay > new Date().getTime()) {
+                console.log(">>>>sale: " + sales[0].endDay);
+                let timer = setInterval(() => {
+                    const onSaleTime = calculateTimeDifference(parseFloat(sales[0].startDay), new Date().getTime(), parseFloat(sales[0].endDay));
+                    setTime(onSaleTime)
+                    console.log(">>>>>dawdawdaw " + sales[0].startDay + " " + new Date().getTime())
+                    // if (sales[0].startDay > new Date().getTime()){
+                    //     setonProductSaleOff(false)
+                    //         setonProductSaleOff(true)
+                    // }
+                    if (typeof onSaleTime === "undefined") {
+                        setBannerSale('none')
+                    }
+                }, 1000);
+                return () => clearTimeout(timer);
+            }
+        }, [])
+        return (
+            <View style={{ justifyContent: 'center', alignContent: 'center', marginLeft: 100 }}>
+                <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 15 }}>{Time}</Text>
+            </View>
+        )
+    }
+    useEffect(() => {
+        const getSalesCurrent = async () => {
+            const response = await AxiosIntance().get('/saleOffAPI/getSaleOffCurrent?productID=' + params.itemId);
+            if (response.result == true && response.saleOff.length != 0) {
+                setSales(response.saleOff);
+                setendDate(response.saleOff.endDay);
+                setstartDate(response.saleOff.startDay);
+                setPercentSales(response.saleOff[0].saleOff)
+                setBannerSale("flex");
+            } else {
+
+            }
+        }
+        getSalesCurrent();
+        return () => {
+        }
+    }, [])
+    const opacityBackground = () => {
+        if (isDialogVisible == true)
+            return 0.5
+        return 1
     }
     const heartHandler = async () => {
         console.log(favorite);
@@ -77,7 +170,6 @@ const DetailProduct = (props) => {
             }
         }
     }
-    const [check, setCheck] = useState(null);
 
     const handlerDetail = () => {
         navigation.navigate("DetailFeedback", { itemId: params.itemId })
@@ -195,6 +287,7 @@ const DetailProduct = (props) => {
         const [sizeChoosen, setSizeChoosen] = useState('');
         const [imageColor, setimageColor] = useState('')
         const [quantity, setQuantity] = useState(1);
+
         const [productID, setproductID] = useState(params.itemId)
         const [itemTotalCost, setitemTotalCost] = useState(0)
         const [productPrice, setproductPrice] = useState(0)
@@ -229,6 +322,8 @@ const DetailProduct = (props) => {
         useEffect(() => {
             setitemTotalCost(quantity * productPrice)
         }, [quantity])
+
+
 
         const quantityHandler = (updateQuantity) => {
             if (updateQuantity == "+") {
@@ -342,20 +437,25 @@ const DetailProduct = (props) => {
                         <Image style={{ width: 100, height: 100, borderRadius: 5 }} source={imageColor != '' ? { uri: imageColor } : { uri: imageProduct }} />
                         <View style={{ marginLeft: 10 }}>
                             <View>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={{
-                                        marginLeft: 0, fontSize: 30,
-                                        color: '#3669C9', fontWeight: 'bold'
-                                    }}>
-                                        {formatPrice(productPrice)}
-                                    </Text>
-                                    <Text style={{ marginLeft: 0, fontSize: 20, color: '#3669C9', marginLeft: 4, paddingTop: 8 }}>
-                                        đ
-                                    </Text>
+                                <View>
+                                    {
+                                        sales.length > 0 ?
+                                            <View>
+                                                <Text style={StyleDetailProduct.textPrice}>
+                                                    {formatPrice(productPrice - (productPrice * percentSales).toFixed(0))} đ
+                                                </Text>
+                                                <Text style={{ fontSize: 18, textDecorationLine: 'line-through' }}>
+                                                    {formatPrice(productPrice)}đ
+                                                </Text>
+                                            </View>
+                                            :
+                                            <View style={{}}>
+                                                <Text style={StyleDetailProduct.textPrice}>
+                                                    {formatPrice(productPrice)} đ
+                                                </Text>
+                                            </View>
+                                    }
                                 </View>
-                                <Text style={{ fontSize: 20, textDecorationLine: 'line-through' }}>
-                                    199.000 đ
-                                </Text>
                                 <View>
                                     {
                                         colorChoosen != '' || sizeChoosen != '' ?
@@ -425,14 +525,15 @@ const DetailProduct = (props) => {
                                                         {
                                                             margin: 5,
                                                             justifyContent: 'center',
-                                                            alignItems: 'center', borderWidth: 0.5, borderRadius: 5, overflow: 'hidden',
-                                                            backgroundColor: '#f7f5f5', borderColor: '#EEEEEE'
+                                                            alignItems: 'center', borderWidth: 0.5,
+                                                            borderRadius: 5, overflow: 'hidden',
+                                                            backgroundColor: '#f7f5f5', borderColor: '#EEEEEE',
                                                         },
                                                         selectedSize === item._id && { borderColor: '#4c4b4b' }
                                                     ]}>
                                                     <Text style={{
-                                                        backgroundColor: '#EEEEEE', width: 70,
-                                                        padding: 8, textAlign: 'center'
+                                                        marginLeft: 20, marginRight: 20,
+                                                        padding: 3, textAlign: 'center', marginTop: 5, marginBottom: 5
                                                     }}>{item.size}</Text>
                                                 </TouchableOpacity>
                                             ))}
@@ -458,28 +559,52 @@ const DetailProduct = (props) => {
                             }}>
                                 <Text style={{ fontSize: 20 }}>+</Text>
                             </TouchableOpacity>
+
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center', marginTop: 10,
+                                marginLeft: 10, width: 350, justifyContent: 'space-between'
+                            }}>
+                                <Text style={{ fontSize: 18, color: 'black' }}>Số lượng</Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <TouchableOpacity onPress={() => quantityHandler("-")} style={{
+                                        backgroundColor: '#EEEEEE'
+                                    }}>
+                                        <Icon1 name='remove-outline' size={15} style={{ padding: 3 }} />
+                                    </TouchableOpacity>
+                                    <Text style={{ padding: 5, fontSize: 20 }}>{quantity}</Text>
+                                    <TouchableOpacity onPress={() => quantityHandler("+")} style={{
+                                        backgroundColor: '#EEEEEE'
+                                    }}>
+                                        <Icon1 name='add-outline' size={15} style={{ padding: 3 }} />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
                         </View>
                     </ScrollView>
 
                     <View style={{ padding: 10, position: 'absolute', bottom: 0, flex: 1 }}>
                         {
-                            check == true ? <TouchableOpacity onPress={orderNow} style={StyleDetailProduct.touchOpa2}>
-                                <Text style={StyleDetailProduct.textButton}>Mua ngay</Text>
-                            </TouchableOpacity>
+                            check == true ?
+                                <TouchableOpacity onPress={orderNow} style={StyleDetailProduct.touchOpa2}>
+                                    <Text style={StyleDetailProduct.textButton}>Mua ngay</Text>
+                                </TouchableOpacity>
                                 :
-                                <LinearGradient start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} colors={['#3669C9', '#070723']} style={{ padding: 8, borderRadius: 25, flex: 1 }}>
-                                    <TouchableOpacity onPress={addToCart} style={{ width: 355 }}>
-                                        <Text style={StyleDetailProduct.textButton}>Thêm vào giỏ hàng</Text>
-                                    </TouchableOpacity>
-                                </LinearGradient>
+
+                                <TouchableOpacity
+                                    onPress={addToCart}
+                                    style={{ width: 355 }}>
+                                    <Text style={StyleDetailProduct.textButton}>Thêm vào giỏ hàng</Text>
+                                </TouchableOpacity>
                         }
+
                     </View>
                 </View>
             </Modal>
         );
-    };
+    }
     return (
-        <View style={{ height: 785, backgroundColor: 'white' }}>
+        <View style={{ flex: 1, backgroundColor: 'white', opacity: opacityBackground() }}>
             <View style={StyleDetailProduct.menu}>
                 <TouchableOpacity onPress={back}>
                     <Image source={require('../../images/backic.png')} />
@@ -489,32 +614,56 @@ const DetailProduct = (props) => {
                 </Text>
             </View>
             <ScrollView
-                stickyHeaderIndices={[1]}
                 showsVerticalScrollIndicator={false}
                 overScrollMode='never'>
                 <ImageBackground source={imageProduct ? { uri: imageProduct } : null} resizeMode='cover' style={{ width: width, height: 320 }}>
                 </ImageBackground>
-                <LinearGradient
-                    start={{ x: 0, y: 0.5 }} // Điểm bắt đầu của gradient (trái)
-                    end={{ x: 1.2, y: 0.5 }}   // Điểm kết thúc của gradient (phải)
-                    colors={['#000033', '#3669C9']}
-                    style={StyleDetailProduct.banner}
+                <Animated.View
+                    style={{
+                        ...StyleDetailProduct.banner,
+                        display: bannerSale,
+                        transform: [{ translateY: slideAnim }] // Sử dụng giá trị Animated cho thuộc tính transform
+                    }}
                 >
-                    <Text style={[StyleDetailProduct.titleBanner,]}>SavvyFlash Sale</Text>
-                </LinearGradient>
-                <View style={{ flexDirection: 'row', padding: 10 }}>
-                    <Text style={StyleDetailProduct.textd}>
-                        đ
-                    </Text>
-                    <Text style={StyleDetailProduct.textPrice}>
-                        {formatPrice(productPrice)}
-                    </Text>
-                    <Text style={StyleDetailProduct.textSalePrice}>
-                        đ230,000
-                    </Text>
-                    <Text style={StyleDetailProduct.textBoxSale}>
-                        -37%
-                    </Text>
+                    <LinearGradient
+                        start={{ x: 0, y: 0.5 }}
+                        end={{ x: 1.2, y: 0.5 }}
+                        colors={['#000033', '#3669C9']}
+                        style={[StyleDetailProduct.banner,]}
+                    >
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={[StyleDetailProduct.titleBanner,]}>Shopping Sale</Text>
+                            <TextTime
+                                startDay={startDate}
+                                endDay={endDate}
+                            />
+                        </View>
+                    </LinearGradient>
+                </Animated.View>
+                <View>
+                    {
+                        sales.length > 0 ?
+                            <View style={{ flexDirection: 'row', padding: 10 }}>
+                                <Text style={StyleDetailProduct.textd}>
+                                    đ
+                                </Text>
+                                <Text style={StyleDetailProduct.textPrice}>
+                                    {formatPrice(productPrice - (productPrice * percentSales).toFixed(0))}
+                                </Text>
+                                <Text style={StyleDetailProduct.textSalePrice}>
+                                    đ{productPrice}
+                                </Text>
+                                <Text style={StyleDetailProduct.textBoxSale}>
+                                    {percentSales * 100}%
+                                </Text>
+                            </View>
+                            :
+                            <View style={{ flexDirection: 'row', padding: 10 }}>
+                                <Text style={StyleDetailProduct.textPrice}>
+                                    {formatPrice(productPrice)}
+                                </Text>
+                            </View>
+                    }
                 </View>
                 <View style={{ padding: 10 }}>
                     <Text style={{ color: 'black', fontFamily: 'TiltNeon-Regular', fontSize: 20 }}>
@@ -540,6 +689,13 @@ const DetailProduct = (props) => {
                                     heart == true ?
                                         require('../../images/heart.jpg') : require('../../images/unheart.jpg')
                                 } />
+
+                            {/* <Image style={{ width: 30, height: 30, marginRight: 15 }}
+                            source={
+                                heart == true ?
+                                    require('../../images/heart.png') : require('../../images/unheart.png')
+                            } /> */}
+
                         </TouchableOpacity>
                         <TouchableOpacity>
                             <Image style={{ width: 25, height: 25, marginTop: 3 }} source={require('../../images/messenger.jpg')} />
@@ -656,7 +812,7 @@ const DetailProduct = (props) => {
                 }
 
             </View>
-        </View>
-    )
+        </View >
+    );
 }
 export default DetailProduct;
