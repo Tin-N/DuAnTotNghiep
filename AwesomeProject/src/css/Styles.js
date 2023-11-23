@@ -143,11 +143,96 @@ export const StyleSearchSuggestions = StyleSheet.create({
         flexDirection: 'row',
     },
     text: {
-        fontSize: 19,
-        lineHeight: 20,
-        letterSpacing: 0.2,
-        alignSelf: 'center',
+        
     },
+});
+export const StyleHomeStore = StyleSheet.create({
+    menu: {
+        backgroundColor:'#3669c9',
+        flexDirection: 'row',
+        padding:10,
+        width:'100%',
+        alignItems:'center', justifyContent: 'space-around'
+      },
+      textTitle: {
+        textAlign: 'center',
+        color: 'black',
+        fontSize: 20,
+        paddingLeft: 110,
+        marginTop: -6,
+      },
+      touchOpa: {
+        marginLeft: 75,
+      },
+      line: {
+        borderWidth: 1,
+        opacity: 0.03,
+        marginTop: 20,
+      },
+      boxSeller: {
+        marginTop: 30,
+        paddingLeft: 30,
+        paddingRight: 30,
+        flexDirection: 'row',
+      },
+      infoSeller: {
+        flexDirection: 'row',
+      },
+      boxNameSeller: {
+        width: 218,
+        marginLeft: 20,
+      },
+      boxRate: {
+        flexDirection: 'row',
+        paddingTop: 10,
+      },
+      textRate: {
+        fontSize: 20,
+        color: 'black',
+        marginTop: -5,
+        paddingLeft: 5,
+      },
+      boxLocate: {
+        flexDirection: 'row',
+        marginLeft: 30,
+        marginTop: 20,
+      },
+      boxProductStore: {
+        flexDirection: 'row',
+        marginTop: 20,
+        marginLeft: 30,
+        justifyContent: 'space-between',
+        marginRight: 30,
+      },
+      textTitleProduct: {
+        fontSize: 15,
+      },
+      textCountProduct: {
+        color: 'black',
+        fontSize: 13,
+      },
+      textitleProductSelling: {
+        fontSize: 20,
+        color: 'black',
+      },
+      productSelling: {
+        marginTop: 15,
+        marginLeft: 30,
+        marginRight: 30,
+      },
+      boxSelling: {
+        paddingLeft: 30,
+        paddingRight: 30,
+      },
+      boxProduct: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        margin:5, overflow:'hidden'
+      },
+      reviewsProduct: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
 });
 
 export const StyleShipper = StyleSheet.create({
@@ -313,7 +398,7 @@ export const StyleDialogShopping = StyleSheet.create({
     },
     line: {
         borderWidth: 1,
-        opacity: 0.03,
+        opacity: 0.05,
         marginTop: 20
     },
     container2: {
@@ -693,10 +778,11 @@ export const StyleDetailPersonFeedback = StyleSheet.create({
 export const StyleDetailProduct = StyleSheet.create({
     menu: {
         flexDirection: 'row',
-        marginLeft: 30,
-        marginRight: 30,
+        paddingLeft: 30,
+        paddingRight: 30,
         paddingTop: 20,
-        paddingBottom: 15
+        paddingBottom: 15,
+        borderBottomWidth:0.2
     },
     textTitle: {
         textAlign: 'center',
@@ -713,13 +799,14 @@ export const StyleDetailProduct = StyleSheet.create({
         backgroundColor: '#766f6f'
     },
     banner: {
-        width: width
+        width: width,
+        flexDirection:'row'
     },
     titleBanner: {
         padding: 10,
 
         color: 'white',
-        fontSize: 25,
+        fontSize: 20,
         fontFamily: 'TiltNeon-Regular'
     },
     textPrice: {
@@ -810,103 +897,103 @@ export const StyleDetailProduct = StyleSheet.create({
 
 
 
-export const StyleHomeStore = StyleSheet.create({
-  container: {
-  },
-  menu: {
-      paddingTop: 50,
-      flexDirection: 'row',
-      marginLeft: 30,
-      marginRight: 30,
-  },
-  textTitle: {
-      textAlign: 'center',
-      color: 'black',
-      fontSize: 20,
-      paddingLeft: 110,
-      marginTop: -6
-  },
-  images: {
-      marginLeft: 80
-  },
-  touchOpa: {
-      marginLeft: 75
-  },
-  line: {
-      borderWidth: 1,
-      opacity: 0.03,
-      marginTop: 20
-  },
-  boxSeller: {
-      marginTop: 30,
-      paddingLeft: 30,
-      paddingRight: 30,
-      flexDirection: 'row'
-  },
-  infoSeller: {
-      flexDirection: 'row',
-  },
-  boxNameSeller: {
-      width: 218,
-      marginLeft: 20
-  },
-  boxRate: {
-      flexDirection: 'row',
-      paddingTop: 10
-  },
-  textRate: {
-      fontSize: 20,
-      color: 'black',
-      marginTop: -5,
-      paddingLeft: 5
-  },
-  boxLocate: {
-      flexDirection: 'row',
-      marginLeft: 30,
-      marginTop: 20
-  },
-  boxProductStore: {
-      flexDirection: 'row',
-      marginTop: 20,
-      marginLeft: 30,
-      justifyContent: 'space-between',
-      marginRight: 30
-  },
-  textTitleProduct: {
-      fontSize: 15
-  },
-  textCountProduct: {
-      color: 'black',
-      fontSize: 13
-  },
-  textitleProductSelling: {
-      fontSize: 20,
-      color: 'black'
-  },
-  productSelling: {
-      marginTop: 15,
-      marginLeft: 30,
-      marginRight: 30
-  },
-  boxSelling: {
-      backgroundColor: 'FAFAFA',
-      paddingLeft: 30,
-      paddingRight: 30,
-  },
-  boxProduct: {
-    width:180,
-    elevation:1,
-      backgroundColor: 'white',
-      borderRadius: 10,
-      padding: 10,
-      margin: 3,
-  },
-  reviewsProduct: {
-      flexDirection:'row',
-      alignItems:'center',
-      marginTop:5
-  }
-})
+// export const StyleHomeStore = StyleSheet.create({
+//   container: {
+//   },
+//   menu: {
+//       paddingTop: 50,
+//       flexDirection: 'row',
+//       marginLeft: 30,
+//       marginRight: 30,
+//   },
+//   textTitle: {
+//       textAlign: 'center',
+//       color: 'black',
+//       fontSize: 20,
+//       paddingLeft: 110,
+//       marginTop: -6
+//   },
+//   images: {
+//       marginLeft: 80
+//   },
+//   touchOpa: {
+//       marginLeft: 75
+//   },
+//   line: {
+//       borderWidth: 1,
+//       opacity: 0.03,
+//       marginTop: 20
+//   },
+//   boxSeller: {
+//       marginTop: 30,
+//       paddingLeft: 30,
+//       paddingRight: 30,
+//       flexDirection: 'row'
+//   },
+//   infoSeller: {
+//       flexDirection: 'row',
+//   },
+//   boxNameSeller: {
+//       width: 218,
+//       marginLeft: 20
+//   },
+//   boxRate: {
+//       flexDirection: 'row',
+//       paddingTop: 10
+//   },
+//   textRate: {
+//       fontSize: 20,
+//       color: 'black',
+//       marginTop: -5,
+//       paddingLeft: 5
+//   },
+//   boxLocate: {
+//       flexDirection: 'row',
+//       marginLeft: 30,
+//       marginTop: 20
+//   },
+//   boxProductStore: {
+//       flexDirection: 'row',
+//       marginTop: 20,
+//       marginLeft: 30,
+//       justifyContent: 'space-between',
+//       marginRight: 30
+//   },
+//   textTitleProduct: {
+//       fontSize: 15
+//   },
+//   textCountProduct: {
+//       color: 'black',
+//       fontSize: 13
+//   },
+//   textitleProductSelling: {
+//       fontSize: 20,
+//       color: 'black'
+//   },
+//   productSelling: {
+//       marginTop: 15,
+//       marginLeft: 30,
+//       marginRight: 30
+//   },
+//   boxSelling: {
+//       backgroundColor: 'FAFAFA',
+//       paddingLeft: 30,
+//       paddingRight: 30,
+//   },
+//   boxProduct: {
+//     width:180,
+//     elevation:1,
+//       backgroundColor: 'white',
+//       borderRadius: 10,
+//       padding: 10,
+//       margin: 3,
+//   },
+//   reviewsProduct: {
+//       flexDirection:'row',
+//       alignItems:'center',
+//       marginTop:5
+//   }
+// })
 
 export const StyleSearch = StyleSheet.create({
     menu: {
