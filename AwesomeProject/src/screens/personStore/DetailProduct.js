@@ -689,6 +689,7 @@ const DetailProduct = (props) => {
                                     heart == true ?
                                         require('../../images/heart.jpg') : require('../../images/unheart.jpg')
                                 } />
+
                         </TouchableOpacity>
                         <TouchableOpacity>
                             <Image style={{ width: 25, height: 25, marginTop: 3 }} source={require('../../images/messenger.jpg')} />
