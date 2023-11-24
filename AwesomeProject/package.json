@@ -18,32 +18,35 @@
     "@react-native-community/datetimepicker": "^7.6.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/slider": "^4.4.3",
+    "@react-native-firebase/app": "^18.6.1",
+    "@react-native-firebase/auth": "^18.6.1",
+    "@react-native-google-signin/google-signin": "^10.1.1",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/material-top-tabs": "^6.6.5",
     "@react-navigation/native-stack": "^6.9.14",
     "axios": "^1.5.1",
     "bson-objectid": "^2.0.4",
     "firebase": "^10.5.0",
-
     "node-modules": "^1.0.1",
     "react": "18.1.0",
     "react-native": "0.70.0",
-
     "react-native-animatable": "^1.4.0",
     "react-native-bouncy-checkbox": "^3.0.7",
     "react-native-color-picker": "^0.6.0",
     "react-native-color-wheel": "^0.1.7",
     "react-native-date-picker": "^4.3.3",
     "react-native-dropdown-picker": "^5.4.6",
+
+    "react-native-gesture-handler": "^2.13.1",
+    "react-native-gifted-charts": "^1.3.16",
+    "react-native-gifted-chat": "^2.4.0",
     "react-native-image-picker": "^7.0.2",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-masonry-list": "^2.16.1",
     "react-native-modal": "^13.0.1",
-
     "react-native-gifted-charts": "^1.3.16",
     "react-native-gifted-chat": "^2.4.0",
-
     "react-native-pager-view": "^6.2.2",
     "react-native-progress": "^5.0.0",
     "react-native-ratings": "^8.1.0",
@@ -54,10 +57,10 @@
     "react-native-svg": "^13.14.0",
     "react-native-swipe-item": "^0.7.0",
     "react-native-swiper": "^1.6.0",
+    "react-native-tab-view": "^3.5.2",
     "react-native-vector-icons": "^10.0.0",
     "react-slider": "^2.0.6",
-    "reanimated-color-picker": "^2.4.0",
-    "react-native-tab-view": "^3.5.2"
+    "reanimated-color-picker": "^2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

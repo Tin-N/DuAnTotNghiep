@@ -8,7 +8,6 @@ const CensorshipProductItem = (props) => {
   const { dulieu1, navigation } = props;
   const [user, setuser] = useState([]);
 
-  console.log('user: ' + dulieu1.userID);
   const onDetailProduct = () => {
     navigation.navigate("CensorshipDetailProduct", {
       productId: dulieu1._id, userId: dulieu1.userID,
@@ -42,7 +41,7 @@ const CensorshipProductItem = (props) => {
   return (
     <View style={StyleCensorshipProduct.viewBorder}>
       <View style={StyleCensorshipProduct.viewInfoShop}>
-        <Image source={{ uri: dulieu1.image[0] }} style={StyleCensorshipProduct.imageShop} />
+        <Image source={{ uri: user.avatar }} style={StyleCensorshipProduct.imageShop} />
         <View style={{ marginLeft: 20 }}>
           <Text style={StyleCensorshipProduct.textName}>{user.fullname}</Text>
         </View>
@@ -54,7 +53,7 @@ const CensorshipProductItem = (props) => {
         <Image source={{ uri: dulieu1.image[0] }} style={StyleCensorshipProduct.imageProduct} />
         <View style={StyleCensorshipProduct.infoProduct}>
           <View>
-            <Text style={StyleCensorshipProduct.textInfoProduct}>{dulieu1.name}</Text>
+            <Text style={[StyleCensorshipProduct.textInfoProduct, {fontWeight: '700'}]}>{dulieu1.name}</Text>
             <Text style={StyleCensorshipProduct.textInfoProduct}>Giá: {dulieu1.price}</Text>
             <Text style={StyleCensorshipProduct.textInfoProduct}>Loại: {dulieu1.categoryID}</Text>
           </View>
