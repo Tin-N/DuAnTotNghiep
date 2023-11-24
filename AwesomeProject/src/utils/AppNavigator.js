@@ -37,40 +37,45 @@ import HomeScreen from '../screens/HomeScreen';
 import DetailList from '../screens/DetailList';
 import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
 
+import DetailProduct from '../screens/personStore/DetailProduct';
+import CreateProduct from '../screens/personStore/CreateProduct';
+import ManageProduct from '../screens/personStore/ManageProduct';
+import UpdateProduct from '../screens/personStore/UpdateProduct';
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const User = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='Splash'>
-                        <Stack.Screen name='Product' component={ProductHome}></Stack.Screen>
-                        <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
-                        <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
-                        <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
-                        <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
-                        <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
-                        <Stack.Screen name='Splash' component={Splash}></Stack.Screen>                       
-                        <Stack.Screen name='WarningProfile' component={WarningProfile}></Stack.Screen>
-                        <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>                       
-                        <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
-                        <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
-        </Stack.Navigator>            
+            <Stack.Screen name='Product' component={ProductHome}></Stack.Screen>
+            <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
+            <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
+            <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
+            <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
+            <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
+            <Stack.Screen name='Splash' component={Splash}></Stack.Screen>
+            <Stack.Screen name='WarningProfile' component={WarningProfile}></Stack.Screen>
+            <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>
+            <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
+            <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
+        </Stack.Navigator>
     )
 }
 const Profile = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProfileScreen'>
-                        <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>   
-                        <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>                      
+            <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
+            <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
 
-                        <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
-                        <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
-                        <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
-                        <Stack.Screen name='WarningProfile' component={WarningProfile}></Stack.Screen>
-                        <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>                       
-                        <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
-                        <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
-                        
+            <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
+            <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
+            <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
+            <Stack.Screen name='WarningProfile' component={WarningProfile}></Stack.Screen>
+            <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>
+            <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
+            <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
+
 
         </Stack.Navigator>
     )
@@ -86,29 +91,35 @@ const ProductHome = () => {
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
             <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
+
             <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
 
             <Stack.Screen name='DetailProduct' component={DetailProduct} />
-            {/* <Stack.Screen name='CreateProduct' component={CreateProduct}
+
+            <Stack.Screen name='DetailList' component={DetailList}>
+
+            </Stack.Screen>
+            <Stack.Screen name='ManageProduct' component={ManageProduct} />
+            <Stack.Screen name='UpdateProduct'
                 options={{
                     presentation: 'modal',
                     animationTypeForReplace: 'push',
                     animation: 'slide_from_right'
-                }}></Stack.Screen> */}
-            <Stack.Screen name='DetailList' component={DetailList}></Stack.Screen>
-        </Stack.Navigator>
+                }}
+                component={UpdateProduct} />
+        </Stack.Navigator >
     )
 }
 
 
 const ProductProcessStack = () => {
     return (
-      <Stack.Navigator initialRouteName='Product Process Overview'>
-        <Stack.Screen name="Product Process Overview" component={ProductProcessOverview} />
-        <Stack.Screen name="Product Process" component={ProductProcess} />
-      </Stack.Navigator>
+        <Stack.Navigator initialRouteName='Product Process Overview'>
+            <Stack.Screen name="Product Process Overview" component={ProductProcessOverview} />
+            <Stack.Screen name="Product Process" component={ProductProcess} />
+        </Stack.Navigator>
     );
-  };
+};
 
 
 const censorshipProduct = () => {
@@ -152,14 +163,14 @@ const Main = () => {
                         iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
                     } else if (route.name === 'Profile') {
 
-                        iconName = focused ? 'bag' : 'bag-handle-outline';
+                        iconName = focused ? 'people-sharp' : 'people-outline';
                     } else if (route.name === 'SignUp') {
 
                         iconName = focused ? 'people-sharp' : 'people-outline';
                     } else if (route.name === 'Prod Process') {
                         iconName = focused ? 'clipboard' : 'clipboard-outline';
 
-                    }else if (route.name === 'Test') {
+                    } else if (route.name === 'Test') {
                         iconName = focused ? 'people-sharp' : 'people-outline';
                     }
                     return <Icon1 name={iconName} size={size} color={color} />
@@ -167,7 +178,7 @@ const Main = () => {
                 tabBarActiveTintColor: '#3669C9',
                 tabBarInactiveTintColor: 'black',
                 tabBarIconStyle: {
-                    marginTop:8
+                    marginTop: 8
                 }
             })}
         >

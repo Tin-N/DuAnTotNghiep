@@ -12,7 +12,7 @@ const ProdsProcessOverview = () => {
     const userID = appContextData.userID;
     const navigation = useNavigation();
     const [ProdsProcessOverviewChanged, setProdsProcessOverviewChanged] = useState(1)
-    // console.log(">>>>> " + userID)
+    // console.log(">>>>>ProdsProcessOverviewChanged " + JSON.stringify(orderData))
     useEffect(() => {
         (async () => {
             try {
@@ -24,6 +24,7 @@ const ProdsProcessOverview = () => {
             }
         })();
     }, [ProdsProcessOverviewChanged]);
+
 
     const handleNavigateToDetail = (orderDetailID) => {
         navigation.navigate("Product Process", {navigateData: orderDetailID})

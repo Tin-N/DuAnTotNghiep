@@ -12,7 +12,7 @@ const ProdsProcessOverviewItem = (props) => {
     const appContextData = useContext(AppContext);
     const userID = appContextData.userID;
 
-    // console.log(">>>>>>>>" + JSON.stringify(data))
+    // console.log(">>>>>>>>ProdsProcessOverviewItem: " + JSON.stringify(data))
     const [orderDetailProducts, setorderDetailProducts] = useState([])
     console.log("orderDetailProducts: ", orderDetailProducts)
 

@@ -143,11 +143,96 @@ export const StyleSearchSuggestions = StyleSheet.create({
         flexDirection: 'row',
     },
     text: {
-        fontSize: 19,
-        lineHeight: 20,
-        letterSpacing: 0.2,
-        alignSelf: 'center',
+        
     },
+});
+export const StyleHomeStore = StyleSheet.create({
+    menu: {
+        backgroundColor:'#3669c9',
+        flexDirection: 'row',
+        padding:10,
+        width:'100%',
+        alignItems:'center', justifyContent: 'space-around'
+      },
+      textTitle: {
+        textAlign: 'center',
+        color: 'black',
+        fontSize: 20,
+        paddingLeft: 110,
+        marginTop: -6,
+      },
+      touchOpa: {
+        marginLeft: 75,
+      },
+      line: {
+        borderWidth: 1,
+        opacity: 0.03,
+        marginTop: 20,
+      },
+      boxSeller: {
+        marginTop: 30,
+        paddingLeft: 30,
+        paddingRight: 30,
+        flexDirection: 'row',
+      },
+      infoSeller: {
+        flexDirection: 'row',
+      },
+      boxNameSeller: {
+        width: 218,
+        marginLeft: 20,
+      },
+      boxRate: {
+        flexDirection: 'row',
+        paddingTop: 10,
+      },
+      textRate: {
+        fontSize: 20,
+        color: 'black',
+        marginTop: -5,
+        paddingLeft: 5,
+      },
+      boxLocate: {
+        flexDirection: 'row',
+        marginLeft: 30,
+        marginTop: 20,
+      },
+      boxProductStore: {
+        flexDirection: 'row',
+        marginTop: 20,
+        marginLeft: 30,
+        justifyContent: 'space-between',
+        marginRight: 30,
+      },
+      textTitleProduct: {
+        fontSize: 15,
+      },
+      textCountProduct: {
+        color: 'black',
+        fontSize: 13,
+      },
+      textitleProductSelling: {
+        fontSize: 20,
+        color: 'black',
+      },
+      productSelling: {
+        marginTop: 15,
+        marginLeft: 30,
+        marginRight: 30,
+      },
+      boxSelling: {
+        paddingLeft: 30,
+        paddingRight: 30,
+      },
+      boxProduct: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        margin:5, overflow:'hidden'
+      },
+      reviewsProduct: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
 });
 
 export const StyleShipper = StyleSheet.create({
@@ -313,7 +398,7 @@ export const StyleDialogShopping = StyleSheet.create({
     },
     line: {
         borderWidth: 1,
-        opacity: 0.03,
+        opacity: 0.05,
         marginTop: 20
     },
     container2: {
@@ -338,332 +423,360 @@ export const StyleDialogShopping = StyleSheet.create({
 })
 
 export const StyleLogin = StyleSheet.create({
+    Container: {
+        backgroundColor: COLOR.backgroundSignIn,
+    },
     header: {
-        color: COLOR.primary,
+      color: COLOR.primary,
+    },
+    HintTextCP:{
+      color: 'black',
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginTop: "2%",
+      height: 55,
+      letterSpacing: 0.9,
+      color: COLOR.TextHint,
+      // justifyContent: 'center',
+      marginHorizontal: 25,
     },
     HeadingTextCP: {
-        color: COLOR.background,
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginTop: '20%',
-        justifyContent: 'space-between',
-        marginHorizontal: 20,
+      color: COLOR.background,
+      fontSize: 30,
+      fontWeight: 'bold',
+      marginTop: '20%',
+      justifyContent: 'space-between',
+      marginHorizontal: 20,
     },
     HeadingText: {
-        color: COLOR.background,
-        fontSize: 80,
-        fontWeight: 'bold',
-
-        marginTop: "2%",
-        justifyContent: 'space-between',
-        marginHorizontal: 20,
-        // Tạo bóng chữ
-        textShadowColor: 'black',
-        textShadowOffset: { width: -3, height: 5 },
-        textShadowRadius: 1,
+      color: COLOR.background,
+      fontSize: 80,
+      fontWeight: 'bold',
+  
+      marginTop: '2%',
+      justifyContent: 'space-between',
+      marginHorizontal: 20,
+      // Tạo bóng chữ
+      textShadowColor: 'black',
+      textShadowOffset: {width: -3, height: 5},
+      textShadowRadius: 1,
     },
     extraText: {
-        color: 'black',
-        fontSize: 30,
-        fontWeight: 'bold',
-        justifyContent: 'space-between',
-        paddingTop: '2%',
-        marginHorizontal: 16,
-        paddingBottom: '3%',
+      color: 'black',
+      fontSize: 25,
+      fontWeight: 'bold',
+      justifyContent: 'space-between',
+      paddingTop: '2%',
+      marginHorizontal: 16,
+      paddingBottom: '3%',
     },
     textHint: {
-        color: COLOR.TextHint,
-        fontSize: 17,
-        marginTop: '1%',
-        marginHorizontal: 16,
+      color: COLOR.TextHint,
+      fontSize: 15,
+      marginTop: '1%',
+      justifyContent: 'space-between',
+      marginHorizontal: 16,
     },
-    textHint: {
-        color: COLOR.TextHint,
-        fontSize: 15,
-        marginTop: "1%",
-        justifyContent: 'space-between',
-        marginHorizontal: 16,
+    textHintP: {
+      color: COLOR.TextHint,
+      fontSize: 15,
+      marginTop: '1%',
+      justifyContent: 'space-between',
+      marginHorizontal: 16,
     },
     fgPass: {
-        textAlign: 'right',
-        marginHorizontal: 20,
-        color: COLOR.Blue,
-        fontSize: 15,
-        fontWeight: 'bold',
+      marginTop: '1%',
+      textAlign: 'right',
+      marginHorizontal: 20,
+      color: COLOR.background,
+      fontSize: 15,
+      // alignContent: 'flex-end',
+      fontWeight: 'bold',
     },
     fgPass1: {
-        textAlign: 'center',
-        marginTop: '3%',
-        color: COLOR.Blue,
-        fontSize: 20,
-        fontWeight: 'bold',
+      textAlign: 'center',
+      marginTop: '3%',
+      color: COLOR.Blue,
+      fontSize: 20,
+      fontWeight: 'bold',
     },
     input: {
-        flexDirection: 'row',
-        // placeholderTextColor: COLOR.TextPlaceHolder,
-        // height: 30,
-        margin: "3%",
-
-        borderWidth: 1,
-        borderColor: COLOR.borderColor,
-        padding: '1%',
-        height: 55,
-        justifyContent: 'space-between',
-        alignContent: 'center',
-        borderRadius: 15,
+      flexDirection: 'row',
+      // placeholderTextColor: COLOR.TextPlaceHolder,
+      // height: 30,
+      marginHorizontal: '3%',
+      marginTop: '1.3%',
+      borderWidth: 1,
+      borderColor: COLOR.borderColor,
+      padding: '1%',
+      height: 55,
+      justifyContent: 'space-between',
+      alignContent: 'center',
+      borderRadius: 15,
+    },
+    inputP:{
+      flexDirection: 'row',
+      // placeholderTextColor: COLOR.TextPlaceHolder,
+      // height: 30,
+      marginTop: '1.3%',
+      marginHorizontal: '3%',
+      borderWidth: 1,
+      borderColor: COLOR.borderColor,
+      padding: '1%',
+      height: 55,
+      justifyContent: 'space-between',
+      alignContent: 'center',
+      borderRadius: 15,
     },
     buttonShape: {
-        alignItems: 'center',
-        jussifyContent: 'center',
-        backgroundColor: COLOR.background,
-        padding: 10,
-        height: 55,
-        width: '95%',
-        marginHorizontal: 10,
-        marginTop: 20,
-        borderRadius: 30,
-        // marginHorizontal: 10
+      alignItems: 'center',
+      jussifyContent: 'center',
+      backgroundColor: COLOR.background,
+      padding: 10,
+      height: 55,
+      width: '95%',
+      marginHorizontal: 10,
+      marginTop: "5%",
+      borderRadius: 30,
+      // marginHorizontal: 10
     },
     TextButton: {
-        fontSize: 20,
-        paddingTop: 2,
-        fontWeight: 'bold',
-        height: 55,
-        color: 'white',
-    },
+      fontSize: 20,
 
+      fontWeight: 'bold',
+      height: 55,
+      marginTop:"1%",
+      color: 'white',
+    },
+  
     text: {
-        color: COLOR.TextHint,
-        fontSize: 17,
-        justifyContent: 'space-between',
-        marginHorizontal: 16,
-        marginTop: 15,
-        // backgroundColor: 'red',
-        textAlign: 'center',
+      color: COLOR.TextHint,
+      fontSize: 17,
+      justifyContent: 'space-between',
+      marginHorizontal: 16,
+      marginTop: 15,
+      // backgroundColor: 'red',
+      textAlign: 'center',
     },
     FGcontainer: {
-        flexDirection: 'row',
-        width: '94%',
-        marginHorizontal: 10,
-        marginTop: 10,
-        justifyContent: 'space-around',
+      flexDirection: 'row',
+      width: '94%',
+      marginHorizontal: 10,
+      marginTop: "4%",
+      justifyContent: 'space-around',
     },
     FButton: {
-        alignItems: 'center',
-        backgroundColor: COLOR.Blue,
-        padding: 10,
-        height: 55,
-        width: '46%',
-        borderRadius: 10,
-        marginHorizontal: 0,
+      alignItems: 'center',
+      backgroundColor: COLOR.background,
+      padding: 10,
+      height: 55,
+      width: '46%',
+      borderRadius: 10,
+      marginHorizontal: 0,
     },
     GButton: {
-        alignItems: 'center',
-        borderWidth: 0.5,
-        padding: 10,
-        height: 55,
-        width: '46%',
-        borderRadius: 10,
-        marginHorizontal: 0,
+      alignItems: 'center',
+      borderWidth: 0.5,
+      padding: 10,
+      height: 55,
+      width: '46%',
+      borderRadius: 10,
+      marginHorizontal: 0,
     },
     CbuttomText: {
-        marginTop: '8%',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        width: '94%',
-        marginHorizontal: 10,
+      marginTop: '8%',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      width: '94%',
+      marginHorizontal: 10,
     },
     CSbuttomText: {
-        marginTop: '7%',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        width: '94%',
-        marginHorizontal: 10,
+      marginTop: '7%',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      width: '94%',
+      marginHorizontal: 10,
     },
     ButtomText1: {
-        fontSize: 20,
-        fontWight: 'bold',
-        // backgroundColor: 'red',
+      fontSize: 20,
+      fontWight: 'bold',
+      // backgroundColor: 'red',
     },
     ButtomText2: {
-        color: COLOR.Blue,
-        fontSize: 20,
-        fontWight: 'bold',
-        fontStyle: 'italic',
-        // backgroundColor: 'blue',
-        textDecorationLine: 'underline',
+      color: COLOR.background,
+      fontSize: 20,
+      fontWight: 'bold',
+      fontStyle: 'italic',
+      // backgroundColor: 'blue',
+      textDecorationLine: 'underline',
     },
     SButtonShape: {
-        alignItems: 'center',
-        jussifyContent: 'center',
-        backgroundColor: COLOR.background,
-        padding: 10,
-        height: 55,
-        width: '94%',
-        marginHorizontal: 10,
-        marginTop: 20,
-        borderRadius: 30,
+      alignItems: 'center',
+      jussifyContent: 'center',
+      backgroundColor: COLOR.background,
+      padding: 10,
+      height: 55,
+      width: '94%',
+      marginHorizontal: 10,
+      marginTop: 20,
+      borderRadius: 30,
     },
     RPBottomText: {
-        textAlign: 'center',
-        marginTop: '50%',
-        fontSize: 20,
-        color: 'black',
-        fontWeight: 'bold',
-        // backgroundColor: 'red',
+      textAlign: 'center',
+      marginTop: '7%',
+      fontSize: 20,
+      color: COLOR.background,
+      fontWeight: 'bold',
+      
     },
     RSPassInput: {
-        placeholderTextColor: COLOR.TextPlaceHolder,
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        borderColor: COLOR.borderColor,
-        padding: 15,
-        height: 55,
-        justifyContent: 'space-between',
-        borderRadius: 25,
+      placeholderTextColor: COLOR.TextPlaceHolder,
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      borderColor: COLOR.borderColor,
+      padding: 15,
+      height: 55,
+      justifyContent: 'space-between',
+      borderRadius: 25,
+      
     },
-
+  
     //Welcome
-
-
-    //Welcome 
+  
+    //Welcome
     HeadingTextWelcome: {
-        paddingTop: "2%",
-        fontWeight: 'bold',
-        paddingHorizontal: 20,
-        color: 'white',
-        fontFamily: 'INter-Black',
-        fontSize: 39,
+      paddingTop: '2%',
+      fontWeight: 'bold',
+      paddingHorizontal: 20,
+      color: 'white',
+      fontFamily: 'INter-Black',
+      fontSize: 39,
     },
     ButtonWelcome: {
-        alignItems: 'center',
-        backgroundColor: 'white',
-        padding: 10,
-        height: 55,
-        margin: 75,
-        borderRadius: 30,
-        marginHorizontal: 20,
+      alignItems: 'center',
+      backgroundColor: 'white',
+      padding: 10,
+      height: 55,
+      margin: 75,
+      borderRadius: 30,
+      marginHorizontal: 20,
     },
     TextWelcome: {
-        fontSize: 20,
-        paddingTop: 2,
-        fontWeight: 'bold',
-        height: 55,
-        color: COLOR.background,
+      fontSize: 20,
+      paddingTop: 2,
+      fontWeight: 'bold',
+      height: 55,
+      color: COLOR.background,
     },
-
+  
     // Confirm Pass
     HeadingTextCP: {
-        color: COLOR.background,
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginTop: "20%",
-        justifyContent: 'space-between',
-        marginHorizontal: 20,
+      color: COLOR.background,
+      fontSize: 30,
+      fontWeight: 'bold',
+      marginTop: '20%',
+      justifyContent: 'space-between',
+      marginHorizontal: 20,
     },
-    HintText:
-    {
-        color: 'black',
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginTop: 30,
-        height: 55,
-        color: COLOR.TextHint,
-        // justifyContent: 'center',
-        marginHorizontal: 16,
-
+    HintText: {
+      color: 'black',
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginTop: 30,
+      height: 55,
+      color: COLOR.TextHint,
+      // justifyContent: 'center',
+      marginHorizontal: 16,
     },
     inputCP: {
-        placeholderTextColor: COLOR.TextPlaceHolder,
-        height: 40,
-        width: '20%',
-        margin: 12,
-        borderWidth: 1,
-        borderColor: COLOR.borderColor,
-        padding: 15,
-        height: 55,
-        justifyContent: 'space-between',
-        borderRadius: 25,
-        textAlign: 'center',
+      placeholderTextColor: COLOR.TextPlaceHolder,
+      height: 40,
+      width: '100%',
+      margin: 12,
+      borderWidth: 1,
+      borderColor: COLOR.borderColor,
+      padding: 15,
+      height: 55,
+      justifyContent: 'space-between',
+      borderRadius: 25,
+      textAlign: 'center',
     },
     Resent: {
-        color: COLOR.Blue,
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginHorizontal: 15,
+      color: COLOR.background,
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginHorizontal: 15,
     },
     ContainerSentCode: {
-        flexDirection: 'row',
-        marginTop: 15,
-        width: '90%',
-        marginHorizontal: 15,
-        // backgroundColor: COLOR.background,
+      flexDirection: 'row',
+      marginTop: 15,
+      width: '90%',
+      marginHorizontal: 15,
+      // backgroundColor: COLOR.background,
     },
     SCText1: {
-        color: COLOR.TextHint,
-        fontSize: 14,
-        flex: 5,
+      color: COLOR.TextHint,
+      fontSize: 14,
+      flex: 5,
     },
     SCText2: {
-        color: COLOR.TextHint,
-        fontSize: 14,
-        flex: 1,
+      color: COLOR.TextHint,
+      fontSize: 14,
+      flex: 1,
     },
-
+  
     //UPdate Password
     UPContainerWarning: {
-        marginTop: '2%',
-        marginHorizontal: '6%',
-        flexDirection: 'row',
-        alignItems: 'center',
-
-        // backgroundColor: 'green',
+      marginTop: '2%',
+      marginHorizontal: '6%',
+      flexDirection: 'row',
+      alignItems: 'center',
+  
+      // backgroundColor: 'green',
     },
     iconWarning: {
-        width: 20,
-        height: 20,
-        // justifyContent: 'space-between',
-        alignItems: 'center',
-
-        // backgroundColor: 'yellow',
+      width: 20,
+      height: 20,
+      // justifyContent: 'space-between',
+      alignItems: 'center',
+  
+      // backgroundColor: 'yellow',
     },
     TextWarning: {
-        color: COLOR.TextHint,
-        width: '85%',
-        fontSize: 15,
-        // backgroundColor: 'red',
-        alignItems: 'center',
-        // color: COLOR.TextHint,
-        justifyContent: 'space-between',
-        marginHorizontal: '2%',
+      color: COLOR.TextHint,
+      width: '85%',
+      fontSize: 15,
+      // backgroundColor: 'red',
+      alignItems: 'center',
+      // color: COLOR.TextHint,
+      justifyContent: 'space-between',
+      marginHorizontal: '2%',
     },
     ButtonUP: {
-
-        marginTop: '20%',
-        marginHorizontal: '1%',
+      marginTop: '2%',
+      marginHorizontal: '1%',
     },
     containerTextInput: {
-        flexDirection: 'row',
+      flexDirection: 'row',
     },
     TextInputUP: {
-        width: '85%',
-        height: '100%',
-        marginLeft: '4%',
+      width: '85%',
+      height: '100%',
+      marginLeft: '4%',
     },
     HideShowIcon: {
-        width: "60%",
-        height: "50%",
+      width: '60%',
+      height: '50%',
     },
     CTIcon: {
-        marginVertical: '0.5%',
-        width: '14%',
-        // height: '100%',
-        justifyContent: 'center',
-        // backgroundColor: 'red',
+      marginVertical: '0.5%',
+      width: '14%',
+      // height: '100%',
+      justifyContent: 'center',
+      // backgroundColor: 'red',
     },
-
-});
+  });
 export const StyleDetailPersonFeedback = StyleSheet.create({
     menu: {
         paddingTop: 30,
@@ -693,10 +806,11 @@ export const StyleDetailPersonFeedback = StyleSheet.create({
 export const StyleDetailProduct = StyleSheet.create({
     menu: {
         flexDirection: 'row',
-        marginLeft: 30,
-        marginRight: 30,
+        paddingLeft: 30,
+        paddingRight: 30,
         paddingTop: 20,
-        paddingBottom: 15
+        paddingBottom: 15,
+        borderBottomWidth:0.2
     },
     textTitle: {
         textAlign: 'center',
@@ -713,13 +827,14 @@ export const StyleDetailProduct = StyleSheet.create({
         backgroundColor: '#766f6f'
     },
     banner: {
-        width: width
+        width: width,
+        flexDirection:'row'
     },
     titleBanner: {
         padding: 10,
 
         color: 'white',
-        fontSize: 25,
+        fontSize: 20,
         fontFamily: 'TiltNeon-Regular'
     },
     textPrice: {
@@ -810,103 +925,103 @@ export const StyleDetailProduct = StyleSheet.create({
 
 
 
-export const StyleHomeStore = StyleSheet.create({
-  container: {
-  },
-  menu: {
-      paddingTop: 50,
-      flexDirection: 'row',
-      marginLeft: 30,
-      marginRight: 30,
-  },
-  textTitle: {
-      textAlign: 'center',
-      color: 'black',
-      fontSize: 20,
-      paddingLeft: 110,
-      marginTop: -6
-  },
-  images: {
-      marginLeft: 80
-  },
-  touchOpa: {
-      marginLeft: 75
-  },
-  line: {
-      borderWidth: 1,
-      opacity: 0.03,
-      marginTop: 20
-  },
-  boxSeller: {
-      marginTop: 30,
-      paddingLeft: 30,
-      paddingRight: 30,
-      flexDirection: 'row'
-  },
-  infoSeller: {
-      flexDirection: 'row',
-  },
-  boxNameSeller: {
-      width: 218,
-      marginLeft: 20
-  },
-  boxRate: {
-      flexDirection: 'row',
-      paddingTop: 10
-  },
-  textRate: {
-      fontSize: 20,
-      color: 'black',
-      marginTop: -5,
-      paddingLeft: 5
-  },
-  boxLocate: {
-      flexDirection: 'row',
-      marginLeft: 30,
-      marginTop: 20
-  },
-  boxProductStore: {
-      flexDirection: 'row',
-      marginTop: 20,
-      marginLeft: 30,
-      justifyContent: 'space-between',
-      marginRight: 30
-  },
-  textTitleProduct: {
-      fontSize: 15
-  },
-  textCountProduct: {
-      color: 'black',
-      fontSize: 13
-  },
-  textitleProductSelling: {
-      fontSize: 20,
-      color: 'black'
-  },
-  productSelling: {
-      marginTop: 15,
-      marginLeft: 30,
-      marginRight: 30
-  },
-  boxSelling: {
-      backgroundColor: 'FAFAFA',
-      paddingLeft: 30,
-      paddingRight: 30,
-  },
-  boxProduct: {
-    width:180,
-    elevation:1,
-      backgroundColor: 'white',
-      borderRadius: 10,
-      padding: 10,
-      margin: 3,
-  },
-  reviewsProduct: {
-      flexDirection:'row',
-      alignItems:'center',
-      marginTop:5
-  }
-})
+// export const StyleHomeStore = StyleSheet.create({
+//   container: {
+//   },
+//   menu: {
+//       paddingTop: 50,
+//       flexDirection: 'row',
+//       marginLeft: 30,
+//       marginRight: 30,
+//   },
+//   textTitle: {
+//       textAlign: 'center',
+//       color: 'black',
+//       fontSize: 20,
+//       paddingLeft: 110,
+//       marginTop: -6
+//   },
+//   images: {
+//       marginLeft: 80
+//   },
+//   touchOpa: {
+//       marginLeft: 75
+//   },
+//   line: {
+//       borderWidth: 1,
+//       opacity: 0.03,
+//       marginTop: 20
+//   },
+//   boxSeller: {
+//       marginTop: 30,
+//       paddingLeft: 30,
+//       paddingRight: 30,
+//       flexDirection: 'row'
+//   },
+//   infoSeller: {
+//       flexDirection: 'row',
+//   },
+//   boxNameSeller: {
+//       width: 218,
+//       marginLeft: 20
+//   },
+//   boxRate: {
+//       flexDirection: 'row',
+//       paddingTop: 10
+//   },
+//   textRate: {
+//       fontSize: 20,
+//       color: 'black',
+//       marginTop: -5,
+//       paddingLeft: 5
+//   },
+//   boxLocate: {
+//       flexDirection: 'row',
+//       marginLeft: 30,
+//       marginTop: 20
+//   },
+//   boxProductStore: {
+//       flexDirection: 'row',
+//       marginTop: 20,
+//       marginLeft: 30,
+//       justifyContent: 'space-between',
+//       marginRight: 30
+//   },
+//   textTitleProduct: {
+//       fontSize: 15
+//   },
+//   textCountProduct: {
+//       color: 'black',
+//       fontSize: 13
+//   },
+//   textitleProductSelling: {
+//       fontSize: 20,
+//       color: 'black'
+//   },
+//   productSelling: {
+//       marginTop: 15,
+//       marginLeft: 30,
+//       marginRight: 30
+//   },
+//   boxSelling: {
+//       backgroundColor: 'FAFAFA',
+//       paddingLeft: 30,
+//       paddingRight: 30,
+//   },
+//   boxProduct: {
+//     width:180,
+//     elevation:1,
+//       backgroundColor: 'white',
+//       borderRadius: 10,
+//       padding: 10,
+//       margin: 3,
+//   },
+//   reviewsProduct: {
+//       flexDirection:'row',
+//       alignItems:'center',
+//       marginTop:5
+//   }
+// })
 
 export const StyleSearch = StyleSheet.create({
     menu: {
@@ -1459,4 +1574,184 @@ export const StyleSlider = StyleSheet.create({
 export const styleProductScreen=StyleSheet.create({
     
 });
+export const StyleProfile = StyleSheet.create({
+    ProfileContainer: {
+        height: '100%',
+        width: '100%',
+        backgroundColor: COLOR.backgroundProfile,
+    },
+  NavTab: {
+    marginTop: '2%',
+    flexDirection: 'row',
+  },
+  IconShapeStart: {
+    marginTop: '2%',
+    marginLeft: '4%',
+    backgroundColor: COLOR.background,
+    height: '80%',
+    width: 40,
+    borderRadius: 9,
+  },
+  Icon: {
+    margin: 10,
+    justifyContent: 'center',
+    height: 20,
+    width: 20,
+  },
+  TextIcon: {
+    marginTop: '2%',
+    marginLeft: '5%',
+    height: 40,
+    width: '64%',
+    color: 'black',
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+  IconShapeEnd: {
+    marginTop: '2%',
+    marginLeft: '4%',
+    backgroundColor: COLOR.Blue,
+    height: '80%',
+    width: 40,
+    borderRadius: 9,
+  },
+  IconSetting: {
+    margin: 10,
+    justifyContent: 'center',
+    height: 20,
+    width: 20,
+  },
 
+  Heading: {
+    // backgroundColor: COLOR.background,
+    marginTop: '5%',
+    marginLeft: '4%',
+    height: 130,
+    width: '92%',
+    flexDirection: 'row',
+    // marginBottom: '2%',
+  },
+  Avatar: {
+    height: '90%',
+    width: '35%',
+    // backgroundColor: "red",
+    borderRadius: 110,
+    
+  },
+  iconProfile: {
+    marginVertical: 0.1,
+    justifyContent: 'center',
+    height: '90%',
+    width: '80%',
+  },
+  TextProfile: {
+    marginLeft: '1%',
+    justifyContent: 'space-around',
+    // backgroundColor: "orange",
+    height: '80%',
+  },
+  Name: {
+    fontSize: 25,
+    color: 'black',
+  },
+  Email: {
+    fontSize: 16,
+    color: 'black',
+    width: '100%',
+  },
+  iconEdit: {
+    height: 20,
+    width: 20,
+    marginLeft: '25%',
+    marginTop: '5%',
+  },
+  iconEditContainer: {
+    backgroundColor: COLOR.background,
+    width: '25%',
+    height: '25%',
+    borderRadius: 110,
+  },
+  Line: {
+    width: '90%',
+    borderBottomColor: COLOR.TextHint, // Change this to the desired color
+    borderBottomWidth: 0.1, // Change this to the desired thickness
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: '5%',
+    marginTop: '2%',
+  },
+  Form:{
+    // backgroundColor: COLOR.background,
+    
+  },
+  FormItemTextAddress:{
+    marginLeft: 13,
+    color: COLOR.TextHint,
+    fontWeight: 'bold',
+  },
+  FormItemInputAddress:{
+    borderWidth: 0.2,
+    color: 'black',
+    paddingLeft: 15,
+    borderRadius: 35,
+    borderColor: COLOR.TextHint,
+    fontWeight: 'bold',
+  },
+  FormItem:{
+    marginTop: 15,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  ButtonCP:{
+    marginTop: 20,
+    marginHorizontal: "20%",
+    backgroundColor: COLOR.background,
+    height: 50,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  TextButton:{
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  ListProduct:{
+    flexDirection: 'row',
+    marginLeft: 20,
+    marginTop: 1,
+  },
+  ListProductIcon:{
+    height: 28,
+    width: 28,
+    marginTop: 5,
+  },
+  ListProductText:{
+    fontSize: 20,
+    marginLeft: 10,
+    marginTop: 5,
+  },
+  ListProductIconEnd:{
+    height: 16,
+    width: 16,
+    marginTop: 15,
+    marginLeft: "60%" ,
+  },
+  ListProductIconEndSeller:{
+    height: 16,
+    width: 16,
+    marginTop: 15,
+    marginLeft: "55%" ,
+  },
+  ListProductItem:{
+    flexDirection: 'row',
+  },
+  FormItemText:{
+    marginTop: 10,
+    flexDirection: 'row',
+  },      
+  FormItemStart:{
+    color: 'red',
+  }
+  
+});
