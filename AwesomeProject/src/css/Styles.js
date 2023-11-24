@@ -1326,9 +1326,10 @@ export const StyleCensorshipProduct = StyleSheet.create({
     //item product
     viewBorder: {
         margin: 10,
-        borderWidth: 0.2,
+
         borderRadius: 15,
         padding: 10,
+        backgroundColor: 'white'
     },
     viewInfoShop: {
         flexDirection: 'row',
@@ -1337,11 +1338,13 @@ export const StyleCensorshipProduct = StyleSheet.create({
     imageShop: {
         width: 50,
         height: 50,
+        borderRadius: 50/2
     },
     textName: {
         color: 'black',
         fontSize: 18,
         marginTop: 10,
+        fontWeight: '700'
     },
     line: {
         borderWidth: 0.2,
