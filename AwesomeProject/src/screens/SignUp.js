@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TextInput,
   ToastAndroid,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import {COLOR} from '../css/Theme';
@@ -26,24 +27,50 @@ const SignUp = () => {
   const [password,setPassword]=React.useState("");
   const navigation = useNavigation();
 
+  
 //http://localhost:3000/api/UserApi/register?email=thuan1234@gmail.com&password=1234
   const moveToSignIn = () => {
     navigation.navigate("SignIn");
   }
-
+  const validation = () => {
+    const emailRegex =
+    /^[a-zA-Z0-9._%+-]+[0-9._%+-]@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{11,}$/;
+  if (emailUser === '' || password === '') {
+    Alert.alert('Lỗi chưa điền', 'Hãy điền đầy đủ');
+    setCheckEmail("yellow");
+    setCheckPassword("yellow");
+    return false;
+  } else if (!emailRegex.test(emailUser)) {
+    Alert.alert('Lỗi Email','Hãy điền đầy đủ Email và theo đúng định dạng ');
+    setCheckEmail("yellow");
+    return false
+  } else if (!passwordRegex.test(password)) {
+    Alert.alert('Lỗi Password','Hãy điền đầy đủ Password và theo đúng định dạng');
+    setCheckPassword("yellow");
+    return false
+  }
+  setCheckEmail("white");
+  setCheckPassword("white");
+  return true;
+};
 
   const SignUpp= async()=>{
-    if(password==confirmPass){
+  
       
       try {
-        
+
         const response= await AxiosIntance().post("/UserApi/register?email="+ emailUser + "&password="+ password);
-        console.log(password);
+        // console.log(password);
+        // const _id = response.user._id;
+
+
         if(response.result==true)
         {
-          ToastAndroid.show("Đăng ký thành công",ToastAndroid.SHORT);
+          // ToastAndroid.show("Đăng ký thành công",ToastAndroid.SHORT);
+          Alert.alert("","Đăng ký thành công")
           navigation.navigate("SignIn");
-          console.log(response);
+          // console.log(response);
         }
           else
           ToastAndroid.show("Đăng ký thất bại",ToastAndroid.SHORT);
@@ -51,14 +78,11 @@ const SignUp = () => {
       } catch (error) {
         console.log(error);
       }
-    }else{
-      ToastAndroid.show("Mật khẩu không trùng khớp",ToastAndroid.SHORT);
-    }
+   
   }
 
   return (
-    <View
-      >
+    <View style={StyleLogin.Container}>
       {/* Text Savvy */}
       <Text
         style={StyleLogin.HeadingText}>
@@ -73,12 +97,12 @@ const SignUp = () => {
 
       {/* TextInput Email */}
       <View>
-        <Text style={StyleLogin.textHint}>Email</Text>
+        {/* <Text style={StyleLogin.textHint}>Email</Text> */}
 
         <View style={StyleLogin.input}>
           <TextInput
             style={StyleLogin.TextInputUP}
-            placeholder="Enter your email"
+            placeholder="Email"
             keyboardType="default"
             onChangeText={setEmailUser}
           />
@@ -87,7 +111,7 @@ const SignUp = () => {
 
       {/* TextInput Password */}
       <View>
-        <Text style={StyleLogin.textHint}>Password</Text>
+        <Text style={StyleLogin.textHint}>Email Error Validation</Text>
 
         <View style={StyleLogin.input}>
           <TextInput
@@ -103,21 +127,21 @@ const SignUp = () => {
              setShowPassword(!showPassword)
             }}
             style={StyleLogin.CTIcon}>
-            {/* <Image
+            <Image
               source={
                 showPassword === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }
               style={StyleLogin.HideShowIcon}
-            /> */}
+            />
           </TouchableOpacity>
         </View>
         {/* TextInput Password */}
         
 
         {/* TextInput Confirm Password */}
-        <Text style={StyleLogin.textHint}>Confirm Password</Text>
+        <Text style={StyleLogin.textHint}>Password Error Validation</Text>
 
         <View style={StyleLogin.input}>
           <TextInput
@@ -134,24 +158,27 @@ const SignUp = () => {
               setShowConfirmPassword(!showConfirmPassword)
             }}
             style={StyleLogin.CTIcon}>
-            {/* <Image
+            <Image
               source={
                 showConfirmPassword === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }
               style={StyleLogin.HideShowIcon}
-            /> */}
+            />
           </TouchableOpacity>
+          
         </View>
+        <Text style={StyleLogin.textHint}>Password Error Validation</Text>
+
          {/* TextInput Confirm Password */}
 
 
         <TouchableOpacity
           style={StyleLogin.buttonShape} onPress={SignUpp}>
           <Text
-            style={StyleLogin.TetuxtButton}>
-            Sign Up
+            style={StyleLogin.TextButton}>
+            Đăng ký
           </Text>
         </TouchableOpacity>
 
@@ -159,12 +186,12 @@ const SignUp = () => {
           style={StyleLogin.CbuttomText}>
           <Text
             style={StyleLogin.ButtomText1}>
-            You don't have any account?
+            Bạn mới biết tới SavvyShop?
           </Text>
           <TouchableOpacity onPress={moveToSignIn}>
             <Text
               style={StyleLogin.ButtomText2}>
-              SignIn
+              Đăng ký
             </Text>
           </TouchableOpacity>
         </View>

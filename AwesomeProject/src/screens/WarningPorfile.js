@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: "35%",
+        marginTop: "25%",
         color :  'white'
     },
     Container:{
@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.background,
     },
     Icon:{
-        width: 200,
-        height: 200,
+        width: 300,
+        height: 300,
         alignSelf: 'center',
         marginTop: "20%",
     },

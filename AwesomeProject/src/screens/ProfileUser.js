@@ -78,9 +78,10 @@ useEffect(() => {
       {
         console.log("Sửa thành công" );
         setImgLink("");
+        navigation.navigate('Home');
         
       }else{
-        console.log("Sửa thất bại" );
+        // console.log("Sửa thất bại" );
       }
       
     } catch (error) {

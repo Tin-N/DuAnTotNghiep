@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TextInput,
+  Alert
 } from 'react-native';
 import React, {useState} from 'react';
 import {COLOR} from '../css/Theme';
@@ -14,31 +15,34 @@ import {Image} from 'react-native';
 const windowWIdth = Dimensions.get('window').width;
 import {StyleSheet} from 'react-native';
 import AxiosIntance from '../utils/AxiosIntance';
+import {useNavigation} from '@react-navigation/native'
 const UpdatePassword = (props) => {
   const [show, setshow] = useState(true);
   const [visible, setvisible] = useState(true);
   const [showCP, setshowCP] = useState(true);
   const [visibleCP, setvisibleCP] = useState(true);
 
-  const [oldPassword, setOldPassword] = React.useState("");
+  // const [oldPassword, setOldPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState(""); 
   const {email} = props.route.params;
+  const navigation = useNavigation();
+
     const UpdatePassword = async () => {
       // console.log(oldPassword, newPassword, confirmPassword);
       
       if( newPassword==confirmPassword){
-        console.log(oldPassword, newPassword, confirmPassword);
+        console.log( newPassword, confirmPassword);
         try {
           // http://localhost:3000/Api/UserApi/change-password?email=thuan141@gmail.com&oldPassword=thuan2&newPassword=thuan3
-          const response= await AxiosIntance().post("/UserApi/change-password?email="+email+"&oldPassword="+oldPassword+"&newPassword="+newPassword);
+          const response= await AxiosIntance().post("/UserApi/change-password?email="+email+"&newPassword="+newPassword);
           // console.log(response, email, newPassword, confirmPassword, oldPassword);
           console.log(response)
           // console.log(emailUser, password );
           if(response.result==true)
           {
             console.log( "Do if"+newPassword, confirmPassword );
-            Alert.alert("Thay đổi mật khẩu thành công");
+            Alert.alert("","Thay đổi mật khẩu thành công");
             // await AsyncStorage.setItem("token",response.returnData.data.token);
             // ToastAndroid.show("check thanhf coong ",ToastAndroid.SHORT);
             // console.log(email);
@@ -48,7 +52,7 @@ const UpdatePassword = (props) => {
             // // setuserInfo(response.user);
             // // navigation.navigate('Product');
             // // console.log(response);
-    
+            navigation.navigate("SignIn");
           }else{
             console.log( "check thất bại"+response );
             Alert.alert("Thay đổi mật khẩu thất bại");
@@ -72,7 +76,7 @@ const UpdatePassword = (props) => {
       <View>
         {/* <Text style={StyleLogin.textHint}>Old Password </Text> */}
 
-        <View style={StyleLogin.input}>
+        {/* <View style={StyleLogin.input}> */}
           {/* <TextInput
             style={StyleLogin.TextInputUP}
             placeholder="Enter your password"
@@ -95,7 +99,7 @@ const UpdatePassword = (props) => {
               style={StyleLogin.HideShowIcon}
             />
           </TouchableOpacity> */}
-        </View>
+        {/* </View> */}
       </View>
 
 
@@ -116,14 +120,14 @@ const UpdatePassword = (props) => {
               setshow(!show);
             }}
             style={StyleLogin.CTIcon}>
-            {/* <Image
+            <Image
               source={
                 show === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }
               style={StyleLogin.HideShowIcon}
-            /> */}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -146,14 +150,14 @@ const UpdatePassword = (props) => {
               setshowCP(!showCP);
             }}
             style={StyleLogin.CTIcon}>
-            {/* <Image
+            <Image
               source={
                 showCP === false
                   ? require('../images/icon/view.png')
                   : require('../images/icon/hide.png')
               }
               style={StyleLogin.HideShowIcon}
-            /> */}
+            />
           </TouchableOpacity>
         </View>
       </View>
