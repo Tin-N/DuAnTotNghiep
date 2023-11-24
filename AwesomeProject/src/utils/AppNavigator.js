@@ -155,7 +155,7 @@ const Main = () => {
                         iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
                     } else if (route.name === 'Profile') {
 
-                        iconName = focused ? 'bag' : 'bag-handle-outline';
+                        iconName = focused ? 'people-sharp' : 'people-outline';
                     } else if (route.name === 'SignUp') {
 
                         iconName = focused ? 'people-sharp' : 'people-outline';
