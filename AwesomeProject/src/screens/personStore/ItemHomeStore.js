@@ -11,14 +11,16 @@ LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const ItemHomeStore = (props) => {
   const { dulieu } = props;
-  const navigation=useNavigation();
+  const navigation = useNavigation();
   const [priceProduct, setPriceProduct] = useState('');
   const [salePrice, setSalePrice] = useState('');
   const [countFeedback, setCountFeedback] = useState();
+  const [name, setName] = useState('')
   useEffect(() => {
     var salePricee = dulieu.price;
     setPriceProduct(formatPrice(salePricee));
     setSalePrice(formatPrice(Math.round(salePricee * 0.9)));
+    console.log(">>>nameProduct: " + dulieu.name);
     return () => {
     }
   }, [dulieu]);
@@ -27,8 +29,8 @@ const ItemHomeStore = (props) => {
   }
   return (
     <View style={[StyleHomeStore.boxProduct]}>
-      <TouchableOpacity onPress={handleOnClick}>
-        <Image source={{ uri: dulieu.image[0] }} style={{ height: 160, width: 155,  }} />
+      <TouchableOpacity onPress={() => handleOnClick()}>
+        <Image source={{ uri: dulieu.image[0] }} style={{ height: 160, width: 155, }} />
         {/* <Text style={{
           fontFamily: 'DM Sans',
           maxWidth: 200,
@@ -37,8 +39,13 @@ const ItemHomeStore = (props) => {
         }}>
           {dulieu.name}
         </Text> */}
-        <View style={{padding:5}}>
-          <TextWithLimit text={dulieu.name} limit={17} />
+        <View style={{ padding: 5 }}>
+          <View>
+            {
+              dulieu.name ? <TextWithLimit text={dulieu.name} limit={17} />
+                : <View />
+            }
+          </View>
           <Text>
             Kho: {dulieu.quantity}
           </Text>
@@ -49,7 +56,7 @@ const ItemHomeStore = (props) => {
             maxWidth: 200,
             flex: 1,
             flexWrap: 'nowrap',
-            fontSize: 15, color: 'black', marginLeft:5
+            fontSize: 15, color: 'black', marginLeft: 5
           }}>
             {dulieu.sold} đã bán
           </Text>
@@ -59,4 +66,4 @@ const ItemHomeStore = (props) => {
   )
 }
 
-export default ItemHomeStore;
+export default ItemHomeStore

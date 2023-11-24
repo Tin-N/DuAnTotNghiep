@@ -45,7 +45,7 @@ const DetailProduct = (props) => {
     const [star, setStar] = useState(0);
 
     const { userID } = useContext(AppContext);
-    const {userAddress} = useContext(AppContext);
+    const { userAddress } = useContext(AppContext);
     const [ownerID, setownerID] = useState()
 
     const [dataFeedback, setDataFeedback] = useState([]);
@@ -57,7 +57,6 @@ const DetailProduct = (props) => {
 
     // Feedback
     const [feedbackLength, setFeedbackLenght] = useState();
-
     // Favorite
     const [heart, setHeart] = useState(false);
     const [isDialogVisible, setDialogVisible] = useState(false);
@@ -180,6 +179,9 @@ const DetailProduct = (props) => {
     const Separator = () => {
         return <View style={StyleDetailProduct.separator} />;
     };
+    const homeStoreHandler = () => {
+        navigation.navigate('HomeStore')
+    }
 
     useEffect(() => {
         navigation.getParent()?.setOptions({
@@ -196,6 +198,7 @@ const DetailProduct = (props) => {
         const getDetails = async () => {
             try {
                 const response = await AxiosIntance().get('/productAPI/getProductByID?id=' + params.itemId);
+                console.log(">>>>>>productID for detail: " + params.itemId);
                 if (response.result == true) {
                     setDataProduct(response.products);
                     setProductPrice(response.products.price);
@@ -203,13 +206,13 @@ const DetailProduct = (props) => {
                     setDetail(response.products.detail);
                     setownerID(response.products.userID);
                     setproductQuantity(response.products.quantity)
-                    console.log(">>>>>> Số lượng sản phẩm: " + response.products.quantity)
+
                 }
             } catch (error) {
                 console.log("Product Detail: lỗi lấy dữ liệu: " + error)
             }
         }
-
+        
         // Get favorite 
         const getFavorite = async () => {
             const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + "113" + "&productID=" + params.itemId);
@@ -278,7 +281,7 @@ const DetailProduct = (props) => {
         getFavorite();
         return () => {
         }
-    }, [])
+    }, [params.itemId])
 
     const MyDialog = ({ isVisible, onClose }) => {
         const [selectedColor, setSelectedColor] = useState(null);
@@ -291,6 +294,8 @@ const DetailProduct = (props) => {
         const [productID, setproductID] = useState(params.itemId)
         const [itemTotalCost, setitemTotalCost] = useState(0)
         const [productPrice, setproductPrice] = useState(0)
+
+
 
         useEffect(() => {
             (async () => {
@@ -305,6 +310,7 @@ const DetailProduct = (props) => {
                 }
             })();
         }, []);
+
 
         const optionsInCart = {
             color: colorChoosen,
@@ -351,7 +357,25 @@ const DetailProduct = (props) => {
         const orderNow = async () => {
             const objectId = new ObjectID();
             console.log(objectId)
-
+            console.log(">>>>isLogin: " + isLogin);
+            if (!isLogin) {
+                Alert.alert(
+                    'Thông báo',
+                    'Bạn chưa đăng nhập', // Nội dung thông báo
+                    [
+                        {
+                            text: 'Cancel', // Chữ hiển thị trên nút Cancel
+                        },
+                        {
+                            text: 'OK', // Chữ hiển thị trên nút OK
+                            onPress: () => {
+                                // Xử lý khi người dùng chọn "OK"
+                                navigation.navigate('Login')
+                            },
+                        },
+                    ]
+                );
+            }
             const productToOrder = {
                 ownerID,
                 productID,
@@ -407,13 +431,13 @@ const DetailProduct = (props) => {
 
                             async () => {
                                 try {
-                                  await AxiosIntance().put(`productAPI/updateQuantityOrdered`, {
-                                    productsToUpdate: productsSelected
-                                  })
+                                    await AxiosIntance().put(`productAPI/updateQuantityOrdered`, {
+                                        productsToUpdate: productsSelected
+                                    })
                                 } catch (error) {
-                                  
+
                                 }
-                              }
+                            }
                         },
                     },
                 ]
@@ -703,42 +727,30 @@ const DetailProduct = (props) => {
                     </View>
                 </View>
                 <View style={StyleDetailProduct.line}></View>
-                <View>
-                    <View style={{
-                        height: 50, alignItems: 'center',
-                        backgroundColor: '#f5f5f5',
-                        justifyContent: 'center',
-                        flexDirection: 'row',
-                    }}>
-                        <View style={{ borderWidth: 0.2, width: 30 }}></View>
-                        <Text style={{ textAlign: 'center', fontSize: 18 }}>  Chi tiết sản phẩm  </Text>
-                        <View style={{ borderWidth: 0.2, width: 30 }}></View>
-                    </View>
-                    <Text style={{ padding: 15, fontSize: 20, fontFamily: 'TiltNeon-Regular' }}>{detail}</Text>
-                </View>
-                <View style={StyleDetailProduct.line}></View>
-                <Text style={{ fontSize: 16, marginVertical: 5, marginHorizontal: 10 }}>Điểm đánh giá</Text>
+                            
+                            <View style={{}}>
 
-                <View style={{ flexDirection: 'row', marginVertical: 3, alignItems: 'center' }}>
-                    <StarRating
-                        maxStars={5}
-                        rating={star}
-                        onChange={setStar}
-                        enableHalfStar={false}
-                        onRatingEnd={() => checkStar()}
-                        starSize={25}
-                        enableSwiping={true}
-                        animationConfig={{
-                            scale: 1.3, duration: 100,
-                            easing: Easing.elastic(10)
-                        }}
-                    />
-                    <Text>( {star} sao )</Text>
-                </View>
+                            </View>
 
                 <View style={StyleDetailProduct.line}></View>
-
                 <View style={{ marginBottom: 100 }}>
+                    <View style={{ alignItems: 'center' }}>
+                        <Text style={{ fontSize: 16, marginVertical: 5, marginHorizontal: 10 }}>Thêm đánh giá</Text>
+                        <StarRating
+                            maxStars={5}
+                            rating={star}
+                            onChange={setStar}
+                            enableHalfStar={false}
+                            onRatingEnd={() => checkStar()}
+                            starSize={25}
+                            enableSwiping={true}
+                            animationConfig={{
+                                scale: 1.3, duration: 100,
+                                easing: Easing.elastic(10)
+                            }}
+                        />
+                    </View>
+
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ margin: 10, fontSize: 18 }}>
                             Đánh giá ({feedbackLength})
@@ -757,6 +769,20 @@ const DetailProduct = (props) => {
                         keyExtractor={item => item.feedbackID}
                         ItemSeparatorComponent={Separator} />
                 </View>
+                <View style={StyleDetailProduct.line}></View>
+                <View style={{marginBottom:100}}>
+                    <View style={{
+                        height: 50, alignItems: 'center',
+                        backgroundColor: '#f5f5f5',
+                        justifyContent: 'center',
+                        flexDirection: 'row'
+                    }}>
+                        <View style={{ borderWidth: 0.2, width: 30 }}></View>
+                        <Text style={{ textAlign: 'center', fontSize: 18 }}>  Chi tiết sản phẩm  </Text>
+                        <View style={{ borderWidth: 0.2, width: 30 }}></View>
+                    </View>
+                    <Text style={{ padding: 15, fontSize: 20, fontFamily: 'TiltNeon-Regular' }}>{detail}</Text>
+                </View>
             </ScrollView>
 
             <View style={{
@@ -770,10 +796,10 @@ const DetailProduct = (props) => {
 
             <View style={StyleDetailProduct.bottom}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{ paddingLeft: 10, paddingRight: 10, }}>
+                    <TouchableOpacity onPress={homeStoreHandler} style={{ paddingLeft: 10, paddingRight: 10, }}>
                         <Image style={StyleDetailProduct.image} source={require('../../images/avatarPersonStore.png')} />
                         <Text style={{ fontSize: 12, textAlign: 'center' }}>Store</Text>
-                    </View>
+                    </TouchableOpacity>
                     <Image style={{ height: 45, marginTop: -4 }} source={require('../../images/lineheight.png')} />
                     <View style={{ paddingLeft: 10, paddingRight: 10 }}>
                         {/* <Image style={StyleDetailProduct.image} source={require('../../images/iconchat1.png')} /> */}
@@ -783,7 +809,7 @@ const DetailProduct = (props) => {
                 {productQuantity != 0
                     ?
                     <View style={{ flexDirection: 'row', marginLeft: 10 }}>
-                        <TouchableOpacity onPress={() => { setDialogVisible(true); setCheck(true) }} style={StyleDetailProduct.touchOpa}>
+                        <TouchableOpacity onPress={() => { setDialogVisible(true); setCheck(true); }} style={StyleDetailProduct.touchOpa}>
                             <Text style={StyleDetailProduct.textButton}>Mua ngay</Text>
                             <MyDialog isVisible={isDialogVisible} onClose={() => setDialogVisible(false)} />
                         </TouchableOpacity>

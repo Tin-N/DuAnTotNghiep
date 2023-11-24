@@ -4,26 +4,21 @@ import { StyleSearchSuggestions } from '../../css/Styles';
 import AxiosIntance from '../../utils/AxiosIntance';
 const SearchItem = props => {
   const { source, enableDelete, item, getText, handleCheck } = props;
-  const [text, settext] = useState("");
   const limit = 27;
-  useEffect(() => {
-    const setText = () => {
-      if (item.keyword.length > limit)
-        settext(item.keyword.slice(0, limit) + '...')
-      else
-        settext(item.keyword)
-    }
-    setText();
-    return () => {
-
-    }
-  }, [])
+  const setTextSlice = (text) => {
+    if (text.length > limit)
+      return text.slice(0,limit)+"...";
+    
+    return text;
+  }
+  
+  
 
   // const TextWithLimit = ({ text, limit }) => {
   //   // Kiểm tra xem văn bản có vượt quá giới hạn không
   //   if (text.length > limit) {
   //     // Nếu vượt quá, cắt văn bản và thêm dấu ba chấm
-  //     const truncatedText = 
+  //     const truncatedText = text.keyword.slice(0, limit) + '...';
   //     return (
   //       <TouchableOpacity onPress={()=>{handleTextClick(truncatedText);console.log(truncatedText);}}>
   //         <Text style={StyleSearchSuggestions.text} >
@@ -37,7 +32,7 @@ const SearchItem = props => {
   //   return <Text style={StyleSearchSuggestions.text}>{text}</Text>;
   // };
   const handleTextClick = () => {
-    getText(text);
+    getText(item.keyword);
   }
 
   const deleteHistory = async () => {
@@ -54,7 +49,10 @@ const SearchItem = props => {
         <View style={StyleSearchSuggestions.viewInside}>
           <Image source={source} style={StyleSearchSuggestions.image} />
           <Text
-          >{text}</Text>
+          >
+            item.keyword
+            {/* {setTextSlice(item.keyword)} */}
+            </Text>
         </View>
       </TouchableOpacity>
       {enableDelete === true ? (
@@ -70,6 +68,22 @@ const SearchItem = props => {
     </View>
   );
 }
+export const TextWithLimit = ({ text, limit }) => {
+    // Kiểm tra xem văn bản có vượt quá giới hạn không
+    if (text.length > limit) {
+      // Nếu vượt quá, cắt văn bản và thêm dấu ba chấm
+      const truncatedText = text.slice(0, limit) + '...';
+      return (
+        <TouchableOpacity onPress={()=>{handleTextClick(truncatedText);console.log(truncatedText);}}>
+          <Text style={StyleSearchSuggestions.text} >
+          {truncatedText}
+        </Text>
+        </TouchableOpacity>
+      );
+    }
 
+    // Nếu không vượt quá, hiển thị văn bản gốc
+    return <Text style={StyleSearchSuggestions.text}>{text}</Text>;
+  };
 export default SearchItem;
 

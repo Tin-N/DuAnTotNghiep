@@ -16,7 +16,6 @@ import DetailFeedback from '../screens/personStore/DetailFeedback';
 import CensorshipProductItem from '../screens/CensorshipProductItem';
 import CensorshipProduct from '../screens/CensorshipProduct';
 import CensorshipDetailProduct from '../screens/CensorshipDetailProduct';
-import DetailProduct from '../screens/personStore/DetailProduct'
 import ProfileUser from '../screens/ProfileUser';
 // import CreateProduct from '../screens/personStore/CreateProduct';
 import SignIn from '../screens/SignIn';
@@ -67,7 +66,6 @@ const Profile = () => {
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProfileScreen'>
             <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
             <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
-
             <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
             <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
             <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
@@ -75,8 +73,6 @@ const Profile = () => {
             <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>
             <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
-
-
         </Stack.Navigator>
     )
 }
@@ -91,13 +87,9 @@ const ProductHome = () => {
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
             <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
-
             <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
-
             <Stack.Screen name='DetailProduct' component={DetailProduct} />
-
             <Stack.Screen name='DetailList' component={DetailList}>
-
             </Stack.Screen>
             <Stack.Screen name='ManageProduct' component={ManageProduct} />
             <Stack.Screen name='UpdateProduct'
@@ -188,6 +180,7 @@ const Main = () => {
             <Tab.Screen name="Prod Process" component={ProductProcessStack} />
             <Tab.Screen name="Shipper" component={SProductProcess} />
             <Tab.Screen name="Test" component={censorshipProduct} />
+            <Tab.Screen name="Login" component={SignIn} />
         </Tab.Navigator>
     )
 }

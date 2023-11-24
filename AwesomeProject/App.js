@@ -40,7 +40,6 @@ const App = () => {
     <AppContextProvider>
       <NavigationContainer>
         <AppNavigator/>
-
       </NavigationContainer>
     </AppContextProvider>
 

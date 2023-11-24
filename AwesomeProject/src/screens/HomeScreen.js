@@ -25,7 +25,6 @@ const HomeScreen = props => {
 
   const handleClick = () => {
     navigation.navigate('SearchScreen');
-    console.log('homeSceen');
   };
   useEffect(() => {
     const getcategoryData1 = async () => {
@@ -122,7 +121,7 @@ const HomeScreen = props => {
       {/*category*/}
       <CategoryList />
       {/*Container all category*/}
-      <View style={{backgroundColor:'#F5F5F5', marginTop:30, borderTopRightRadius:30, borderTopLeftRadius:30}}>
+      <View style={{backgroundColor:'#F1F5F8', marginTop:30, borderTopRightRadius:30, borderTopLeftRadius:30}}>
         <View style={{width:'100%'}}>
           {/* BestSeller View */}
           <View style={styleHome.CategoryView}>

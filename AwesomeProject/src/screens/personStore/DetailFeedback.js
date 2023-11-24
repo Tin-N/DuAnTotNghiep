@@ -28,7 +28,7 @@ const DetailFeedback = (props) => {
     const [percentRating4, setpercentRating4] = useState(0);
     const [percentRating5, setpercentRating5] = useState(0);
     const onHandle = () => {
-        navigation.navigate("HomeStore");
+        navigation.goBack();
     }
     useEffect(() => {
         const getFeedback = async () => {

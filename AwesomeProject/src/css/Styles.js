@@ -458,12 +458,6 @@ export const StyleLogin = StyleSheet.create({
     },
     textHint: {
         color: COLOR.TextHint,
-        fontSize: 17,
-        marginTop: '1%',
-        marginHorizontal: 16,
-    },
-    textHint: {
-        color: COLOR.TextHint,
         fontSize: 15,
         marginTop: "1%",
         justifyContent: 'space-between',
@@ -550,13 +544,6 @@ export const StyleLogin = StyleSheet.create({
         width: '46%',
         borderRadius: 10,
         marginHorizontal: 0,
-    },
-    CbuttomText: {
-        marginTop: '8%',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        width: '94%',
-        marginHorizontal: 10,
     },
     CSbuttomText: {
         marginTop: '7%',
