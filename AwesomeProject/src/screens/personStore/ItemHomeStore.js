@@ -6,6 +6,7 @@ import AxiosIntance from '../../utils/AxiosIntance'
 import { useNavigation } from '@react-navigation/native';
 
 import { LogBox } from 'react-native';
+import { TextWithLimit } from '../../component/SearchSuggestions/SearchItem'
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const ItemHomeStore = (props) => {
@@ -27,29 +28,28 @@ const ItemHomeStore = (props) => {
   return (
     <View style={[StyleHomeStore.boxProduct]}>
       <TouchableOpacity onPress={handleOnClick}>
-        <Image source={{ uri: dulieu.image[0] }} style={{ height: 150, width: 140, borderRadius: 10, borderWidth: 1 }} />
-        <Text style={{
+        <Image source={{ uri: dulieu.image[0] }} style={{ height: 160, width: 155,  }} />
+        {/* <Text style={{
           fontFamily: 'DM Sans',
           maxWidth: 200,
           flex: 1,
           flexWrap: 'nowrap'
         }}>
           {dulieu.name}
-        </Text>
-        <Text style={{ color: '#3669C9' }}>
-          Giá: {salePrice}đ
-        </Text>
-        <Text>
-          Kho: {dulieu.quantity}
-        </Text>
+        </Text> */}
+        <View style={{padding:5}}>
+          <TextWithLimit text={dulieu.name} limit={17} />
+          <Text>
+            Kho: {dulieu.quantity}
+          </Text>
+        </View>
         <View>
           <Text style={{
             fontFamily: 'TiltNeon-Regular',
             maxWidth: 200,
             flex: 1,
             flexWrap: 'nowrap',
-            fontSize: 15,
-            marginTop: 4
+            fontSize: 15, color: 'black', marginLeft:5
           }}>
             {dulieu.sold} đã bán
           </Text>

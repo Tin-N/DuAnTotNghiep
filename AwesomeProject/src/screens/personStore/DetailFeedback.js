@@ -106,7 +106,6 @@ const DetailFeedback = (props) => {
     }, [dataFeedback])
     return (
         <View>
-            <Text>{dataFeedback.length}</Text>
             <View style={StyleDetailFeedback.menu}>
                 <TouchableOpacity onPress={onHandle}>
                     <Image source={require('../../images/backic.png')} />

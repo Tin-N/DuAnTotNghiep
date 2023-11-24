@@ -11,7 +11,7 @@ import {
 import React, {useState, useContext, ToastAndroid,userEffect} from 'react';
 import {COLOR} from '../css/Theme';
 import {Image} from 'react-native';
-const {width} = Dimensions.get('window');
+// const {width} = Dimensions.get('window');
 import {StyleSheet} from 'react-native';
 import {StyleLogin} from '../css/Styles.js';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
@@ -19,14 +19,27 @@ import AxiosIntance from '../utils/AxiosIntance';
 import {useNavigation} from '@react-navigation/native';
 import {AppContext} from '../utils/AppContext';
 import { GoogleSignin , statusCodes } from '@react-native-google-signin/google-signin';
+
+import React, { useState, useContext, ToastAndroid, } from 'react';
+import { COLOR } from '../css/Theme';
+import { Image } from 'react-native';
+const { width } = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
+import { StyleLogin } from '../css/Styles.js';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AxiosIntance from '../utils/AxiosIntance';
+import { useNavigation } from '@react-navigation/native'
+import { AppContext } from '../utils/AppContext';
+
 const SignIn = () => {
  
   const [showPassword, setShowPassword] = useState(true);
-  const [emailUser, setEmailUser] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  // Lấy thông tin user từ context
-  const {setuserInfo, userInfo, userID, setuserID, setisLogin} =
-    useContext(AppContext);
+
+  const [emailUser, setEmailUser] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  // Lấy thông tin user từ context    
+  const { setuserInfo, userInfo, userID, setuserID, setisLogin, setuserAddress } = useContext(AppContext);
+
   const navigation = useNavigation();
   const [checkEmail, setCheckEmail] = useState(COLOR.TextHint);
   const [checkPassword, setCheckPassword] = useState(COLOR.TextHint);
@@ -77,6 +90,7 @@ const SignIn = () => {
     return true;
   };
 
+
   const moveToSignUp = () => {
     navigation.navigate('SignUp');
   };
@@ -85,7 +99,6 @@ const SignIn = () => {
     navigation.navigate('ResetPassword');
   };
 
-  
 
   const SignIn = async () => {
     try {
@@ -145,11 +158,13 @@ const SignIn = () => {
             placeholder="Enter your password"
             underlineColorAndroid="transparent"
             secureTextEntry={showPassword}
+
             onChangeText={setPassword}></TextInput>
 
           <TouchableOpacity
             onPress={() => {
-              setShowPassword(!showPassword);
+              setShowPassword(!showPassword)
+
             }}
             style={StyleLogin.CTIcon}>
             <Image
@@ -162,11 +177,15 @@ const SignIn = () => {
             />
           </TouchableOpacity>
         </View>
+
         <Text style={StyleLogin.textHintP}>Password</Text>
+
+
 
         <TouchableOpacity onPress={FGPassword}>
           <Text style={StyleLogin.fgPass}>Quên mật khẩu</Text>
         </TouchableOpacity>
+
 
         <TouchableOpacity style={StyleLogin.buttonShape} onPress={SignIn}>
           <Text style={StyleLogin.TextButton}>Sign In</Text>
@@ -175,13 +194,13 @@ const SignIn = () => {
           <TouchableOpacity style={StyleLogin.FButton}>
             <Image
               source={require('../images/icon/Facebook.png')}
-              style={{width: 35, height: 35, tintColor: COLOR.title}}
+              style={{ width: 35, height: 35, tintColor: COLOR.title }}
             />
           </TouchableOpacity>
           <TouchableOpacity style={StyleLogin.GButton} onPress={signIn}>
             <Image
               source={require('../images/icon/Google.png')}
-              style={{width: 35, height: 35, tintColor: COLOR.title}}
+              style={{ width: 35, height: 35, tintColor: COLOR.title }}
             />
           </TouchableOpacity>
         </View>
@@ -196,7 +215,7 @@ const SignIn = () => {
       </View>
     </View>
   );
-};
+};  
 
 const styles = StyleSheet.create({});
 export default SignIn;

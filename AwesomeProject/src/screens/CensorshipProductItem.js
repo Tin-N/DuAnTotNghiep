@@ -8,7 +8,7 @@ const CensorshipProductItem = (props) => {
   const { dulieu1, navigation } = props;
   const [user, setuser] = useState([]);
 
-  console.log(dulieu1.userID);
+  console.log('user: ' + dulieu1.userID);
   const onDetailProduct = () => {
     navigation.navigate("CensorshipDetailProduct", {
       productId: dulieu1._id, userId: dulieu1.userID,
