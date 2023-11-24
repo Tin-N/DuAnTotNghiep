@@ -358,7 +358,7 @@ const CreateProduct = (props) => {
                             justifyContent: 'center',
                             backgroundColor: '#EEEEEE', margin: 5, display: buttonImg2()
                         }}>
-                            <Image style={{ width: 30, height: 30 }} source={require('../../images/icimage.png')} />
+                            {/* <Image style={{ width: 30, height: 30 }} source={require('../../images/icimage.png')} /> */}
                         </TouchableOpacity>
                     </View>
                     <View style={{ alignItems: 'center', marginTop: 10, display: buttonImg() }}>
@@ -369,7 +369,7 @@ const CreateProduct = (props) => {
                             justifyContent: 'center',
                             backgroundColor: '#EEEEEE'
                         }}>
-                            <Image style={{ width: 30, height: 30 }} source={require('../../images/icimage.png')} />
+                            {/* <Image style={{ width: 30, height: 30 }} source={require('../../images/icimage.png')} /> */}
                             <Text style={{ color: '#3669C9', fontWeight: 'bold' }}>+ Thêm hình</Text>
                         </TouchableOpacity>
                     </View>

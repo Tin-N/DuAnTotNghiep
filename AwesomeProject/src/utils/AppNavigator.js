@@ -16,7 +16,6 @@ import DetailFeedback from '../screens/personStore/DetailFeedback';
 import CensorshipProductItem from '../screens/CensorshipProductItem';
 import CensorshipProduct from '../screens/CensorshipProduct';
 import CensorshipDetailProduct from '../screens/CensorshipDetailProduct';
-import DetailProduct from '../screens/personStore/DetailProduct'
 import ProfileUser from '../screens/ProfileUser';
 // import CreateProduct from '../screens/personStore/CreateProduct';
 import SignIn from '../screens/SignIn';
