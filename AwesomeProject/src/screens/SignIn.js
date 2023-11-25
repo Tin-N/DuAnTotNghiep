@@ -11,8 +11,6 @@ import {
 } from 'react-native';
 
 import React, {useState, useContext,userEffect} from 'react';
-import {COLOR} from '../css/Theme';
-import {Image} from 'react-native';
 
 // const {width} = Dimensions.get('window');
 import AxiosIntance from '../utils/AxiosIntance';
@@ -21,7 +19,6 @@ import {AppContext} from '../utils/AppContext';
 import { GoogleSignin , statusCodes } from '@react-native-google-signin/google-signin';
 
 import {COLOR} from '../css/Theme.js'
-import React, { useState, useContext, ToastAndroid, } from 'react';
 import { Image } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';

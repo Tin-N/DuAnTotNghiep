@@ -331,7 +331,6 @@ const CreateProduct = (props) => {
                     Thêm sản phẩm mới
                 </Text>
             </View>
-<<<<<<< HEAD
             <KeyboardAwareScrollView overScrollMode='never'
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}>
@@ -361,77 +360,7 @@ const CreateProduct = (props) => {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 backgroundColor: '#EEEEEE', margin: 5, display: buttonImg2()
-=======
-            <KeyboardAwareScrollView>
-            <ScrollView showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                overScrollMode='never'
-                style={{ paddingBottom: 100 }}>
-                <View style={{ padding: 20 }}>
-                    <View style={{ flexDirection: 'row', width: width, flexWrap: 'wrap' }}>
-                        {image.map(item => (
-                            <View style={{ borderRadius: 5, overflow: 'hidden', margin: 5 }}>
-                                <ImageBackground style={{ width: 110, height: 110, borderRadius: 10 }} source={{ uri: item }}>
-                                    <TouchableOpacity onPress={() => removeImageFromImageArray(item)}>
-                                        <Image style={{
-                                            position: 'absolute', top: 0, margin: 4,
-                                            width: 25, height: 25, right: 0,
-                                            backgroundColor: 'white', borderRadius: 12.5
-                                        }} source={require('../../images/deleteimg1.png')} />
-                                    </TouchableOpacity>
-                                </ImageBackground>
-                            </View>
-                        ))}
-                        <TouchableOpacity onPress={getImageFromLibrary} style={{
-                            height: 110, width: 110, borderColor: '#3669C9',
-                            borderWidth: 1, borderRadius: 5,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: '#EEEEEE', margin: 5, display: buttonImg2()
-                        }}>
-                            {/* <Image style={{ width: 30, height: 30 }} source={require('../../images/icimage.png')} /> */}
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ alignItems: 'center', marginTop: 10, display: buttonImg() }}>
-                        <TouchableOpacity onPress={getImageFromLibrary} style={{
-                            height: 150, width: 150, borderColor: '#3669C9',
-                            borderWidth: 1, borderRadius: 5,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: '#EEEEEE'
-                        }}>
-                            {/* <Image style={{ width: 30, height: 30 }} source={require('../../images/icimage.png')} /> */}
-                            <Text style={{ color: '#3669C9', fontWeight: 'bold' }}>+ Thêm hình</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View>
-                        <Text style={{
-                            color: '#3669C9', textAlign: 'center',
-                            marginTop: 10, fontFamily: 'TiltNeon-Regular'
-                        }}>(Ảnh đầu tiên sẽ là ảnh đại diện sản phẩm)</Text>
-                    </View>
-                </View>
-                <View style={{ backgroundColor: '#f3f3f3' }}>
-                    <Text style={styles.titleBox}>
-                        Thông tin cho sản phẩm
-                    </Text>
-                </View>
-                <View style={{
-                    marginLeft: 10, marginRight: 10, padding: 10, borderRadius: 5
-                }}>
-                    <View>
-                        <Text style={{ fontSize: 15 }}>Tên sản phẩm*</Text>
-                        <TextInput
-                            onChangeText={setName}
-                            style={styles.textInput}
-                        />
-                    </View>
-                    <View style={{ marginTop: 10, zIndex: 0 }}>
-                        <Text style={{ fontSize: 15 }}>Danh mục hiển th*</Text>
-                        <View
-                            style={{
-                                zIndex: 3, flexDirection: 'row', marginTop: 5
->>>>>>> 01a783cf2c5b567fb87bc5ad358aedcbca7f3440
+            
                             }}>
                                 <Icon1 name="images-outline" size={25} color='#3669c9'></Icon1>
                             </TouchableOpacity>

@@ -18,13 +18,8 @@ const AxiosIntance = (contentType = 'application/json') => {
         //  'http://192.168.1.81:3000/api'//Thuan192.168.6.19
         //  baseURL: 'http://192.168.1.3:3000/Api'
 
-<<<<<<< HEAD
-
         baseURL: 'http://192.168.1.7:3000/Api'
 
-=======
-        baseURL: 'http://192.168.1.5:3000/Api'
->>>>>>> 01a783cf2c5b567fb87bc5ad358aedcbca7f3440
     });
     axiosInstance.interceptors.request.use(
         async config => {
