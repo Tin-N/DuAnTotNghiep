@@ -96,11 +96,10 @@ const ProductHome = () => {
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
             <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
             <Stack.Screen name='DetailProduct' component={DetailProduct} />
-<<<<<<< HEAD
-=======
+
+
             <Stack.Screen name='CategoryDetailList' component={CategoryScreen}/>
 
->>>>>>> 01a783cf2c5b567fb87bc5ad358aedcbca7f3440
             <Stack.Screen name='DetailList' component={DetailList}>
             </Stack.Screen>
             <Stack.Screen name='ManageProduct' component={ManageProduct} />
@@ -193,11 +192,10 @@ const Main = () => {
             <Tab.Screen name="Prod Process" component={ProductProcessStack} />
             <Tab.Screen name="Shipper" component={SProductProcess} />
             <Tab.Screen name="Test" component={censorshipProduct} />
-<<<<<<< HEAD
-            <Tab.Screen name="Login" component={SignIn} />
-=======
 
->>>>>>> 01a783cf2c5b567fb87bc5ad358aedcbca7f3440
+            <Tab.Screen name="Login" component={SignIn} />
+
+
         </Tab.Navigator>
     )
 }

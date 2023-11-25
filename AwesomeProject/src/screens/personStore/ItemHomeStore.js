@@ -39,7 +39,6 @@ const ItemHomeStore = (props) => {
         }}>
           {dulieu.name}
         </Text> */}
-<<<<<<< HEAD
         <View style={{ padding: 5 }}>
           <View>
             {
@@ -47,12 +46,12 @@ const ItemHomeStore = (props) => {
                 : <View />
             }
           </View>
-=======
+
         <View style={{padding:5}}>
           <TextWithLimit text={dulieu.name} limit={17} 
             styleView={{fontWeight:'bold',fontSize:30}}
           />
->>>>>>> 01a783cf2c5b567fb87bc5ad358aedcbca7f3440
+
           <Text>
             Kho: {dulieu.quantity}
           </Text>
@@ -63,15 +62,18 @@ const ItemHomeStore = (props) => {
             maxWidth: 200,
             flex: 1,
             flexWrap: 'nowrap',
-<<<<<<< HEAD
-            fontSize: 15, color: 'black', marginLeft: 5
-=======
+
+           
             fontSize: 15, color: 'black', marginLeft:5,
             paddingVertical:1,paddingBottom:10
->>>>>>> 01a783cf2c5b567fb87bc5ad358aedcbca7f3440
+
+
+         
+
           }}>
             {dulieu.sold} đã bán
           </Text>
+        </View>
         </View>
       </TouchableOpacity>
     </View>

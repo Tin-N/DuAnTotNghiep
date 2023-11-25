@@ -121,15 +121,14 @@ const HomeScreen = props => {
       {/*category*/}
       <CategoryList />
       {/*Container all category*/}
-<<<<<<< HEAD
-      <View style={{backgroundColor:'#F1F5F8', marginTop:30, borderTopRightRadius:30, borderTopLeftRadius:30}}>
-        <View style={{width:'100%'}}>
-=======
+
+
       <View style={{backgroundColor:'#F5F5F5', marginTop:30, borderTopRightRadius:30, borderTopLeftRadius:30}}>
         <View style={{backgroundColor:'white',
                   margin:10,
                   borderRadius:10,}}>
->>>>>>> 01a783cf2c5b567fb87bc5ad358aedcbca7f3440
+
+
           {/* BestSeller View */}
           <View style={styleHome.CategoryView}>
             <Text style={styleHome.titleCategory}>Bán chạy</Text>
