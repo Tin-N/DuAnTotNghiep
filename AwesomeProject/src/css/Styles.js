@@ -143,7 +143,10 @@ export const StyleSearchSuggestions = StyleSheet.create({
         flexDirection: 'row',
     },
     text: {
-        
+        fontSize:15,
+        fontWeight:'bold',
+        color:'black',
+        textTransform:'uppercase'
     },
 });
 export const StyleHomeStore = StyleSheet.create({
@@ -1222,7 +1225,7 @@ export const StyleSearch = StyleSheet.create({
         marginTop:20,
         alignItems:'center',
         paddingLeft:25,
-        paddingRight:25
+        paddingRight:25,
     },
     text:{
         fontSize:15,

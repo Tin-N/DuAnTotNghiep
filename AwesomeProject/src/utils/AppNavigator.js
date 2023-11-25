@@ -40,6 +40,9 @@ import DetailProduct from '../screens/personStore/DetailProduct';
 import CreateProduct from '../screens/personStore/CreateProduct';
 import ManageProduct from '../screens/personStore/ManageProduct';
 import UpdateProduct from '../screens/personStore/UpdateProduct';
+import CategoryList from '../component/CategoryList/CategoryList';
+import CategoryScreen from '../screens/CategoryFilterProduct';
+import UserScreen from '../screens/personStore/UserScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -63,13 +66,15 @@ const User = () => {
 }
 const Profile = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProfileScreen'>
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='UserScreen'>
             <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
             <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
 
             <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
             <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
             <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
+            <Stack.Screen name='UserScreen' component={UserScreen}></Stack.Screen>
+
             <Stack.Screen name='WarningProfile' component={WarningProfile}></Stack.Screen>
             <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>
             <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
@@ -94,6 +99,7 @@ const ProductHome = () => {
             <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
 
             <Stack.Screen name='DetailProduct' component={DetailProduct} />
+            <Stack.Screen name='CategoryDetailList' component={CategoryScreen}/>
 
             <Stack.Screen name='DetailList' component={DetailList}>
 
@@ -187,6 +193,7 @@ const Main = () => {
             <Tab.Screen name="Prod Process" component={ProductProcessStack} />
             <Tab.Screen name="Shipper" component={SProductProcess} />
             <Tab.Screen name="Test" component={censorshipProduct} />
+
         </Tab.Navigator>
     )
 }

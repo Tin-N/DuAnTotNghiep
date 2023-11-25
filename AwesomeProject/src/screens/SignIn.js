@@ -7,8 +7,9 @@ import {
   SafeAreaView,
   TextInput,
   Alert,
+  ToastAndroid
 } from 'react-native';
-import React, {useState, useContext, ToastAndroid,userEffect} from 'react';
+import React, {useState, useContext,userEffect} from 'react';
 import {COLOR} from '../css/Theme';
 import {Image} from 'react-native';
 // const {width} = Dimensions.get('window');
@@ -20,16 +21,7 @@ import {useNavigation} from '@react-navigation/native';
 import {AppContext} from '../utils/AppContext';
 import { GoogleSignin , statusCodes } from '@react-native-google-signin/google-signin';
 
-import React, { useState, useContext, ToastAndroid, } from 'react';
-import { COLOR } from '../css/Theme';
-import { Image } from 'react-native';
 const { width } = Dimensions.get('window');
-import { StyleSheet } from 'react-native';
-import { StyleLogin } from '../css/Styles.js';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import AxiosIntance from '../utils/AxiosIntance';
-import { useNavigation } from '@react-navigation/native'
-import { AppContext } from '../utils/AppContext';
 
 const SignIn = () => {
  

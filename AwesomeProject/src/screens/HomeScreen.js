@@ -123,10 +123,12 @@ const HomeScreen = props => {
       <CategoryList />
       {/*Container all category*/}
       <View style={{backgroundColor:'#F5F5F5', marginTop:30, borderTopRightRadius:30, borderTopLeftRadius:30}}>
-        <View style={{width:'100%'}}>
+        <View style={{backgroundColor:'white',
+                  margin:10,
+                  borderRadius:10,}}>
           {/* BestSeller View */}
           <View style={styleHome.CategoryView}>
-            <Text style={styleHome.titleCategory}>Best seller</Text>
+            <Text style={styleHome.titleCategory}>Bán chạy</Text>
             {/* Text See all with next error */}
             {/* <TouchableOpacity style={styleHome.touchSeeAll}
               activeOpacity={1}
@@ -152,7 +154,7 @@ const HomeScreen = props => {
                   },
                 });
               }}>
-              <Text style={styleHome.text}>See all</Text>
+              <Text style={styleHome.text}>Xem thêm</Text>
             </TouchableOpacity>
           </View>
           {/* <Banner
@@ -174,10 +176,16 @@ const HomeScreen = props => {
             showsHorizontalScrollIndicator={false}
           />
         </View>
-        <View>
+        <View
+         style={{
+                  backgroundColor:'white',
+                  margin:10,
+                  borderRadius:10,
+        }}
+        >
           {/* New Product */}
           <View style={styleHome.CategoryView}>
-            <Text style={styleHome.titleCategory}>New Product</Text>
+            <Text style={styleHome.titleCategory}>Mới nhất</Text>
             <TouchableOpacity
               style={styleHome.touchSeeAll}
               activeOpacity={0.6}
@@ -189,25 +197,33 @@ const HomeScreen = props => {
                   },
                 });
               }}>
-              <Text style={styleHome.text}>See all</Text>
+              <Text style={styleHome.text}>Xem thêm</Text>
             </TouchableOpacity>
           </View>
           <ProductList
             infinitiveScroll={false}
             data={categoryData1}
             styleView={{
-              width: '100%',
+              width: '90%',
               margin: 20,
+              alignItems:'center'
             }}
             horizontal
             showsHorizontalScrollIndicator={false}
           />
         </View>
-        <View>
+        <View
+         style={{
+          backgroundColor:'white',
+          margin:10,
+          borderRadius:10,
+          // marginBottom:80
+}}
+        >
           {/* Top Product */}
 
           <View style={styleHome.CategoryView}>
-            <Text style={styleHome.titleCategory}>Top</Text>
+            <Text style={styleHome.titleCategory}>Hàng đầu</Text>
             <TouchableOpacity
               style={styleHome.touchSeeAll}
               activeOpacity={0.6}
@@ -219,38 +235,47 @@ const HomeScreen = props => {
                   },
                 });
               }}>
-              <Text style={styleHome.text}>See all</Text>
+              <Text style={styleHome.text}>Xem thêm</Text>
             </TouchableOpacity>
           </View>
           <ProductList
             infinitiveScroll={false}
             data={categoryData2}
             styleView={{
-              width: '100%',
+              width: '90%',
               margin: 20,
+              alignItems:'center'
             }}
             horizontal
             showsHorizontalScrollIndicator={false}
           />
         </View>
-        <View>
+        <View 
+        style={{
+                  backgroundColor:'white',
+                  margin:10,
+                  borderRadius:10,
+                  marginBottom:80
+        }}
+        >
           {/* Discount Product */}
 
-          <View style={styleHome.CategoryView}>
-            <Text style={styleHome.titleCategory}>Discount</Text>
+          {/* <View style={styleHome.CategoryView}>
+            <Text style={styleHome.titleCategory}>Đang giảm giá</Text>
             <TouchableOpacity style={styleHome.touchSeeAll} activeOpacity={0.6}>
-              <Text style={styleHome.text}>See all</Text>
+              <Text style={styleHome.text}>Xem thêm</Text>
             </TouchableOpacity>
           </View>
           <ProductList
             data={categoryData3}
             styleView={{
-              width: '100%',
+              width: '90%',
               margin: 20,
+              alignItems:'center'
             }}
             horizontal
             showsHorizontalScrollIndicator={false}
-          />
+          /> */}
         </View>
       </View>
 

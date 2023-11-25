@@ -3,7 +3,7 @@ import React,{useEffect} from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 import {Dimensions} from 'react-native';
-import {formatMoney, formatPrice} from '../../../Agro';
+import {convertToCurrencyString, formatPrice} from '../../../Agro';
 import {LineChart} from 'react-native-gifted-charts';
 import { StyleDetailProduct } from '../../css/Styles';
 const screenWidth = Dimensions.get('screen').width;
@@ -49,7 +49,7 @@ const StatisticSellerScreen = (props) => {
           // tabBarStyle: { backgroundColor: 'white', elevation: 0 },
           // tabBarIndicatorStyle: { backgroundColor: paperTheme.colors.primary },
         }}>
-        <Tab.Screen name="StatisticByWeek" component={StatisticSellerByWeekScreen} options={{ title: 'Theo ngày' }}/>
+        <Tab.Screen name="StatisticByWeek" component={StatisticSellerByWeekScreen} options={{ title: 'Theo tuần' }}/>
         <Tab.Screen name="StatisticByMonth" component={StatisticSellerByMonthScreen} options={{ title: 'Theo tháng' }}/>
         <Tab.Screen name="StatisticByYear" component={StatisticSellerByYearScreen} options={{ title: 'Theo năm' }}/>
       </Tab.Navigator>
@@ -66,6 +66,7 @@ export const StatisticSellerByWeekScreen = () => {
     <ScrollView
       style={{
         backgroundColor: '#f7f7f7',
+        marginBottom:50
       }}>
       <View
         style={[
@@ -215,7 +216,7 @@ export const StatisticSellerByWeekScreen = () => {
           noOfSections={10}
           verticalLinesZIndex={2}
           yAxisLabelWidth={70}
-          formatYLabel={formatMoney}
+          formatYLabel={convertToCurrencyString}
           yAxisColor="white"
           yAxisThickness={0}
           rulesType="dashed"
@@ -258,54 +259,54 @@ export const StatisticSellerByWeekScreen = () => {
             <Text style={styles.table_data}>01</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Áo thể thao</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>200</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>02</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Áo khoác jeans</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>100</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>03</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Quần jeans xanh đen</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>70</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>04</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Áo sơ mi trắng</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>05</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>06</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Quần thể thao xám </Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>20</Text>
           </View>
         </View>
       </View>
@@ -339,54 +340,54 @@ export const StatisticSellerByWeekScreen = () => {
             <Text style={styles.table_data}>01</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Giày thể thao Adidas</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>5 </Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>02</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Giày adidas vàng</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>4.6</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>03</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Khăn tay trắng</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>3.7</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>04</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Áo khoác kaki vàng</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>3</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>05</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Mũ puma đen</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>3</Text>
           </View>
         </View>
       </View>
@@ -552,7 +553,7 @@ export const StatisticSellerByMonthScreen = () => {
           noOfSections={10}
           verticalLinesZIndex={2}
           yAxisLabelWidth={70}
-          formatYLabel={formatMoney}
+          formatYLabel={convertToCurrencyString}
           yAxisColor="white"
           yAxisThickness={0}
           rulesType="dashed"
@@ -595,54 +596,54 @@ export const StatisticSellerByMonthScreen = () => {
             <Text style={styles.table_data}>01</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Áo thể thao</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>200</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>02</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Áo khoác jeans</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>100</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>03</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Quần jeans xanh đen</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>70</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>04</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Áo sơ mi trắng</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>05</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>06</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Quần thể thao xám </Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>20</Text>
           </View>
         </View>
       </View>
@@ -676,54 +677,54 @@ export const StatisticSellerByMonthScreen = () => {
             <Text style={styles.table_data}>01</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Giày thể thao Adidas</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>5 </Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>02</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Giày adidas vàng</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>4.6</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>03</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Khăn tay trắng</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>3.7</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>04</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Áo khoác kaki vàng</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>3</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>05</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Mũ puma đen</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>3</Text>
           </View>
         </View>
       </View>
@@ -889,7 +890,7 @@ export const StatisticSellerByYearScreen = () => {
           noOfSections={10}
           verticalLinesZIndex={2}
           yAxisLabelWidth={70}
-          formatYLabel={formatMoney}
+          formatYLabel={convertToCurrencyString}
           yAxisColor="white"
           yAxisThickness={0}
           rulesType="dashed"
@@ -932,54 +933,54 @@ export const StatisticSellerByYearScreen = () => {
             <Text style={styles.table_data}>01</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Áo thể thao</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>200</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>02</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Áo khoác jeans</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>100</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>03</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Quần jeans xanh đen</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>70</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>04</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Áo sơ mi trắng</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>05</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>06</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Quần thể thao xám </Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>20</Text>
           </View>
         </View>
       </View>
@@ -1013,54 +1014,54 @@ export const StatisticSellerByYearScreen = () => {
             <Text style={styles.table_data}>01</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Giày thể thao Adidas</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>5 </Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>02</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Giày adidas vàng</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>4.6</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>03</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Khăn tay trắng</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>3.7</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>04</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Áo khoác kaki vàng</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>3</Text>
           </View>
         </View>
         <View style={styles.table_body_single_row}>
           <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
+            <Text style={styles.table_data}>05</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>January</Text>
+            <Text style={styles.table_data}>Mũ puma đen</Text>
           </View>
           <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>$10,236</Text>
+            <Text style={styles.table_data}>3</Text>
           </View>
         </View>
       </View>
@@ -1087,6 +1088,7 @@ const styles = StyleSheet.create({
   table_head_captions: {
     fontSize: 15,
     color: 'white',
+    fontWeight:'bold'
   },
 
   table_body_single_row: {
@@ -1094,7 +1096,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: '#ddd',
-    padding: 7,
+    padding: 15,
   },
   table_data: {
     fontSize: 14,

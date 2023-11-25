@@ -28,6 +28,7 @@ import { AppContextProvider } from './src/utils/AppContext';
 import AppNavigator from './src/utils/AppNavigator';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import StatisticSellerScreen from './src/screens/personStore/StatisticSellerScreen';
+import UserScreen from './src/screens/personStore/UserScreen';
 
 
 const Stack = createNativeStackNavigator()
@@ -38,16 +39,17 @@ const Stack = createNativeStackNavigator()
 const App = () => {
   
   return (
-    // <AppContextProvider>
-    //   <NavigationContainer>
-    //     <AppNavigator/>
+    <AppContextProvider>
+      <NavigationContainer>
+        <AppNavigator/>
 
-    //   </NavigationContainer>
-    // </AppContextProvider>
-    <NavigationContainer>
+      </NavigationContainer>
+    </AppContextProvider>
+    // <UserScreen/>
+  //   <NavigationContainer>
    
-   <StatisticSellerScreen/> 
-       </NavigationContainer>
+  //  <StatisticSellerScreen/> 
+  //      </NavigationContainer>
 
    
   )

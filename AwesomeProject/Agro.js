@@ -75,3 +75,24 @@ export const formatDateFormSaleUsing = (startTimestamp, endTimestamp) => {
   return startDateFormatted;
 }
 
+
+export function convertToCurrencyString(num) {
+  let number= parseInt(num);
+
+  const units = ["", "Ng", "Tr", "T"];
+  let unitIndex = 0;
+
+  while (number >= 1000 && unitIndex < units.length - 1) {
+    number /= 1000;
+    unitIndex++;
+  }
+
+  console.log(isNaN(number));
+  const formattedNumber = number % 1 !== 0 ? number.toFixed(1) : number.toFixed(0);
+  const unit = units[unitIndex];
+
+  return formattedNumber + " " + unit;
+}
+
+
+

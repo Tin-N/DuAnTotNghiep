@@ -5,6 +5,7 @@ import { useContext } from 'react'
 import ProfileUser from './ProfileUser'
 import ProfileSeller from './ProfileSeller'
 import WarningPorfile from './WarningPorfile'
+import UserScreen from './personStore/UserScreen'
 const ProfileScreen = () => {
     const { isLogin } = useContext(AppContext);
     const { userInfo } = useContext(AppContext);
@@ -14,7 +15,7 @@ const ProfileScreen = () => {
         
                 if(_role == 1){
                     return (
-                        <ProfileUser/>
+                        <UserScreen/>
                     )
                 }else if (_role == 2){
                     return (

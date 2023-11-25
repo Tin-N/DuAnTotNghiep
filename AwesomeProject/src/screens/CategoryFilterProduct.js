@@ -9,7 +9,6 @@ import AxiosIntance from '../utils/AxiosIntance'
 const CategoryScreen = (props) => {
   const route =useRoute();
   const {params}=route;
-  const { searchText } = route.params;
   const navigation= useNavigation();
   const [page, setPage] = useState(1)
   const [columns, setcolumns] = useState(2);
@@ -22,7 +21,16 @@ const CategoryScreen = (props) => {
   const handleClick=()=>{
     navigation.goBack();
   }
-
+  useEffect(() => {
+    navigation.getParent()?.setOptions({
+      tabBarStyle: {
+        display: "none"
+      }
+    });
+    return () => navigation.getParent()?.setOptions({
+      tabBarStyle: undefined
+    });
+  }, [navigation]);
   function createURLstring(objValue, arrValue, stringValue) {
     // if (typeof objValue !== 'object' || !Array.isArray(arrValue) || typeof stringValue !== 'string') {
     //   throw new Error('Giá trị không hợp lệ');
@@ -79,7 +87,7 @@ const CategoryScreen = (props) => {
       
       
       try {
-        const response = await AxiosIntance().get("/productAPI/filterProductByCategory?"+createURLstring(valueFilter[0],valueFilter[1],params.id)+"&skipData="+page);
+        const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+params.categoryID+"&skipData="+page);
         console.log(response +"   " + createURLstring(valueFilter[0],valueFilter[1],valueFilter[2]));
         if (response.result&&response.products.length>0) {
           console.log(response);
@@ -105,31 +113,32 @@ const CategoryScreen = (props) => {
       }
     }
   
-  useEffect(() => {
+  // useEffect(() => {
 
-    if ((Object.keys(valueFilter[0]).length > 0)||valueFilter[1].length > 0||params.id>0) {
-      // console.log('Đối tượng rỗng');
-      // Load();
-      console.log((Object.keys(valueFilter[0]).length > 0) +"   "+ valueFilter[1].length > 0 +"   "+ valueFilter[2]>0 +"                "+ valueFilter[1][1]+"                 "+valueFilter[2]);
-      if(page==1)
-        Load();
-      setPage(1);
-  }
-    return () => {
+  //   if ((Object.keys(valueFilter[0]).length > 0)||valueFilter[1].length > 0||params.id>0) {
+  //     // console.log('Đối tượng rỗng');
+  //     // Load();
+  //     console.log((Object.keys(valueFilter[0]).length > 0) +"   "+ valueFilter[1].length > 0 +"   "+ valueFilter[2]>0 +"                "+ valueFilter[1][1]+"                 "+valueFilter[2]);
+  //     if(page==1)
+  //       Load();
+  //     setPage(1);
+  // }
+  //   return () => {
       
-    }
-  }, [valueFilter]);
+  //   }
+  // }, [valueFilter]);
   return (
     <View>
-      <View style={styleHome.topBarView}>
+      <View style={[styleHome.topBarView,{justifyContent:'space-evenly', alignItems:'center',}]}>
       <TouchableOpacity onPress={handleClick}>
             <Image
-                style={styleSearchScreen.icons}
+                style={[styleSearchScreen.icons,{marginLeft:10,marginRight:30}]}
                 source={require('../images/icon/previous-ic.png')}
                 />
          </TouchableOpacity>
+         <Text style={[styleSearchScreen.title,{textAlign:'center',marginLeft:20,width:"75%",marginRight: 0}]}>Danh mục: {params.name}</Text>
             <View style={styleHome.viewIcons}>
-            <TouchableOpacity  style={styleHome.icons} onPress={()=>setModalVisible((!modalVisible))}>
+            <TouchableOpacity  style={[styleHome.icons,{marginLeft:40}]} onPress={()=>setModalVisible((!modalVisible))}>
               <Image
                   style={styleHome.icons}
                   source={require('../images/icon/filter.png')}
@@ -150,7 +159,11 @@ const CategoryScreen = (props) => {
           color={"blue"}
           size={'large'}/>
           :
-          <View>
+          <View
+          style={{
+            alignItems:'center'
+          }}
+          >
             {
               data.length>0?
                 <View>

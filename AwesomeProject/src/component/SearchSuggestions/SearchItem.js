@@ -70,6 +70,22 @@ const SearchItem = props => {
     </View>
   );
 }
+export const TextWithLimit = ({ text, limit,styleView }) => {
+    // Kiểm tra xem văn bản có vượt quá giới hạn không
+    if (text.length > limit) {
+      // Nếu vượt quá, cắt văn bản và thêm dấu ba chấm
+      const truncatedText = text.slice(0,limit)+"..."
+      return (
+        <TouchableOpacity onPress={()=>{handleTextClick(truncatedText);console.log(truncatedText);}}>
+          <Text style={[StyleSearchSuggestions.text,{fontSize:15}]} >
+          {truncatedText}
+        </Text>
+        </TouchableOpacity>
+      );
+    }
 
+    // Nếu không vượt quá, hiển thị văn bản gốc
+    return <Text style={StyleSearchSuggestions.text}>{text}</Text>;
+  };
 export default SearchItem;
 
