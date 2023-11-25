@@ -49,9 +49,11 @@ const SearchItem = props => {
         <View style={StyleSearchSuggestions.viewInside}>
           <Image source={source} style={StyleSearchSuggestions.image} />
           <Text
+          style={{
+            textAlignVertical:'center'
+          }}
           >
-            item.keyword
-            {/* {setTextSlice(item.keyword)} */}
+            {setTextSlice(item.keyword)}
             </Text>
         </View>
       </TouchableOpacity>
@@ -68,6 +70,7 @@ const SearchItem = props => {
     </View>
   );
 }
+<<<<<<< HEAD
 export const TextWithLimit = ({ text, limit }) => {
     // Kiểm tra xem văn bản có vượt quá giới hạn không
     if (text.length > limit) {
@@ -76,6 +79,16 @@ export const TextWithLimit = ({ text, limit }) => {
       return (
         <TouchableOpacity onPress={()=>{handleTextClick(truncatedText);console.log(truncatedText);}}>
           <Text style={StyleSearchSuggestions.text} >
+=======
+export const TextWithLimit = ({ text, limit,styleView }) => {
+    // Kiểm tra xem văn bản có vượt quá giới hạn không
+    if (text.length > limit) {
+      // Nếu vượt quá, cắt văn bản và thêm dấu ba chấm
+      const truncatedText = text.slice(0,limit)+"..."
+      return (
+        <TouchableOpacity onPress={()=>{handleTextClick(truncatedText);console.log(truncatedText);}}>
+          <Text style={[StyleSearchSuggestions.text,{fontSize:15}]} >
+>>>>>>> 01a783cf2c5b567fb87bc5ad358aedcbca7f3440
           {truncatedText}
         </Text>
         </TouchableOpacity>

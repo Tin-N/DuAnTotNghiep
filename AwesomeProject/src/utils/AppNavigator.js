@@ -40,6 +40,10 @@ import DetailProduct from '../screens/personStore/DetailProduct';
 import CreateProduct from '../screens/personStore/CreateProduct';
 import ManageProduct from '../screens/personStore/ManageProduct';
 import UpdateProduct from '../screens/personStore/UpdateProduct';
+import CategoryList from '../component/CategoryList/CategoryList';
+import CategoryScreen from '../screens/CategoryFilterProduct';
+import UserScreen from '../screens/personStore/UserScreen';
+import FavoriteScreen from '../screens/FavoriteList';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -63,12 +67,15 @@ const User = () => {
 }
 const Profile = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProfileScreen'>
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='UserScreen'>
             <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
             <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
             <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
             <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
             <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
+            <Stack.Screen name='UserScreen' component={UserScreen}></Stack.Screen>
+            <Stack.Screen name='FavoriteScreen' component={FavoriteScreen}></Stack.Screen>
+
             <Stack.Screen name='WarningProfile' component={WarningProfile}></Stack.Screen>
             <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>
             <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
@@ -89,9 +96,15 @@ const ProductHome = () => {
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
             <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
             <Stack.Screen name='DetailProduct' component={DetailProduct} />
+<<<<<<< HEAD
+=======
+            <Stack.Screen name='CategoryDetailList' component={CategoryScreen}/>
+
+>>>>>>> 01a783cf2c5b567fb87bc5ad358aedcbca7f3440
             <Stack.Screen name='DetailList' component={DetailList}>
             </Stack.Screen>
             <Stack.Screen name='ManageProduct' component={ManageProduct} />
+            <Stack.Screen name='CreateProduct' component={CreateProduct} />
             <Stack.Screen name='UpdateProduct'
                 options={{
                     presentation: 'modal',
@@ -176,11 +189,15 @@ const Main = () => {
         >
             <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Order" component={Order} />
-            <Tab.Screen name="Profile" component={Profile} />
+            <Tab.Screen name="ProfileScreen" component={ProfileScreen} />
             <Tab.Screen name="Prod Process" component={ProductProcessStack} />
             <Tab.Screen name="Shipper" component={SProductProcess} />
             <Tab.Screen name="Test" component={censorshipProduct} />
+<<<<<<< HEAD
             <Tab.Screen name="Login" component={SignIn} />
+=======
+
+>>>>>>> 01a783cf2c5b567fb87bc5ad358aedcbca7f3440
         </Tab.Navigator>
     )
 }

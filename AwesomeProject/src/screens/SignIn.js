@@ -6,31 +6,34 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TextInput,
-  Alert,
+<<<<<<< HEAD
+  Alert, StyleSheet
 } from 'react-native';
-import React, {useState, useContext, ToastAndroid,userEffect} from 'react';
+=======
+  Alert,
+  ToastAndroid
+} from 'react-native';
+import React, {useState, useContext,userEffect} from 'react';
 import {COLOR} from '../css/Theme';
 import {Image} from 'react-native';
+>>>>>>> 01a783cf2c5b567fb87bc5ad358aedcbca7f3440
 // const {width} = Dimensions.get('window');
-import {StyleSheet} from 'react-native';
-import {StyleLogin} from '../css/Styles.js';
-import {MaterialCommunityIcons} from '@expo/vector-icons';
 import AxiosIntance from '../utils/AxiosIntance';
 import {useNavigation} from '@react-navigation/native';
 import {AppContext} from '../utils/AppContext';
 import { GoogleSignin , statusCodes } from '@react-native-google-signin/google-signin';
-
+<<<<<<< HEAD
+import {COLOR} from '../css/Theme.js'
 import React, { useState, useContext, ToastAndroid, } from 'react';
-import { COLOR } from '../css/Theme';
 import { Image } from 'react-native';
 const { width } = Dimensions.get('window');
-import { StyleSheet } from 'react-native';
-import { StyleLogin } from '../css/Styles.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import AxiosIntance from '../utils/AxiosIntance';
-import { useNavigation } from '@react-navigation/native'
-import { AppContext } from '../utils/AppContext';
+import { StyleLogin } from '../css/Styles.js';
+=======
 
+const { width } = Dimensions.get('window');
+
+>>>>>>> 01a783cf2c5b567fb87bc5ad358aedcbca7f3440
 const SignIn = () => {
  
   const [showPassword, setShowPassword] = useState(true);

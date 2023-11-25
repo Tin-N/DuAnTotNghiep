@@ -75,10 +75,11 @@ const DetailProduct = (props) => {
     const [check, setCheck] = useState(null);
     // Sales
     const [bannerSale, setBannerSale] = useState('none');
-    const [sales, setSales] = useState([]);
+    const [sales, setSales] = useState({});
     const [percentSales, setPercentSales] = useState(0);
     const [endDate, setendDate] = useState();
     const [startDate, setstartDate] = useState();
+    const [saleOffID, setsaleOffID] = useState();
     const [onProductSaleOff, setonProductSaleOff] = useState(false);
     //data sale 
     const slideAnim = useRef(new Animated.Value(-100)).current;
@@ -100,10 +101,10 @@ const DetailProduct = (props) => {
         const threeDaysFromNow = new Date(now);
         threeDaysFromNow.setDate(now.getDate() + 3); // Thêm 3 ngày
         useEffect(() => {
-            if (sales.length != 0 && sales[0].endDay > new Date().getTime()) {
+            if (sales.length != 0 && sales.endDay > new Date().getTime()) {
                 console.log(">>>>sale: " + sales[0].endDay);
                 let timer = setInterval(() => {
-                    const onSaleTime = calculateTimeDifference(parseFloat(sales[0].startDay), new Date().getTime(), parseFloat(sales[0].endDay));
+                    const onSaleTime = calculateTimeDifference(parseFloat(sales.startDay), new Date().getTime(), parseFloat(sales.endDay));
                     setTime(onSaleTime)
                     console.log(">>>>>dawdawdaw " + sales[0].startDay + " " + new Date().getTime())
                     // if (sales[0].startDay > new Date().getTime()){
@@ -125,12 +126,12 @@ const DetailProduct = (props) => {
     }
     useEffect(() => {
         const getSalesCurrent = async () => {
-            const response = await AxiosIntance().get('/saleOffAPI/getSaleOffCurrent?productID=' + params.itemId);
+            const response = await AxiosIntance().get('/saleOffAPI/getSaleApplyBySaleID?saleID=' + saleOffID);
             if (response.result == true && response.saleOff.length != 0) {
                 setSales(response.saleOff);
                 setendDate(response.saleOff.endDay);
                 setstartDate(response.saleOff.startDay);
-                setPercentSales(response.saleOff[0].saleOff)
+                setPercentSales(response.saleOff.saleOff);
                 setBannerSale("flex");
             } else {
 
@@ -205,7 +206,8 @@ const DetailProduct = (props) => {
                     setImageProduct(response.products.image[0]);
                     setDetail(response.products.detail);
                     setownerID(response.products.userID);
-                    setproductQuantity(response.products.quantity)
+                    setproductQuantity(response.products.quantity);
+                    setsaleOffID(response.products.saleOff);
 
                 }
             } catch (error) {
@@ -215,11 +217,11 @@ const DetailProduct = (props) => {
         
         // Get favorite 
         const getFavorite = async () => {
-            const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + "113" + "&productID=" + params.itemId);
+            const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + "654627d67137a3bf678fb544" + "&productID=" + params.itemId);
             if (response.result) {
-                setFavorite(response.favorite);
                 if (Object.keys(response.favorite).length > 0) {
                     setHeart(!heart);
+                    setFavorite(response.favorite);
                 }
             }
         }

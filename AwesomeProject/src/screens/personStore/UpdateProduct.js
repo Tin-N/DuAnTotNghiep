@@ -179,11 +179,13 @@ const UpdateProduct = props => {
         let price = response.products.price;
         let quantity = response.products.quantity;
         let image = response.products.image[0];
+        let saleOffID = response.products.saleOffID
         const itemProduct = {
           name,
           quantity,
           price,
           image,
+          saleOffID
         };
         setDataProduct(itemProduct);
       }
@@ -305,23 +307,34 @@ const UpdateProduct = props => {
                 : ''}{' '}
               đ
             </Text>
+            <Text>{dataProduct.saleOffID}</Text>
+            <Text>{dataProduct.saleOffID}</Text>
             <Text style={{ fontSize: 15 }}>Kho: {dataProduct.quantity}</Text>
           </View>
         </View>
       </View>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarLabelStyle: { fontSize: 16, fontWeight: 'bold' },
-          tabBarItemStyle: { flexDirection: 'row', flex: 1 },
-          tabBarStyle: { backgroundColor: 'white' },
-          tabBarActiveTintColor: '#3669c9',
-          tabBarInactiveTintColor: '#a2a0a0',
-          tabBarIndicatorStyle: { width: 70, marginLeft: 65 }
 
-        }}>
-        <Tab.Screen initialParams={{ productID: params.itemId }} name="Sửa thông tin" component={TabUpdateProduct} />
-        <Tab.Screen initialParams={{ productID: params.itemId }} name="Cập nhật sale" component={TabSaleProduct} />
-      </Tab.Navigator>
+      {
+        Object.keys(dataProduct).length > 0 ?
+          <Tab.Navigator
+            screenOptions={{
+              tabBarLabelStyle: { fontSize: 16, fontWeight: 'bold' },
+              tabBarItemStyle: { flexDirection: 'row', flex: 1 },
+              tabBarStyle: { backgroundColor: 'white' },
+              tabBarActiveTintColor: '#3669c9',
+              tabBarInactiveTintColor: '#a2a0a0',
+              tabBarIndicatorStyle: { width: 70, marginLeft: 65 }
+
+            }}>
+            <Tab.Screen initialParams={{ productID: params.itemId, saleOffID: dataProduct.saleOffID }} name="Sửa thông tin" component={TabUpdateProduct} />
+            <Tab.Screen initialParams={{ productID: params.itemId, saleOffID: dataProduct.saleOffID }} name="Cập nhật sale" component={TabSaleProduct} />
+          </Tab.Navigator>
+          :
+          <View />
+      }
+
+
+
     </View>
   );
 };

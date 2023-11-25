@@ -1,23 +1,26 @@
 import { View, Text, ScrollView,Image, TouchableOpacity,ToastAndroid, ActivityIndicator } from 'react-native'
 import React,{useState,useEffect} from 'react'
-import ProductList from '../component/ProductList/ProductList'
+import ProductList from '../component/FavoriteList/ProductList'
 import SearchFilter from '../component/Filter/SearchFilter'
 import { styleHome,styleSearchScreen } from '../css/Styles'
 import NoResult from '../component/SearchSuggestions/NoResult';
 import {useNavigation,useRoute} from '@react-navigation/native'
 import AxiosIntance from '../utils/AxiosIntance'
-const CategoryScreen = (props) => {
-  const route =useRoute();
-  const {params}=route;
+import Searchbar from '../component/Seachbar/Searchbar'
+const FavoriteScreen = (props) => {
+//   const route =useRoute();
+//   const {params}=route;
+//   const {item}=params;
+  const  [searchText,setSearchText]  = useState("");
   const navigation= useNavigation();
   const [page, setPage] = useState(1)
+  // const {params}=route;
   const [columns, setcolumns] = useState(2);
   const [isLoading, setisLoading] = useState(true);
   const [data, setData] = useState([]);
-  const [valueFilter, setValueFilter] = useState([{},[0,10000000],""]);
-  const [modalVisible, setModalVisible] = useState(false);
   const [isLoadingmini,setisLoadingmini]=useState(false);
-  const [countData, setcountData] = useState(0)
+  const [countData, setcountData] = useState(0);
+  const [totalPage, settotalPage] = useState(0)
   const handleClick=()=>{
     navigation.goBack();
   }
@@ -31,126 +34,126 @@ const CategoryScreen = (props) => {
       tabBarStyle: undefined
     });
   }, [navigation]);
-  function createURLstring(objValue, arrValue, stringValue) {
+  function createURLstring(name,object) {
     // if (typeof objValue !== 'object' || !Array.isArray(arrValue) || typeof stringValue !== 'string') {
     //   throw new Error('Giá trị không hợp lệ');
     // }
     
     let url="";
       // name
-      // price
+      if(name.length>0)
+        url=url+"name="+name+"&";
 
-      url=url+"lte="+arrValue[1]+"&";
-
-      url=url+"gte="+arrValue[0];
-
-  // Category
-      if(stringValue.length>0)
-      url=url+"&categoryID="+stringValue;
-  
       // sort 
-      if (Object.keys(objValue).length === 0) {
+      if (Object.keys(object).length === 0) {
         console.log('Đối tượng rỗng');
       } else {
-        if(objValue.name.includes("Tên"))
-          url=url+"&sortName="+objValue.value;
-        if(objValue.name.includes("Giá"))
-          url=url+"&sortPrice="+objValue.value;
-        // if(objValue.name.includes("Bán chạy"))
-        //   url=url+"sortPrice="+objValue.value;
-        if(objValue.name.includes("Đánh giá tốt nhất"))
-          url=url+"&sortRating="+objValue.value;
+          url=url+object.name+"="+object.value;
         
       }
     
     return url;
   }
 
-  useEffect(() => {
-    
-    Load();
-    console.log(page);
-
-    return () => {
-      
+  useEffect(() => {   
+        Load();
+    return () => {      
     }
   }, [page])
   
   const loadMoreData = async ()=>{
-    setPage(page+1);
-    setisLoadingmini(!isLoadingmini)
+    if((totalPage>page)){
+        setPage(page+1);
+        console.log("Hellooaaaa",page);
+        setisLoadingmini(!isLoadingmini);
+        return true;
+
     }
+    return false
+    }
+
+    const onChangeText = text => {
+        setSearchText(text);
+        // setIsSearch(true);
+        console.log(text, 'SearchScreen');
+      };
+    
+      const onSubmitText = () => {
+        console.log(searchText.length);
+        if (searchText.length > 0) {
+            if(page==1)
+                Load();
+             setPage(1);
+        }
+      };
     const Load = async ()=>{
       
-      if(isLoadingmini)
-        setisLoading(true);
-      
-      
+      if(!isLoadingmini)
+        setisLoading(true);   
       try {
-        const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+params.categoryID+"&skipData="+page);
-        console.log(response +"   " + createURLstring(valueFilter[0],valueFilter[1],valueFilter[2]));
+        const response = await AxiosIntance().get("/productAPI/filterProductByName?"+"sortPrice=true"+"&skipData="+page);
+        console.log(response);
         if (response.result&&response.products.length>0) {
           console.log(response);
           if(page==1){
             setData(response.products);
-            setcountData(response.count)
+            setcountData(response.count);
+            settotalPage(response.totalPage);
             console.log("Hellooo");
+            console.log(isLoading+"ELLOOO1");
+            
           }
           else if(page>1)
           setData([...data,...response.products]);
-          
-          setisLoading(false);
-
+          if(isLoadingmini)
+          setisLoadingmini(!isLoadingmini);
         } else {
-          setData([]);
+          // setData([]);
           setisLoading(false);
           ToastAndroid.show("Đã hết sản phẩm ",ToastAndroid.SHORT);
         }
-        setisLoadingmini(!isLoadingmini);
+
+        
+
+            if(!isLoadingmini)
+            {
+                setisLoading(false);
+                console.log(isLoading+"ELLOOO222");
+
+            }
+        
       } catch (error) {
         console.error("Error:", error);
         setisLoading(false);
       }
+     
     }
   
-  // useEffect(() => {
-
-  //   if ((Object.keys(valueFilter[0]).length > 0)||valueFilter[1].length > 0||params.id>0) {
-  //     // console.log('Đối tượng rỗng');
-  //     // Load();
-  //     console.log((Object.keys(valueFilter[0]).length > 0) +"   "+ valueFilter[1].length > 0 +"   "+ valueFilter[2]>0 +"                "+ valueFilter[1][1]+"                 "+valueFilter[2]);
-  //     if(page==1)
-  //       Load();
-  //     setPage(1);
-  // }
-  //   return () => {
-      
-  //   }
-  // }, [valueFilter]);
   return (
     <View>
-      <View style={[styleHome.topBarView,{justifyContent:'space-evenly', alignItems:'center',}]}>
-      <TouchableOpacity onPress={handleClick}>
+        {/*<Text style={{color:'black'}}>{isLoading.toString()}</Text>*/}
+      <View style={[styleHome.topBarView,{}]}>
+      <TouchableOpacity
+      style={{marginLeft:-10}}
+      onPress={handleClick}>
             <Image
-                style={[styleSearchScreen.icons,{marginLeft:10,marginRight:30}]}
+                style={styleSearchScreen.icons}
                 source={require('../images/icon/previous-ic.png')}
                 />
          </TouchableOpacity>
-         <Text style={[styleSearchScreen.title,{textAlign:'center',marginLeft:20,width:"75%",marginRight: 0}]}>Danh mục: {params.name}</Text>
+            <View style={{marginLeft:5,width:"90%"}}>
+              {/* <Searchbar
+            onChangeText={onChangeText}
+            onClick={false}
+            onSubmitText={onSubmitText}
+            /> */}
+            <Text style={[styleHome.title,{fontSize:20, textAlign:'center',color:'black'}]}>Danh sách yêu thích</Text>
+            </View>
             <View style={styleHome.viewIcons}>
-            <TouchableOpacity  style={[styleHome.icons,{marginLeft:40}]} onPress={()=>setModalVisible((!modalVisible))}>
-              <Image
-                  style={styleHome.icons}
-                  source={require('../images/icon/filter.png')}
-                />
-            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={1}/>
+              
             </View>
           </View>
-          <SearchFilter 
-            onSubmit={setValueFilter}
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-          />
 
         <View>
         {
@@ -160,13 +163,16 @@ const CategoryScreen = (props) => {
           size={'large'}/>
           :
           <View
-          style={{
-            alignItems:'center'
-          }}
+            style={{
+                alignItems:'center',
+                alignSelf:'center'
+            }}
           >
             {
               data.length>0?
-                <View>
+                <View
+                style={{paddingBottom:30}}
+            >
                         <ProductList
                         count={countData}
                       data={data}
@@ -176,7 +182,7 @@ const CategoryScreen = (props) => {
                       styleView={{
                         width: '100%',
                         margin: 10,
-                        marginBottom:150,
+                        marginBottom:110
                       }}
                       numColumns={columns}
                       showsVerticalScrollIndicator={false}
@@ -194,4 +200,4 @@ const CategoryScreen = (props) => {
   )
 }
 
-export default CategoryScreen
+export default FavoriteScreen
