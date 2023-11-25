@@ -43,6 +43,7 @@ import UpdateProduct from '../screens/personStore/UpdateProduct';
 import CategoryList from '../component/CategoryList/CategoryList';
 import CategoryScreen from '../screens/CategoryFilterProduct';
 import UserScreen from '../screens/personStore/UserScreen';
+import FavoriteScreen from '../screens/FavoriteList';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -74,6 +75,7 @@ const Profile = () => {
             <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
             <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
             <Stack.Screen name='UserScreen' component={UserScreen}></Stack.Screen>
+            <Stack.Screen name='FavoriteScreen' component={FavoriteScreen}></Stack.Screen>
 
             <Stack.Screen name='WarningProfile' component={WarningProfile}></Stack.Screen>
             <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>

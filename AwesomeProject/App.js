@@ -29,6 +29,7 @@ import AppNavigator from './src/utils/AppNavigator';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import StatisticSellerScreen from './src/screens/personStore/StatisticSellerScreen';
 import UserScreen from './src/screens/personStore/UserScreen';
+import FavoriteScreen from './src/screens/FavoriteList';
 
 
 const Stack = createNativeStackNavigator()
@@ -45,6 +46,7 @@ const App = () => {
 
       </NavigationContainer>
     </AppContextProvider>
+    // <FavoriteScreen/>
     // <UserScreen/>
   //   <NavigationContainer>
    

@@ -212,11 +212,11 @@ const DetailProduct = (props) => {
 
         // Get favorite 
         const getFavorite = async () => {
-            const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + "113" + "&productID=" + params.itemId);
+            const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + "654627d67137a3bf678fb544" + "&productID=" + params.itemId);
             if (response.result) {
-                setFavorite(response.favorite);
                 if (Object.keys(response.favorite).length > 0) {
                     setHeart(!heart);
+                    setFavorite(response.favorite);
                 }
             }
         }

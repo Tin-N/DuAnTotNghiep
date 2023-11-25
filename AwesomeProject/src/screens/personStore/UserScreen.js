@@ -2,8 +2,9 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from '../../css/Theme'
-
+import {useNavigation} from '@react-navigation/native'
 const UserScreen = () => {
+  const navigation = useNavigation();
   return (
     <View style={{marginHorizontal: 15}}>
       <View
@@ -161,7 +162,9 @@ const UserScreen = () => {
  />
         </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=>{navigation.navigate("FavoriteScreen")}}
+        >
         <View
           style={{
             flexDirection: 'row',
