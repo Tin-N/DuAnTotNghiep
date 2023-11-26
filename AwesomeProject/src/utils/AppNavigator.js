@@ -40,13 +40,18 @@ import DetailProduct from '../screens/personStore/DetailProduct';
 import CreateProduct from '../screens/personStore/CreateProduct';
 import ManageProduct from '../screens/personStore/ManageProduct';
 import UpdateProduct from '../screens/personStore/UpdateProduct';
-import CategoryList from '../component/CategoryList/CategoryList';
-import CategoryScreen from '../screens/CategoryFilterProduct';
-import UserScreen from '../screens/personStore/UserScreen';
-import FavoriteScreen from '../screens/FavoriteList';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
+const ProductProcessStack = () => {
+    return (
+        <Stack.Navigator initialRouteName='ProductProcessOverview'>
+            <Stack.Screen name="ProductProcessOverview" component={ProductProcessOverview} />
+            <Stack.Screen options={{ headerShown: false }} name="Product Process" component={ProductProcess} />
+        </Stack.Navigator>
+    );
+};
 
 const User = () => {
     return (
@@ -67,19 +72,19 @@ const User = () => {
 }
 const Profile = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='UserScreen'>
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProfileScreen'>
             <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
             <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
+
             <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
             <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
             <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
-            <Stack.Screen name='UserScreen' component={UserScreen}></Stack.Screen>
-            <Stack.Screen name='FavoriteScreen' component={FavoriteScreen}></Stack.Screen>
-
             <Stack.Screen name='WarningProfile' component={WarningProfile}></Stack.Screen>
             <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>
             <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
+            <Stack.Screen name='Prod Process' component={ProductProcessStack}/>
+
         </Stack.Navigator>
     )
 }
@@ -94,16 +99,15 @@ const ProductHome = () => {
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
             <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
+
             <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
+
             <Stack.Screen name='DetailProduct' component={DetailProduct} />
 
-
-            <Stack.Screen name='CategoryDetailList' component={CategoryScreen}/>
-
             <Stack.Screen name='DetailList' component={DetailList}>
+
             </Stack.Screen>
             <Stack.Screen name='ManageProduct' component={ManageProduct} />
-            <Stack.Screen name='CreateProduct' component={CreateProduct} />
             <Stack.Screen name='UpdateProduct'
                 options={{
                     presentation: 'modal',
@@ -114,17 +118,6 @@ const ProductHome = () => {
         </Stack.Navigator >
     )
 }
-
-
-const ProductProcessStack = () => {
-    return (
-        <Stack.Navigator initialRouteName='Product Process Overview'>
-            <Stack.Screen name="Product Process Overview" component={ProductProcessOverview} />
-            <Stack.Screen name="Product Process" component={ProductProcess} />
-        </Stack.Navigator>
-    );
-};
-
 
 const censorshipProduct = () => {
     return (
@@ -162,7 +155,7 @@ const Main = () => {
                     let iconName;
                     if (route.name === 'Home') {
                         iconName = focused ? 'home' : 'home-outline';
-                    } else if (route.name === 'Order') {
+                    } else if (route.name === 'Cart') {
 
                         iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
                     } else if (route.name === 'Profile') {
@@ -187,15 +180,11 @@ const Main = () => {
             })}
         >
             <Tab.Screen name="Home" component={ProductHome} />
-            <Tab.Screen name="Order" component={Order} />
-            <Tab.Screen name="ProfileScreen" component={ProfileScreen} />
-            <Tab.Screen name="Prod Process" component={ProductProcessStack} />
+            <Tab.Screen name="Cart" component={Order} />
+            <Tab.Screen name="Profile" component={Profile} />
+            {/* <Tab.Screen name="Prod Process" component={ProductProcessStack} /> */}
             <Tab.Screen name="Shipper" component={SProductProcess} />
             <Tab.Screen name="Test" component={censorshipProduct} />
-
-            <Tab.Screen name="Login" component={SignIn} />
-
-
         </Tab.Navigator>
     )
 }
