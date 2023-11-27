@@ -1,16 +1,16 @@
-export const formatPrice = (input) => {  
-    var price = input.toString();
-    var array = [];
-    for (i = price.length; i >= 0; i -= 3) {
-      if (i >= 3)
-        array.push(price.substring(i, i - 3));
-      else {
-        if (i == 2)
-          array.push(price.substring(i, i - 2));
-        if (i == 1)
-          array.push(price.substring(i, i - 1));
-      }
+export const formatPrice = (input) => {
+  var price = input.toString();
+  var array = [];
+  for (i = price.length; i >= 0; i -= 3) {
+    if (i >= 3)
+      array.push(price.substring(i, i - 3));
+    else {
+      if (i == 2)
+        array.push(price.substring(i, i - 2));
+      if (i == 1)
+        array.push(price.substring(i, i - 1));
     }
+  }
   const string = array.reverse().join(",");
   return string;
 }
@@ -65,14 +65,24 @@ export const checkTimetampRemaining = (oldTimestamp, newTimestamp) => {
 }
 
 export const formatDateFormSaleUsing = (startTimestamp, endTimestamp) => {
-  const startTime = startTimestamp
-  const day = startTime.getDate().toString().padStart(2, '0');
-  const month = (startTime.getMonth() + 1).toString().padStart(2, '0');
-  const hour = startTime.getHours().toString().padStart(2, '0');
-  const minute = startTime.getMinutes().toString().padStart(2, '0');
-  const startDateFormatted = `${day}/${month} ${hour}:${minute}`
-  const ess = 123;
-  return startDateFormatted;
+  const startTime = new Date(startTimestamp);
+  const startDay = startTime.getDate().toString().padStart(2, '0');
+  const startMonth = (startTime.getMonth() + 1).toString().padStart(2, '0');
+  const startHour = startTime.getHours().toString().padStart(2, '0');
+  const startMinute = startTime.getMinutes().toString().padStart(2, '0');
+  const startDateFormatted = `${startDay}/${startMonth} ${startHour}:${startMinute}`
+
+  const endTime = new Date(endTimestamp)
+  const endDay = endTime.getDate().toString().padStart(2, '0');
+  const endMonth = (endTime.getMonth() + 1).toString().padStart(2, '0');
+  const endHour = endTime.getHours().toString().padStart(2, '0');
+  const endMinute = endTime.getMinutes().toString().padStart(2, '0');
+  const endDateFormatted = `${endDay}/${endMonth} ${endHour}:${endMinute}`
+  console.log(">>>>endDateFormatted: " + endDateFormatted);
+  return {
+    startDate: startDateFormatted,
+    endDate: endDateFormatted
+  }
 }
 
 

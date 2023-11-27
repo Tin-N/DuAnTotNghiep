@@ -137,24 +137,25 @@ const FilterScreen = (props) => {
   return (
     
     <View>
-      <View style={[styleHome.topBarView,{justifyContent:'space-between',alignItems:'center',borderColor:'white',borderWidth:0.5  }]}>
+      <View style={[styleHome.topBarView,{justifyContent:'space-between',alignItems:'center'
+      }]}>
       <TouchableOpacity onPress={handleClick}>
             <Image
                 style={styleSearchScreen.icons}
                 source={require('../images/icon/previous-ic.png')}
                 />
          </TouchableOpacity>
-            <Text style={[styleHome.title,{color:"black",marginHorizontal:12,width:"75%"}]}
+            <Text style={[styleHome.title,{color:"black",marginHorizontal:12,width:"75%"},{fontSize:18}]}
             numberOfLines={3}
           
             ellipsizeMode='head'
             >
-              Từ khóa: {searchText}
+              Từ khóa: {searchText.slice(0,17)+"..."}
               </Text>
             <View>
             <TouchableOpacity  style={styleHome.icons} onPress={()=>setModalVisible((!modalVisible))}>
               <Image
-                  style={styleHome.icons}
+                  style={[styleHome.icons,{width:25,height:25}]}
                   source={require('../images/icon/filter.png')}
                 />
             </TouchableOpacity>
@@ -173,7 +174,7 @@ const FilterScreen = (props) => {
           color={"blue"}
           size={'large'}/>
           :
-          <View>
+          <View style={{alignItems:'center'}}>
             {
               data.length>0?
                 <View
@@ -182,6 +183,7 @@ const FilterScreen = (props) => {
                   marginLeft:30
                 }}
                 >
+
                   
                         <ProductList
                         count={countData}
@@ -192,7 +194,8 @@ const FilterScreen = (props) => {
                       styleView={{
                         width: '100%',
                         margin: 10,
-                        marginBottom:150,
+                        marginBottom:110,
+                        paddingBottom:0,
                       }}
                       numColumns={columns}
                       showsVerticalScrollIndicator={false}

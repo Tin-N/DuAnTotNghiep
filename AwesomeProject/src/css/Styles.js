@@ -33,13 +33,13 @@ export const StyleOrder = StyleSheet.create({
     tillte: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        margin: 10
     },
     textTillte: {
         fontSize: 20,
         fontStyle: 'bold',
         color: 'black',
         marginLeft: 5,
+        textAlign: 'center'
     },
     icon: {
         position: 'absolute',
@@ -91,12 +91,13 @@ export const StyleOrder = StyleSheet.create({
     },
     checkBoxOrder: {
         position: 'relative',
-        top: '50%',
+        top: 29.5,
     },
     pressableBuy: {
-        height: 52,
-        backgroundColor: '#D44325',
-        padding: 5,
+        marginBottom: 10,
+        backgroundColor: '#3669C9',
+        padding: 13,
+        borderRadius: 5
     },
 })
 
@@ -474,6 +475,12 @@ export const StyleLogin = StyleSheet.create({
       paddingBottom: '3%',
     },
     textHint: {
+        color: COLOR.TextHint,
+        fontSize: 15,
+        marginTop: "1%",
+        justifyContent: 'space-between',
+        marginHorizontal: 16,
+
       color: COLOR.TextHint,
       fontSize: 15,
       marginTop: '1%',
@@ -586,6 +593,7 @@ export const StyleLogin = StyleSheet.create({
       borderRadius: 10,
       marginHorizontal: 0,
     },
+
     CbuttomText: {
       marginTop: '8%',
       flexDirection: 'row',

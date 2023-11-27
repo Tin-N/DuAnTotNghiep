@@ -1,4 +1,4 @@
-import { View, Text, Image, TextInput, TouchableOpacity,ImageBackground } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, ImageBackground } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { storage } from '../../utils/FirebaseConfig';
@@ -12,22 +12,22 @@ LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 
 const ItemFeedBack = (props) => {
-    const { dataFeedback,setCheck,check } = props;
+    const { dataFeedback, setCheck, check } = props;
     const [shopFeedBack, setShopFeedBack] = useState("wsdf")
     const [roleId, setRoleId] = useState(1);
     const [image, setimage] = useState("");
     const [isModalVisible, setModalVisible] = useState(false);
-    const deleteFeedback = async ()=>{
-        const response= await AxiosIntance().post("/feedbackAPI/deleteFeedback?id="+dataFeedback._id);
-        if(response.result){
+    const deleteFeedback = async () => {
+        const response = await AxiosIntance().post("/feedbackAPI/deleteFeedback?id=" + dataFeedback._id);
+        if (response.result) {
             setCheck(!check);
         }
     }
 
-    
-    const deleteImageArr =async ()=>{
-        if(dataFeedback.image.length>0){
-            for(let i=0 ;i<dataFeedback.image.length;i++){
+
+    const deleteImageArr = async () => {
+        if (dataFeedback.image.length > 0) {
+            for (let i = 0; i < dataFeedback.image.length; i++) {
                 deleteObject(ref(storage, dataFeedback.image[i]));
                 console.log("Ok r ddos");
             }
@@ -62,87 +62,88 @@ const ItemFeedBack = (props) => {
                 }
             }
             starImage();
-        } catch (error) {   
+        } catch (error) {
         }
-        
+
         return () => {
         }
     }, [])
 
-    let string="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
- 
+    let string = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
 
     return (
 
-        <View         
-    
-         style={{ marginHorizontal: 20,
-          marginVertical: 5}}>
+        <View
+
+            style={{
+                 backgroundColor:'#f0efef', borderRadius:15, padding:10, marginLeft:10, marginRight:10
+            }}>
             <View>
-            <View style={{ flexDirection: 'row' }}>
-                <Image source={require('../../images/avatarPersonStore.png')} />
-                <View style={{ marginLeft: 10 }}>
                 <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ color: 'black', width: 100 }}>
-                            Nguyễn Văn Tin
-                        </Text>
-                        <Text style={{ marginLeft: 50,paddingRight:10 }}>
-                            ngày 10 tháng 3 2023
-                        </Text>
-                        
+                    <Image source={require('../../images/avatarPersonStore.png')} />
+                    <View style={{ marginLeft: 10 }}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ color: 'black', width: 100 }}>
+                                Nguyễn Văn Tin
+                            </Text>
+                            <Text style={{ marginLeft: 50, paddingRight: 10 }}>
+                                ngày 10 tháng 3 2023
+                            </Text>
+
+                        </View>
+                        <View style={{ marginVertical: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+
+
+                            <Image style={{ marginTop: 5 }} source={imageStar} />
+                            {
+                                dataFeedback.userID == "113" ?
+                                    <TouchableOpacity onPress={() => deleteImageArr()}>
+                                        <Image source={require('../../images/bin.png')} style={{ width: 20, height: 20 }}></Image>
+                                    </TouchableOpacity> : <View />
+                            }
+                        </View>
                     </View>
-                   <View style={{marginVertical:10,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
-
-                   
-                    <Image style={{ marginTop: 5 }} source={imageStar} />
-                       {
-                        dataFeedback.userID=="113"? 
-                        <TouchableOpacity onPress={()=>deleteImageArr()}>
-                        <Image source={require('../../images/bin.png')} style={{width:20,height:20}}></Image>
-                        </TouchableOpacity>:<View/>
-                       }
-                   </View>
                 </View>
-            </View>
-            <View style={{ paddingLeft: 57 }}>
-            <View style={{flexDirection:'row',flexWrap:'wrap'}}>
-                {dataFeedback.image.length > 0 ? (
-                            dataFeedback.image.map(item => (
-                            <View style={{borderRadius: 5, overflow: 'hidden', margin: 5}}>
-                                <TouchableOpacity onPress={()=>{setimage(item);setModalVisible(true)}}>
-                                    <Image
-                                    style={{width: 80, height: 80, borderRadius: 10}}
-                                    source={{uri: item}}>
-                                    
-                                    </Image>
-                                </TouchableOpacity>
+                <View style={{ paddingLeft: 57 }}>
+                    <Text style={{ letterSpacing: 0.3, fontFamily: 'TiltNeon-Regular' }}>
+                        {dataFeedback.feedback}
 
-                            </View>
+                    </Text>
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                        {dataFeedback.image.length > 0 ? (
+                            dataFeedback.image.map(item => (
+                                <View style={{ borderRadius: 5, overflow: 'hidden', margin: 5 }}>
+                                    <TouchableOpacity onPress={() => { setimage(item); setModalVisible(true) }}>
+                                        <Image
+                                            style={{ width: 80, height: 80, borderRadius: 10 }}
+                                            source={{ uri: item }}>
+
+                                        </Image>
+                                    </TouchableOpacity>
+
+                                </View>
                             ))
                         ) : (
                             <View />
                         )}
 
 
+                    </View>
+
+                    {
+                        (image.length > 0) && (isModalVisible) ? <ImageViewer imageUrl={image} isModalVisible={isModalVisible} setModalVisible={setModalVisible} />
+                            : <View />
+
+                    }
+
+
+                </View>
+
             </View>
 
-                {
-                (image.length>0)&&(isModalVisible)?<ImageViewer imageUrl={image} isModalVisible={isModalVisible} setModalVisible={setModalVisible}/>
-                :<View/>
-
-                }
-
-                <Text style={{ letterSpacing: 0.3, fontFamily: 'TiltNeon-Regular' }}>
-                    {dataFeedback.feedback}
-
-                </Text>
-              
-            </View>
-         
-            </View>
-          
 
         </View>
     )
-            }
-    export default  ItemFeedBack;
+}
+export default ItemFeedBack;

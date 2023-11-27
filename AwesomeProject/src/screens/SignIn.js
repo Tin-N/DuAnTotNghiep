@@ -6,22 +6,28 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TextInput,
-  Alert,
-  ToastAndroid
+
+  Alert, StyleSheet
 } from 'react-native';
+
 import React, {useState, useContext,userEffect} from 'react';
-import {COLOR} from '../css/Theme';
-import {Image} from 'react-native';
+
 // const {width} = Dimensions.get('window');
-import {StyleSheet} from 'react-native';
-import {StyleLogin} from '../css/Styles.js';
-import {MaterialCommunityIcons} from '@expo/vector-icons';
 import AxiosIntance from '../utils/AxiosIntance';
 import {useNavigation} from '@react-navigation/native';
 import {AppContext} from '../utils/AppContext';
 import { GoogleSignin , statusCodes } from '@react-native-google-signin/google-signin';
 
+import {COLOR} from '../css/Theme.js'
+import { Image } from 'react-native';
+
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { StyleLogin } from '../css/Styles.js';
+
+
 const { width } = Dimensions.get('window');
+
+
 
 const SignIn = () => {
  

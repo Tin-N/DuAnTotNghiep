@@ -24,17 +24,14 @@ const HomeStore = (props) => {
         )
     }
     useEffect(() => {
-        try {
-            const getAllProductByUserID = async () => {
-                const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + '113' + '&isShow=true');
-                if (response.result) {
-                    setDataProduct(response.products);
-                    setProductID(response.products._id);
-                    setSold(response.products.sold)
-                }
+
+        const getAllProductByUserID = async () => {
+            const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + '113' + '&isShow=true');
+            if (response.result) {
+                setDataProduct(response.products);
+                setProductID(response.products._id);
+                setSold(response.products.sold)
             }
-        } catch (error) {
-            console.log(error);
         }
         getAllProductByUserID();
         return () => {
@@ -137,7 +134,7 @@ const HomeStore = (props) => {
                     </View>
                     <View style={[StyleHomeStore.line, { marginLeft: 30, marginRight: 30 }]}>
                     </View>
-    
+
                     <View style={{ backgroundColor: '#F1F5F8' }}>
                         <View style={StyleHomeStore.productSelling}>
                             <Text style={StyleHomeStore.textitleProductSelling}>

@@ -45,7 +45,7 @@ const DetailProduct = (props) => {
     const [star, setStar] = useState(0);
 
     const { userID } = useContext(AppContext);
-    const {userAddress} = useContext(AppContext);
+    const { userAddress } = useContext(AppContext);
     const [ownerID, setownerID] = useState()
 
     const [dataFeedback, setDataFeedback] = useState([]);
@@ -57,7 +57,6 @@ const DetailProduct = (props) => {
 
     // Feedback
     const [feedbackLength, setFeedbackLenght] = useState();
-
     // Favorite
     const [heart, setHeart] = useState(false);
     const [isDialogVisible, setDialogVisible] = useState(false);
@@ -76,10 +75,11 @@ const DetailProduct = (props) => {
     const [check, setCheck] = useState(null);
     // Sales
     const [bannerSale, setBannerSale] = useState('none');
-    const [sales, setSales] = useState([]);
+    const [sales, setSales] = useState({});
     const [percentSales, setPercentSales] = useState(0);
     const [endDate, setendDate] = useState();
     const [startDate, setstartDate] = useState();
+    const [saleOffID, setsaleOffID] = useState();
     const [onProductSaleOff, setonProductSaleOff] = useState(false);
     //data sale 
     const slideAnim = useRef(new Animated.Value(-100)).current;
@@ -101,10 +101,10 @@ const DetailProduct = (props) => {
         const threeDaysFromNow = new Date(now);
         threeDaysFromNow.setDate(now.getDate() + 3); // Thêm 3 ngày
         useEffect(() => {
-            if (sales.length != 0 && sales[0].endDay > new Date().getTime()) {
+            if (sales.length != 0 && sales.endDay > new Date().getTime()) {
                 console.log(">>>>sale: " + sales[0].endDay);
                 let timer = setInterval(() => {
-                    const onSaleTime = calculateTimeDifference(parseFloat(sales[0].startDay), new Date().getTime(), parseFloat(sales[0].endDay));
+                    const onSaleTime = calculateTimeDifference(parseFloat(sales.startDay), new Date().getTime(), parseFloat(sales.endDay));
                     setTime(onSaleTime)
                     console.log(">>>>>dawdawdaw " + sales[0].startDay + " " + new Date().getTime())
                     // if (sales[0].startDay > new Date().getTime()){
@@ -126,12 +126,12 @@ const DetailProduct = (props) => {
     }
     useEffect(() => {
         const getSalesCurrent = async () => {
-            const response = await AxiosIntance().get('/saleOffAPI/getSaleOffCurrent?productID=' + params.itemId);
+            const response = await AxiosIntance().get('/saleOffAPI/getSaleApplyBySaleID?saleID=' + saleOffID);
             if (response.result == true && response.saleOff.length != 0) {
                 setSales(response.saleOff);
                 setendDate(response.saleOff.endDay);
                 setstartDate(response.saleOff.startDay);
-                setPercentSales(response.saleOff[0].saleOff)
+                setPercentSales(response.saleOff.saleOff);
                 setBannerSale("flex");
             } else {
 
@@ -180,6 +180,9 @@ const DetailProduct = (props) => {
     const Separator = () => {
         return <View style={StyleDetailProduct.separator} />;
     };
+    const homeStoreHandler = () => {
+        navigation.navigate('HomeStore')
+    }
 
     useEffect(() => {
         navigation.getParent()?.setOptions({
@@ -196,20 +199,22 @@ const DetailProduct = (props) => {
         const getDetails = async () => {
             try {
                 const response = await AxiosIntance().get('/productAPI/getProductByID?id=' + params.itemId);
+                console.log(">>>>>>productID for detail: " + params.itemId);
                 if (response.result == true) {
                     setDataProduct(response.products);
                     setProductPrice(response.products.price);
                     setImageProduct(response.products.image[0]);
                     setDetail(response.products.detail);
                     setownerID(response.products.userID);
-                    setproductQuantity(response.products.quantity)
-                    console.log(">>>>>> Số lượng sản phẩm: " + response.products.quantity)
+                    setproductQuantity(response.products.quantity);
+                    setsaleOffID(response.products.saleOff);
+
                 }
             } catch (error) {
                 console.log("Product Detail: lỗi lấy dữ liệu: " + error)
             }
         }
-
+        
         // Get favorite 
         const getFavorite = async () => {
             const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + "654627d67137a3bf678fb544" + "&productID=" + params.itemId);
@@ -278,7 +283,7 @@ const DetailProduct = (props) => {
         getFavorite();
         return () => {
         }
-    }, [])
+    }, [params.itemId])
 
     const MyDialog = ({ isVisible, onClose }) => {
         const [selectedColor, setSelectedColor] = useState(null);
@@ -291,6 +296,8 @@ const DetailProduct = (props) => {
         const [productID, setproductID] = useState(params.itemId)
         const [itemTotalCost, setitemTotalCost] = useState(0)
         const [productPrice, setproductPrice] = useState(0)
+
+
 
         useEffect(() => {
             (async () => {
@@ -305,6 +312,7 @@ const DetailProduct = (props) => {
                 }
             })();
         }, []);
+
 
         const optionsInCart = {
             color: colorChoosen,
@@ -351,7 +359,25 @@ const DetailProduct = (props) => {
         const orderNow = async () => {
             const objectId = new ObjectID();
             console.log(objectId)
-
+            console.log(">>>>isLogin: " + isLogin);
+            if (!isLogin) {
+                Alert.alert(
+                    'Thông báo',
+                    'Bạn chưa đăng nhập', // Nội dung thông báo
+                    [
+                        {
+                            text: 'Cancel', // Chữ hiển thị trên nút Cancel
+                        },
+                        {
+                            text: 'OK', // Chữ hiển thị trên nút OK
+                            onPress: () => {
+                                // Xử lý khi người dùng chọn "OK"
+                                navigation.navigate('Login')
+                            },
+                        },
+                    ]
+                );
+            }
             const productToOrder = {
                 ownerID,
                 productID,
@@ -407,13 +433,13 @@ const DetailProduct = (props) => {
 
                             async () => {
                                 try {
-                                  await AxiosIntance().put(`productAPI/updateQuantityOrdered`, {
-                                    productsToUpdate: productsSelected
-                                  })
+                                    await AxiosIntance().put(`productAPI/updateQuantityOrdered`, {
+                                        productsToUpdate: productsSelected
+                                    })
                                 } catch (error) {
-                                  
+
                                 }
-                              }
+                            }
                         },
                     },
                 ]
@@ -593,7 +619,7 @@ const DetailProduct = (props) => {
 
                                 <TouchableOpacity
                                     onPress={addToCart}
-                                    style={{ width: 355 }}>
+                                    style={[{ width: 355 }, StyleDetailProduct.touchOpa2]}>
                                     <Text style={StyleDetailProduct.textButton}>Thêm vào giỏ hàng</Text>
                                 </TouchableOpacity>
                         }
@@ -690,6 +716,12 @@ const DetailProduct = (props) => {
                                         require('../../images/heart.jpg') : require('../../images/unheart.jpg')
                                 } />
 
+                            {/* <Image style={{ width: 30, height: 30, marginRight: 15 }}
+                            source={
+                                heart == true ?
+                                    require('../../images/heart.png') : require('../../images/unheart.png')
+                            } /> */}
+
                         </TouchableOpacity>
                         <TouchableOpacity>
                             <Image style={{ width: 25, height: 25, marginTop: 3 }} source={require('../../images/messenger.jpg')} />
@@ -697,42 +729,30 @@ const DetailProduct = (props) => {
                     </View>
                 </View>
                 <View style={StyleDetailProduct.line}></View>
-                <View>
-                    <View style={{
-                        height: 50, alignItems: 'center',
-                        backgroundColor: '#f5f5f5',
-                        justifyContent: 'center',
-                        flexDirection: 'row',
-                    }}>
-                        <View style={{ borderWidth: 0.2, width: 30 }}></View>
-                        <Text style={{ textAlign: 'center', fontSize: 18 }}>  Chi tiết sản phẩm  </Text>
-                        <View style={{ borderWidth: 0.2, width: 30 }}></View>
-                    </View>
-                    <Text style={{ padding: 15, fontSize: 20, fontFamily: 'TiltNeon-Regular' }}>{detail}</Text>
-                </View>
-                <View style={StyleDetailProduct.line}></View>
-                <Text style={{ fontSize: 16, marginVertical: 5, marginHorizontal: 10 }}>Điểm đánh giá</Text>
+                            
+                            <View style={{}}>
 
-                <View style={{ flexDirection: 'row', marginVertical: 3, alignItems: 'center' }}>
-                    <StarRating
-                        maxStars={5}
-                        rating={star}
-                        onChange={setStar}
-                        enableHalfStar={false}
-                        onRatingEnd={() => checkStar()}
-                        starSize={25}
-                        enableSwiping={true}
-                        animationConfig={{
-                            scale: 1.3, duration: 100,
-                            easing: Easing.elastic(10)
-                        }}
-                    />
-                    <Text>( {star} sao )</Text>
-                </View>
+                            </View>
 
                 <View style={StyleDetailProduct.line}></View>
-
                 <View style={{ marginBottom: 100 }}>
+                    <View style={{ alignItems: 'center' }}>
+                        <Text style={{ fontSize: 16, marginVertical: 5, marginHorizontal: 10 }}>Thêm đánh giá</Text>
+                        <StarRating
+                            maxStars={5}
+                            rating={star}
+                            onChange={setStar}
+                            enableHalfStar={false}
+                            onRatingEnd={() => checkStar()}
+                            starSize={25}
+                            enableSwiping={true}
+                            animationConfig={{
+                                scale: 1.3, duration: 100,
+                                easing: Easing.elastic(10)
+                            }}
+                        />
+                    </View>
+
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ margin: 10, fontSize: 18 }}>
                             Đánh giá ({feedbackLength})
@@ -751,6 +771,20 @@ const DetailProduct = (props) => {
                         keyExtractor={item => item.feedbackID}
                         ItemSeparatorComponent={Separator} />
                 </View>
+                <View style={StyleDetailProduct.line}></View>
+                <View style={{marginBottom:100}}>
+                    <View style={{
+                        height: 50, alignItems: 'center',
+                        backgroundColor: '#f5f5f5',
+                        justifyContent: 'center',
+                        flexDirection: 'row'
+                    }}>
+                        <View style={{ borderWidth: 0.2, width: 30 }}></View>
+                        <Text style={{ textAlign: 'center', fontSize: 18 }}>  Chi tiết sản phẩm  </Text>
+                        <View style={{ borderWidth: 0.2, width: 30 }}></View>
+                    </View>
+                    <Text style={{ padding: 15, fontSize: 20, fontFamily: 'TiltNeon-Regular' }}>{detail}</Text>
+                </View>
             </ScrollView>
 
             <View style={{
@@ -764,10 +798,10 @@ const DetailProduct = (props) => {
 
             <View style={StyleDetailProduct.bottom}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{ paddingLeft: 10, paddingRight: 10, }}>
+                    <TouchableOpacity onPress={homeStoreHandler} style={{ paddingLeft: 10, paddingRight: 10, }}>
                         <Image style={StyleDetailProduct.image} source={require('../../images/avatarPersonStore.png')} />
                         <Text style={{ fontSize: 12, textAlign: 'center' }}>Store</Text>
-                    </View>
+                    </TouchableOpacity>
                     <Image style={{ height: 45, marginTop: -4 }} source={require('../../images/lineheight.png')} />
                     <View style={{ paddingLeft: 10, paddingRight: 10 }}>
                         {/* <Image style={StyleDetailProduct.image} source={require('../../images/iconchat1.png')} /> */}
@@ -777,7 +811,7 @@ const DetailProduct = (props) => {
                 {productQuantity != 0
                     ?
                     <View style={{ flexDirection: 'row', marginLeft: 10 }}>
-                        <TouchableOpacity onPress={() => { setDialogVisible(true); setCheck(true) }} style={StyleDetailProduct.touchOpa}>
+                        <TouchableOpacity onPress={() => { setDialogVisible(true); setCheck(true); }} style={StyleDetailProduct.touchOpa}>
                             <Text style={StyleDetailProduct.textButton}>Mua ngay</Text>
                             <MyDialog isVisible={isDialogVisible} onClose={() => setDialogVisible(false)} />
                         </TouchableOpacity>
