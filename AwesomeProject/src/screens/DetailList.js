@@ -132,7 +132,7 @@ const DetailList = (props) => {
   return (
     <View>
         {/*<Text style={{color:'black'}}>{isLoading.toString()}</Text>*/}
-      <View style={[styleHome.topBarView,{marginVertical:10}]}>
+      <View style={[styleHome.topBarView]}>
       <TouchableOpacity
       style={{marginLeft:-10}}
       onPress={handleClick}>
@@ -161,7 +161,11 @@ const DetailList = (props) => {
           color={"blue"}
           size={'large'}/>
           :
-          <View>
+          <View
+          style={{
+            alignItems:'center'
+          }}
+          >
             {
               data.length>0?
                 <View
@@ -176,7 +180,7 @@ const DetailList = (props) => {
                       styleView={{
                         width: '100%',
                         margin: 10,
-                        marginBottom:110
+                        marginBottom:140
                       }}
                       numColumns={columns}
                       showsVerticalScrollIndicator={false}

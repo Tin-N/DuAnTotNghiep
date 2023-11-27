@@ -171,15 +171,7 @@ const Main = () => {
                     } else if (route.name === 'Profile') {
 
                         iconName = focused ? 'people-sharp' : 'people-outline';
-                    } else if (route.name === 'SignUp') {
-
-                        iconName = focused ? 'people-sharp' : 'people-outline';
-                    } else if (route.name === 'Prod Process') {
-                        iconName = focused ? 'clipboard' : 'clipboard-outline';
-
-                    } else if (route.name === 'Test') {
-                        iconName = focused ? 'people-sharp' : 'people-outline';
-                    }
+                    } 
                     return <Icon1 name={iconName} size={size} color={color} />
                 },
                 tabBarActiveTintColor: '#3669C9',
@@ -192,10 +184,7 @@ const Main = () => {
             <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Order" component={Order} />
             <Tab.Screen name="Profile" component={Profile} />
-            <Tab.Screen name="Prod Process" component={ProductProcessStack} />
-            <Tab.Screen name="Shipper" component={SProductProcess} />
-            <Tab.Screen name="Test" component={censorshipProduct} />
-
+          
         </Tab.Navigator>
     )
 }

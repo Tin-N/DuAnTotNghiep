@@ -2,6 +2,7 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState,memo} from 'react';
 import {StyleHomeStore} from '../../css/Styles';
 import { formatPrice } from '../../../Agro';
+import { TextWithLimit } from '../SearchSuggestions/SearchItem';
 const ItemList = props => {
   const {data} = props;
   const [name, setName] = useState('');
@@ -34,20 +35,11 @@ const ItemList = props => {
   }, []);
 
   return (
-    <View style={{padding:5, borderRadius:12}}>
+    <View style={{padding:10, borderRadius:15 ,backgroundColor:'white' ,margin:10}}>
 
       <Image style={{padding:5,width:150,height:150, borderRadius:12}} source={{uri:data.image[0]}} />
-      <Text
-        style={{
-          textTransform:'uppercase',
-          color: 'black',
-          fontSize: 13,
-          letterSpacing: 0.5,
-          fontWeight:'500',
-          padding:3
-        }}>
-        {data.name}
-      </Text>
+      <TextWithLimit text={data.name} limit={14} 
+          />
       <Text style={{color:'red',fontWeight:'700',fontSize:17,padding:3}}>đ {formatPrice(data.price)} </Text>
       <View style={StyleHomeStore.reviewsProduct}>
         <View style={{flexDirection: 'row'}}>

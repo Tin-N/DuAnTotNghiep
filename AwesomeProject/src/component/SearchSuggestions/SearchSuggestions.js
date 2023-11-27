@@ -45,7 +45,7 @@ const SearchSuggestion = (props) => {
   return (
     // <ScrollView>
       <View style={{margin: 10}}>
-        <Text style={StyleSearchSuggestions.title}>Search suggestion </Text>
+        <Text style={StyleSearchSuggestions.title}>Lịch sử tìm kiếm </Text>
         <FlatList
       keyExtractor={(item) => item._id.toString()} // Đảm bảo keyExtractor đủ duy nhất cho mỗi mục
         style={{marginBottom: 40}}

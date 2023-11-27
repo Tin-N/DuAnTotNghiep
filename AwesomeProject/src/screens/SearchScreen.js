@@ -118,7 +118,7 @@ const SearchScreen = () => {
             source={require('../images/icon/previous-ic.png')}
           />
         </TouchableOpacity>
-        <Text style={styleSearchScreen.title}>Search</Text>
+        <Text style={styleSearchScreen.title}>Tìm kiếm</Text>
       </View>
       {/* Search bar */}
       <Searchbar
