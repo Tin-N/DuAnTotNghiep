@@ -89,15 +89,16 @@ const CreateProduct = (props) => {
                 <KeyboardAwareScrollView keyboardShouldPersistTaps='always'>
                     <View style={StyleDialogShopping.container}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
-                            <Text style={{ color: 'black' }}>Màu của biến thể sản phẩm</Text>
+                            <Text style={{ color: 'black', fontSize:18 }}>Màu biến thể</Text>
                             <TouchableOpacity onPress={onClose}>
                                 <Image style={{ width: 20, height: 20 }} source={require('../../images/deleteimg1.png')} />
                             </TouchableOpacity>
                         </View>
-                        <View style={{ padding: 5, borderWidth: 0.2, marginTop: 10 }}>
+                        <View style={{ padding: 5, marginTop: 10 }}>
                             <TextInput onChangeText={(text) => setColorVariations(text)}
                                 value={colorVariations} style={{ borderBottomWidth: 0.2 }} placeholder='Tên màu' />
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={{ flexDirection: 'row', alignItems:'center', 
+                            marginLeft:20, marginRight:20, justifyContent:'space-between' }}>
                                 <TextInput style={{
                                     width: 150, borderWidth: 1,
                                     borderColor: 'black', marginTop: 5, height: 50, paddingLeft: 10, borderRadius: 5
@@ -169,11 +170,10 @@ const CreateProduct = (props) => {
                                 <Image style={{ width: 20, height: 20 }} source={require('../../images/deleteimg1.png')} />
                             </TouchableOpacity>
                         </View>
-                        <View style={{ padding: 5, borderWidth: 0.2, marginTop: 10 }}>
+                        <View style={{ marginTop: 10, 
+                            borderWidth:0.5, borderColor:'#9a9898', borderRadius:5 }}>
                             <TextInput onChangeText={(text) => setSizeVariations(text)}
                                 value={sizeVariations} />
-                        </View>
-                        <View style={StyleDialogShopping.line}>
                         </View>
                         <View style={{
                             flexDirection: 'row', position: 'absolute',

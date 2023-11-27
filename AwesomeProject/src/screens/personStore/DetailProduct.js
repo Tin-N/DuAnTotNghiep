@@ -23,7 +23,7 @@ import DialogFeedback from '../../component/DialogFeedback/DialogFeedback';
 import { AppContext } from '../../utils/AppContext';
 const ObjectID = require('bson-objectid');
 
-
+const imgAvatar = { uri: 'http://designercomvn.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2018/12/06090103/logo-shop-qu%E1%BA%A7n-%C3%A1o-8.png' }
 
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
@@ -37,7 +37,7 @@ const DetailProduct = (props) => {
 
 
     // Product
-
+    const [userIDStore, setuserIDStore] = useState('')
     const [productPrice, setProductPrice] = useState('');
     const [dataProduct, setDataProduct] = useState({});
     const [imageProduct, setImageProduct] = useState('');
@@ -208,13 +208,13 @@ const DetailProduct = (props) => {
                     setownerID(response.products.userID);
                     setproductQuantity(response.products.quantity);
                     setsaleOffID(response.products.saleOff);
+                    setuserIDStore(response.products.userID);
 
                 }
             } catch (error) {
                 console.log("Product Detail: lỗi lấy dữ liệu: " + error)
             }
         }
-        
         // Get favorite 
         const getFavorite = async () => {
             const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + "654627d67137a3bf678fb544" + "&productID=" + params.itemId);
@@ -571,41 +571,28 @@ const DetailProduct = (props) => {
                             }
                         </View>
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10, marginLeft: 250 }}>
-                            <TouchableOpacity onPress={() => quantityHandler("-")} style={{
-                                width: 35, height: 30,
-                                backgroundColor: '#EEEEEE', alignItems: 'center',
-                            }}>
-                                <Text style={{ fontSize: 20 }}>-</Text>
-                            </TouchableOpacity>
-                            <Text style={{ padding: 5, fontSize: 20 }}>{quantity}</Text>
-                            <TouchableOpacity onPress={() => quantityHandler("+")} style={{
-                                width: 35, height: 30,
-                                backgroundColor: '#EEEEEE', alignItems: 'center'
-                            }}>
-                                <Text style={{ fontSize: 20 }}>+</Text>
-                            </TouchableOpacity>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center', marginTop: 10, marginLeft:10, 
+                            marginRight:10, justifyContent:'space-between'
+                        }}>
 
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center', marginTop: 10,
-                                marginLeft: 10, width: 350, justifyContent: 'space-between'
-                            }}>
-                                <Text style={{ fontSize: 18, color: 'black' }}>Số lượng</Text>
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <TouchableOpacity onPress={() => quantityHandler("-")} style={{
-                                        backgroundColor: '#EEEEEE'
-                                    }}>
-                                        <Icon1 name='remove-outline' size={15} style={{ padding: 3 }} />
-                                    </TouchableOpacity>
-                                    <Text style={{ padding: 5, fontSize: 20 }}>{quantity}</Text>
-                                    <TouchableOpacity onPress={() => quantityHandler("+")} style={{
-                                        backgroundColor: '#EEEEEE'
-                                    }}>
-                                        <Icon1 name='add-outline' size={15} style={{ padding: 3 }} />
-                                    </TouchableOpacity>
-                                </View>
+
+                            <Text style={{ fontSize: 18 }}>Số lượng</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <TouchableOpacity onPress={() => quantityHandler("-")} style={{
+                                    backgroundColor: '#EEEEEE'
+                                }}>
+                                    <Icon1 name='remove-outline' size={15} style={{ padding: 3 }} />
+                                </TouchableOpacity>
+                                <Text style={{ padding: 5, fontSize: 20 }}>{quantity}</Text>
+                                <TouchableOpacity onPress={() => quantityHandler("+")} style={{
+                                    backgroundColor: '#EEEEEE'
+                                }}>
+                                    <Icon1 name='add-outline' size={15} style={{ padding: 3 }} />
+                                </TouchableOpacity>
                             </View>
+
                         </View>
                     </ScrollView>
 
@@ -631,11 +618,11 @@ const DetailProduct = (props) => {
     }
     return (
         <View style={{ flex: 1, backgroundColor: 'white', opacity: opacityBackground() }}>
-            <View style={StyleDetailProduct.menu}>
+            <View style={{ padding: 15, alignItems: 'center', flexDirection: 'row' }}>
                 <TouchableOpacity onPress={back}>
-                    <Image source={require('../../images/backic.png')} />
+                    <Icon1 name="chevron-back-outline" size={20}></Icon1>
                 </TouchableOpacity>
-                <Text style={StyleDetailProduct.textTitle}>
+                <Text style={{ fontSize: 20, fontFamily: 'TiltNeon-Regular', color: 'black', marginLeft: 10 }}>
                     T. Tin Sản Phẩm
                 </Text>
             </View>
@@ -723,16 +710,30 @@ const DetailProduct = (props) => {
                             } /> */}
 
                         </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image style={{ width: 25, height: 25, marginTop: 3 }} source={require('../../images/messenger.jpg')} />
-                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={StyleDetailProduct.line}></View>
-                            
-                            <View style={{}}>
 
-                            </View>
+                <View style={{ padding: 10, flexDirection: 'row' }}>
+                    <View style={{
+                        width: 60, height: 60, borderRadius: 10, overflow: 'hidden',
+                        borderWidth: 0.5, borderColor: '#cfcccc'
+                    }}>
+                        <Image style={{ width: 60, height: 60 }} source={imgAvatar} />
+                    </View>
+                    <View style={{ margin: 10 }}>
+                        <Text style={{ fontSize: 18, color: 'black' }}>
+                            BUMDES Desa Sidosari
+                        </Text>
+                        <Text>Đánh giá tích cực 94% | Active 7 sec...</Text>
+                    </View>
+                    <TouchableOpacity style={{
+                        backgroundColor: '#3669c9',
+                        position: 'absolute', top: 0, right: 0, margin: 10, padding: 8, borderRadius: 20
+                    }}>
+                        <Text style={{ color: 'white', fontWeight: 'bold' }}>Tới Shop</Text>
+                    </TouchableOpacity>
+                </View>
 
                 <View style={StyleDetailProduct.line}></View>
                 <View style={{ marginBottom: 100 }}>
@@ -772,7 +773,7 @@ const DetailProduct = (props) => {
                         ItemSeparatorComponent={Separator} />
                 </View>
                 <View style={StyleDetailProduct.line}></View>
-                <View style={{marginBottom:100}}>
+                <View style={{ marginBottom: 100 }}>
                     <View style={{
                         height: 50, alignItems: 'center',
                         backgroundColor: '#f5f5f5',
@@ -799,12 +800,12 @@ const DetailProduct = (props) => {
             <View style={StyleDetailProduct.bottom}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <TouchableOpacity onPress={homeStoreHandler} style={{ paddingLeft: 10, paddingRight: 10, }}>
-                        <Image style={StyleDetailProduct.image} source={require('../../images/avatarPersonStore.png')} />
+                        <Image style={StyleDetailProduct.image} source={imgAvatar} />
                         <Text style={{ fontSize: 12, textAlign: 'center' }}>Store</Text>
                     </TouchableOpacity>
                     <Image style={{ height: 45, marginTop: -4 }} source={require('../../images/lineheight.png')} />
-                    <View style={{ paddingLeft: 10, paddingRight: 10 }}>
-                        {/* <Image style={StyleDetailProduct.image} source={require('../../images/iconchat1.png')} /> */}
+                    <View style={{ paddingLeft: 10, paddingRight: 10, marginTop: 10, alignItems: 'center' }}>
+                        <Icon1 name="chatbubble-ellipses-outline" size={20}></Icon1>
                         <Text style={{ fontSize: 12, textAlign: 'center' }}>Chat</Text>
                     </View>
                 </View>

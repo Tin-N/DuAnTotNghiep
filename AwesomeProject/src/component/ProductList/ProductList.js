@@ -53,6 +53,7 @@ const ProductList = (props) => {
       onEndReachedThreshold={1}
       ListFooterComponent={FooterLoading}
       onMomentumScrollBegin = {() => {this.onEndReachedCalledDuringMomentum = false;}}
+      overScrollMode='never'
       onEndReached = {() => {
     if (!this.onEndReachedCalledDuringMomentum) {
       handleLoadMore();    // LOAD MORE DATA

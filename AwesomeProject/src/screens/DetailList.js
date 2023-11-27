@@ -164,7 +164,7 @@ const DetailList = (props) => {
               color={"blue"}
               size={'large'} />
             :
-            <View style={{alignItems:'center',paddingBottom:30}}>
+            <View style={{paddingBottom:30}}>
               {
                 data.length > 0 ?
                   <View
@@ -185,7 +185,7 @@ const DetailList = (props) => {
                       showsVerticalScrollIndicator={false}
                     />
                   </View>
-                  : <View style={{ justifyContent: 'center', alignItems: 'center', height: "100%" }}>
+                  : <View style={{alignItems: 'center', height: "100%" }}>
                     <NoResult />
                   </View>
 

@@ -78,7 +78,7 @@ export const TextWithLimit = ({ text, limit,styleView }) => {
       const truncatedText = text.slice(0,limit)+"..."
       return (
         <TouchableOpacity onPress={()=>{handleTextClick(truncatedText);console.log(truncatedText);}}>
-          <Text style={[StyleSearchSuggestions.text,{fontSize:15}]} >
+          <Text style={[StyleSearchSuggestions.text,{fontSize:15, fontWeight:'400'}]} >
 
           {truncatedText}
         </Text>
@@ -87,7 +87,7 @@ export const TextWithLimit = ({ text, limit,styleView }) => {
     }
 
     // Nếu không vượt quá, hiển thị văn bản gốc
-    return <Text style={StyleSearchSuggestions.text}>{text}</Text>;
+    return <Text style={[StyleSearchSuggestions.text, {fontSize:15, fontWeight:'400'}]}>{text}</Text>;
   };
 export default SearchItem;
 

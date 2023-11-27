@@ -165,16 +165,16 @@ const Main = () => {
                     } else if (route.name === 'Order') {
 
                         iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
-                    } else if (route.name === 'Profile') {
+                    // } else if (route.name === 'Profile') {
 
-                        iconName = focused ? 'people-sharp' : 'people-outline';
-                    } else if (route.name === 'SignUp') {
+                    //     iconName = focused ? 'people-sharp' : 'people-outline';
+                    // } else if (route.name === 'SignUp') {
 
-                        iconName = focused ? 'people-sharp' : 'people-outline';
-                    } else if (route.name === 'Prod Process') {
-                        iconName = focused ? 'clipboard' : 'clipboard-outline';
+                    //     iconName = focused ? 'people-sharp' : 'people-outline';
+                    // } else if (route.name === 'Prod Process') {
+                    //     iconName = focused ? 'clipboard' : 'clipboard-outline';
 
-                    } else if (route.name === 'Test') {
+                    } else if (route.name === 'Login') {
                         iconName = focused ? 'people-sharp' : 'people-outline';
                     }
                     return <Icon1 name={iconName} size={size} color={color} />
@@ -188,10 +188,10 @@ const Main = () => {
         >
             <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Order" component={Order} />
-            <Tab.Screen name="ProfileScreen" component={ProfileScreen} />
-            <Tab.Screen name="Prod Process" component={ProductProcessStack} />
-            <Tab.Screen name="Shipper" component={SProductProcess} />
-            <Tab.Screen name="Test" component={censorshipProduct} />
+            {/* <Tab.Screen name="ProfileScreen" component={ProfileScreen} /> */}
+            {/* <Tab.Screen name="Prod Process" component={ProductProcessStack} /> */}
+            {/* <Tab.Screen name="Shipper" component={SProductProcess} />
+            <Tab.Screen name="Test" component={censorshipProduct} /> */}
 
             <Tab.Screen name="Login" component={SignIn} />
 

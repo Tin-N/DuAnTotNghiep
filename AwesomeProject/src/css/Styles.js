@@ -394,10 +394,10 @@ export const StyleDialogShopping = StyleSheet.create({
         flex: 1,
         marginTop: 250,
         borderRadius: 5,
-        marginLeft: 30,
-        marginRight: 30,
+        marginLeft: 10,
+        marginRight: 10,
         backgroundColor: 'white',
-        padding: 10, borderWidth: 1, height: 'auto'
+        padding: 10, borderWidth: 0.5, height: 'auto', borderColor:'#9f9f9f'
     },
     line: {
         borderWidth: 1,
@@ -408,10 +408,10 @@ export const StyleDialogShopping = StyleSheet.create({
         flex: 1,
         marginTop: 300,
         borderRadius: 5,
-        marginLeft: 30,
-        marginRight: 30,
+        marginLeft: 10,
+        marginRight: 10,
         backgroundColor: 'white',
-        padding: 10, borderWidth: 1, height: 150
+        padding: 10, borderWidth: 0.5, height: 150, borderColor:'#9f9f9f'
     },
     containerShopping: {
         flex: 1,
@@ -911,7 +911,7 @@ export const StyleDetailProduct = StyleSheet.create({
         textAlign: 'center',
         fontSize: 18,
         color: 'white',
-        fontFamily: 'TiltNeon-Regular',
+        fontFamily: 'TiltNeon-Regular', paddingTop:3
     },
     separator: {
         height: 1,

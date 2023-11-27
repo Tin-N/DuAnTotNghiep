@@ -307,8 +307,6 @@ const UpdateProduct = props => {
                 : ''}{' '}
               đ
             </Text>
-            <Text>{dataProduct.saleOffID}</Text>
-            <Text>{dataProduct.saleOffID}</Text>
             <Text style={{ fontSize: 15 }}>Kho: {dataProduct.quantity}</Text>
           </View>
         </View>
