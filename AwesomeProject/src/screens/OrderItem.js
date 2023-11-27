@@ -131,7 +131,8 @@ const OrderItem = (props) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 marginTop: 5,
-                marginRight: 8,
+                marginRight: 5,
+                marginLeft: 5,
                 borderWidth: 0.35,
                 borderRadius: 5,
                 flex: 1
@@ -176,15 +177,19 @@ const OrderItem = (props) => {
                         <Image style={StyleOrder.imageFlatList} source={{ uri: imageUri }} />
 
                         <View>
-                            <Text numberOfLines={1} style={StyleOrder.textNameFlatList}>{productName}</Text>
+                            <Text numberOfLines={1} style={[StyleOrder.textNameFlatList, { fontSize: 15, fontWeight: 'bold' }]}>{productName}</Text>
                             <Text numberOfLines={1} style={StyleOrder.textInfoFlatList}>{categoryID}</Text>
-                            <Text numberOfLines={1} style={StyleOrder.textInfoFlatList}>$ {productPrice}</Text>
+                            <Text numberOfLines={1} style={[StyleOrder.textInfoFlatList, { fontSize: 13, color: '#EE2624' }]}>$ {productPrice}</Text>
                         </View>
                     </View>
 
                     <View style={[StyleOrder.function, { flexDirection: 'row', justifyContent: 'space-between' }]}>
                         <Pressable onPress={() => decreaseQuantity(quantity)}>
-                            <Icon name='trash-outline' size={24} />
+                            {quantity === 1 ? (
+                                <Icon name='trash-outline' size={24} />
+                            ) : (
+                                <Icon name='remove' size={24}/>
+                            )}
                         </Pressable>
                         <Text>{quantity}</Text>
                         <Pressable onPress={() => increaseQuantity(quantity)}>

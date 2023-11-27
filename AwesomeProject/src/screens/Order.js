@@ -12,6 +12,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 const ObjectID = require('bson-objectid');
 import ActionBar from './ActionBar'
 import { memo } from "react"
+import { Dimensions } from 'react-native';
 
 const Order = () => {
   // const { isOrder } = useContext(AppContext);
@@ -58,7 +59,6 @@ const Order = () => {
   // Tính tổng tiền
   useEffect(() => {
     settotalCost(productsSelected.reduce((total, product) => total + product.itemTotalCost, 0))
-    // console.log(">>>>>>>>>Total Cost: " + totalCost)
   }, [productsSelected])
 
   // View thông báo khi giỏ hàng trống
@@ -194,29 +194,19 @@ const Order = () => {
       <View style={{ marginRight: 10 }}>
         {/* Order Process */}
         <View style={{ bottom: 100 }}>
-          <View style={[StyleOrder.tillte, { marginLeft: -6, marginRight: -6, borderTopWidth: 0.3, borderTopLeftRadius: 10, borderTopRightRadius: 10, borderLeftWidth: 1, borderRightWidth: 1 }]}>
+          <View style={[StyleOrder.tillte, { width: Dimensions.get('window').width, borderTopWidth: 0.3, borderTopLeftRadius: 10, borderTopRightRadius: 10, borderLeftWidth: 0.3, borderRightWidth: 0.3 }]}>
             {/* <Image style={{ width: 40, height: 40 }} source={require('../images/icons8-coin-50.png')} /> */}
             {!productsSelected
               ? <Text style={StyleOrder.textTillte}>Bạn chưa chọn sản phầm nào</Text>
-              : <Text style={StyleOrder.textTillte}>Bạn đã chọn {productsSelected.length} sản phẩm</Text>}
-            <Switch
-              trackColor={{ false: '#767577', true: '#3669C9' }}
-              thumbColor={isEnabled ? '#18039E' : '#f4f3f4'}
-              onValueChange={toggleSwitch}
-              value={isEnabled}
-            />
+              : <Text style={[StyleOrder.textTillte,{margin: 10, marginLeft:10}]}>Bạn đã chọn {productsSelected.length} sản phẩm</Text>}
+            
           </View>
 
-          <View style={StyleOrder.tillte}>
-            <BouncyCheckbox
-              fillColor='white'
-              onPress={() => setisCheckBox(!isCheckBox)}
-              iconComponent={isCheckBox ? <MaterialIcons name='check-box' size={24} color={'#3669C9'} /> : <MaterialIcons name='check-box-outline-blank' size={24} color={'black'} />}
-            />
-            <Text style={[StyleOrder.textTillte, { marginTop: 10 }]}>Tổng: {totalCost}</Text>
-
+          <View style={[StyleOrder.tillte]}>
+            <Text style={[StyleOrder.textTillte, { marginTop: 10, marginLeft:10 }]}>Tổng:</Text>
+            <Text style={[StyleOrder.textTillte, { marginTop: 10, color: '#EE2624' }]}>$ {totalCost}</Text>
             <Pressable onPress={OrderFunc} style={StyleOrder.pressableBuy}>
-              <Text style={[StyleOrder.textTillte, { color: 'white', marginTop: 5 }]}>Mua Hàng</Text>
+              <Text style={[ { color: 'white', fontSize:18 }]}>Mua Hàng</Text>
             </Pressable>
           </View>
         </View>

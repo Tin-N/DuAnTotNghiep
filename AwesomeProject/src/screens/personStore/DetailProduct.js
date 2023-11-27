@@ -606,7 +606,7 @@ const DetailProduct = (props) => {
 
                                 <TouchableOpacity
                                     onPress={addToCart}
-                                    style={{ width: 355 }}>
+                                    style={[{ width: 355 }, StyleDetailProduct.touchOpa2]}>
                                     <Text style={StyleDetailProduct.textButton}>Thêm vào giỏ hàng</Text>
                                 </TouchableOpacity>
                         }
