@@ -84,7 +84,6 @@ const Profile = () => {
             <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
             <Stack.Screen name='Prod Process' component={ProductProcessStack}/>
-
         </Stack.Navigator>
     )
 }

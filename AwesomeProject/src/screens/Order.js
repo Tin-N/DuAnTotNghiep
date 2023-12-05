@@ -13,6 +13,7 @@ const ObjectID = require('bson-objectid');
 import ActionBar from './ActionBar'
 import { memo } from "react"
 import { Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Order = () => {
   // const { isOrder } = useContext(AppContext);
@@ -63,6 +64,30 @@ const Order = () => {
 
   // View thông báo khi giỏ hàng trống
   const MyCartIsEmpty = () => {
+    const navigation = useNavigation();
+
+    if (!userID) {
+      Alert.alert(
+        'Thông báo',
+        'Cỏ vẻ bạn chưa đăng nhập vào ứng dụng, bạn muốn đăng nhập chứ?', // Nội dung thông báo
+        [
+          {
+            text: 'Cancel', // Chữ hiển thị trên nút Cancel
+            onPress: () => {
+              // Xử lý khi người dùng chọn "OK"
+              navigation.goBack();
+            },
+          },
+          {
+            text: 'OK', // Chữ hiển thị trên nút OK
+            onPress: () => {
+              // Xử lý khi người dùng chọn "OK"
+              navigation.navigate('Profile');
+            },
+          },
+        ]
+      );
+    }
     return (
       <View style={StyleOrder.myCart1}>
         <Image style={StyleOrder.image} source={require('../images/myCart1.png')} />
@@ -159,7 +184,7 @@ const Order = () => {
                     productsToUpdate: productsSelected
                   })
                 } catch (error) {
-                  
+
                 }
               }
             },
@@ -198,15 +223,15 @@ const Order = () => {
             {/* <Image style={{ width: 40, height: 40 }} source={require('../images/icons8-coin-50.png')} /> */}
             {!productsSelected
               ? <Text style={StyleOrder.textTillte}>Bạn chưa chọn sản phầm nào</Text>
-              : <Text style={[StyleOrder.textTillte,{margin: 10, marginLeft:10}]}>Bạn đã chọn {productsSelected.length} sản phẩm</Text>}
-            
+              : <Text style={[StyleOrder.textTillte, { margin: 10, marginLeft: 10 }]}>Bạn đã chọn {productsSelected.length} sản phẩm</Text>}
+
           </View>
 
           <View style={[StyleOrder.tillte]}>
-            <Text style={[StyleOrder.textTillte, { marginTop: 10, marginLeft:10 }]}>Tổng:</Text>
+            <Text style={[StyleOrder.textTillte, { marginTop: 10, marginLeft: 10 }]}>Tổng:</Text>
             <Text style={[StyleOrder.textTillte, { marginTop: 10, color: '#EE2624' }]}>$ {totalCost}</Text>
             <Pressable onPress={OrderFunc} style={StyleOrder.pressableBuy}>
-              <Text style={[ { color: 'white', fontSize:18 }]}>Mua Hàng</Text>
+              <Text style={[{ color: 'white', fontSize: 18 }]}>Mua Hàng</Text>
             </Pressable>
           </View>
         </View>

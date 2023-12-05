@@ -6,7 +6,7 @@ const ActionBar = ({ title }) => {
 //   const navigation = useNavigation(); // Sử dụng useNavigation để truy cập đối tượng điều hướng
 
   const handleBackPress = () => {
-    // navigation.goBack(); // Chuyển về màn hình trước đó
+    navigation.goBack(); // Chuyển về màn hình trước đó
   };
 
   return (
