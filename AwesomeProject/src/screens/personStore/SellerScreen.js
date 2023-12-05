@@ -1,8 +1,11 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native'
 
 const SellerScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={{marginHorizontal: 15}}>
       <View
@@ -184,6 +187,47 @@ const SellerScreen = () => {
                 color: 'black',
               }}>
               Danh sách yêu thích
+            </Text>
+          </View>
+          <Icon name="chevron-forward" size={30} color="#36abd9" />
+        </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+        onPress={
+          ()=>navigation.navigate("Prod Process")
+        }
+        >
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '80%',
+            }}>
+            <View
+              style={{
+                borderRadius: 10,
+                backgroundColor: '#b7e6f98a',
+                width: 50,
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Icon name="list-circle" size={30} color="#36abd9" />
+            </View>
+            <Text
+              style={{
+                marginLeft: 10,
+                fontSize: 18,
+                fontWeight: 'bold',
+                color: 'black',
+              }}>
+              Xử lý xác nhận đơn hàng
             </Text>
           </View>
           <Icon name="chevron-forward" size={30} color="#36abd9" />

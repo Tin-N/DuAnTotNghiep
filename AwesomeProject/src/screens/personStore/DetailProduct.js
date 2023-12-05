@@ -716,12 +716,7 @@ const DetailProduct = (props) => {
                                         require('../../images/heart.jpg') : require('../../images/unheart.jpg')
                                 } />
 
-                            {/* <Image style={{ width: 30, height: 30, marginRight: 15 }}
-                            source={
-                                heart == true ?
-                                    require('../../images/heart.png') : require('../../images/unheart.png')
-                            } /> */}
-
+                    
                         </TouchableOpacity>
                         <TouchableOpacity>
                             <Image style={{ width: 25, height: 25, marginTop: 3 }} source={require('../../images/messenger.jpg')} />
@@ -792,7 +787,7 @@ const DetailProduct = (props) => {
             }}>
                 <DialogFeedback
                     modalVisible={modalVisible} setModalVisible={setModalVisible} star={star} setStar={setStar}
-                    productID={params.itemId} userID={"113"}
+                    productID={params.itemId} userID={userID}
                 />
             </View>
 
@@ -823,6 +818,7 @@ const DetailProduct = (props) => {
                         >
                             <TouchableOpacity onPress={() => {
                                 setDialogVisible(true);
+                                console.log("Hello"+userID);
                                 setCheck(false)
                             }}>
                                 <Text style={StyleDetailProduct.textButton}>
