@@ -139,6 +139,8 @@ const censorshipProduct = () => {
 
 
 const Main = () => {
+    const appContextData = useContext(AppContext)
+    const userRole = appContextData.userRole
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -183,7 +185,8 @@ const Main = () => {
             <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Cart" component={Order} />
             <Tab.Screen name="Profile" component={Profile} />
-            <Tab.Screen name="Shipper" component={ShipperStack}/>
+            {userRole == 3 ? <Tab.Screen name="Shipper" component={ShipperStack}/> : null}
+            
         </Tab.Navigator>
     )
 }
