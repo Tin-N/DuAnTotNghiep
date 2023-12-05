@@ -433,7 +433,7 @@ const DetailProduct = (props) => {
                                 paymentStatus: 'Unpaid',
                                 paymentMethods: 'COD',
                                 ownerID: ownerID,
-                                userAddress
+                                address: userAddress
                             });
                         setDialogVisible(false)
                         // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);

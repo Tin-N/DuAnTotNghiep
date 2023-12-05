@@ -5,15 +5,18 @@ import { Dimensions } from 'react-native';
 import AxiosIntance from '../../../utils/AxiosIntance'
 import { AppContext } from '../../../utils/AppContext';
 const { width, height } = Dimensions.get('screen');
+import { useNavigation } from '@react-navigation/native';
 
 const SProductProcessItem = (props) => {
     const data = props.data;
+    const sProductProcessChange = props.sProductProcessChange;
     const appContextData = useContext(AppContext);
     const userID = appContextData.userID;
     const [ownerID, setownerID] = useState();
     const [customerID, setcustomerID] = useState()
     const [paymentMethods, setpaymentMethods] = useState()
     const [paymentStatus, setpaymentStatus] = useState()
+    const navigation = useNavigation();
 
     const handleDeliverySuccess = () => {
         Alert.alert(
@@ -30,11 +33,10 @@ const SProductProcessItem = (props) => {
                     text: 'OK',
                     onPress: async () => {
                         try {
+                            sProductProcessChange();
                             const response1 = await AxiosIntance().put(`/orderdetail/updateDeliveryStatus/${data.orderDetailID}`, {
                                 deliveryStatus: 'Delivered'
                             })
-                            const res2 = await Ax
-                            console.log(response)
                         } catch (error) {
                             console.log("SProductProcessItem: error: " + error);
                         }
@@ -44,20 +46,12 @@ const SProductProcessItem = (props) => {
             ]
         );
     }
+    
+    // console.log(">>>>>>>>>>>>>>>>>>" + JSON.stringify(data))
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const response = await AxiosIntance().get(`/order/getOrderByOrderDetailID/${data.orderDetailID}`)
-                setcustomerID(response.data[0].userID)
-                setownerID(response.data[0].ownerID)
-                setpaymentMethods(response.data[0].paymentMethods)
-                setpaymentStatus(response.data[0].paymentStatus)
-            } catch (error) {
-                console.log("SProductProcessItem: lỗi lấy dữ liệu order: " + error);
-            }
-        })();
-    }, []);
+    const navigateToAllProductDetails = () => {
+        navigation.navigate("AllProductDetails", {navigateData: data})
+    }
 
     return (
         <View style={{ borderWidth: 2, borderRadius: 5, margin: 10, padding: 15, backgroundColor: '#ebf6fc' }}>
@@ -88,7 +82,7 @@ const SProductProcessItem = (props) => {
                     <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, padding: 5 }}>
                         <Text style={{ textAlign: 'center' }}>Địa chỉ: </Text>
                     </View>
-                    <Pressable style={{ borderWidth: 0.5, borderRadius: 5, padding: 5, backgroundColor: '#87C4FF' }}>
+                    <Pressable onPress={navigateToAllProductDetails} style={{ borderWidth: 0.5, borderRadius: 5, padding: 5, backgroundColor: '#87C4FF' }}>
                         <Text style={{ textAlign: 'center', color: 'white' }}>Xem chi tiết</Text>
                     </Pressable>
                     <Pressable onPress={handleDeliverySuccess} style={{ borderWidth: 0.5, borderRadius: 5, padding: 5, backgroundColor: '#39A7FF' }}>
