@@ -40,6 +40,10 @@ import DetailProduct from '../screens/personStore/DetailProduct';
 import CreateProduct from '../screens/personStore/CreateProduct';
 import ManageProduct from '../screens/personStore/ManageProduct';
 import UpdateProduct from '../screens/personStore/UpdateProduct';
+import StatisticSellerScreen from '../screens/personStore/StatisticSellerScreen';
+import ShipperScreen from '../screens/personStore/ShipperScreen';
+import FavoriteScreen from '../screens/FavoriteList';
+import Item from '../component/FavoriteList/Item';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -75,7 +79,9 @@ const Profile = () => {
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProfileScreen'>
             <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
             <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
-
+            <Stack.Screen name='StatisticScreen' component={StatisticSellerScreen}></Stack.Screen>
+            <Stack.Screen name='ShipperScreen' component={ShipperScreen}></Stack.Screen>
+            <Stack.Screen name='Shipper' component={SProductProcess}></Stack.Screen>
             <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
             <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
             <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
@@ -84,6 +90,11 @@ const Profile = () => {
             <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
             <Stack.Screen name='Prod Process' component={ProductProcessStack}/>
+            <Stack.Screen name='FavoriteScreen' component={FavoriteScreen}/>
+            <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
+
+<Stack.Screen name='DetailProduct' component={DetailProduct} />
+            {/* FavoriteScreen */}
         </Stack.Navigator>
     )
 }
@@ -100,6 +111,7 @@ const ProductHome = () => {
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
 
             <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
+            <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
 
             <Stack.Screen name='DetailProduct' component={DetailProduct} />
 

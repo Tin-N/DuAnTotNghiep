@@ -1,39 +1,51 @@
-import {View, Text, ScrollView, StyleSheet,TouchableOpacity,Image} from 'react-native';
-import React,{useEffect} from 'react';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import React, {useEffect} from 'react';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+// import {useNavigation,useRoute} from '@react-navigation/native'
 
 import {Dimensions} from 'react-native';
 import {convertToCurrencyString, formatPrice} from '../../../Agro';
-import {LineChart} from 'react-native-gifted-charts';
-import { StyleDetailProduct } from '../../css/Styles';
+import {BarChart, LineChart} from 'react-native-gifted-charts';
+import {StyleDetailProduct} from '../../css/Styles';
 const screenWidth = Dimensions.get('screen').width;
 const height = Dimensions.get('screen').height;
 
-const StatisticSellerScreen = (props) => {
-
-  // const { navigation } = props;
+const StatisticSellerScreen = props => {
+  const { navigation,route } = props;
+  const {shopId}=route.params;
   const Tab = createMaterialTopTabNavigator();
   const back = () => {
     navigation.goBack();
-  }
-  // useEffect(() => {
-  //   navigation.getParent()?.setOptions({
-  //     tabBarStyle: {
-  //       display: "none"
-  //     }
-  //   });
-  //   return () => navigation.getParent()?.setOptions({
-  //     tabBarStyle: undefined
-  //   });
-  // }, [navigation]);
+  };
+  useEffect(() => {
+    navigation.getParent()?.setOptions({
+      tabBarStyle: {
+        display: "none"
+      }
+    });
+    return () => navigation.getParent()?.setOptions({
+      tabBarStyle: undefined
+    });
+  }, [navigation]);
   return (
     <View style={{height: height, backgroundColor: 'white'}}>
-      <View style={[StyleDetailProduct.menu,{borderBottomWidth:0.2,borderColor:'grey'}]}>
+      <View
+        style={[
+          StyleDetailProduct.menu,
+          {borderBottomWidth: 0.2, borderColor: 'grey'},
+        ]}>
         <TouchableOpacity onPress={back}>
           <Image source={require('../../images/backic.png')} />
         </TouchableOpacity>
-        <View/>
-        <Text style={StyleDetailProduct.textTitle}>Thống kê</Text>
+        <View />
+        <Text style={StyleDetailProduct.textTitle}>Thống kê id: {shopId}</Text>
       </View>
       <Tab.Navigator
         screenOptions={{
@@ -49,14 +61,35 @@ const StatisticSellerScreen = (props) => {
           // tabBarStyle: { backgroundColor: 'white', elevation: 0 },
           // tabBarIndicatorStyle: { backgroundColor: paperTheme.colors.primary },
         }}>
-        <Tab.Screen name="StatisticByWeek" component={StatisticSellerByWeekScreen} options={{ title: 'Theo tuần' }}/>
-        <Tab.Screen name="StatisticByMonth" component={StatisticSellerByMonthScreen} options={{ title: 'Theo tháng' }}/>
-        <Tab.Screen name="StatisticByYear" component={StatisticSellerByYearScreen} options={{ title: 'Theo năm' }}/>
+        <Tab.Screen
+          name="StatisticByWeek"
+          component={StatisticSellerByWeekScreen}
+          options={{title: 'Theo tuần'}}
+        />
+        <Tab.Screen
+          name="StatisticByMonth"
+          component={StatisticSellerByMonthScreen}
+          options={{title: 'Theo tháng'}}
+        />
+        <Tab.Screen
+          name="StatisticByYear"
+          component={StatisticSellerByYearScreen}
+          options={{title: 'Theo năm'}}
+        />
       </Tab.Navigator>
     </View>
   );
 };
 export const StatisticSellerByWeekScreen = () => {
+  const barData = [
+    {value: 250, label: 'M'},
+    {value: 500, label: 'T', frontColor: '#177AD5'},
+    {value: 745, label: 'W', frontColor: '#177AD5'},
+    {value: 320, label: 'T'},
+    {value: 600, label: 'F', frontColor: '#177AD5'},
+    {value: 256, label: 'S'},
+    {value: 300, label: 'S'},
+  ];
   return (
     // <View
     // // style={{marginLeft:15,zIndex:0}}
@@ -66,7 +99,7 @@ export const StatisticSellerByWeekScreen = () => {
     <ScrollView
       style={{
         backgroundColor: '#f7f7f7',
-        marginBottom:50
+        marginBottom: 50,
       }}>
       <View
         style={[
@@ -199,7 +232,18 @@ export const StatisticSellerByWeekScreen = () => {
             DOANH THU THEO TUẦN
           </Text>
         </View>
-        <LineChart
+        <BarChart
+          data={ptData}
+          verticalLinesZIndex={2}
+          yAxisLabelWidth={60}
+          xAxisLabelTextStyle={{color: 'black'}}
+          height={300}
+          spacing={50}
+          formatYLabel={convertToCurrencyString}
+          width={280}
+          // formatXlabel={(text)=>{return text.slice(0,4)}}
+        />
+        {/* <LineChart
           areaChart
           data={ptData}
           width={280}
@@ -227,7 +271,7 @@ export const StatisticSellerByWeekScreen = () => {
           xAxisColor="lightgray"
           pointerConfig={pointerConfig}
           xAxisLabelTextStyle={{color: 'black'}}
-        />
+        /> */}
       </View>
       <View style={[styles.view, {paddingHorizontal: 10, marginBottom: 20}]}>
         {/* Table Head */}
@@ -488,7 +532,7 @@ export const StatisticSellerByMonthScreen = () => {
               style={{
                 color: 'black',
               }}>
-              Số lượng sản phẩm đã bán {'\n'} trong 1 tuần
+              Số lượng sản phẩm đã bán {'\n'} trong 1 năm
             </Text>
             <Text
               style={{
@@ -510,7 +554,7 @@ export const StatisticSellerByMonthScreen = () => {
               style={{
                 color: 'black',
               }}>
-              Tổng doanh thu trong 1 tuần
+              Tổng doanh thu trong 1 tháng
             </Text>
             <Text
               style={{
@@ -533,7 +577,7 @@ export const StatisticSellerByMonthScreen = () => {
               color: 'black',
               fontWeight: '600',
             }}>
-            DOANH THU THEO TUẦN
+            DOANH THU THEO NĂM
           </Text>
         </View>
         <LineChart
@@ -1088,7 +1132,7 @@ const styles = StyleSheet.create({
   table_head_captions: {
     fontSize: 15,
     color: 'white',
-    fontWeight:'bold'
+    fontWeight: 'bold',
   },
 
   table_body_single_row: {
@@ -1183,30 +1227,30 @@ const pointerConfig = {
   },
 };
 const ptData = [
-  {value: 160000000, date: '1 Apr 2022'},
-  {value: 180002650000, date: '2 Apr 2022'},
-  {value: 190000000000, date: '3 Apr 2022'},
-  {value: 180000000000, date: '4 Apr 2022'},
-  {value: 140000000000, date: '5 Apr 2022'},
-  {value: 145000000000, date: '6 Apr 2022'},
-  {value: 160000000000, date: '7 Apr 2022'},
-  {value: 200000000000, date: '8 Apr 2022'},
-  {value: 160000000, date: '1 Apr 2022'},
-  {value: 180002650000, date: '2 Apr 2022'},
-  {value: 190000000000, date: '3 Apr 2022'},
-  {value: 180000000000, date: '4 Apr 2022'},
-  {value: 140000000000, date: '5 Apr 2022'},
-  {value: 145000000000, date: '6 Apr 2022'},
-  {value: 160000000000, date: '7 Apr 2022'},
-  {value: 200000000000, date: '8 Apr 2022'},
-  {value: 160000000, date: '1 Apr 2022'},
-  {value: 180002650000, date: '2 Apr 2022'},
-  {value: 190000000000, date: '3 Apr 2022'},
-  {value: 180000000000, date: '4 Apr 2022'},
-  {value: 140000000000, date: '5 Apr 2022'},
-  {value: 145000000000, date: '6 Apr 2022'},
-  {value: 160000000000, date: '7 Apr 2022'},
-  {value: 200000000000, date: '8 Apr 2022'},
+  {value: 160000000, label: '1 Apr 2022'},
+  {value: 180002650000, label: '2 Apr 2022'},
+  {value: 190000000000, label: '3 Apr 2022'},
+  {value: 180000000000, label: '4 Apr 2022'},
+  {value: 140000000000, label: '5 Apr 2022'},
+  {value: 145000000000, label: '6 Apr 2022'},
+  {value: 160000000000, label: '7 Apr 2022'},
+  {value: 200000000000, label: '8 Apr 2022'},
+  {value: 160000000, label: '1 Apr 2022'},
+  {value: 180002650000, label: '2 Apr 2022'},
+  {value: 190000000000, label: '3 Apr 2022'},
+  {value: 180000000000, label: '4 Apr 2022'},
+  {value: 140000000000, label: '5 Apr 2022'},
+  {value: 145000000000, label: '6 Apr 2022'},
+  {value: 160000000000, label: '7 Apr 2022'},
+  {value: 200000000000, label: '8 Apr 2022'},
+  {value: 160000000, label: '1 Apr 2022'},
+  {value: 180002650000, label: '2 Apr 2022'},
+  {value: 190000000000, label: '3 Apr 2022'},
+  {value: 180000000000, label: '4 Apr 2022'},
+  {value: 140000000000, label: '5 Apr 2022'},
+  {value: 145000000000, label: '6 Apr 2022'},
+  {value: 160000000000, label: '7 Apr 2022'},
+  {value: 200000000000, label: '8 Apr 2022'},
   // {value: 220, date: '9 Apr 2022'},
   // {
   //   value: 240,

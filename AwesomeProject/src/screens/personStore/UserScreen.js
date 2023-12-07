@@ -3,8 +3,12 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from '../../css/Theme'
 import {useNavigation} from '@react-navigation/native'
+import { useContext } from 'react';
+import { AppContext } from '../../utils/AppContext';
 const UserScreen = () => {
   const navigation = useNavigation();
+  const {userInfo}=useContext(AppContext);
+
   return (
     <View style={{marginHorizontal: 15}}>
       <View
@@ -163,7 +167,7 @@ const UserScreen = () => {
         </View>
         </TouchableOpacity>
         <TouchableOpacity
-        onPress={()=>{navigation.navigate("FavoriteScreen")}}
+        onPress={()=>{navigation.navigate("FavoriteScreen",{userID:userInfo._id,navigation:navigation}); console.log(userInfo._id)}}
         >
         <View
           style={{
@@ -204,7 +208,6 @@ const UserScreen = () => {
         </View>
         </TouchableOpacity>
         <TouchableOpacity
-        // onPress={()=>{navigation.navigate("FavoriteScreen")}}
         >
         <View
           style={{
