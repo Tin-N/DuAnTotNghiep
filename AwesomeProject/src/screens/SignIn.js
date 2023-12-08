@@ -11,19 +11,12 @@ import {
 } from 'react-native';
 
 import React, {useState, useContext,userEffect} from 'react';
-import {COLOR} from '../css/Theme';
 import {Image} from 'react-native';
-
-// const {width} = Dimensions.get('window');
 import AxiosIntance from '../utils/AxiosIntance';
 import {useNavigation} from '@react-navigation/native';
 import {AppContext} from '../utils/AppContext';
 import { GoogleSignin , statusCodes } from '@react-native-google-signin/google-signin';
-
 import {COLOR} from '../css/Theme.js'
-import React, { useState, useContext, ToastAndroid, } from 'react';
-import { Image } from 'react-native';
-
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleLogin } from '../css/Styles.js';
 
@@ -136,11 +129,11 @@ const SignIn = () => {
       <Text style={StyleLogin.HeadingText}>Savvy</Text>
 
       {/* Text Welcome back! */}
-      <Text style={StyleLogin.extraText}>Welcome back!</Text>
+      <Text style={StyleLogin.extraText}>Chúc mừng trở lại!</Text>
 
       {/* TextInput Email */}
       <View>
-        {/* <Text style={StyleLogin.textHint}>Email</Text> */}
+        <Text style={StyleLogin.textHint}>Email</Text>
         <View style={[StyleLogin.input,{borderColor: checkEmail}]}>
           <TextInput
             style={StyleLogin.TextInputUP}
@@ -151,21 +144,19 @@ const SignIn = () => {
       </View>
       {/* TextInput Password */}
       <View>
-        <Text style={StyleLogin.textHintP}>Password</Text>
+        <Text style={StyleLogin.textHintP}>Mật khẩu</Text>
 
         <View style={[StyleLogin.inputP,{borderColor: checkPassword}]}>
           <TextInput
             style={StyleLogin.TextInputUP}
-            placeholder="Enter your password"
+            placeholder="Nhập mật khẩu của bạn"
             underlineColorAndroid="transparent"
             secureTextEntry={showPassword}
-
             onChangeText={setPassword}></TextInput>
 
           <TouchableOpacity
             onPress={() => {
               setShowPassword(!showPassword)
-
             }}
             style={StyleLogin.CTIcon}>
             <Image
@@ -179,7 +170,7 @@ const SignIn = () => {
           </TouchableOpacity>
         </View>
 
-        <Text style={StyleLogin.textHintP}>Password</Text>
+        {/* <Text style={StyleLogin.textHintP}>Password</Text> */}
 
 
 
@@ -188,15 +179,12 @@ const SignIn = () => {
         </TouchableOpacity>
 
 
-        <TouchableOpacity style={StyleLogin.buttonShape} onPress={SignIn}>
+        {/* <TouchableOpacity style={StyleLogin.buttonShape} onPress={SignIn}>
           <Text style={StyleLogin.TextButton}>Sign In</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={StyleLogin.FGcontainer}>
-          <TouchableOpacity style={StyleLogin.FButton}>
-            <Image
-              source={require('../images/icon/Facebook.png')}
-              style={{ width: 35, height: 35, tintColor: COLOR.title }}
-            />
+          <TouchableOpacity style={StyleLogin.FButton} onPress={SignIn}>
+              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold', marginTop: "2%"}}>Đăng nhập</Text>
           </TouchableOpacity>
           <TouchableOpacity style={StyleLogin.GButton} onPress={signIn}>
             <Image
@@ -207,10 +195,10 @@ const SignIn = () => {
         </View>
         <View style={StyleLogin.CSbuttomText}>
           <Text style={StyleLogin.ButtomText1}>
-            You don't have any account?
+            Bạn chưa có tài khoản?
           </Text>
           <TouchableOpacity onPress={moveToSignUp}>
-            <Text style={StyleLogin.ButtomText2}>SignUp</Text>
+            <Text style={StyleLogin.ButtomText2}> Đăng ký</Text>
           </TouchableOpacity>
         </View>
       </View>

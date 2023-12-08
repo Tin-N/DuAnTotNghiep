@@ -205,8 +205,8 @@ const AppNavigator = () => {
     return (
         <>
             {
-                <Main />
-                // <User />
+                // <Main />
+                <User />
                 // <Main/>
             }
         </>

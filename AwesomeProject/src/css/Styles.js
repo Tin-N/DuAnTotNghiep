@@ -594,14 +594,14 @@ export const StyleLogin = StyleSheet.create({
     },
 
     CbuttomText: {
-      marginTop: '8%',
+      marginTop: '26%',
       flexDirection: 'row',
       justifyContent: 'center',
       width: '94%',
       marginHorizontal: 10,
     },
     CSbuttomText: {
-      marginTop: '7%',
+      marginTop: '40%',
       flexDirection: 'row',
       justifyContent: 'center',
       width: '94%',
@@ -610,6 +610,7 @@ export const StyleLogin = StyleSheet.create({
     ButtomText1: {
       fontSize: 20,
       fontWight: 'bold',
+      color: 'black'
       // backgroundColor: 'red',
     },
     ButtomText2: {
@@ -1588,7 +1589,7 @@ export const StyleProfile = StyleSheet.create({
     ProfileContainer: {
         height: '100%',
         width: '100%',
-        backgroundColor: COLOR.backgroundProfile,
+        // backgroundColor: 'gray',
     },
   NavTab: {
     marginTop: '2%',
@@ -1614,7 +1615,7 @@ export const StyleProfile = StyleSheet.create({
     height: 40,
     width: '64%',
     color: 'black',
-    fontSize: 25,
+    fontSize: 23,
     fontWeight: 'bold',
   },
   IconShapeEnd: {
@@ -1633,7 +1634,7 @@ export const StyleProfile = StyleSheet.create({
   },
 
   Heading: {
-    // backgroundColor: COLOR.background,
+    // backgroundColor: 'red',
     marginTop: '5%',
     marginLeft: '4%',
     height: 130,
@@ -1642,44 +1643,52 @@ export const StyleProfile = StyleSheet.create({
     // marginBottom: '2%',
   },
   Avatar: {
-    height: '90%',
+    height: '100%',
     width: '35%',
-    // backgroundColor: "red",
+    marginHorizontal: '3%',
+    // backgroundColor: "yellow",
     borderRadius: 110,
-    
+    jussifyContent: 'center',
+    alignItems: 'center',
   },
   iconProfile: {
-    marginVertical: 0.1,
+    // marginVertical: 0.1,
     justifyContent: 'center',
-    height: '90%',
-    width: '80%',
+    marginHorizontal: '-3%',
+    height: '100%',
+    width: '100%',
   },
   TextProfile: {
-    marginLeft: '1%',
+    marginLeft: '-10%',
     justifyContent: 'space-around',
+    marginTop: '5%',
     // backgroundColor: "orange",
     height: '80%',
   },
   Name: {
     fontSize: 25,
     color: 'black',
+    marginLeft: '15%',
   },
   Email: {
     fontSize: 16,
     color: 'black',
     width: '100%',
+    marginLeft: '15%',
   },
   iconEdit: {
     height: 20,
     width: 20,
     marginLeft: '25%',
-    marginTop: '5%',
+    marginTop: '20%',
+    // backgroundColor: "green",
   },
   iconEditContainer: {
     backgroundColor: COLOR.background,
-    width: '25%',
-    height: '25%',
-    borderRadius: 110,
+    width: 35,
+    height: 35,
+    borderRadius: 30,
+    marginRight: '25%',
   },
   Line: {
     width: '90%',
@@ -1691,8 +1700,11 @@ export const StyleProfile = StyleSheet.create({
     marginTop: '2%',
   },
   Form:{
-    // backgroundColor: COLOR.background,
-    
+    backgroundColor: COLOR.backgroundSignIn,
+    borderRadius: 20,
+    marginHorizontal: 20,
+    marginTop: "4%",
+    height: "58%",
   },
   FormItemTextAddress:{
     marginLeft: 13,
@@ -1700,11 +1712,11 @@ export const StyleProfile = StyleSheet.create({
     fontWeight: 'bold',
   },
   FormItemInputAddress:{
-    borderWidth: 0.2,
+    borderWidth: 1,
     color: 'black',
     paddingLeft: 15,
     borderRadius: 35,
-    borderColor: COLOR.TextHint,
+    borderColor: COLOR.TextPlaceHolder,
     fontWeight: 'bold',
   },
   FormItem:{
@@ -1714,15 +1726,16 @@ export const StyleProfile = StyleSheet.create({
   },
   ButtonCP:{
     marginTop: 20,
-    marginHorizontal: "20%",
+    // marginHorizontal: "%",
     backgroundColor: COLOR.background,
     height: 50,
-    borderRadius: 30,
+    width: '45%',
+    borderRadius: 35,
     alignItems: 'center',
     justifyContent: 'center',
   },
   TextButton:{
-    color: 'white',
+    // color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
   },
