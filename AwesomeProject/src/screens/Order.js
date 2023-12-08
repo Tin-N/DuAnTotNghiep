@@ -26,6 +26,7 @@ const Order = () => {
   const [totalCost, settotalCost] = useState(0)
   const [isCartChanged, setisCartChanged] = useState(1)
   const [isLoading, setisLoading] = useState(false)
+  const navigation = useNavigation
 
   const appContextData = useContext(AppContext);
   const userID = appContextData.userID;
@@ -92,7 +93,9 @@ const Order = () => {
       <View style={StyleOrder.myCart1}>
         <Image style={StyleOrder.image} source={require('../images/myCart1.png')} />
         <Text style={StyleOrder.textHeader}>Your Card is Empty</Text>
-        <Pressable style={StyleOrder.pressable}>
+        <Pressable  onPress={() => {
+          navigation.navigate("Home")
+        }} style={StyleOrder.pressable}>
           <Text style={StyleOrder.textPressable}>Start Browsing</Text>
         </Pressable>
       </View>
@@ -149,7 +152,7 @@ const Order = () => {
               paymentStatus: 'Unpaid',
               paymentMethods: 'COD',
               ownerID: [...new Set(productsSelected.map(product => product.ownerID))],
-              userAddress
+              address: userAddress
             });
           console.log("Đặt hàng thành công");
           ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);

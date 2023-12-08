@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-// import { useNavigation } from '@react-navigation/native'; // Import useNavigation từ thư viện React Navigation
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation từ thư viện React Navigation
 
 const ActionBar = ({ title }) => {
-//   const navigation = useNavigation(); // Sử dụng useNavigation để truy cập đối tượng điều hướng
+  const navigation = useNavigation(); // Sử dụng useNavigation để truy cập đối tượng điều hướng
 
   const handleBackPress = () => {
     navigation.goBack(); // Chuyển về màn hình trước đó

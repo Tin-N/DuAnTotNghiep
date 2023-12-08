@@ -35,6 +35,7 @@ import FilterScreen from '../screens/FilterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import DetailList from '../screens/DetailList';
 import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
+import AllProductDetails from '../screens/personStore/Shiper/AllProductDetails'
 
 import DetailProduct from '../screens/personStore/DetailProduct';
 import CreateProduct from '../screens/personStore/CreateProduct';
@@ -53,6 +54,15 @@ const ProductProcessStack = () => {
         <Stack.Navigator initialRouteName='ProductProcessOverview'>
             <Stack.Screen name="ProductProcessOverview" component={ProductProcessOverview} />
             <Stack.Screen options={{ headerShown: false }} name="Product Process" component={ProductProcess} />
+        </Stack.Navigator>
+    );
+};
+
+const ShipperStack = () => {
+    return (
+        <Stack.Navigator initialRouteName='SProductProcess'>
+            <Stack.Screen name="SProductProcess" component={SProductProcess} />
+            <Stack.Screen options={{ headerShown: false }} name="AllProductDetails" component={AllProductDetails} />
         </Stack.Navigator>
     );
 };
@@ -141,6 +151,8 @@ const censorshipProduct = () => {
 
 
 const Main = () => {
+    const appContextData = useContext(AppContext)
+    const userRole = appContextData.userRole
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -185,7 +197,8 @@ const Main = () => {
             <Tab.Screen name="Home" component={ProductHome} />
             <Tab.Screen name="Cart" component={Order} />
             <Tab.Screen name="Profile" component={Profile} />
-          
+            {userRole == 3 ? <Tab.Screen name="Shipper" component={ShipperStack}/> : null}
+            
         </Tab.Navigator>
     )
 }
