@@ -30,7 +30,7 @@ LogBox.ignoreAllLogs();
 const DetailProduct = (props) => {
     const { navigation } = props;
     const { route } = props;
-    const { isLogin } = useContext(AppContext);
+    const { isLogin,userInfo } = useContext(AppContext);
     const { params } = route;
 
     console.log(params)
@@ -81,6 +81,8 @@ const DetailProduct = (props) => {
     const [startDate, setstartDate] = useState();
     const [saleOffID, setsaleOffID] = useState();
     const [onProductSaleOff, setonProductSaleOff] = useState(false);
+    const [isVisibleRating, setIsVisibleRating] = useState(false);
+
     //data sale 
     const slideAnim = useRef(new Animated.Value(-100)).current;
     useEffect(() => {
@@ -148,27 +150,45 @@ const DetailProduct = (props) => {
     }
     const heartHandler = async () => {
         console.log(favorite);
-        if (heart) {
-            console.log("Aiyooooo");
-            const response = await AxiosIntance().post("/favoriteApi/deleteFavorite?id=" + favorite._id);
-            if (response.result) {
-                setFavorite({});
-                ToastAndroid.show("Gỡ khỏi ưu thích thành công", ToastAndroid.SHORT);
-                setHeart(!heart);
+        if (!isLogin) {
+            Alert.alert(
+                'Thông báo',
+                'Bạn chưa đăng nhập', // Nội dung thông báo
+                [
+                    {
+                        text: 'Cancel', // Chữ hiển thị trên nút Cancel
+                    },
+                    {
+                        text: 'OK', // Chữ hiển thị trên nút OK
+                        onPress: () => {
+                            // Xử lý khi người dùng chọn "OK"
+                            navigation.navigate('Login')
+                        },
+                    },
+                ]
+            );
+        }else{
+            if (heart) {
+                const response = await AxiosIntance().post("/favoriteApi/deleteFavorite?id=" + favorite._id);
+                if (response.result) {
+                    setFavorite({});
+                    ToastAndroid.show("Gỡ khỏi ưu thích thành công", ToastAndroid.SHORT);
+                    setHeart(!heart);
+                } else {
+                    ToastAndroid.show("Gỡ khỏi ưu thích không thành công", ToastAndroid.SHORT);
+                }
             } else {
-                ToastAndroid.show("Gỡ khỏi ưu thích không thành công", ToastAndroid.SHORT);
-            }
-        } else {
-            const response = await AxiosIntance().post("/favoriteApi/addFavorite?userID=" + "654627d67137a3bf678fb544" + "&productID=" + params.itemId);
-            if (response.result) {
-                ToastAndroid.show("Thích thành công", ToastAndroid.SHORT);
-                setHeart(!heart);
-                setFavorite(response.favorite)
-
-            } else {
-                ToastAndroid.show("Thêm vào ưu thích không thành công", ToastAndroid.SHORT);
+                const response = await AxiosIntance().post("/favoriteApi/addFavorite?userID=" + userInfo._id + "&productID=" + params.itemId);
+                if (response.result) {
+                    ToastAndroid.show("Thích thành công", ToastAndroid.SHORT);
+                    setHeart(!heart);
+                    setFavorite(response.favorite);
+                } else {
+                    ToastAndroid.show("Thêm vào ưu thích không thành công", ToastAndroid.SHORT);
+                }
             }
         }
+        
     }
 
     const handlerDetail = () => {
@@ -214,10 +234,23 @@ const DetailProduct = (props) => {
                 console.log("Product Detail: lỗi lấy dữ liệu: " + error)
             }
         }
-        
+        const checkProductsInOrderdetail = async () => {
+           if(isLogin){
+                try {
+                    const response = await AxiosIntance().get(`/orderdetail/check-product-in-orderDetail/${userID}/${params.itemId}`);
+                    console.log(">>>>>>productID for detail: " + params.itemId);
+                    if (response.result == true) {
+                       setIsVisibleRating(response.result)
+
+                    }
+                } catch (error) {
+                    console.log("Product Detail: lỗi lấy dữ liệu: " + error)
+                }
+           }
+        }
         // Get favorite 
         const getFavorite = async () => {
-            const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + "654627d67137a3bf678fb544" + "&productID=" + params.itemId);
+            const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + userInfo._id + "&productID=" + params.itemId);
             if (response.result) {
                 if (Object.keys(response.favorite).length > 0) {
                     setHeart(!heart);
@@ -226,10 +259,12 @@ const DetailProduct = (props) => {
             }
         }
         const getFeedback = async () => {
-            const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId);
+            const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId+"&size="+1);
             if (response.result == true) {
                 setDataFeedback(response.feedbacks);
                 setFeedbackLenght(response.feedbacks.length);
+                ToastAndroid.show('getFeedback thanhf cong', ToastAndroid.SHORT);
+
             } else {
                 ToastAndroid.show('getFeedback thất bại', ToastAndroid.SHORT);
             } if (response.feedbacks.length > 0) {
@@ -279,7 +314,7 @@ const DetailProduct = (props) => {
         getDetails();
         getFeedback();
         getSizeByProductID();
-
+        checkProductsInOrderdetail();
         getFavorite();
         return () => {
         }
@@ -619,7 +654,7 @@ const DetailProduct = (props) => {
 
                                 <TouchableOpacity
                                     onPress={addToCart}
-                                    style={{ width: 355 }}>
+                                    style={[{ width: 355 }, StyleDetailProduct.touchOpa2]}>
                                     <Text style={StyleDetailProduct.textButton}>Thêm vào giỏ hàng</Text>
                                 </TouchableOpacity>
                         }
@@ -716,12 +751,7 @@ const DetailProduct = (props) => {
                                         require('../../images/heart.jpg') : require('../../images/unheart.jpg')
                                 } />
 
-                            {/* <Image style={{ width: 30, height: 30, marginRight: 15 }}
-                            source={
-                                heart == true ?
-                                    require('../../images/heart.png') : require('../../images/unheart.png')
-                            } /> */}
-
+                    
                         </TouchableOpacity>
                         <TouchableOpacity>
                             <Image style={{ width: 25, height: 25, marginTop: 3 }} source={require('../../images/messenger.jpg')} />
@@ -735,8 +765,8 @@ const DetailProduct = (props) => {
                             </View>
 
                 <View style={StyleDetailProduct.line}></View>
-                <View style={{ marginBottom: 100 }}>
-                    <View style={{ alignItems: 'center' }}>
+                 <View style={{ marginBottom: 20 }}>
+                 {isLogin? <View style={{ alignItems: 'center' }}>
                         <Text style={{ fontSize: 16, marginVertical: 5, marginHorizontal: 10 }}>Thêm đánh giá</Text>
                         <StarRating
                             maxStars={5}
@@ -751,7 +781,7 @@ const DetailProduct = (props) => {
                                 easing: Easing.elastic(10)
                             }}
                         />
-                    </View>
+                    </View>:<View/>}
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ margin: 10, fontSize: 18 }}>
@@ -763,14 +793,15 @@ const DetailProduct = (props) => {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <FlatList
+                   
+                   <FlatList
                         data={dataFeedback.slice(0, 3)}
                         showsHorzontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) => <ItemFeedBack dataFeedback={item} />}
                         keyExtractor={item => item.feedbackID}
                         ItemSeparatorComponent={Separator} />
-                </View>
+                   </View>
                 <View style={StyleDetailProduct.line}></View>
                 <View style={{marginBottom:100}}>
                     <View style={{
@@ -792,7 +823,7 @@ const DetailProduct = (props) => {
             }}>
                 <DialogFeedback
                     modalVisible={modalVisible} setModalVisible={setModalVisible} star={star} setStar={setStar}
-                    productID={params.itemId} userID={"113"}
+                    productID={params.itemId} userID={userID}
                 />
             </View>
 
@@ -823,6 +854,7 @@ const DetailProduct = (props) => {
                         >
                             <TouchableOpacity onPress={() => {
                                 setDialogVisible(true);
+                                console.log("Hello"+userID);
                                 setCheck(false)
                             }}>
                                 <Text style={StyleDetailProduct.textButton}>

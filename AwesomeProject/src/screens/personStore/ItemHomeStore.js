@@ -39,17 +39,12 @@ const ItemHomeStore = (props) => {
         }}>
           {dulieu.name}
         </Text> */}
-        <View style={{ padding: 5 }}>
-          <View>
-            {
-              dulieu.name ? <TextWithLimit text={dulieu.name} limit={17} />
-                : <View />
-            }
-          </View>
+
 
         <View style={{padding:5}}>
-          <TextWithLimit text={dulieu.name} limit={17} 
-            styleView={{fontWeight:'bold',fontSize:30}}
+          <TextWithLimit text={dulieu.name} limit={14} 
+
+            styleView={{fontSize:25}}
           />
 
           <Text>
@@ -69,11 +64,9 @@ const ItemHomeStore = (props) => {
 
 
          
-
           }}>
             {dulieu.sold} đã bán
           </Text>
-        </View>
         </View>
       </TouchableOpacity>
     </View>

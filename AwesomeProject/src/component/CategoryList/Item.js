@@ -22,7 +22,7 @@ const Item = props => {
       <TouchableOpacity 
       onPress={handleClick}
       style={{
-        width:80,height:80, backgroundColor: data.color, borderRadius:15
+        width:60,height:60, backgroundColor: data.color, borderRadius:15
       }}
       // onPress={()=>onHandlePress(data._id)}
       >
@@ -31,7 +31,7 @@ const Item = props => {
           alignItems:'center',width:"100%"
         }}
         >
-        <Image source={{uri:data.icon}} style={{marginTop:10,width:60,height:60}}/>
+        <Image source={{uri:data.icon}} style={{marginTop:10,width:40,height:40}}/>
 
         </View>
       </TouchableOpacity>

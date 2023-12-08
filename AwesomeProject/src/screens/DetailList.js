@@ -133,6 +133,7 @@ const DetailList = (props) => {
   }
 
   return (
+
     <View style={{marginBottom:50}}>
       {/*<Text style={{color:'black'}}>{isLoading.toString()}</Text>*/}
       <View style={[styleHome.topBarView]}>
@@ -159,6 +160,7 @@ const DetailList = (props) => {
 
       <View style={{backgroundColor:'#f2f1f1'}}>
         {
+
           isLoading == true ?
             <ActivityIndicator
               color={"blue"}

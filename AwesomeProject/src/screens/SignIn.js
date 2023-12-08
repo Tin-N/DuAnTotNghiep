@@ -11,12 +11,20 @@ import {
 } from 'react-native';
 
 import React, {useState, useContext,userEffect} from 'react';
+
 import {Image} from 'react-native';
+
+
+// const {width} = Dimensions.get('window');
+
 import AxiosIntance from '../utils/AxiosIntance';
 import {useNavigation} from '@react-navigation/native';
 import {AppContext} from '../utils/AppContext';
 import { GoogleSignin , statusCodes } from '@react-native-google-signin/google-signin';
 import {COLOR} from '../css/Theme.js'
+
+import { Image } from 'react-native';
+
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleLogin } from '../css/Styles.js';
 
@@ -62,25 +70,25 @@ const SignIn = () => {
 
   // regex
   const validate = () => {
-    const emailRegex =
-      /^[a-zA-Z0-9._%+-]+[0-9._%+-]@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{11,}$/;
-    if (emailUser === '' || password === '') {
-      Alert.alert('Lỗi chưa điền', 'Hãy điền đầy đủ');
-      setCheckEmail("red");
-      setCheckPassword("red");
-      return false;
-    } else if (!emailRegex.test(emailUser)) {
-      Alert.alert('Lỗi Email','Hãy điền đầy đủ Email và theo đúng định dạng ');
-      setCheckEmail("red");
-      return false
-    } else if (!passwordRegex.test(password)) {
-      Alert.alert('Lỗi Password','Hãy điền đầy đủ Password và theo đúng định dạng');
-      setCheckPassword("red");
-      return false
-    }
-    setCheckEmail("white");
-    setCheckPassword("white");
+    // const emailRegex =
+    //   /^[a-zA-Z0-9._%+-]+[0-9._%+-]@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    // const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{11,}$/;
+    // if (emailUser === '' || password === '') {
+    //   Alert.alert('Lỗi chưa điền', 'Hãy điền đầy đủ');
+    //   setCheckEmail("red");
+    //   setCheckPassword("red");
+    //   return false;
+    // } else if (!emailRegex.test(emailUser)) {
+    //   Alert.alert('Lỗi Email','Hãy điền đầy đủ Email và theo đúng định dạng ');
+    //   setCheckEmail("red");
+    //   return false
+    // } else if (!passwordRegex.test(password)) {
+    //   Alert.alert('Lỗi Password','Hãy điền đầy đủ Password và theo đúng định dạng');
+    //   setCheckPassword("red");
+    //   return false
+    // }
+    // setCheckEmail("white");
+    // setCheckPassword("white");
     return true;
   };
 
@@ -108,7 +116,7 @@ const SignIn = () => {
           const _id = response.user._id;
           setuserInfo({...userInfo, ...response.user});
           setuserID(_id);
-
+          
           setisLogin(true);
           console.log('UserID ' + response.user); // log ra ID
 

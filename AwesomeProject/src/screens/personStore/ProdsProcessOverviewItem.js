@@ -14,14 +14,14 @@ const ProdsProcessOverviewItem = (props) => {
 
     // console.log(">>>>>>>>ProdsProcessOverviewItem: " + JSON.stringify(data))
     const [orderDetailProducts, setorderDetailProducts] = useState([])
-    console.log("orderDetailProducts: ", orderDetailProducts)
+    console.log("orderDetailProducts: ", data.orderID)
 
     useEffect(() => {
         (async () => {
             try {
                 const response = await AxiosIntance().get(`/order/getOrderForSeller/${data.orderID}`)
             } catch (error) {
-                console.log("ProdsProcessOverviewItem: lỗi lấy dữ liệu: " + error);
+                console.log("ProdsProcessOverviewItem: lỗi lấy dữ liệu getOrderForSeller: " + error);
             }
         })();
     }, []);
@@ -33,7 +33,7 @@ const ProdsProcessOverviewItem = (props) => {
                 setorderDetailProducts(response.products[0]);
                 // console.log("<>>>>>>>>" + JSON.stringify(response.products[0]))
             } catch (error) {
-                console.log("ProdsProcessOverviewItem: lỗi lấy dữ liệu: " + error);
+                console.log("ProdsProcessOverviewItem: lỗi lấy dữ liệu getOrderDetailByOwner: " + error);
             }
         })();
     }, []);
@@ -72,7 +72,7 @@ const ProdsProcessOverviewItem = (props) => {
         <View style={{ borderWidth: 2, borderRadius: 5, margin: 10, padding: 15, backgroundColor: '#ebf6fc' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignContent: 'center', marginBottom: 15 }}>
                 <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, padding: 5 }}>
-                    <Text style={{ textAlign: 'center' }}>User ID: {data.userID}</Text>
+                    <Text style={{ textAlign: 'center' }}>ID Người Dùng: {data.userID}</Text>
                 </View>
 
                 <View style={{ borderBottomWidth: 0.5, width: 40 * width / 100, padding: 5 }}>
@@ -82,13 +82,13 @@ const ProdsProcessOverviewItem = (props) => {
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignContent: 'center' }}>
                 <View>
                     <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, marginBottom: 15, padding: 5 }}>
-                        <Text style={{ textAlign: 'center' }}>Order Date</Text>
+                        <Text style={{ textAlign: 'center' }}>Ngày đặt hàng:</Text>
                     </View>
                     <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, marginBottom: 15, padding: 5 }}>
-                        <Text style={{ textAlign: 'center' }}>Payment Methods: {data.paymentMethods}</Text>
+                        <Text style={{ textAlign: 'center' }}>Phương thanh toán: {data.paymentMethods}</Text>
                     </View>
                     <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, padding: 5 }}>
-                        <Text style={{ textAlign: 'center' }}>Payment Status: {data.paymentStatus}</Text>
+                        <Text style={{ textAlign: 'center' }}>Tình trạng thanh toán: {data.paymentStatus}</Text>
                     </View>
                 </View>
                 <View style={{ flexDirection: "column", justifyContent: 'space-between' }}>

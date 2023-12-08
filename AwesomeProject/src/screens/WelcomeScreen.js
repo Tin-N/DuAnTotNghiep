@@ -6,7 +6,7 @@ import Slideshow from '../component/Slideshow/Slideshow'
 const WelcomeScreen = () => {
   return (
     <View style={styleWelcome.view}>
-      <Text style={styleWelcome.text}>Buy everything what you want</Text>
+      <Text style={styleWelcome.text}>Hãy mua những thứ bạn muốn</Text>
          <Slideshow
         isAutoSroll={true}
         width={'80%'}
@@ -21,7 +21,7 @@ const WelcomeScreen = () => {
         style={[styleWelcome.TextInput]}>
             <Text
             style={styleWelcome.MiniTextInput}
-            >Get Started</Text>
+            >Bắt đầu</Text>
         </TouchableOpacity>
      
     </View>

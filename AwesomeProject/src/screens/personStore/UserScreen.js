@@ -3,8 +3,12 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from '../../css/Theme'
 import {useNavigation} from '@react-navigation/native'
+import { useContext } from 'react';
+import { AppContext } from '../../utils/AppContext';
 const UserScreen = () => {
   const navigation = useNavigation();
+  const {userInfo}=useContext(AppContext);
+
   return (
     <View style={{marginHorizontal: 15}}>
       <View
@@ -163,7 +167,7 @@ const UserScreen = () => {
         </View>
         </TouchableOpacity>
         <TouchableOpacity
-        onPress={()=>{navigation.navigate("FavoriteScreen")}}
+        onPress={()=>{navigation.navigate("FavoriteScreen",{userID:userInfo._id,navigation:navigation}); console.log(userInfo._id)}}
         >
         <View
           style={{
@@ -197,6 +201,48 @@ const UserScreen = () => {
                 color: 'black',
               }}>
               Danh sách yêu thích
+            </Text>
+          </View>
+          <Icon name="chevron-forward" size={30}          color={COLOR.background}
+ />
+        </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+        >
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '80%',
+              marginVertical:20
+
+            }}>
+            <View
+              style={{
+                borderRadius: 10,
+                backgroundColor: '#b7e6f98a',
+                width: 50,
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Icon name="log-out" size={30}          color={COLOR.background}
+ />
+            </View>
+            <Text
+              style={{
+                marginLeft: 10,
+                fontSize: 18,
+                fontWeight: 'bold',
+                color: 'black',
+              }}>
+              Đăng xuất
             </Text>
           </View>
           <Icon name="chevron-forward" size={30}          color={COLOR.background}

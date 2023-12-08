@@ -4,6 +4,7 @@ import ProdsProcessOverviewItem from './ProdsProcessOverviewItem'
 import AxiosIntance from '../../utils/AxiosIntance'
 import { AppContext } from '../../utils/AppContext';
 import { useNavigation } from '@react-navigation/native';
+import ActionBar from '../ActionBar';
 
 const ProdsProcessOverview = () => {
     const [data, setdata] = useState([])
@@ -11,7 +12,7 @@ const ProdsProcessOverview = () => {
     const appContextData = useContext(AppContext);
     const userID = appContextData.userID;
     const navigation = useNavigation();
-    const [ProdsProcessOverviewChanged, setProdsProcessOverviewChanged] = useState(1)
+    const [ProdsProcessOverviewChanged, setProdsProcessOverviewChanged] = useState(true)
     // console.log(">>>>>ProdsProcessOverviewChanged " + JSON.stringify(orderData))
     useEffect(() => {
         (async () => {
@@ -40,6 +41,7 @@ const ProdsProcessOverview = () => {
 
     return (
         <View>
+            <ActionBar title={"Xử Lý Đơn Hàng"} />
             <FlatList
                 showsVerticalScrollIndicator={false}
                 overScrollMode='never'
