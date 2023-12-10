@@ -12,6 +12,16 @@ const DetailFeedback = (props) => {
     const { navigation } = props;
     const { route } = props;
     const { params } = route;
+  // const navigation= useNavigation();
+  const [page, setPage] = useState(1)
+  // const {params}=route;
+  const [count,setCount]=useState(0);
+  const [columns, setcolumns] = useState(2);
+  const [isLoading, setisLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [isLoadingmini,setisLoadingmini]=useState(false);
+  const [countData, setcountData] = useState(0);
+  const [totalPage, settotalPage] = useState(0)
     const [star11, setStar11] = useState(0);
     const [star22, setStar22] = useState(0);
     const [star33, setStar33] = useState(0);
@@ -19,7 +29,7 @@ const DetailFeedback = (props) => {
     const [star55, setStar55] = useState(0);
     const [dataFeedback, setDataFeedback] = useState([]);
     const [feedback, setFeedback] = useState('');
-    const [check, setCheck] = useState(true)
+    const [check, setCheck] = useState(false)
     const [lengthFeedback, setlengthFeedback] = useState(0);
     const [percentRating, setpercentRating] = useState(0);
     const [percentRating1, setpercentRating1] = useState(0);
@@ -30,21 +40,48 @@ const DetailFeedback = (props) => {
     const onHandle = () => {
         navigation.goBack();
     }
-    useEffect(() => {
-        const getFeedback = async () => {
-            console.log("getFeedback");
-            const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId);
-            if(response.result == true){
-                ToastAndroid.show('Lấy feedback thành công', ToastAndroid.SHORT);
+    const getFeedback = async () => {
+        console.log(count);
+        setCount((prev)=>prev+1);
+        const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId+"&size="+page);
+        if(response.result == true){
+            ToastAndroid.show('Lấy feedback thành công', ToastAndroid.SHORT);
+            if(page==1)
+            {
                 setDataFeedback(response.feedbacks);
-            }else {
-                ToastAndroid.show('Lấy feedback thất bại', ToastAndroid.SHORT);
+                setcountData(response.countData);
+                settotalPage(response.totalPages);
+            }
+            else if(page>1&&page<totalPage){
+                setDataFeedback([...dataFeedback,...response.feedbacks]);
+
+            }
+        }else {
+            ToastAndroid.show('Lấy feedback thất bại', ToastAndroid.SHORT);
+        }
+        setCheck(false)
+    }
+    useEffect(() => {
+      getFeedback();
+        console.log(23);
+      return () => {
+        
+      }
+    }, [page])
+    
+    useEffect(() => {
+        if(check){
+            if(page==1){
+                getFeedback()
+            }else{
+                setPage(1)
             }
             setCheck(false)
         }
-        if(check)
-        getFeedback();
     }, [check])
+    const handleMoreData=()=>{
+        setPage((prev)=>prev+1)
+    }
     useEffect(() => {
         
         if (dataFeedback.length > 0) {
@@ -182,11 +219,13 @@ const DetailFeedback = (props) => {
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) => <ItemFeedBack dataFeedback={item}  setCheck={setCheck} check={check}/>}
                         keyExtractor={item => item.userID} />
-                    <TouchableOpacity style={StyleDetailFeedback.touchOpa}>
+                    {
+                        dataFeedback.length>=countData?<View/>:<TouchableOpacity style={StyleDetailFeedback.touchOpa} onPress={()=>{handleMoreData()}}>
                         <Text style={{ fontWeight: 'bold' }}>
                             See more
                         </Text>
                     </TouchableOpacity>
+                    }
                 </View>
             </ScrollView>
 

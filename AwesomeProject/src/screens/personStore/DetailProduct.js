@@ -30,7 +30,7 @@ LogBox.ignoreAllLogs();
 const DetailProduct = (props) => {
     const { navigation } = props;
     const { route } = props;
-    const { isLogin } = useContext(AppContext);
+    const { isLogin,userInfo } = useContext(AppContext);
     const { params } = route;
 
     console.log(params)
@@ -81,6 +81,8 @@ const DetailProduct = (props) => {
     const [startDate, setstartDate] = useState();
     const [saleOffID, setsaleOffID] = useState();
     const [onProductSaleOff, setonProductSaleOff] = useState(false);
+    const [isVisibleRating, setIsVisibleRating] = useState(false);
+
     //data sale 
     const slideAnim = useRef(new Animated.Value(-100)).current;
     useEffect(() => {
@@ -148,27 +150,45 @@ const DetailProduct = (props) => {
     }
     const heartHandler = async () => {
         console.log(favorite);
-        if (heart) {
-            console.log("Aiyooooo");
-            const response = await AxiosIntance().post("/favoriteApi/deleteFavorite?id=" + favorite._id);
-            if (response.result) {
-                setFavorite({});
-                ToastAndroid.show("Gỡ khỏi ưu thích thành công", ToastAndroid.SHORT);
-                setHeart(!heart);
+        if (!isLogin) {
+            Alert.alert(
+                'Thông báo',
+                'Bạn chưa đăng nhập', // Nội dung thông báo
+                [
+                    {
+                        text: 'Cancel', // Chữ hiển thị trên nút Cancel
+                    },
+                    {
+                        text: 'OK', // Chữ hiển thị trên nút OK
+                        onPress: () => {
+                            // Xử lý khi người dùng chọn "OK"
+                            navigation.navigate('Login')
+                        },
+                    },
+                ]
+            );
+        }else{
+            if (heart) {
+                const response = await AxiosIntance().post("/favoriteApi/deleteFavorite?id=" + favorite._id);
+                if (response.result) {
+                    setFavorite({});
+                    ToastAndroid.show("Gỡ khỏi ưu thích thành công", ToastAndroid.SHORT);
+                    setHeart(!heart);
+                } else {
+                    ToastAndroid.show("Gỡ khỏi ưu thích không thành công", ToastAndroid.SHORT);
+                }
             } else {
-                ToastAndroid.show("Gỡ khỏi ưu thích không thành công", ToastAndroid.SHORT);
-            }
-        } else {
-            const response = await AxiosIntance().post("/favoriteApi/addFavorite?userID=" + "654627d67137a3bf678fb544" + "&productID=" + params.itemId);
-            if (response.result) {
-                ToastAndroid.show("Thích thành công", ToastAndroid.SHORT);
-                setHeart(!heart);
-                setFavorite(response.favorite)
-
-            } else {
-                ToastAndroid.show("Thêm vào ưu thích không thành công", ToastAndroid.SHORT);
+                const response = await AxiosIntance().post("/favoriteApi/addFavorite?userID=" + userInfo._id + "&productID=" + params.itemId);
+                if (response.result) {
+                    ToastAndroid.show("Thích thành công", ToastAndroid.SHORT);
+                    setHeart(!heart);
+                    setFavorite(response.favorite);
+                } else {
+                    ToastAndroid.show("Thêm vào ưu thích không thành công", ToastAndroid.SHORT);
+                }
             }
         }
+        
     }
 
     const handlerDetail = () => {
@@ -214,10 +234,23 @@ const DetailProduct = (props) => {
                 console.log("Product Detail: lỗi lấy dữ liệu: " + error)
             }
         }
+        const checkProductsInOrderdetail = async () => {
+           if(isLogin){
+                try {
+                    const response = await AxiosIntance().get(`/orderdetail/check-product-in-orderDetail/${userID}/${params.itemId}`);
+                    console.log(">>>>>>productID for detail: " + params.itemId);
+                    if (response.result == true) {
+                       setIsVisibleRating(response.result)
 
+                    }
+                } catch (error) {
+                    console.log("Product Detail: lỗi lấy dữ liệu: " + error)
+                }
+           }
+        }
         // Get favorite 
         const getFavorite = async () => {
-            const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + "654627d67137a3bf678fb544" + "&productID=" + params.itemId);
+            const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + userInfo._id + "&productID=" + params.itemId);
             if (response.result) {
                 if (Object.keys(response.favorite).length > 0) {
                     setHeart(!heart);
@@ -226,10 +259,12 @@ const DetailProduct = (props) => {
             }
         }
         const getFeedback = async () => {
-            const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId);
+            const response = await AxiosIntance().get('/feedbackAPI/getFeedbackByProductID?id=' + params.itemId+"&size="+1);
             if (response.result == true) {
                 setDataFeedback(response.feedbacks);
                 setFeedbackLenght(response.feedbacks.length);
+                ToastAndroid.show('getFeedback thanhf cong', ToastAndroid.SHORT);
+
             } else {
                 ToastAndroid.show('getFeedback thất bại', ToastAndroid.SHORT);
             } if (response.feedbacks.length > 0) {
@@ -279,7 +314,7 @@ const DetailProduct = (props) => {
         getDetails();
         getFeedback();
         getSizeByProductID();
-
+        checkProductsInOrderdetail();
         getFavorite();
         return () => {
         }
@@ -342,137 +377,109 @@ const DetailProduct = (props) => {
         }
 
         const addToCart = async () => {
-            if (!userID) {
-                Alert.alert(
-                    'Thông báo',
-                    'Cỏ vẻ bạn chưa đăng nhập vào ứng dụng, bạn muốn đăng nhập chứ?', // Nội dung thông báo
-                    [
-                        {
-                            text: 'Cancel', // Chữ hiển thị trên nút Cancel
-                            onPress: () => {
-                                // Xử lý khi người dùng chọn "OK"
-                                // navigation.goBack();
-                            },
-                        },
-                        {
-                            text: 'OK', // Chữ hiển thị trên nút OK
-                            onPress: () => {
-                                // Xử lý khi người dùng chọn "OK"
-                                navigation.navigate('Profile');
-                            },
-                        },
-                    ]
-                );
-            } else {
-                try {
-                    const response = await AxiosIntance().post('/cart/add',
-                        { userID: userID, products: productsInCart, quantity })
-                    if (response) {
-                        console.log("Thêm vào giỏ hàng thành công");
-                        setDialogVisible(false)
-                        ToastAndroid.show("Thêm vào giỏ hàng thành công", ToastAndroid.SHORT);
-                    }
-                } catch (error) {
-                    console.log("Lỗi thêm vào giỏ hàng: " + error)
+            try {
+                const response = await AxiosIntance().post('/cart/add',
+                    { userID: userID, products: productsInCart, quantity })
+                if (response) {
+                    console.log("Thêm vào giỏ hàng thành công");
+                    setDialogVisible(false)
+                    ToastAndroid.show("Thêm vào giỏ hàng thành công", ToastAndroid.SHORT);
                 }
+            } catch (error) {
+                console.log("Lỗi thêm vào giỏ hàng: " + error)
             }
+
         }
 
         const orderNow = async () => {
-            if (!userID) {
+            const objectId = new ObjectID();
+            console.log(objectId)
+            console.log(">>>>isLogin: " + isLogin);
+            if (!isLogin) {
                 Alert.alert(
                     'Thông báo',
-                    'Cỏ vẻ bạn chưa đăng nhập vào ứng dụng, bạn muốn đăng nhập chứ?', // Nội dung thông báo
+                    'Bạn chưa đăng nhập', // Nội dung thông báo
                     [
                         {
                             text: 'Cancel', // Chữ hiển thị trên nút Cancel
-                            onPress: () => {
-                                // Xử lý khi người dùng chọn "OK"
-                                // navigation.goBack();
-                            },
                         },
                         {
                             text: 'OK', // Chữ hiển thị trên nút OK
                             onPress: () => {
                                 // Xử lý khi người dùng chọn "OK"
-                                navigation.navigate('Profile');
-                            },
-                        },
-                    ]
-                );
-            } else {
-                const objectId = new ObjectID();
-                console.log(objectId)
-                console.log(">>>>isLogin: " + isLogin);
-
-                const productToOrder = {
-                    ownerID,
-                    productID,
-                    quantity,
-                    optionsInCart,
-                    itemTotalCost,
-                    deliveryStatus: 'Pending'
-                }
-
-                const orderDetailResponse = await AxiosIntance().post('/orderdetail/add',
-                    {
-                        userID,
-                        orderDetailID: objectId,
-                        products: productToOrder,
-                        totalCost: itemTotalCost
-                    });
-                console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
-
-                const OrderPost = async () => {
-                    if (orderDetailResponse.error == false) {
-                        const orderResponse = await AxiosIntance().post('/order/add',
-                            {
-                                userID: userID,
-                                orderDetailID: objectId,
-                                orderDate: new Date(),
-                                deliveryStatus: 'Pending',
-                                paymentStatus: 'Unpaid',
-                                paymentMethods: 'COD',
-                                ownerID: ownerID,
-                                address: userAddress
-                            });
-                        setDialogVisible(false)
-                        // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
-                        ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
-                    }
-                }
-
-                Alert.alert(
-                    'Thông báo',
-                    'Bạn có muốn mua sản phẩm này?', // Nội dung thông báo
-                    [
-                        {
-                            text: 'Cancel', // Chữ hiển thị trên nút Cancel
-                            onPress: () => {
-                                // Xử lý khi người dùng chọn "Cancel"
-                                console.log('Bạn đã chọn Cancel');
-                            }
-                        },
-                        {
-                            text: 'OK', // Chữ hiển thị trên nút OK
-                            onPress: () => {
-                                // Xử lý khi người dùng chọn "OK"
-                                OrderPost();
-
-                                async () => {
-                                    try {
-                                        await AxiosIntance().put(`productAPI/updateQuantityOrdered`, {
-                                            productsToUpdate: productsSelected
-                                        })
-                                    } catch (error) {
-
-                                    }
-                                }
+                                navigation.navigate('Login')
                             },
                         },
                     ]
                 );
             }
+            const productToOrder = {
+                ownerID,
+                productID,
+                quantity,
+                optionsInCart,
+                itemTotalCost,
+                deliveryStatus: 'Pending'
+            }
+
+            const orderDetailResponse = await AxiosIntance().post('/orderdetail/add',
+                {
+                    userID,
+                    orderDetailID: objectId,
+                    products: productToOrder,
+                    totalCost: itemTotalCost
+                });
+            console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
+
+            const OrderPost = async () => {
+                if (orderDetailResponse.error == false) {
+                    const orderResponse = await AxiosIntance().post('/order/add',
+                        {
+                            userID,
+                            orderDetailID: objectId,
+                            orderDate: new Date(),
+                            deliveryStatus: 'Pending',
+                            paymentStatus: 'Unpaid',
+                            paymentMethods: 'COD',
+                            ownerID: ownerID,
+                            userAddress
+                        });
+                    setDialogVisible(false)
+                    // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
+                    ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
+                }
+            }
+
+            Alert.alert(
+                'Thông báo',
+                'Bạn có muốn mua sản phẩm này?', // Nội dung thông báo
+                [
+                    {
+                        text: 'Cancel', // Chữ hiển thị trên nút Cancel
+                        onPress: () => {
+                            // Xử lý khi người dùng chọn "Cancel"
+                            console.log('Bạn đã chọn Cancel');
+                        }
+                    },
+                    {
+                        text: 'OK', // Chữ hiển thị trên nút OK
+                        onPress: () => {
+                            // Xử lý khi người dùng chọn "OK"
+                            OrderPost();
+
+                            async () => {
+                                try {
+                                    await AxiosIntance().put(`productAPI/updateQuantityOrdered`, {
+                                        productsToUpdate: productsSelected
+                                    })
+                                } catch (error) {
+
+                                }
+                            }
+                        },
+                    },
+                ]
+            );
         }
 
         return (
@@ -753,14 +760,14 @@ const DetailProduct = (props) => {
                     </View>
                 </View>
                 <View style={StyleDetailProduct.line}></View>
+                            
+                            <View style={{}}>
 
-                <View style={{}}>
-
-                </View>
+                            </View>
 
                 <View style={StyleDetailProduct.line}></View>
-                <View style={{ marginBottom: 100 }}>
-                    <View style={{ alignItems: 'center' }}>
+                 <View style={{ marginBottom: 20 }}>
+                 {isLogin? <View style={{ alignItems: 'center' }}>
                         <Text style={{ fontSize: 16, marginVertical: 5, marginHorizontal: 10 }}>Thêm đánh giá</Text>
                         <StarRating
                             maxStars={5}
@@ -775,7 +782,7 @@ const DetailProduct = (props) => {
                                 easing: Easing.elastic(10)
                             }}
                         />
-                    </View>
+                    </View>:<View/>}
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ margin: 10, fontSize: 18 }}>
@@ -787,16 +794,17 @@ const DetailProduct = (props) => {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <FlatList
+                   
+                   <FlatList
                         data={dataFeedback.slice(0, 3)}
                         showsHorzontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) => <ItemFeedBack dataFeedback={item} />}
                         keyExtractor={item => item.feedbackID}
                         ItemSeparatorComponent={Separator} />
-                </View>
+                   </View>
                 <View style={StyleDetailProduct.line}></View>
-                <View style={{ marginBottom: 100 }}>
+                <View style={{marginBottom:100}}>
                     <View style={{
                         height: 50, alignItems: 'center',
                         backgroundColor: '#f5f5f5',

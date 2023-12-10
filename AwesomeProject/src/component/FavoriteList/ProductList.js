@@ -5,7 +5,7 @@ import ItemList from './Item';
 import ItemHomeStore from '../../screens/personStore/ItemHomeStore';
 import Item from './Item';
 const ProductList = (props) => {
-    const { count,data,styleView,infinitiveScroll,loadMoreData,isLoadingmini, ...customSetting} = props
+    const { count,data,styleView,infinitiveScroll,loadMoreData,isLoadingmini,setCheck,check ,...customSetting} = props
     const [data1, setData] = useState(data); // Sử dụng trực tiếp data
     const [isLoading, setIsLoading] = useState(false);
 
@@ -50,7 +50,7 @@ const ProductList = (props) => {
       <FlatList
       {...customSetting}
       data={data} // data sẽ truyền thằng vào nếu data1 rỗng
-      renderItem={({item})=>(<Item data={item}/>)}
+      renderItem={({item})=>(<Item data={item} setCheck={setCheck} check ={check}/>)}
       onEndReachedThreshold={1}
       ListFooterComponent={FooterLoading}
       onMomentumScrollBegin = {() => {this.onEndReachedCalledDuringMomentum = false;}}

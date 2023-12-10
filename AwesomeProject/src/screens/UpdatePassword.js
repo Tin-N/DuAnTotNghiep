@@ -25,7 +25,8 @@ const UpdatePassword = (props) => {
   // const [oldPassword, setOldPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState(""); 
-  const {email} = props.route.params;
+  // const {email} = props.route.params;
+  const email = ""
   const navigation = useNavigation();
 
     const UpdatePassword = async () => {
@@ -68,9 +69,9 @@ const UpdatePassword = (props) => {
 
   return (
     <View>
-      <Text style={StyleLogin.HeadingTextCP}>Update Password</Text>
+      <Text style={StyleLogin.HeadingTextCP}>Thay đổi mật khẩu</Text>
       <Text style={StyleLogin.HintText}>
-        Complete the following final data to enter the Savvy Shop application
+      Hoàn thành dữ liệu cuối cùng sau đây để vào ứng dụng Savvy Shop
       </Text>
       
       <View>
@@ -104,12 +105,12 @@ const UpdatePassword = (props) => {
 
 
       <View>
-        <Text style={StyleLogin.textHint}>New Password</Text>
+        <Text style={StyleLogin.textHint}>Mật khẩu mới</Text>
 
         <View style={StyleLogin.input}>
           <TextInput
             style={StyleLogin.TextInputUP}
-            placeholder="Enter your password"
+            placeholder="************"
             underlineColorAndroid="transparent"
             onChangeText={setNewPassword}
             secureTextEntry={visible}></TextInput>
@@ -133,13 +134,13 @@ const UpdatePassword = (props) => {
       </View>
 
 
-      <View>
-        <Text style={StyleLogin.textHint}> Confirm New Password</Text>
+      <View style={{marginTop:"10%"}}>
+        <Text style={StyleLogin.textHint}>Xác nhận mật khẩu</Text>
 
         <View style={StyleLogin.input}>
           <TextInput
             style={StyleLogin.TextInputUP}
-            placeholder="Enter your password"
+            placeholder="************"
             underlineColorAndroid="transparent"
             onChangeText={setConfirmPassword}
             secureTextEntry={visible}></TextInput>
@@ -163,7 +164,7 @@ const UpdatePassword = (props) => {
       </View>
       <View style={StyleLogin.ButtonUP}>
         <TouchableOpacity style={StyleLogin.buttonShape} onPress={UpdatePassword}>
-          <Text style={StyleLogin.TextButton}>Save Update</Text>
+          <Text style={StyleLogin.TextButton}>Cập nhật</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -97,7 +97,7 @@ const ProfileUser = () => {
             source={require('../images/icon/Search_icon.png')}
           />
         </TouchableOpacity>
-        <Text style={StyleProfile.TextIcon}>Profile</Text>
+        <Text style={StyleProfile.TextIcon}>Thông tin người bán</Text>
         <TouchableOpacity style={StyleProfile.IconShapeEnd} >
           <Image
             style={StyleProfile.IconSetting}
@@ -114,8 +114,10 @@ const ProfileUser = () => {
           />
         </TouchableOpacity>
         <View style={StyleProfile.TextProfile}>
-          <Text style={StyleProfile.Name}>Name</Text>
-          <Text style={StyleProfile.Email}>{userInfo.email}</Text>
+          <Text style={StyleProfile.Name}>Thuận Nguyễn</Text>
+          <Text style={StyleProfile.Email}>
+            {/* {userInfo.email} */} thuannt160603@gmail.com
+            </Text>
           <TouchableOpacity style={StyleProfile.iconEditContainer}>
             <Image
               style={StyleProfile.iconEdit}
@@ -126,7 +128,7 @@ const ProfileUser = () => {
       </View>
 
       {/* <View style={StyleProfile.Line} /> */}
-      <View style={StyleProfile.ListProduct}>
+      {/* <View style={StyleProfile.ListProduct}>
         <TouchableOpacity style={StyleProfile.ListProductItem}>
           <Image
             style={StyleProfile.ListProductIcon}
@@ -139,34 +141,57 @@ const ProfileUser = () => {
           style={StyleProfile.ListProductIconEnd}
           source={require('../images/icon/right-arrow.png')}
         />
-      </View>
+      </View> */}
       <View style={StyleProfile.Line} />
       <View style={StyleProfile.Form}>
         <View style={StyleProfile.FormItem}>
           <View style={StyleProfile.FormItemText}>
-            <Text style={StyleProfile.FormItemTextAddress}>Address</Text><Text style={StyleProfile.FormItemStart}>*</Text>
+            <Text style={StyleProfile.FormItemTextAddress}>Địa chỉ</Text><Text style={StyleProfile.FormItemStart}>*</Text>
           </View>
-          <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setAddress} placeholder={userInfo.address} />
+          <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setAddress} placeholder=
+          // {userInfo.address} 
+          {"số 69, Ql50, Quận 8, Tp.HCM"}
+          />
         </View>
         <View style={StyleProfile.FormItem}>
           <View style={StyleProfile.FormItemText}>
-            <Text style={StyleProfile.FormItemTextAddress}>Phone Number</Text><Text style={StyleProfile.FormItemStart}>*</Text>
+            <Text style={StyleProfile.FormItemTextAddress}>Số điện thoại</Text><Text style={StyleProfile.FormItemStart}>*</Text>
           </View>
-          <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setPhoneNumber} placeholder={userInfo.phoneNumber} />
+          <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setPhoneNumber} placeholder=
+          // {userInfo.phoneNumber} 
+           {"0933067567"} 
+          />
         </View>
         <View style={StyleProfile.FormItem}>
           <View style={StyleProfile.FormItemText}>
-            <Text style={StyleProfile.FormItemTextAddress}>fullname</Text><Text style={StyleProfile.FormItemStart}>*</Text>
+            <Text style={StyleProfile.FormItemTextAddress}>Họ và tên</Text><Text style={StyleProfile.FormItemStart}>*</Text>
           </View>
-          <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setFullName} placeholder={userInfo.fullname} />
+          <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setFullName} placeholder=
+          // {userInfo.fullname} 
+          {"Nguyễn Trần Trung Quân"}
+          />
         </View>
-        <TouchableOpacity style={StyleProfile.ButtonCP} onPress={() => Upload()}>
-          <Text style={StyleProfile.TextButton}>Update</Text>
-        </TouchableOpacity>
+        <View style={styles.btContainer} >
+          <TouchableOpacity style={[StyleProfile.ButtonCP,{backgroundColor: 'white', borderWidth:0.5, borderColor: COLOR.background}]} onPress={() => Upload()}>
+            <Text style={[StyleProfile.TextButton, {color: COLOR.background}]}>Đặt lại</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={StyleProfile.ButtonCP} onPress={() => Upload()}>
+            <Text style={[StyleProfile.TextButton, {color: 'white'}]}>Cập nhật</Text>
+          </TouchableOpacity>
+        </View>
+        
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  btContainer:{
+    flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal:"10%"
+  },
+  
+});
 export default ProfileUser;
