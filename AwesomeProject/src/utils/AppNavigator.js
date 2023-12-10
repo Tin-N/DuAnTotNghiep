@@ -41,6 +41,8 @@ import DetailProduct from '../screens/personStore/DetailProduct';
 import CreateProduct from '../screens/personStore/CreateProduct';
 import ManageProduct from '../screens/personStore/ManageProduct';
 import UpdateProduct from '../screens/personStore/UpdateProduct';
+import OrderHistory from '../screens/personStore/UserOrderHistory/OrderHistory'
+import OrderDetailHistory from '../screens/personStore/UserOrderHistory/OrderDetailHistory'
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -62,6 +64,15 @@ const ShipperStack = () => {
         </Stack.Navigator>
     );
 };
+
+const OrderHistoryStack = () => {
+    return (
+        <Stack.Navigator initialRouteName='OrderHistory'>
+            <Stack.Screen options={{ headerShown: false }} name="OrderHistory" component={OrderHistory} />
+            <Stack.Screen options={{ headerShown: false }} name="OrderDetailHistory" component={OrderDetailHistory} />
+        </Stack.Navigator>
+    );
+}
 
 const User = () => {
     return (
@@ -186,7 +197,6 @@ const Main = () => {
             <Tab.Screen name="Cart" component={Order} />
             <Tab.Screen name="Profile" component={Profile} />
             {userRole == 3 ? <Tab.Screen name="Shipper" component={ShipperStack}/> : null}
-            
         </Tab.Navigator>
     )
 }

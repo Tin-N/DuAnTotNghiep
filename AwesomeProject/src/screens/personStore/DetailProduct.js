@@ -427,6 +427,7 @@ const DetailProduct = (props) => {
                     if (orderDetailResponse.error == false) {
                         const orderResponse = await AxiosIntance().post('/order/add',
                             {
+                                userID: userID,
                                 orderDetailID: objectId,
                                 orderDate: new Date(),
                                 deliveryStatus: 'Pending',

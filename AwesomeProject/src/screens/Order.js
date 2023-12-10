@@ -13,6 +13,7 @@ const ObjectID = require('bson-objectid');
 import ActionBar from './ActionBar'
 import { memo } from "react"
 import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('screen');
 import { useNavigation } from '@react-navigation/native';
 
 const Order = () => {
@@ -93,7 +94,7 @@ const Order = () => {
       <View style={StyleOrder.myCart1}>
         <Image style={StyleOrder.image} source={require('../images/myCart1.png')} />
         <Text style={StyleOrder.textHeader}>Your Card is Empty</Text>
-        <Pressable  onPress={() => {
+        <Pressable onPress={() => {
           navigation.navigate("Home")
         }} style={StyleOrder.pressable}>
           <Text style={StyleOrder.textPressable}>Start Browsing</Text>
@@ -106,6 +107,7 @@ const Order = () => {
   const MyCart = () => {
     return (
       <FlatList
+        // style={{ height: height }}
         data={userCart}
         renderItem={
           ({ item }) =>
@@ -208,7 +210,7 @@ const Order = () => {
         <ActionBar title={"Cart"} />
         {/* co san pham thi hien list san pham khong thi hien hinh anh */}
         {isLoading
-          ? <View style={{ height: 550 }}>
+          ? <View style={{ height: 525, bo }}>
             {userCart.length != 0 ? <MyCart /> : <MyCartIsEmpty />}
           </View>
           : <View style={{ alignItems: 'center', marginTop: 220 }}>

@@ -38,7 +38,7 @@ const SProductProcessItem = (props) => {
                                 deliveryStatus: 'Delivered'
                             })
                         } catch (error) {
-                            console.log("SProductProcessItem: error: " + error);
+                            console.log("SProductProcessItem - handleDeliverySuccess error: " + error);
                         }
 
                     },
