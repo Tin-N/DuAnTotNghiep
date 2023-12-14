@@ -29,23 +29,37 @@ const AllProductDetailsItem = (props) => {
                     setImageUri(productResponse.products.image[0]);
                 }
             } catch (error) {
-                console.log("ProductProcessItem: lỗi lấy dữ liệu: " + error)
+                console.log("AllProductDetailsItem: lỗi lấy dữ liệu: " + error)
             }
         })();
     }, []);
 
+    const handleReturnProduct = async () => {
+        useEffect(() => {
+            (async () => {
+                try {
+                    const productResponse = await AxiosIntance().get(
+                        `/orderDetailID/updateProductDeliveryStatus/${orderDetailID}/${productID}`,
+                        { deliveryStatus: 'Return' }
+                    );
+                } catch (error) {
+                    console.log("AllProductDetailsItem - handleReturnProduct lỗi: " + error)
+                }
+            })();
+        }, []);
+    }
 
     return (
         <View style={{ width: 45 * width / 100, borderWidth: 0.2, margin: 10, padding: 10, backgroundColor: '#F6F6F6', borderRadius: 3 }}>
-            <Image source={{ uri: "http://nhatminhdecor.com/wp-content/uploads/2019/01/chup-anh-voi-phong-nen-vai-trang-1.jpg" }} style={{ alignSelf: 'center', width: 130, height: 150, backgroundColor: 'red', zIndex: 4 }} />
+            <Image source={{ uri: imageUri }} style={{ alignSelf: 'center', width: 130, height: 150, backgroundColor: 'red', zIndex: 4 }} />
 
-            <Text style={{ color: 'black', fontSize: 15, marginBottom: 5, marginTop: 5, fontWeight:'500' }} numberOfLines={1}>{productName}</Text>
+            <Text style={{ color: 'black', fontSize: 15, marginBottom: 5, marginTop: 5, fontWeight: '500' }} numberOfLines={1}>{productName}</Text>
             <Text>Số Lượng: {quantity}</Text>
 
             <Text style={{ color: '#008000', marginBottom: 3, marginTop: 3, textAlign: 'right' }}>$ {productPrice}</Text>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
             </View>
-            <Pressable  style={{ alignItems: 'center', borderWidth: 0.5, borderRadius: 5, borderColor: '#3669C9', backgroundColor: '#8B0000', padding: 5 }}>
+            <Pressable onPress={handleReturnProduct} style={{ alignItems: 'center', borderWidth: 0.5, borderRadius: 5, borderColor: '#3669C9', backgroundColor: '#8B0000', padding: 5 }}>
                 <Text style={{ color: 'white', fontStyle: 'bold', fontSize: 15, fontWeight: '370' }}>Hàng trả về</Text>
             </Pressable>
         </View>

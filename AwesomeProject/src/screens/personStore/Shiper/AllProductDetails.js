@@ -16,8 +16,9 @@ const AllProductDetail = ({ route }) => {
     console.log("data>>>>>>>>>>" + JSON.stringify(dataFromPreviousScreen))
     return (
         <View style={{}}>
-            <Actionbar title={"Chi tiết các mặt hàng"}/>
+            <Actionbar title={"Chi tiết các mặt hàng"} />
             <FlatList
+                style={{ height: height }}
                 numColumns={2}
                 showsVerticalScrollIndicator={false}
                 overScrollMode='never'
