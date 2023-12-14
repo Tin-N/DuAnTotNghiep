@@ -41,6 +41,8 @@ import CreateProduct from '../screens/personStore/CreateProduct';
 import ManageProduct from '../screens/personStore/ManageProduct';
 import UpdateProduct from '../screens/personStore/UpdateProduct';
 
+import DetailImage from '../screens/personStore/DetailImage';
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -83,7 +85,7 @@ const Profile = () => {
             <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>
             <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
-            <Stack.Screen name='Prod Process' component={ProductProcessStack}/>
+            <Stack.Screen name='Prod Process' component={ProductProcessStack} />
 
         </Stack.Navigator>
     )
@@ -108,6 +110,15 @@ const ProductHome = () => {
 
             </Stack.Screen>
             <Stack.Screen name='ManageProduct' component={ManageProduct} />
+
+            <Stack.Screen name='CreateProduct'
+                options={{
+                    presentation: 'modal',
+                    animationTypeForReplace: 'push',
+                    animation: 'slide_from_right'
+                }}
+                component={CreateProduct} />
+
             <Stack.Screen name='UpdateProduct'
                 options={{
                     presentation: 'modal',
@@ -115,6 +126,13 @@ const ProductHome = () => {
                     animation: 'slide_from_right'
                 }}
                 component={UpdateProduct} />
+
+            <Stack.Screen name='DetailImage' component={DetailImage}
+                options={{
+                    presentation: 'modal',
+                    animationTypeForReplace: 'push',
+                    animation: 'slide_from_right'
+                }} />
         </Stack.Navigator >
     )
 }
@@ -158,14 +176,14 @@ const Main = () => {
                     } else if (route.name === 'Cart') {
 
                         iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
-                    // } else if (route.name === 'Profile') {
+                        // } else if (route.name === 'Profile') {
 
-                    //     iconName = focused ? 'people-sharp' : 'people-outline';
-                    // } else if (route.name === 'SignUp') {
+                        //     iconName = focused ? 'people-sharp' : 'people-outline';
+                        // } else if (route.name === 'SignUp') {
 
-                    //     iconName = focused ? 'people-sharp' : 'people-outline';
-                    // } else if (route.name === 'Prod Process') {
-                    //     iconName = focused ? 'clipboard' : 'clipboard-outline';
+                        //     iconName = focused ? 'people-sharp' : 'people-outline';
+                        // } else if (route.name === 'Prod Process') {
+                        //     iconName = focused ? 'clipboard' : 'clipboard-outline';
 
                     } else if (route.name === 'Login') {
                         iconName = focused ? 'people-sharp' : 'people-outline';

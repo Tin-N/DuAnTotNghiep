@@ -25,10 +25,8 @@ const TabUpdateProduct = ({ route }) => {
   const { productID } = route.params;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: 'Snaker', value: 'Snaker' },
-    { label: 'Clothing', value: 'Clothing' },
-    { label: 'Shirt', value: 'Shirt' },
+  const [items2, setItems2] = useState([
+       
   ]);
   const [dataProduct, setDataProduct] = useState({});
   const [editQuantity, setEditQuantity] = useState(false);
@@ -57,6 +55,33 @@ const TabUpdateProduct = ({ route }) => {
   const [checkimgLink2, setcheckimgLink2] = useState(false);
   const [newVariationColor, setnewVariationColor] = useState([])
   // Dialog add variations Color
+
+  useEffect(() => {
+    const getCategory = async () => {
+        const response = await AxiosIntance().get('/category/getCategoryNotDelete')
+        console.log(">>>>>>>>categories: " + response.categories[0].name);
+        if(response.result == true) {
+            ToastAndroid.show('Lấy category thành công', ToastAndroid.SHORT)
+            setItems2(prevItems => [
+                ...prevItems,
+                ...response.categories.map(category => ({
+                    label: category.name,
+                    value: category._id
+                }))
+            ]);
+            
+            for (let i = 0; i < response.categories.length; i++) {
+                console.log(">>>>item categories: " + response.categories[i].name);
+            }
+        }
+    }
+    getCategory();
+  return () => {
+    
+  }
+}, [])
+
+
   const MyDialog = ({ isVisible, onClose }) => {
     const [colorVariations, setColorVariations] = useState('');
     const [hexColor, setHexColor] = useState('');
@@ -458,12 +483,12 @@ const TabUpdateProduct = ({ route }) => {
                 <DropDownPicker
                   open={open}
                   value={value}
-                  items={items}
+                  items={items2}
                   zIndex={1000}
                   zIndexInverse={3000}
                   setOpen={setOpen}
                   setValue={setValue}
-                  setItems={setItems}
+                  setItems={setItems2}
                   placeholder={'Chưa chọn'}
                   props={{
                     activeOpacity: 1,

@@ -452,7 +452,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   touchUpdate: {
-    backgroundColor: '#3669C9', width: 100, padding: 5
+    backgroundColor: '#3669C9', width: 100, padding: 5, borderRadius:4
   },
   textUpdate: {
     textAlign: 'center', color: 'white'
@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
   touchDelete: {
     borderWidth: 2,
     borderColor: '#3669C9', width: 100,
-    padding: 5, marginTop: 15
+    padding: 5, marginTop: 15, borderRadius:4
   },
   textDelete: {
     textAlign: 'center', color: '#3669C9'

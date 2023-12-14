@@ -231,7 +231,7 @@ export const StyleHomeStore = StyleSheet.create({
       boxProduct: {
         backgroundColor: 'white',
         borderRadius: 10,
-        margin:5, overflow:'hidden'
+        margin:5, overflow:'hidden', elevation:5
       },
       reviewsProduct: {
         flexDirection: 'row',

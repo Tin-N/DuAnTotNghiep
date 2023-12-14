@@ -31,7 +31,6 @@ import StatisticSellerScreen from './src/screens/personStore/StatisticSellerScre
 import UserScreen from './src/screens/personStore/UserScreen';
 import FavoriteScreen from './src/screens/FavoriteList';
 
-
 const Stack = createNativeStackNavigator()
 
 

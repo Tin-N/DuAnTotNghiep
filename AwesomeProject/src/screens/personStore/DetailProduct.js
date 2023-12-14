@@ -41,6 +41,7 @@ const DetailProduct = (props) => {
     const [productPrice, setProductPrice] = useState('');
     const [dataProduct, setDataProduct] = useState({});
     const [imageProduct, setImageProduct] = useState('');
+    const [arrayImageProduct, setarrayImageProduct] = useState([])
     const [modalVisible, setModalVisible] = useState(false);
     const [star, setStar] = useState(0);
 
@@ -93,6 +94,8 @@ const DetailProduct = (props) => {
             }
         ).start();
     }, [slideAnim]);
+
+
     const TextTime = (props) => {
         const { startDay, endDay } = props;
         const [Time, setTime] = useState("");
@@ -101,12 +104,11 @@ const DetailProduct = (props) => {
         const threeDaysFromNow = new Date(now);
         threeDaysFromNow.setDate(now.getDate() + 3); // Thêm 3 ngày
         useEffect(() => {
-            if (sales.length != 0 && sales.endDay > new Date().getTime()) {
-                console.log(">>>>sale: " + sales[0].endDay);
+            if (Object.keys(sales).length > 0 && sales.endDay > new Date().getTime()) {
                 let timer = setInterval(() => {
                     const onSaleTime = calculateTimeDifference(parseFloat(sales.startDay), new Date().getTime(), parseFloat(sales.endDay));
                     setTime(onSaleTime)
-                    console.log(">>>>>dawdawdaw " + sales[0].startDay + " " + new Date().getTime())
+                    console.log(">>>>>dawdawdaw " + sales.startDay + " " + new Date().getTime())
                     // if (sales[0].startDay > new Date().getTime()){
                     //     setonProductSaleOff(false)
                     //         setonProductSaleOff(true)
@@ -124,28 +126,39 @@ const DetailProduct = (props) => {
             </View>
         )
     }
+
+
     useEffect(() => {
         const getSalesCurrent = async () => {
-            const response = await AxiosIntance().get('/saleOffAPI/getSaleApplyBySaleID?saleID=' + saleOffID);
-            if (response.result == true && response.saleOff.length != 0) {
-                setSales(response.saleOff);
-                setendDate(response.saleOff.endDay);
-                setstartDate(response.saleOff.startDay);
-                setPercentSales(response.saleOff.saleOff);
-                setBannerSale("flex");
+            const response = await AxiosIntance().get('/saleOffAPI/getSaleApplyBySaleID?saleID=' + params.saleOffID);
+            console.log("sale detailProduct: " + params.sale);
+            if (typeof params.saleOffID != "undefined") {
+                if (response.result == true && response.saleOff != false && response.saleOff.endDay > new Date().getTime()) {
+                    setSales(response.saleOff);
+                    setendDate(response.saleOff.endDay);
+                    setstartDate(response.saleOff.startDay);
+                    setPercentSales(response.saleOff.saleOff);
+                    setBannerSale("flex");
+                } else {
+                    ToastAndroid.show("Không lấy được dũ liệu sale", ToastAndroid.SHORT)
+                }
             } else {
-
+                ToastAndroid.show("Không có dữ liệu sale để lấy", ToastAndroid.SHORT)
             }
         }
         getSalesCurrent();
         return () => {
         }
-    }, [])
+    }, [params.saleOffID])
+
+
     const opacityBackground = () => {
         if (isDialogVisible == true)
             return 0.5
         return 1
     }
+
+
     const heartHandler = async () => {
         console.log(favorite);
         if (heart) {
@@ -171,18 +184,30 @@ const DetailProduct = (props) => {
         }
     }
 
+
     const handlerDetail = () => {
         navigation.navigate("DetailFeedback", { itemId: params.itemId })
     }
+
+
     const back = () => {
         navigation.goBack();
     }
     const Separator = () => {
         return <View style={StyleDetailProduct.separator} />;
     };
+
+
     const homeStoreHandler = () => {
         navigation.navigate('HomeStore')
     }
+
+
+
+    const detailImageHandler = () => {
+        navigation.navigate('DetailImage', {dataImage: arrayImageProduct})
+    }
+
 
     useEffect(() => {
         navigation.getParent()?.setOptions({
@@ -209,7 +234,7 @@ const DetailProduct = (props) => {
                     setproductQuantity(response.products.quantity);
                     setsaleOffID(response.products.saleOff);
                     setuserIDStore(response.products.userID);
-
+                    setarrayImageProduct(response.products.image);
                 }
             } catch (error) {
                 console.log("Product Detail: lỗi lấy dữ liệu: " + error)
@@ -573,8 +598,8 @@ const DetailProduct = (props) => {
 
                         <View style={{
                             flexDirection: 'row',
-                            alignItems: 'center', marginTop: 10, marginLeft:10, 
-                            marginRight:10, justifyContent:'space-between'
+                            alignItems: 'center', marginTop: 10, marginLeft: 10,
+                            marginRight: 10, justifyContent: 'space-between'
                         }}>
 
 
@@ -618,7 +643,7 @@ const DetailProduct = (props) => {
     }
     return (
         <View style={{ flex: 1, backgroundColor: 'white', opacity: opacityBackground() }}>
-            <View style={{ padding: 15, alignItems: 'center', flexDirection: 'row' }}>
+            <View style={{ padding: 10, alignItems: 'center', flexDirection: 'row', elevation: 5 }}>
                 <TouchableOpacity onPress={back}>
                     <Icon1 name="chevron-back-outline" size={20}></Icon1>
                 </TouchableOpacity>
@@ -629,8 +654,16 @@ const DetailProduct = (props) => {
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 overScrollMode='never'>
-                <ImageBackground source={imageProduct ? { uri: imageProduct } : null} resizeMode='cover' style={{ width: width, height: 320 }}>
-                </ImageBackground>
+                <TouchableOpacity onPress={detailImageHandler} activeOpacity={1}>
+                    <ImageBackground source={imageProduct ? { uri: imageProduct } : null} resizeMode='cover' style={{ width: width, height: 320 }}>
+                        <Text style={{
+                            color: 'white', position: 'absolute',
+                            bottom: 0, left: 0, margin: 10, fontSize: 18,
+                            backgroundColor: '#999999', width: 65, textAlign: 'center', borderRadius: 15
+                        }}>1/{arrayImageProduct.length}</Text>
+                    </ImageBackground>
+                </TouchableOpacity>
+
                 <Animated.View
                     style={{
                         ...StyleDetailProduct.banner,
@@ -655,7 +688,7 @@ const DetailProduct = (props) => {
                 </Animated.View>
                 <View>
                     {
-                        sales.length > 0 ?
+                        Object.keys(sales).length > 0 && percentSales != 0 ?
                             <View style={{ flexDirection: 'row', padding: 10 }}>
                                 <Text style={StyleDetailProduct.textd}>
                                     đ
@@ -664,7 +697,7 @@ const DetailProduct = (props) => {
                                     {formatPrice(productPrice - (productPrice * percentSales).toFixed(0))}
                                 </Text>
                                 <Text style={StyleDetailProduct.textSalePrice}>
-                                    đ{productPrice}
+                                    đ{formatPrice(productPrice)}
                                 </Text>
                                 <Text style={StyleDetailProduct.textBoxSale}>
                                     {percentSales * 100}%
@@ -672,6 +705,9 @@ const DetailProduct = (props) => {
                             </View>
                             :
                             <View style={{ flexDirection: 'row', padding: 10 }}>
+                                <Text style={StyleDetailProduct.textd}>
+                                    đ
+                                </Text>
                                 <Text style={StyleDetailProduct.textPrice}>
                                     {formatPrice(productPrice)}
                                 </Text>

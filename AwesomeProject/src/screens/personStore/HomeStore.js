@@ -37,6 +37,11 @@ const HomeStore = (props) => {
         return () => {
         }
     }, [])
+
+    const searchStoreHandler = () => {
+        navigation.navigate('SearchStore');
+    }
+
     const sellerManageHandler = () => {
         navigation.navigate('ManageProduct');
     }
@@ -62,8 +67,8 @@ const HomeStore = (props) => {
                         <View style={{
                             width: '90%', flexDirection: 'row',
                             alignItems: 'center', justifyContent: 'space-around'
-                        }}>
-                            <TextInput style={{
+                        }} >
+                            <TextInput onTouchStart={searchStoreHandler} style={{
                                 backgroundColor: 'white', paddingLeft: 20,
                                 height: 42.7, width: '80%', borderRadius: 20
                             }} placeholder='Tìm kiếm trong cửa hàng' />
