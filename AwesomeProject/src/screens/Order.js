@@ -13,6 +13,8 @@ const ObjectID = require('bson-objectid');
 import ActionBar from './ActionBar'
 import { memo } from "react"
 import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('screen');
+import { useNavigation } from '@react-navigation/native';
 
 const Order = () => {
   // const { isOrder } = useContext(AppContext);
@@ -25,6 +27,7 @@ const Order = () => {
   const [totalCost, settotalCost] = useState(0)
   const [isCartChanged, setisCartChanged] = useState(1)
   const [isLoading, setisLoading] = useState(false)
+  const navigation = useNavigation
 
   const appContextData = useContext(AppContext);
   const userID = appContextData.userID;
@@ -63,11 +66,37 @@ const Order = () => {
 
   // View thông báo khi giỏ hàng trống
   const MyCartIsEmpty = () => {
+    const navigation = useNavigation();
+
+    if (!userID) {
+      Alert.alert(
+        'Thông báo',
+        'Cỏ vẻ bạn chưa đăng nhập vào ứng dụng, bạn muốn đăng nhập chứ?', // Nội dung thông báo
+        [
+          {
+            text: 'Cancel', // Chữ hiển thị trên nút Cancel
+            onPress: () => {
+              // Xử lý khi người dùng chọn "OK"
+              navigation.goBack();
+            },
+          },
+          {
+            text: 'OK', // Chữ hiển thị trên nút OK
+            onPress: () => {
+              // Xử lý khi người dùng chọn "OK"
+              navigation.navigate('Profile');
+            },
+          },
+        ]
+      );
+    }
     return (
       <View style={StyleOrder.myCart1}>
         <Image style={StyleOrder.image} source={require('../images/myCart1.png')} />
         <Text style={StyleOrder.textHeader}>Your Card is Empty</Text>
-        <Pressable style={StyleOrder.pressable}>
+        <Pressable onPress={() => {
+          navigation.navigate("Home")
+        }} style={StyleOrder.pressable}>
           <Text style={StyleOrder.textPressable}>Start Browsing</Text>
         </Pressable>
       </View>
@@ -78,6 +107,7 @@ const Order = () => {
   const MyCart = () => {
     return (
       <FlatList
+        // style={{ height: height }}
         data={userCart}
         renderItem={
           ({ item }) =>
@@ -124,7 +154,7 @@ const Order = () => {
               paymentStatus: 'Unpaid',
               paymentMethods: 'COD',
               ownerID: [...new Set(productsSelected.map(product => product.ownerID))],
-              userAddress
+              address: userAddress
             });
           console.log("Đặt hàng thành công");
           ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
@@ -159,7 +189,7 @@ const Order = () => {
                     productsToUpdate: productsSelected
                   })
                 } catch (error) {
-                  
+
                 }
               }
             },
@@ -180,7 +210,7 @@ const Order = () => {
         <ActionBar title={"Cart"} />
         {/* co san pham thi hien list san pham khong thi hien hinh anh */}
         {isLoading
-          ? <View style={{ height: 550 }}>
+          ? <View style={{ height: 525, bo }}>
             {userCart.length != 0 ? <MyCart /> : <MyCartIsEmpty />}
           </View>
           : <View style={{ alignItems: 'center', marginTop: 220 }}>
@@ -198,15 +228,15 @@ const Order = () => {
             {/* <Image style={{ width: 40, height: 40 }} source={require('../images/icons8-coin-50.png')} /> */}
             {!productsSelected
               ? <Text style={StyleOrder.textTillte}>Bạn chưa chọn sản phầm nào</Text>
-              : <Text style={[StyleOrder.textTillte,{margin: 10, marginLeft:10}]}>Bạn đã chọn {productsSelected.length} sản phẩm</Text>}
-            
+              : <Text style={[StyleOrder.textTillte, { margin: 10, marginLeft: 10 }]}>Bạn đã chọn {productsSelected.length} sản phẩm</Text>}
+
           </View>
 
           <View style={[StyleOrder.tillte]}>
-            <Text style={[StyleOrder.textTillte, { marginTop: 10, marginLeft:10 }]}>Tổng:</Text>
+            <Text style={[StyleOrder.textTillte, { marginTop: 10, marginLeft: 10 }]}>Tổng:</Text>
             <Text style={[StyleOrder.textTillte, { marginTop: 10, color: '#EE2624' }]}>$ {totalCost}</Text>
             <Pressable onPress={OrderFunc} style={StyleOrder.pressableBuy}>
-              <Text style={[ { color: 'white', fontSize:18 }]}>Mua Hàng</Text>
+              <Text style={[{ color: 'white', fontSize: 18 }]}>Mua Hàng</Text>
             </Pressable>
           </View>
         </View>

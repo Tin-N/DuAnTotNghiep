@@ -1,13 +1,10 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {COLOR} from '../../css/Theme'
 import {useNavigation} from '@react-navigation/native'
-import { useContext } from 'react';
-import { AppContext } from '../../utils/AppContext';
-
-const SellerScreen = () => {
+const ShipperScreen = () => {
   const navigation = useNavigation();
-  const {userInfo}=useContext(AppContext)
   return (
     <View style={{marginHorizontal: 15}}>
       <View
@@ -17,6 +14,21 @@ const SellerScreen = () => {
           marginVertical: 10,
 
         }}>
+        {/* <TouchableOpacity
+        style={{
+        }}>
+          <View
+            style={{
+              borderRadius: 10,
+              backgroundColor: '#b7e6f98a',
+              width: 40,
+              height: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Icon name="chevron-back" size={30} color={COLOR.background} />
+          </View>
+        </TouchableOpacity> */}
         <Text
           style={{
             marginHorizontal: 10,
@@ -51,7 +63,7 @@ const SellerScreen = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Icon name="cart" size={30} color="#36abd9" />
+              <Icon name="cart" size={30} color={COLOR.background} />
             </View>
             <Text
               style={{
@@ -63,7 +75,11 @@ const SellerScreen = () => {
               Giỏ hàng
             </Text>
           </View>
-          <Icon name="chevron-forward" size={30} color="#36abd9" />
+          <Icon name="chevron-forward" size={30}
+          color={COLOR.background}
+        //   color="#36abd9" 
+          
+          />
         </View>
         </TouchableOpacity>
         <TouchableOpacity>
@@ -88,7 +104,8 @@ const SellerScreen = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Icon name="wallet" size={30} color="#36abd9" />
+              <Icon name="wallet" size={30}          color={COLOR.background}
+ />
             </View>
             <Text
               style={{
@@ -100,14 +117,13 @@ const SellerScreen = () => {
               Đơn hàng
             </Text>
           </View>
-          <Icon name="chevron-forward" size={30} color="#36abd9" />
+          <Icon name="chevron-forward" size={30}          color={COLOR.background}
+ />
         </View>
         </TouchableOpacity>
         <TouchableOpacity>
         <View
           style={{
-            marginVertical:20
-,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -117,6 +133,7 @@ const SellerScreen = () => {
               flexDirection: 'row',
               alignItems: 'center',
               width: '80%',
+              marginVertical:20
 
             }}>
             <View
@@ -128,7 +145,8 @@ const SellerScreen = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Icon name="person" size={30} color="#36abd9" />
+              <Icon name="person" size={30}           color={COLOR.background}
+/>
             </View>
             <Text
               style={{
@@ -140,10 +158,13 @@ const SellerScreen = () => {
               Chỉnh sửa thông tin người dùng
             </Text>
           </View>
-          <Icon name="chevron-forward" size={30} color="#36abd9" />
+          <Icon name="chevron-forward" size={30}          color={COLOR.background}
+ />
         </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=>{navigation.navigate("FavoriteScreen")}}
+        >
         <View
           style={{
             flexDirection: 'row',
@@ -165,7 +186,8 @@ const SellerScreen = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Icon name="bookmark" size={30} color="#36abd9" />
+              <Icon name="bookmark" size={30}          color={COLOR.background}
+ />
             </View>
             <Text
               style={{
@@ -177,57 +199,12 @@ const SellerScreen = () => {
               Danh sách yêu thích
             </Text>
           </View>
-          <Icon name="chevron-forward" size={30} color="#36abd9" />
+          <Icon name="chevron-forward" size={30}          color={COLOR.background}
+ />
         </View>
         </TouchableOpacity>
         <TouchableOpacity
-        onPress={
-          ()=>navigation.navigate("Prod Process")
-        }
-        >
-        <View
-          style={{
-            marginVertical:20
-,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: '80%',
-              marginVertical:5
-            }}>
-            <View
-              style={{
-                borderRadius: 10,
-                backgroundColor: '#b7e6f98a',
-                width: 50,
-                height: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Icon name="list-circle" size={30} color="#36abd9" />
-            </View>
-            <Text
-              style={{
-                marginLeft: 10,
-                fontSize: 18,
-                fontWeight: 'bold',
-                color: 'black',
-              }}>
-              Xử lý xác nhận đơn hàng
-            </Text>
-          </View>
-          <Icon name="chevron-forward" size={30} color="#36abd9" />
-        </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-        onPress={
-          ()=>{navigation.navigate("StatisticScreen",{navigation:navigation,shopId:userInfo._id});console.log("sdfsdfaas");}
-        }
+        onPress={()=>{navigation.navigate("Shipper")}}
         >
         <View
           style={{
@@ -250,7 +227,8 @@ const SellerScreen = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Icon name="list-circle" size={30} color="#36abd9" />
+              <Icon name="bookmark" size={30}          color={COLOR.background}
+ />
             </View>
             <Text
               style={{
@@ -259,10 +237,11 @@ const SellerScreen = () => {
                 fontWeight: 'bold',
                 color: 'black',
               }}>
-              Thống kê 
+              Shipper
             </Text>
           </View>
-          <Icon name="chevron-forward" size={30} color="#36abd9" />
+          <Icon name="chevron-forward" size={30}          color={COLOR.background}
+ />
         </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -273,13 +252,14 @@ const SellerScreen = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginVertical:20
           }}>
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
               width: '80%',
+              marginVertical:20
+
             }}>
             <View
               style={{
@@ -290,7 +270,8 @@ const SellerScreen = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Icon name="log-out" size={30} color="#36abd9" />
+              <Icon name="log-out" size={30}          color={COLOR.background}
+ />
             </View>
             <Text
               style={{
@@ -302,7 +283,8 @@ const SellerScreen = () => {
               Đăng xuất
             </Text>
           </View>
-          <Icon name="chevron-forward" size={30} color="#36abd9" />
+          <Icon name="chevron-forward" size={30}          color={COLOR.background}
+ />
         </View>
         </TouchableOpacity>
       </View>
@@ -310,6 +292,6 @@ const SellerScreen = () => {
   );
 };
 
-export default SellerScreen;
+export default ShipperScreen;
 
 const styles = StyleSheet.create({});

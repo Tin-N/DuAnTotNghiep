@@ -43,7 +43,10 @@ const ItemHomeStore = (props) => {
 
         <View style={{padding:5}}>
           <TextWithLimit text={dulieu.name} limit={14} 
-            styleView={{fontSize:15}}
+
+
+            styleView={{fontSize:25}}
+
           />
 
           <Text>

@@ -12,7 +12,7 @@ const ProdsProcessOverview = () => {
     const appContextData = useContext(AppContext);
     const userID = appContextData.userID;
     const navigation = useNavigation();
-    const [ProdsProcessOverviewChanged, setProdsProcessOverviewChanged] = useState(1)
+    const [ProdsProcessOverviewChanged, setProdsProcessOverviewChanged] = useState(true)
     // console.log(">>>>>ProdsProcessOverviewChanged " + JSON.stringify(orderData))
     useEffect(() => {
         (async () => {

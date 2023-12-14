@@ -1,38 +1,1192 @@
-import {View, Text, ScrollView, StyleSheet,TouchableOpacity,Image} from 'react-native';
-import React,{useEffect} from 'react';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ToastAndroid,
+} from 'react-native';
+import React, {useEffect,useState} from 'react';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+// import {useNavigation,useRoute} from '@react-navigation/native'
 
 import {Dimensions} from 'react-native';
 import {convertToCurrencyString, formatPrice} from '../../../Agro';
-import {LineChart} from 'react-native-gifted-charts';
-import { StyleDetailProduct } from '../../css/Styles';
+import {BarChart, LineChart} from 'react-native-gifted-charts';
+import {StyleDetailProduct} from '../../css/Styles';
+import AxiosIntance from '../../utils/AxiosIntance';
 const screenWidth = Dimensions.get('screen').width;
 const height = Dimensions.get('screen').height;
 
-const StatisticSellerScreen = (props) => {
-
-  // const { navigation } = props;
+const StatisticSellerScreen = props => {
+  const { navigation,route } = props;
+  const {shopId}=route.params;
   const Tab = createMaterialTopTabNavigator();
   const back = () => {
     navigation.goBack();
-  }
-  // useEffect(() => {
-  //   navigation.getParent()?.setOptions({
-  //     tabBarStyle: {
-  //       display: "none"
-  //     }
-  //   });
-  //   return () => navigation.getParent()?.setOptions({
-  //     tabBarStyle: undefined
-  //   });
-  // }, [navigation]);
+  };
+   const StatisticSellerByWeekScreen = (props) => {
+    const [topRatedProducts, settopRatedProducts] = useState([])
+    const [data, setData] = useState([])
+    useEffect(() => {
+      const getStatisticRevenueByWeek = async ()=>{
+        const response= await AxiosIntance().get("/statisticSeller/get-statistic-revenue-by-week?ownerID="+shopId);
+        //  const response= await AxiosIntance().get("/statisticAdmin/get-statistic-by-week");
+        // console.log(shopId);
+        // console.log(response);
+        if(response.result){
+          setData(response.data);
+          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
+        }else{
+          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+        }
+      }
+      const getTotalRevenueByWeek = async ()=>{
+        const response= await AxiosIntance().get("/statisticSeller/get-total-revenue-by-week?ownerID="+shopId);
+        // console.log(shopId);
+        // console.log(response);
+        if(response.result){
+          setData(response.data);
+          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
+        }else{
+          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+        }
+      }
+      const getTopRatedProductByWeek = async ()=>{
+        const response= await AxiosIntance().get("/statisticSeller/get-top-rated-products-week?ownerID="+shopId);
+        //  const response= await AxiosIntance().get("/statisticAdmin/get-statistic-by-week");
+        // console.log(shopId);
+        // console.log(response);
+        if(response.result){
+          setData(response.data);
+          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
+        }else{
+          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+        }
+      }
+      // getStatisticRevenueByWeek();
+      return () => {
+        
+      }
+    }, [])
+    
+    return (
+      // <View
+      // // style={{marginLeft:15,zIndex:0}}
+      //  >
+      //   <Text>StatisticSellerScreen</Text>
+      //   <Text>{formatPrice(20000000000)}</Text>
+      <ScrollView
+        style={{
+          backgroundColor: '#efefeff3',
+          marginBottom: 50,
+        }}>
+        <View
+          style={[
+            styles.view,
+            {
+              paddingVertical: 0,
+            },
+          ]}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: 20,
+              marginTop: 10,
+              color: 'black',
+            }}>
+            Bảng chú thích 
+          </Text>
+          <View style={styles.container}>
+            <View style={styles.row}>
+              <View style={styles.cell}>
+                <Text style={styles.cellText}>Viết tắt</Text>
+              </View>
+              <View style={styles.cell}>
+                <Text style={styles.cellText}>Chú thích</Text>
+              </View>
+            </View>
+  
+            {VietnameseCurrency.map(item => {
+              return (
+                <View style={styles.row}>
+                  <View style={styles.cell}>
+                    <Text style={styles.cellText}>{item.name}</Text>
+                  </View>
+                  <View style={styles.cell}>
+                    <Text style={styles.cellText}>{item.value}</Text>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+        <View
+          style={{
+            backgroundColor: 'white',
+            marginHorizontal: 10,
+            elevation: 2,
+            borderRadius: 5,
+            marginTop: 10,
+            marginVertical: 5,
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: 20,
+              marginTop: 5,
+              color: 'black',
+            }}>
+            BẢNG THỐNG KÊ SƠ BỘ
+          </Text>
+          <View
+            style={{
+              marginHorizontal: 30,
+              marginVertical: 10,
+              borderColor: 'black',
+              borderWidth: 0.5,
+            }}>
+            <View
+              style={{
+                height: '100%',
+                borderWidth: 0.2,
+                position: 'absolute',
+                right: 115,
+              }}></View>
+            <View
+              style={{
+                flexDirection: 'row',
+                margin: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                }}>
+                Số lượng sản phẩm đã bán {'\n'} trong 1 tuần
+              </Text>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  marginLeft: 5,
+                  color: 'black',
+                }}>
+                {' '}
+                200 sp
+              </Text>
+            </View>
+            <View style={{width: '100%', borderWidth: 0.2}} />
+            <View
+              style={{
+                flexDirection: 'row',
+                margin: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                }}>
+                Tổng doanh thu trong 1 tuần
+              </Text>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  marginLeft: 5,
+                  color: 'black',
+                }}>
+                {' '}
+                10000000đ
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View style={[styles.view]}>
+          <View>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 20,
+                color: 'black',
+                fontWeight: '600',
+              }}>
+              DOANH THU THEO TUẦN
+            </Text>
+          </View>
+          <BarChart
+            data={data?data:ptData}
+            verticalLinesZIndex={2}
+            yAxisLabelWidth={60}
+            xAxisLabelTextStyle={{color: 'black'}}
+            height={300}
+            spacing={50}
+            formatYLabel={convertToCurrencyString}
+            width={280}
+            // formatXlabel={(text)=>{return text.slice(0,4)}}
+          />
+          {/* <LineChart
+            areaChart
+            data={ptData}
+            width={280}
+            hideDataPoints
+            spacing={20}
+            color="#00d5ff"
+            thickness={1}
+            startFillColor="rgba(83, 185, 249, 0.397))"
+            endFillColor="rgba(255, 255, 255, 0.01)"
+            startOpacity={0.9}
+            endOpacity={0.1}
+            zIndex1={1}
+            initialSpacing={0}
+            noOfSections={10}
+            verticalLinesZIndex={2}
+            yAxisLabelWidth={70}
+            formatYLabel={convertToCurrencyString}
+            yAxisColor="white"
+            yAxisThickness={0}
+            rulesType="dashed"
+            height={300}
+            rulesColor="gray"
+            yAxisTextStyle={{color: 'black'}}
+            yAxisSide="right"
+            xAxisColor="lightgray"
+            pointerConfig={pointerConfig}
+            xAxisLabelTextStyle={{color: 'black'}}
+          /> */}
+        </View>
+        <View style={[styles.view, {paddingHorizontal: 10, marginBottom: 20}]}>
+          {/* Table Head */}
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 20,
+              color: 'black',
+              fontWeight: '600',
+              marginBottom: 10,
+            }}>
+            TOP SẢN PHẨM BÁN CHẠY NHẤT
+          </Text>
+          <View style={styles.table_head}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_head_captions}>ID</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_head_captions}>Đã bán</Text>
+            </View>
+          </View>
+  
+          {/* Table Body - Single Row */}
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>01</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Áo thể thao</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>200</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>02</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Áo khoác jeans</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>100</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>03</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Quần jeans xanh đen</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>70</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>04</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Áo sơ mi trắng</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>05</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>06</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Quần thể thao xám </Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>20</Text>
+            </View>
+          </View>
+        </View>
+        <View style={[styles.view, {marginBottom: 20}]}>
+          {/* Table Head */}
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 20,
+              color: 'black',
+              fontWeight: '600',
+              marginBottom: 10,
+            }}>
+            TOP SẢN PHẨM ĐÁNH GIÁ CAO NHẤT
+          </Text>
+          <View style={styles.table_head}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_head_captions}>ID</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_head_captions}>Đánh giá</Text>
+            </View>
+          </View>
+  
+          {/* Table Body - Single Row */}
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>01</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Giày thể thao Adidas</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>5 </Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>02</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Giày adidas vàng</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>4.6</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>03</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Khăn tay trắng</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>3.7</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>04</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Áo khoác kaki vàng</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>3</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>05</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Mũ puma đen</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>3</Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    );
+  };
+   const StatisticSellerByMonthScreen = () => {
+
+
+    const [topRatedProducts, settopRatedProducts] = useState([])
+    const [data, setData] = useState([])
+    useEffect(() => {
+      const getStatisticRevenueByMonth = async ()=>{
+        const response= await AxiosIntance().get("/statisticSeller/get-statistic-revenue-by-month?ownerID="+shopId);
+        //  const response= await AxiosIntance().get("/statisticAdmin/get-statistic-by-week");
+        // console.log(shopId);
+        // console.log(response);
+        if(response.result){
+          setData(response.data);
+          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
+        }else{
+          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+        }
+      }
+      const getTotalRevenueByMonth = async ()=>{
+        const response= await AxiosIntance().get("/statisticSeller/get-total-revenue-by-month?ownerID="+shopId);
+        // console.log(shopId);
+        // console.log(response);
+        if(response.result){
+          setData(response.data);
+          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
+        }else{
+          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+        }
+      }
+      const getTopRatedProductByMonth = async ()=>{
+        const response= await AxiosIntance().get("/statisticSeller/get-top-rated-products-month?ownerID="+shopId);
+        //  const response= await AxiosIntance().get("/statisticAdmin/get-statistic-by-week");
+        // console.log(shopId);
+        // console.log(response);
+        if(response.result){
+          setData(response.data);
+          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
+        }else{
+          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+        }
+      }
+      return () => {
+        
+      }
+    }, [])
+
+    return (
+      // <View
+      // // style={{marginLeft:15,zIndex:0}}
+      //  >
+      //   <Text>StatisticSellerScreen</Text>
+      //   <Text>{formatPrice(20000000000)}</Text>
+      <ScrollView
+        style={{
+          backgroundColor: '#f7f7f7',
+        }}>
+        <View
+          style={[
+            styles.view,
+            {
+              paddingVertical: 0,
+            },
+          ]}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: 20,
+              marginTop: 10,
+              color: 'black',
+            }}>
+            Bảng chú thích
+          </Text>
+          <View style={styles.container}>
+            <View style={styles.row}>
+              <View style={styles.cell}>
+                <Text style={styles.cellText}>Viết tắt</Text>
+              </View>
+              <View style={styles.cell}>
+                <Text style={styles.cellText}>Chú thích</Text>
+              </View>
+            </View>
+  
+            {VietnameseCurrency.map(item => {
+              return (
+                <View style={styles.row}>
+                  <View style={styles.cell}>
+                    <Text style={styles.cellText}>{item.name}</Text>
+                  </View>
+                  <View style={styles.cell}>
+                    <Text style={styles.cellText}>{item.value}</Text>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+        <View
+          style={{
+            backgroundColor: 'white',
+            marginHorizontal: 10,
+            elevation: 2,
+            borderRadius: 5,
+            marginTop: 10,
+            marginVertical: 5,
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: 20,
+              marginTop: 5,
+              color: 'black',
+            }}>
+            BẢNG THỐNG KÊ SƠ BỘ
+          </Text>
+          <View
+            style={{
+              marginHorizontal: 30,
+              marginVertical: 10,
+              borderColor: 'black',
+              borderWidth: 0.5,
+            }}>
+            <View
+              style={{
+                height: '100%',
+                borderWidth: 0.2,
+                position: 'absolute',
+                right: 115,
+              }}></View>
+            <View
+              style={{
+                flexDirection: 'row',
+                margin: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                }}>
+                Số lượng sản phẩm đã bán {'\n'} trong 1 năm
+              </Text>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  marginLeft: 5,
+                  color: 'black',
+                }}>
+                {' '}
+                200 sp
+              </Text>
+            </View>
+            <View style={{width: '100%', borderWidth: 0.2}} />
+            <View
+              style={{
+                flexDirection: 'row',
+                margin: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                }}>
+                Tổng doanh thu trong 1 tháng
+              </Text>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  marginLeft: 5,
+                  color: 'black',
+                }}>
+                {' '}
+                10000000đ
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View style={[styles.view]}>
+          <View>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 20,
+                color: 'black',
+                fontWeight: '600',
+              }}>
+              DOANH THU THEO NĂM
+            </Text>
+          </View>
+          {/* <LineChart
+            areaChart
+            data={ptData}
+            width={280}
+            hideDataPoints
+            spacing={20}
+            color="#00d5ff"
+            thickness={1}
+            startFillColor="rgba(83, 185, 249, 0.397))"
+            endFillColor="rgba(255, 255, 255, 0.01)"
+            startOpacity={0.9}
+            endOpacity={0.1}
+            zIndex1={1}
+            initialSpacing={0}
+            noOfSections={10}
+            verticalLinesZIndex={2}
+            yAxisLabelWidth={70}
+            formatYLabel={convertToCurrencyString}
+            yAxisColor="white"
+            yAxisThickness={0}
+            rulesType="dashed"
+            height={300}
+            rulesColor="gray"
+            yAxisTextStyle={{color: 'black'}}
+            yAxisSide="right"
+            xAxisColor="lightgray"
+            pointerConfig={pointerConfig}
+            xAxisLabelTextStyle={{color: 'black'}}
+          /> */}
+        </View>
+        <View style={[styles.view, {paddingHorizontal: 10, marginBottom: 20}]}>
+          {/* Table Head */}
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 20,
+              color: 'black',
+              fontWeight: '600',
+              marginBottom: 10,
+            }}>
+            TOP SẢN PHẨM BÁN CHẠY NHẤT
+          </Text>
+          <View style={styles.table_head}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_head_captions}>ID</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_head_captions}>Đã bán</Text>
+            </View>
+          </View>
+  
+          {/* Table Body - Single Row */}
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>01</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Áo thể thao</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>200</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>02</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Áo khoác jeans</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>100</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>03</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Quần jeans xanh đen</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>70</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>04</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Áo sơ mi trắng</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>05</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>06</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Quần thể thao xám </Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>20</Text>
+            </View>
+          </View>
+        </View>
+        <View style={[styles.view, {marginBottom: 20}]}>
+          {/* Table Head */}
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 20,
+              color: 'black',
+              fontWeight: '600',
+              marginBottom: 10,
+            }}>
+            TOP SẢN PHẨM ĐÁNH GIÁ CAO NHẤT
+          </Text>
+          <View style={styles.table_head}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_head_captions}>ID</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_head_captions}>Đánh giá</Text>
+            </View>
+          </View>
+  
+          {/* Table Body - Single Row */}
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>01</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Giày thể thao Adidas</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>5 </Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>02</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Giày adidas vàng</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>4.6</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>03</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Khăn tay trắng</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>3.7</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>04</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Áo khoác kaki vàng</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>3</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>05</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Mũ puma đen</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>3</Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    );
+  };
+   const StatisticSellerByYearScreen = () => {
+
+
+    const [topRatedProducts, settopRatedProducts] = useState([])
+    const [data, setData] = useState([])
+    useEffect(() => {
+      const getStatisticRevenueYear = async ()=>{
+        const response= await AxiosIntance().get("/statisticSeller/get-statistic-revenue-by-year?ownerID="+shopId);
+        //  const response= await AxiosIntance().get("/statisticAdmin/get-statistic-by-week");
+        // console.log(shopId);
+        // console.log(response);
+        if(response.result){
+          setData(response.data);
+          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
+        }else{
+          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+        }
+      }
+      const getTotalRevenueByYear = async ()=>{
+        const response= await AxiosIntance().get("/statisticSeller/get-total-revenue-by-year?ownerID="+shopId);
+        // console.log(shopId);
+        // console.log(response);
+        if(response.result){
+          setData(response.data);
+          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
+        }else{
+          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+        }
+      }
+      const getTopRatedProductByYear = async ()=>{
+        const response= await AxiosIntance().get("/statisticSeller/get-top-rated-products-year?ownerID="+shopId);
+        //  const response= await AxiosIntance().get("/statisticAdmin/get-statistic-by-week");
+        // console.log(shopId);
+        // console.log(response);
+        if(response.result){
+          setData(response.data);
+          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
+        }else{
+          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+        }
+      }
+      return () => {
+        
+      }
+    }, [])
+
+
+    return (
+      // <View
+      // // style={{marginLeft:15,zIndex:0}}
+      //  >
+      //   <Text>StatisticSellerScreen</Text>
+      //   <Text>{formatPrice(20000000000)}</Text>
+      <ScrollView
+        style={{
+          backgroundColor: '#f7f7f7',
+        }}>
+        <View
+          style={[
+            styles.view,
+            {
+              paddingVertical: 0,
+            },
+          ]}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: 20,
+              marginTop: 10,
+              color: 'black',
+            }}>
+            Bảng chú thích
+          </Text>
+          <View style={styles.container}>
+            <View style={styles.row}>
+              <View style={styles.cell}>
+                <Text style={styles.cellText}>Viết tắt</Text>
+              </View>
+              <View style={styles.cell}>
+                <Text style={styles.cellText}>Chú thích</Text>
+              </View>
+            </View>
+  
+            {VietnameseCurrency.map(item => {
+              return (
+                <View style={styles.row}>
+                  <View style={styles.cell}>
+                    <Text style={styles.cellText}>{item.name}</Text>
+                  </View>
+                  <View style={styles.cell}>
+                    <Text style={styles.cellText}>{item.value}</Text>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+        <View
+          style={{
+            backgroundColor: 'white',
+            marginHorizontal: 10,
+            elevation: 2,
+            borderRadius: 5,
+            marginTop: 10,
+            marginVertical: 5,
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: 20,
+              marginTop: 5,
+              color: 'black',
+            }}>
+            BẢNG THỐNG KÊ SƠ BỘ
+          </Text>
+          <View
+            style={{
+              marginHorizontal: 30,
+              marginVertical: 10,
+              borderColor: 'black',
+              borderWidth: 0.5,
+            }}>
+            <View
+              style={{
+                height: '100%',
+                borderWidth: 0.2,
+                position: 'absolute',
+                right: 115,
+              }}></View>
+            <View
+              style={{
+                flexDirection: 'row',
+                margin: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                }}>
+                Số lượng sản phẩm đã bán {'\n'} trong 1 tuần
+              </Text>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  marginLeft: 5,
+                  color: 'black',
+                }}>
+                {' '}
+                200 sp
+              </Text>
+            </View>
+            <View style={{width: '100%', borderWidth: 0.2}} />
+            <View
+              style={{
+                flexDirection: 'row',
+                margin: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                }}>
+                Tổng doanh thu trong 1 tuần
+              </Text>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  marginLeft: 5,
+                  color: 'black',
+                }}>
+                {' '}
+                10000000đ
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View style={[styles.view]}>
+          <View>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 20,
+                color: 'black',
+                fontWeight: '600',
+              }}>
+              DOANH THU THEO TUẦN
+            </Text>
+          </View>
+          <BarChart
+            data={data?data:ptData}
+            verticalLinesZIndex={2}
+            yAxisLabelWidth={60}
+            xAxisLabelTextStyle={{color: 'black'}}
+            height={300}
+            spacing={50}
+            formatYLabel={convertToCurrencyString}
+            width={280}
+            // formatXlabel={(text)=>{return text.slice(0,4)}}
+          />
+        </View>
+        <View style={[styles.view, {paddingHorizontal: 10, marginBottom: 20}]}>
+          {/* Table Head */}
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 20,
+              color: 'black',
+              fontWeight: '600',
+              marginBottom: 10,
+            }}>
+            TOP SẢN PHẨM BÁN CHẠY NHẤT
+          </Text>
+          <View style={styles.table_head}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_head_captions}>ID</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_head_captions}>Đã bán</Text>
+            </View>
+          </View>
+  
+          {/* Table Body - Single Row */}
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>01</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Áo thể thao</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>200</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>02</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Áo khoác jeans</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>100</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>03</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Quần jeans xanh đen</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>70</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>04</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Áo sơ mi trắng</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>05</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>06</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Quần thể thao xám </Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>20</Text>
+            </View>
+          </View>
+        </View>
+        <View style={[styles.view, {marginBottom: 20}]}>
+          {/* Table Head */}
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 20,
+              color: 'black',
+              fontWeight: '600',
+              marginBottom: 10,
+            }}>
+            TOP SẢN PHẨM ĐÁNH GIÁ CAO NHẤT
+          </Text>
+          <View style={styles.table_head}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_head_captions}>ID</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_head_captions}>Đánh giá</Text>
+            </View>
+          </View>
+  
+          {/* Table Body - Single Row */}
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>01</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Giày thể thao Adidas</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>5 </Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>02</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Giày adidas vàng</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>4.6</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>03</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Khăn tay trắng</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>3.7</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>04</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Áo khoác kaki vàng</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>3</Text>
+            </View>
+          </View>
+          <View style={styles.table_body_single_row}>
+            <View style={{width: '15%'}}>
+              <Text style={styles.table_data}>05</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>Mũ puma đen</Text>
+            </View>
+            <View style={{width: '45%'}}>
+              <Text style={styles.table_data}>3</Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    );
+  };
+  useEffect(() => {
+    navigation.getParent()?.setOptions({
+      tabBarStyle: {
+        display: "none"
+      }
+    });
+    return () => navigation.getParent()?.setOptions({
+      tabBarStyle: undefined
+    });
+  }, [navigation]);
   return (
     <View style={{height: height, backgroundColor: 'white'}}>
-      <View style={[StyleDetailProduct.menu,{borderBottomWidth:0.2,borderColor:'grey'}]}>
+      <View
+        style={[
+          StyleDetailProduct.menu,
+          {borderBottomWidth: 0.2, borderColor: 'grey'},
+        ]}>
         <TouchableOpacity onPress={back}>
           <Image source={require('../../images/backic.png')} />
         </TouchableOpacity>
-        <View/>
+        <View />
         <Text style={StyleDetailProduct.textTitle}>Thống kê</Text>
       </View>
       <Tab.Navigator
@@ -49,1025 +1203,38 @@ const StatisticSellerScreen = (props) => {
           // tabBarStyle: { backgroundColor: 'white', elevation: 0 },
           // tabBarIndicatorStyle: { backgroundColor: paperTheme.colors.primary },
         }}>
-        <Tab.Screen name="StatisticByWeek" component={StatisticSellerByWeekScreen} options={{ title: 'Theo tuần' }}/>
-        <Tab.Screen name="StatisticByMonth" component={StatisticSellerByMonthScreen} options={{ title: 'Theo tháng' }}/>
-        <Tab.Screen name="StatisticByYear" component={StatisticSellerByYearScreen} options={{ title: 'Theo năm' }}/>
+        <Tab.Screen
+          name="StatisticByWeek"
+          component={StatisticSellerByWeekScreen}
+          options={{
+            title: 'Theo tuần',
+            shopId:shopId
+          }}
+          initialParams={{shopId:shopId}}
+        />
+        <Tab.Screen
+          name="StatisticByMonth"
+          component={StatisticSellerByMonthScreen}
+          options={{
+          title: 'Theo tháng',
+          shopId:shopId}}
+          initialParams={{shopId:shopId}}
+
+        />
+        <Tab.Screen
+          name="StatisticByYear"
+          component={StatisticSellerByYearScreen }
+          options={{
+          title: 'Theo năm',
+          shopId:shopId}}
+          initialParams={{shopId:shopId}}
+
+        />
       </Tab.Navigator>
     </View>
   );
 };
-export const StatisticSellerByWeekScreen = () => {
-  return (
-    // <View
-    // // style={{marginLeft:15,zIndex:0}}
-    //  >
-    //   <Text>StatisticSellerScreen</Text>
-    //   <Text>{formatPrice(20000000000)}</Text>
-    <ScrollView
-      style={{
-        backgroundColor: '#f7f7f7',
-        marginBottom:50
-      }}>
-      <View
-        style={[
-          styles.view,
-          {
-            paddingVertical: 0,
-          },
-        ]}>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontWeight: 'bold',
-            fontSize: 20,
-            marginTop: 10,
-            color: 'black',
-          }}>
-          Bảng chú thích
-        </Text>
-        <View style={styles.container}>
-          <View style={styles.row}>
-            <View style={styles.cell}>
-              <Text style={styles.cellText}>Viết tắt</Text>
-            </View>
-            <View style={styles.cell}>
-              <Text style={styles.cellText}>Chú thích</Text>
-            </View>
-          </View>
 
-          {VietnameseCurrency.map(item => {
-            return (
-              <View style={styles.row}>
-                <View style={styles.cell}>
-                  <Text style={styles.cellText}>{item.name}</Text>
-                </View>
-                <View style={styles.cell}>
-                  <Text style={styles.cellText}>{item.value}</Text>
-                </View>
-              </View>
-            );
-          })}
-        </View>
-      </View>
-      <View
-        style={{
-          backgroundColor: 'white',
-          marginHorizontal: 10,
-          elevation: 2,
-          borderRadius: 5,
-          marginTop: 10,
-          marginVertical: 5,
-        }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontWeight: 'bold',
-            fontSize: 20,
-            marginTop: 5,
-            color: 'black',
-          }}>
-          BẢNG THỐNG KÊ SƠ BỘ
-        </Text>
-        <View
-          style={{
-            marginHorizontal: 30,
-            marginVertical: 10,
-            borderColor: 'black',
-            borderWidth: 0.5,
-          }}>
-          <View
-            style={{
-              height: '100%',
-              borderWidth: 0.2,
-              position: 'absolute',
-              right: 115,
-            }}></View>
-          <View
-            style={{
-              flexDirection: 'row',
-              margin: 10,
-            }}>
-            <Text
-              style={{
-                color: 'black',
-              }}>
-              Số lượng sản phẩm đã bán {'\n'} trong 1 tuần
-            </Text>
-            <Text
-              style={{
-                alignSelf: 'center',
-                marginLeft: 5,
-                color: 'black',
-              }}>
-              {' '}
-              200 sp
-            </Text>
-          </View>
-          <View style={{width: '100%', borderWidth: 0.2}} />
-          <View
-            style={{
-              flexDirection: 'row',
-              margin: 10,
-            }}>
-            <Text
-              style={{
-                color: 'black',
-              }}>
-              Tổng doanh thu trong 1 tuần
-            </Text>
-            <Text
-              style={{
-                alignSelf: 'center',
-                marginLeft: 5,
-                color: 'black',
-              }}>
-              {' '}
-              10000000đ
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View style={[styles.view]}>
-        <View>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 20,
-              color: 'black',
-              fontWeight: '600',
-            }}>
-            DOANH THU THEO TUẦN
-          </Text>
-        </View>
-        <LineChart
-          areaChart
-          data={ptData}
-          width={280}
-          hideDataPoints
-          spacing={20}
-          color="#00d5ff"
-          thickness={1}
-          startFillColor="rgba(83, 185, 249, 0.397))"
-          endFillColor="rgba(255, 255, 255, 0.01)"
-          startOpacity={0.9}
-          endOpacity={0.1}
-          zIndex1={1}
-          initialSpacing={0}
-          noOfSections={10}
-          verticalLinesZIndex={2}
-          yAxisLabelWidth={70}
-          formatYLabel={convertToCurrencyString}
-          yAxisColor="white"
-          yAxisThickness={0}
-          rulesType="dashed"
-          height={300}
-          rulesColor="gray"
-          yAxisTextStyle={{color: 'black'}}
-          yAxisSide="right"
-          xAxisColor="lightgray"
-          pointerConfig={pointerConfig}
-          xAxisLabelTextStyle={{color: 'black'}}
-        />
-      </View>
-      <View style={[styles.view, {paddingHorizontal: 10, marginBottom: 20}]}>
-        {/* Table Head */}
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 20,
-            color: 'black',
-            fontWeight: '600',
-            marginBottom: 10,
-          }}>
-          TOP SẢN PHẨM BÁN CHẠY NHẤT
-        </Text>
-        <View style={styles.table_head}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_head_captions}>ID</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_head_captions}>Đã bán</Text>
-          </View>
-        </View>
-
-        {/* Table Body - Single Row */}
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Áo thể thao</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>200</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>02</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Áo khoác jeans</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>100</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>03</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Quần jeans xanh đen</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>70</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>04</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Áo sơ mi trắng</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>05</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>06</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Quần thể thao xám </Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>20</Text>
-          </View>
-        </View>
-      </View>
-      <View style={[styles.view, {marginBottom: 20}]}>
-        {/* Table Head */}
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 20,
-            color: 'black',
-            fontWeight: '600',
-            marginBottom: 10,
-          }}>
-          TOP SẢN PHẨM ĐÁNH GIÁ CAO NHẤT
-        </Text>
-        <View style={styles.table_head}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_head_captions}>ID</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_head_captions}>Đánh giá</Text>
-          </View>
-        </View>
-
-        {/* Table Body - Single Row */}
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Giày thể thao Adidas</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>5 </Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>02</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Giày adidas vàng</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>4.6</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>03</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Khăn tay trắng</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>3.7</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>04</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Áo khoác kaki vàng</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>3</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>05</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Mũ puma đen</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>3</Text>
-          </View>
-        </View>
-      </View>
-    </ScrollView>
-  );
-};
-export const StatisticSellerByMonthScreen = () => {
-  return (
-    // <View
-    // // style={{marginLeft:15,zIndex:0}}
-    //  >
-    //   <Text>StatisticSellerScreen</Text>
-    //   <Text>{formatPrice(20000000000)}</Text>
-    <ScrollView
-      style={{
-        backgroundColor: '#f7f7f7',
-      }}>
-      <View
-        style={[
-          styles.view,
-          {
-            paddingVertical: 0,
-          },
-        ]}>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontWeight: 'bold',
-            fontSize: 20,
-            marginTop: 10,
-            color: 'black',
-          }}>
-          Bảng chú thích
-        </Text>
-        <View style={styles.container}>
-          <View style={styles.row}>
-            <View style={styles.cell}>
-              <Text style={styles.cellText}>Viết tắt</Text>
-            </View>
-            <View style={styles.cell}>
-              <Text style={styles.cellText}>Chú thích</Text>
-            </View>
-          </View>
-
-          {VietnameseCurrency.map(item => {
-            return (
-              <View style={styles.row}>
-                <View style={styles.cell}>
-                  <Text style={styles.cellText}>{item.name}</Text>
-                </View>
-                <View style={styles.cell}>
-                  <Text style={styles.cellText}>{item.value}</Text>
-                </View>
-              </View>
-            );
-          })}
-        </View>
-      </View>
-      <View
-        style={{
-          backgroundColor: 'white',
-          marginHorizontal: 10,
-          elevation: 2,
-          borderRadius: 5,
-          marginTop: 10,
-          marginVertical: 5,
-        }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontWeight: 'bold',
-            fontSize: 20,
-            marginTop: 5,
-            color: 'black',
-          }}>
-          BẢNG THỐNG KÊ SƠ BỘ
-        </Text>
-        <View
-          style={{
-            marginHorizontal: 30,
-            marginVertical: 10,
-            borderColor: 'black',
-            borderWidth: 0.5,
-          }}>
-          <View
-            style={{
-              height: '100%',
-              borderWidth: 0.2,
-              position: 'absolute',
-              right: 115,
-            }}></View>
-          <View
-            style={{
-              flexDirection: 'row',
-              margin: 10,
-            }}>
-            <Text
-              style={{
-                color: 'black',
-              }}>
-              Số lượng sản phẩm đã bán {'\n'} trong 1 tuần
-            </Text>
-            <Text
-              style={{
-                alignSelf: 'center',
-                marginLeft: 5,
-                color: 'black',
-              }}>
-              {' '}
-              200 sp
-            </Text>
-          </View>
-          <View style={{width: '100%', borderWidth: 0.2}} />
-          <View
-            style={{
-              flexDirection: 'row',
-              margin: 10,
-            }}>
-            <Text
-              style={{
-                color: 'black',
-              }}>
-              Tổng doanh thu trong 1 tuần
-            </Text>
-            <Text
-              style={{
-                alignSelf: 'center',
-                marginLeft: 5,
-                color: 'black',
-              }}>
-              {' '}
-              10000000đ
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View style={[styles.view]}>
-        <View>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 20,
-              color: 'black',
-              fontWeight: '600',
-            }}>
-            DOANH THU THEO TUẦN
-          </Text>
-        </View>
-        <LineChart
-          areaChart
-          data={ptData}
-          width={280}
-          hideDataPoints
-          spacing={20}
-          color="#00d5ff"
-          thickness={1}
-          startFillColor="rgba(83, 185, 249, 0.397))"
-          endFillColor="rgba(255, 255, 255, 0.01)"
-          startOpacity={0.9}
-          endOpacity={0.1}
-          zIndex1={1}
-          initialSpacing={0}
-          noOfSections={10}
-          verticalLinesZIndex={2}
-          yAxisLabelWidth={70}
-          formatYLabel={convertToCurrencyString}
-          yAxisColor="white"
-          yAxisThickness={0}
-          rulesType="dashed"
-          height={300}
-          rulesColor="gray"
-          yAxisTextStyle={{color: 'black'}}
-          yAxisSide="right"
-          xAxisColor="lightgray"
-          pointerConfig={pointerConfig}
-          xAxisLabelTextStyle={{color: 'black'}}
-        />
-      </View>
-      <View style={[styles.view, {paddingHorizontal: 10, marginBottom: 20}]}>
-        {/* Table Head */}
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 20,
-            color: 'black',
-            fontWeight: '600',
-            marginBottom: 10,
-          }}>
-          TOP SẢN PHẨM BÁN CHẠY NHẤT
-        </Text>
-        <View style={styles.table_head}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_head_captions}>ID</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_head_captions}>Đã bán</Text>
-          </View>
-        </View>
-
-        {/* Table Body - Single Row */}
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Áo thể thao</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>200</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>02</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Áo khoác jeans</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>100</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>03</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Quần jeans xanh đen</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>70</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>04</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Áo sơ mi trắng</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>05</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>06</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Quần thể thao xám </Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>20</Text>
-          </View>
-        </View>
-      </View>
-      <View style={[styles.view, {marginBottom: 20}]}>
-        {/* Table Head */}
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 20,
-            color: 'black',
-            fontWeight: '600',
-            marginBottom: 10,
-          }}>
-          TOP SẢN PHẨM ĐÁNH GIÁ CAO NHẤT
-        </Text>
-        <View style={styles.table_head}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_head_captions}>ID</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_head_captions}>Đánh giá</Text>
-          </View>
-        </View>
-
-        {/* Table Body - Single Row */}
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Giày thể thao Adidas</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>5 </Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>02</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Giày adidas vàng</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>4.6</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>03</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Khăn tay trắng</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>3.7</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>04</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Áo khoác kaki vàng</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>3</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>05</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Mũ puma đen</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>3</Text>
-          </View>
-        </View>
-      </View>
-    </ScrollView>
-  );
-};
-export const StatisticSellerByYearScreen = () => {
-  return (
-    // <View
-    // // style={{marginLeft:15,zIndex:0}}
-    //  >
-    //   <Text>StatisticSellerScreen</Text>
-    //   <Text>{formatPrice(20000000000)}</Text>
-    <ScrollView
-      style={{
-        backgroundColor: '#f7f7f7',
-      }}>
-      <View
-        style={[
-          styles.view,
-          {
-            paddingVertical: 0,
-          },
-        ]}>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontWeight: 'bold',
-            fontSize: 20,
-            marginTop: 10,
-            color: 'black',
-          }}>
-          Bảng chú thích
-        </Text>
-        <View style={styles.container}>
-          <View style={styles.row}>
-            <View style={styles.cell}>
-              <Text style={styles.cellText}>Viết tắt</Text>
-            </View>
-            <View style={styles.cell}>
-              <Text style={styles.cellText}>Chú thích</Text>
-            </View>
-          </View>
-
-          {VietnameseCurrency.map(item => {
-            return (
-              <View style={styles.row}>
-                <View style={styles.cell}>
-                  <Text style={styles.cellText}>{item.name}</Text>
-                </View>
-                <View style={styles.cell}>
-                  <Text style={styles.cellText}>{item.value}</Text>
-                </View>
-              </View>
-            );
-          })}
-        </View>
-      </View>
-      <View
-        style={{
-          backgroundColor: 'white',
-          marginHorizontal: 10,
-          elevation: 2,
-          borderRadius: 5,
-          marginTop: 10,
-          marginVertical: 5,
-        }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontWeight: 'bold',
-            fontSize: 20,
-            marginTop: 5,
-            color: 'black',
-          }}>
-          BẢNG THỐNG KÊ SƠ BỘ
-        </Text>
-        <View
-          style={{
-            marginHorizontal: 30,
-            marginVertical: 10,
-            borderColor: 'black',
-            borderWidth: 0.5,
-          }}>
-          <View
-            style={{
-              height: '100%',
-              borderWidth: 0.2,
-              position: 'absolute',
-              right: 115,
-            }}></View>
-          <View
-            style={{
-              flexDirection: 'row',
-              margin: 10,
-            }}>
-            <Text
-              style={{
-                color: 'black',
-              }}>
-              Số lượng sản phẩm đã bán {'\n'} trong 1 tuần
-            </Text>
-            <Text
-              style={{
-                alignSelf: 'center',
-                marginLeft: 5,
-                color: 'black',
-              }}>
-              {' '}
-              200 sp
-            </Text>
-          </View>
-          <View style={{width: '100%', borderWidth: 0.2}} />
-          <View
-            style={{
-              flexDirection: 'row',
-              margin: 10,
-            }}>
-            <Text
-              style={{
-                color: 'black',
-              }}>
-              Tổng doanh thu trong 1 tuần
-            </Text>
-            <Text
-              style={{
-                alignSelf: 'center',
-                marginLeft: 5,
-                color: 'black',
-              }}>
-              {' '}
-              10000000đ
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View style={[styles.view]}>
-        <View>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 20,
-              color: 'black',
-              fontWeight: '600',
-            }}>
-            DOANH THU THEO TUẦN
-          </Text>
-        </View>
-        <LineChart
-          areaChart
-          data={ptData}
-          width={280}
-          hideDataPoints
-          spacing={20}
-          color="#00d5ff"
-          thickness={1}
-          startFillColor="rgba(83, 185, 249, 0.397))"
-          endFillColor="rgba(255, 255, 255, 0.01)"
-          startOpacity={0.9}
-          endOpacity={0.1}
-          zIndex1={1}
-          initialSpacing={0}
-          noOfSections={10}
-          verticalLinesZIndex={2}
-          yAxisLabelWidth={70}
-          formatYLabel={convertToCurrencyString}
-          yAxisColor="white"
-          yAxisThickness={0}
-          rulesType="dashed"
-          height={300}
-          rulesColor="gray"
-          yAxisTextStyle={{color: 'black'}}
-          yAxisSide="right"
-          xAxisColor="lightgray"
-          pointerConfig={pointerConfig}
-          xAxisLabelTextStyle={{color: 'black'}}
-        />
-      </View>
-      <View style={[styles.view, {paddingHorizontal: 10, marginBottom: 20}]}>
-        {/* Table Head */}
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 20,
-            color: 'black',
-            fontWeight: '600',
-            marginBottom: 10,
-          }}>
-          TOP SẢN PHẨM BÁN CHẠY NHẤT
-        </Text>
-        <View style={styles.table_head}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_head_captions}>ID</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_head_captions}>Đã bán</Text>
-          </View>
-        </View>
-
-        {/* Table Body - Single Row */}
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Áo thể thao</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>200</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>02</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Áo khoác jeans</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>100</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>03</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Quần jeans xanh đen</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>70</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>04</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Áo sơ mi trắng</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>05</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>06</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Quần thể thao xám </Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>20</Text>
-          </View>
-        </View>
-      </View>
-      <View style={[styles.view, {marginBottom: 20}]}>
-        {/* Table Head */}
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 20,
-            color: 'black',
-            fontWeight: '600',
-            marginBottom: 10,
-          }}>
-          TOP SẢN PHẨM ĐÁNH GIÁ CAO NHẤT
-        </Text>
-        <View style={styles.table_head}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_head_captions}>ID</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_head_captions}>Đánh giá</Text>
-          </View>
-        </View>
-
-        {/* Table Body - Single Row */}
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>01</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Giày thể thao Adidas</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>5 </Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>02</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Giày adidas vàng</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>4.6</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>03</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Khăn tay trắng</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>3.7</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>04</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Áo khoác kaki vàng</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>3</Text>
-          </View>
-        </View>
-        <View style={styles.table_body_single_row}>
-          <View style={{width: '15%'}}>
-            <Text style={styles.table_data}>05</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>Mũ puma đen</Text>
-          </View>
-          <View style={{width: '45%'}}>
-            <Text style={styles.table_data}>3</Text>
-          </View>
-        </View>
-      </View>
-    </ScrollView>
-  );
-};
 export default StatisticSellerScreen;
 // rgb(100, 100, 100)
 // rgb(0, 115, 255)
@@ -1088,7 +1255,7 @@ const styles = StyleSheet.create({
   table_head_captions: {
     fontSize: 15,
     color: 'white',
-    fontWeight:'bold'
+    fontWeight: 'bold',
   },
 
   table_body_single_row: {
@@ -1183,30 +1350,30 @@ const pointerConfig = {
   },
 };
 const ptData = [
-  {value: 160000000, date: '1 Apr 2022'},
-  {value: 180002650000, date: '2 Apr 2022'},
-  {value: 190000000000, date: '3 Apr 2022'},
-  {value: 180000000000, date: '4 Apr 2022'},
-  {value: 140000000000, date: '5 Apr 2022'},
-  {value: 145000000000, date: '6 Apr 2022'},
-  {value: 160000000000, date: '7 Apr 2022'},
-  {value: 200000000000, date: '8 Apr 2022'},
-  {value: 160000000, date: '1 Apr 2022'},
-  {value: 180002650000, date: '2 Apr 2022'},
-  {value: 190000000000, date: '3 Apr 2022'},
-  {value: 180000000000, date: '4 Apr 2022'},
-  {value: 140000000000, date: '5 Apr 2022'},
-  {value: 145000000000, date: '6 Apr 2022'},
-  {value: 160000000000, date: '7 Apr 2022'},
-  {value: 200000000000, date: '8 Apr 2022'},
-  {value: 160000000, date: '1 Apr 2022'},
-  {value: 180002650000, date: '2 Apr 2022'},
-  {value: 190000000000, date: '3 Apr 2022'},
-  {value: 180000000000, date: '4 Apr 2022'},
-  {value: 140000000000, date: '5 Apr 2022'},
-  {value: 145000000000, date: '6 Apr 2022'},
-  {value: 160000000000, date: '7 Apr 2022'},
-  {value: 200000000000, date: '8 Apr 2022'},
+  {value: 160000000, label: '1 Apr 2022'},
+  {value: 180002650000, label: '2 Apr 2022'},
+  {value: 190000000000, label: '3 Apr 2022'},
+  {value: 180000000000, label: '4 Apr 2022'},
+  {value: 140000000000, label: '5 Apr 2022'},
+  {value: 145000000000, label: '6 Apr 2022'},
+  {value: 160000000000, label: '7 Apr 2022'},
+  {value: 200000000000, label: '8 Apr 2022'},
+  {value: 160000000, label: '1 Apr 2022'},
+  {value: 180002650000, label: '2 Apr 2022'},
+  {value: 190000000000, label: '3 Apr 2022'},
+  {value: 180000000000, label: '4 Apr 2022'},
+  {value: 140000000000, label: '5 Apr 2022'},
+  {value: 145000000000, label: '6 Apr 2022'},
+  {value: 160000000000, label: '7 Apr 2022'},
+  {value: 200000000000, label: '8 Apr 2022'},
+  {value: 160000000, label: '1 Apr 2022'},
+  {value: 180002650000, label: '2 Apr 2022'},
+  {value: 190000000000, label: '3 Apr 2022'},
+  {value: 180000000000, label: '4 Apr 2022'},
+  {value: 140000000000, label: '5 Apr 2022'},
+  {value: 145000000000, label: '6 Apr 2022'},
+  {value: 160000000000, label: '7 Apr 2022'},
+  {value: 200000000000, label: '8 Apr 2022'},
   // {value: 220, date: '9 Apr 2022'},
   // {
   //   value: 240,

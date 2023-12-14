@@ -8,13 +8,14 @@ import {useNavigation,useRoute} from '@react-navigation/native'
 import AxiosIntance from '../utils/AxiosIntance'
 import Searchbar from '../component/Seachbar/Searchbar'
 const FavoriteScreen = (props) => {
-//   const route =useRoute();
-//   const {params}=route;
-//   const {item}=params;
+  const {navigation,route}=props;
+  const {params}=route;
+  const {userID}=params;
   const  [searchText,setSearchText]  = useState("");
-  const navigation= useNavigation();
+  // const navigation= useNavigation();
   const [page, setPage] = useState(1)
   // const {params}=route;
+  const [check, setCheck] = useState(false)
   const [columns, setcolumns] = useState(2);
   const [isLoading, setisLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -34,33 +35,25 @@ const FavoriteScreen = (props) => {
       tabBarStyle: undefined
     });
   }, [navigation]);
-  function createURLstring(name,object) {
-    // if (typeof objValue !== 'object' || !Array.isArray(arrValue) || typeof stringValue !== 'string') {
-    //   throw new Error('Giá trị không hợp lệ');
-    // }
-    
-    let url="";
-      // name
-      if(name.length>0)
-        url=url+"name="+name+"&";
 
-      // sort 
-      if (Object.keys(object).length === 0) {
-        console.log('Đối tượng rỗng');
-      } else {
-          url=url+object.name+"="+object.value;
-        
-      }
-    
-    return url;
-  }
 
   useEffect(() => {   
         Load();
     return () => {      
     }
   }, [page])
-  
+
+
+  useEffect(() => {   
+    if(check){
+      if(page==1)
+        Load();
+      else
+      setPage(1)
+    }
+    return () => {      
+    }
+    }, [check])
   const loadMoreData = async ()=>{
     if((totalPage>page)){
         setPage(page+1);
@@ -72,33 +65,18 @@ const FavoriteScreen = (props) => {
     return false
     }
 
-    const onChangeText = text => {
-        setSearchText(text);
-        // setIsSearch(true);
-        console.log(text, 'SearchScreen');
-      };
-    
-      const onSubmitText = () => {
-        console.log(searchText.length);
-        if (searchText.length > 0) {
-            if(page==1)
-                Load();
-             setPage(1);
-        }
-      };
     const Load = async ()=>{
-      
       if(!isLoadingmini)
         setisLoading(true);   
       try {
-        const response = await AxiosIntance().get("/productAPI/filterProductByName?"+"sortPrice=true"+"&skipData="+page);
+        const response = await AxiosIntance().get("/favoriteApi/getFavoriteByUserID?userID="+userID+"&skipData="+page);
         console.log(response);
-        if (response.result&&response.products.length>0) {
+        if (response.result&&response.favorite.length>0) {
           console.log(response);
           if(page==1){
-            setData(response.products);
-            setcountData(response.count);
-            settotalPage(response.totalPage);
+            setData(response.favorite);
+            setcountData(response.countData);
+            settotalPage(response.totalPages);
             console.log("Hellooo");
             console.log(isLoading+"ELLOOO1");
             
@@ -142,11 +120,6 @@ const FavoriteScreen = (props) => {
                 />
          </TouchableOpacity>
             <View style={{marginLeft:5,width:"90%"}}>
-              {/* <Searchbar
-            onChangeText={onChangeText}
-            onClick={false}
-            onSubmitText={onSubmitText}
-            /> */}
             <Text style={[styleHome.title,{fontSize:20, textAlign:'center',color:'black'}]}>Danh sách yêu thích</Text>
             </View>
             <View style={styleHome.viewIcons}>
@@ -164,8 +137,8 @@ const FavoriteScreen = (props) => {
           :
           <View
             style={{
-                alignItems:'center',
-                alignSelf:'center'
+                width:'100%',
+                backgroundColor:'#ecebeb'
             }}
           >
             {
@@ -179,8 +152,9 @@ const FavoriteScreen = (props) => {
                       isLoadingmini={isLoadingmini}
                       infinitiveScroll={true}
                       loadMoreData={loadMoreData}
+                      setCheck={setCheck}
+                      check={check}
                       styleView={{
-                        width: '100%',
                         margin: 10,
                         marginBottom:110
                       }}

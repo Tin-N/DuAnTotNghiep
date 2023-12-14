@@ -49,9 +49,11 @@ const SearchItem = props => {
         <View style={StyleSearchSuggestions.viewInside}>
           <Image source={source} style={StyleSearchSuggestions.image} />
           <Text
-            style={{
-              textAlignVertical: 'center'
-            }}
+
+
+          style={{
+            textAlignVertical:'center'
+          }}
           >
             {setTextSlice(item.keyword)}
           </Text>

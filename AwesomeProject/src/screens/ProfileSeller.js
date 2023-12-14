@@ -118,7 +118,7 @@ const ProfileSeller = () => {
       </View>
       <View style={StyleProfile.FormItem}>
       <View style={StyleProfile.FormItemText}>
-          <Text style={StyleProfile.FormItemTextAddress}>fullname</Text><Text style={StyleProfile.FormItemStart}>*</Text>
+          <Text style={StyleProfile.FormItemTextAddress}>Fullname</Text><Text style={StyleProfile.FormItemStart}>*</Text>
           </View>
           <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setFullName} placeholder={userInfo.fullname}  />
       </View>

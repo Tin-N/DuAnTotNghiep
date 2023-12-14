@@ -97,12 +97,12 @@ const SignUp = () => {
 
       {/* TextInput Email */}
       <View>
-        {/* <Text style={StyleLogin.textHint}>Email</Text> */}
+        <Text style={StyleLogin.textHint}>Email</Text>
 
         <View style={StyleLogin.input}>
           <TextInput
             style={StyleLogin.TextInputUP}
-            placeholder="Email"
+            placeholder="Clavi@gmail.com"
             keyboardType="default"
             onChangeText={setEmailUser}
           />
@@ -111,12 +111,12 @@ const SignUp = () => {
 
       {/* TextInput Password */}
       <View>
-        <Text style={StyleLogin.textHint}>Email Error Validation</Text>
+        <Text style={StyleLogin.textHint}>Mật khẩu</Text>
 
         <View style={StyleLogin.input}>
           <TextInput
             style={StyleLogin.TextInputUP}
-            placeholder="Enter your password"
+            placeholder="*************"
             underlineColorAndroid="transparent"
             secureTextEntry={showPassword}
             onChangeText={setPassword}
@@ -141,12 +141,12 @@ const SignUp = () => {
         
 
         {/* TextInput Confirm Password */}
-        <Text style={StyleLogin.textHint}>Password Error Validation</Text>
+        <Text style={StyleLogin.textHint}>Xác nhận mật khẩu</Text>
 
         <View style={StyleLogin.input}>
           <TextInput
             style={StyleLogin.TextInputUP}
-            placeholder="Enter your password again"
+            placeholder="*************"
             underlineColorAndroid="transparent"
             secureTextEntry={showConfirmPassword}
             onChangeText={setConfirmPass}
@@ -169,7 +169,7 @@ const SignUp = () => {
           </TouchableOpacity>
           
         </View>
-        <Text style={StyleLogin.textHint}>Password Error Validation</Text>
+        {/* <Text style={StyleLogin.textHint}>Password Error Validation</Text> */}
 
          {/* TextInput Confirm Password */}
 
@@ -186,12 +186,12 @@ const SignUp = () => {
           style={StyleLogin.CbuttomText}>
           <Text
             style={StyleLogin.ButtomText1}>
-            Bạn mới biết tới SavvyShop?
+            Bạn đã có tài khoản SavvyShop?
           </Text>
           <TouchableOpacity onPress={moveToSignIn}>
             <Text
               style={StyleLogin.ButtomText2}>
-              Đăng ký
+              Đăng nhập
             </Text>
           </TouchableOpacity>
         </View>

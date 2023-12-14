@@ -30,6 +30,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import StatisticSellerScreen from './src/screens/personStore/StatisticSellerScreen';
 import UserScreen from './src/screens/personStore/UserScreen';
 import FavoriteScreen from './src/screens/FavoriteList';
+import WelcomeScreen from './src/screens/WelcomeScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -47,9 +48,8 @@ const App = () => {
     // <FavoriteScreen/>
     // <UserScreen/>
   //   <NavigationContainer>
-   
   //  <StatisticSellerScreen/> 
-  //      </NavigationContainer>
+  //    </NavigationContainer>
 
    
   )

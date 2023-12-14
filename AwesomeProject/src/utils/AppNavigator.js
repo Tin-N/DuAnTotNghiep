@@ -35,11 +35,18 @@ import FilterScreen from '../screens/FilterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import DetailList from '../screens/DetailList';
 import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
+import AllProductDetails from '../screens/personStore/Shiper/AllProductDetails'
 
 import DetailProduct from '../screens/personStore/DetailProduct';
 import CreateProduct from '../screens/personStore/CreateProduct';
 import ManageProduct from '../screens/personStore/ManageProduct';
 import UpdateProduct from '../screens/personStore/UpdateProduct';
+import OrderHistory from '../screens/personStore/UserOrderHistory/OrderHistory'
+import OrderDetailHistory from '../screens/personStore/UserOrderHistory/OrderDetailHistory'
+import StatisticSellerScreen from '../screens/personStore/StatisticSellerScreen';
+import ShipperScreen from '../screens/personStore/ShipperScreen';
+import FavoriteScreen from '../screens/FavoriteList';
+import Item from '../component/FavoriteList/Item';
 
 import DetailImage from '../screens/personStore/DetailImage';
 
@@ -49,11 +56,29 @@ const Stack = createNativeStackNavigator();
 const ProductProcessStack = () => {
     return (
         <Stack.Navigator initialRouteName='ProductProcessOverview'>
-            <Stack.Screen name="ProductProcessOverview" component={ProductProcessOverview} />
+            <Stack.Screen options={{ headerShown: false }} name="ProductProcessOverview" component={ProductProcessOverview} />
             <Stack.Screen options={{ headerShown: false }} name="Product Process" component={ProductProcess} />
         </Stack.Navigator>
     );
 };
+
+const ShipperStack = () => {
+    return (
+        <Stack.Navigator initialRouteName='SProductProcess'>
+            <Stack.Screen options={{ headerShown: false }} name="SProductProcess" component={SProductProcess} />
+            <Stack.Screen options={{ headerShown: false }} name="AllProductDetails" component={AllProductDetails} />
+        </Stack.Navigator>
+    );
+};
+
+const OrderHistoryStack = () => {
+    return (
+        <Stack.Navigator initialRouteName='OrderHistory'>
+            <Stack.Screen options={{ headerShown: false }} name="OrderHistory" component={OrderHistory} />
+            <Stack.Screen options={{ headerShown: false }} name="OrderDetailHistory" component={OrderDetailHistory} />
+        </Stack.Navigator>
+    );
+}
 
 const User = () => {
     return (
@@ -77,7 +102,9 @@ const Profile = () => {
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProfileScreen'>
             <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
             <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
-
+            <Stack.Screen name='StatisticScreen' component={StatisticSellerScreen}></Stack.Screen>
+            <Stack.Screen name='ShipperScreen' component={ShipperScreen}></Stack.Screen>
+            <Stack.Screen name='Shipper' component={SProductProcess}></Stack.Screen>
             <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
             <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
             <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
@@ -87,6 +114,12 @@ const Profile = () => {
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
             <Stack.Screen name='Prod Process' component={ProductProcessStack} />
 
+            <Stack.Screen name='FavoriteScreen' component={FavoriteScreen} />
+            <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
+
+
+            <Stack.Screen name='DetailProduct' component={DetailProduct} />
+            {/* FavoriteScreen */}
         </Stack.Navigator>
     )
 }
@@ -103,6 +136,7 @@ const ProductHome = () => {
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
 
             <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
+            <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
 
             <Stack.Screen name='DetailProduct' component={DetailProduct} />
 
@@ -148,6 +182,8 @@ const censorshipProduct = () => {
 
 
 const Main = () => {
+    const appContextData = useContext(AppContext)
+    const userRole = appContextData.userRole
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -178,6 +214,7 @@ const Main = () => {
                         iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
                         // } else if (route.name === 'Profile') {
 
+
                         //     iconName = focused ? 'people-sharp' : 'people-outline';
                         // } else if (route.name === 'SignUp') {
 
@@ -186,6 +223,7 @@ const Main = () => {
                         //     iconName = focused ? 'clipboard' : 'clipboard-outline';
 
                     } else if (route.name === 'Login') {
+
                         iconName = focused ? 'people-sharp' : 'people-outline';
                     }
                     return <Icon1 name={iconName} size={size} color={color} />
@@ -198,6 +236,7 @@ const Main = () => {
             })}
         >
             <Tab.Screen name="Home" component={ProductHome} />
+
             <Tab.Screen name="Order" component={Order} />
             {/* <Tab.Screen name="ProfileScreen" component={ProfileScreen} /> */}
             {/* <Tab.Screen name="Prod Process" component={ProductProcessStack} /> */}
@@ -208,6 +247,11 @@ const Main = () => {
 
 
 
+
+            <Tab.Screen name="Cart" component={Order} />
+            <Tab.Screen name="Profile" component={Profile} />
+            {userRole == 3 ? <Tab.Screen name="Shipper" component={ShipperStack} /> : null}
+
         </Tab.Navigator>
     )
 }
@@ -217,8 +261,8 @@ const AppNavigator = () => {
     return (
         <>
             {
-                <Main />
-                // <User />
+                // <Main />
+                <User />
                 // <Main/>
             }
         </>

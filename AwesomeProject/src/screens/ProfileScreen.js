@@ -6,6 +6,8 @@ import ProfileUser from './ProfileUser'
 import ProfileSeller from './ProfileSeller'
 import WarningPorfile from './WarningPorfile'
 import UserScreen from './personStore/UserScreen'
+import SellerScreen from './personStore/SellerScreen'
+import ShipperScreen from './personStore/ShipperScreen'
 const ProfileScreen = () => {
     const { isLogin } = useContext(AppContext);
     const { userInfo } = useContext(AppContext);
@@ -19,9 +21,14 @@ const ProfileScreen = () => {
                     )
                 }else if (_role == 2){
                     return (
-                        <ProfileSeller/>
+                        <SellerScreen/>
+                    )
+                }else if (_role == 3){
+                    return (
+                        <ShipperScreen/>
                     )
                 }
+   
    
 
 }

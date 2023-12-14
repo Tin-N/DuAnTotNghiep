@@ -12,13 +12,17 @@ import {
 
 import React, {useState, useContext,userEffect} from 'react';
 
+import {Image} from 'react-native';
+
+
 // const {width} = Dimensions.get('window');
+
 import AxiosIntance from '../utils/AxiosIntance';
 import {useNavigation} from '@react-navigation/native';
 import {AppContext} from '../utils/AppContext';
 import { GoogleSignin , statusCodes } from '@react-native-google-signin/google-signin';
-
 import {COLOR} from '../css/Theme.js'
+
 import { Image } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -66,25 +70,25 @@ const SignIn = () => {
 
   // regex
   const validate = () => {
-    const emailRegex =
-      /^[a-zA-Z0-9._%+-]+[0-9._%+-]@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{11,}$/;
-    if (emailUser === '' || password === '') {
-      Alert.alert('Lỗi chưa điền', 'Hãy điền đầy đủ');
-      setCheckEmail("red");
-      setCheckPassword("red");
-      return false;
-    } else if (!emailRegex.test(emailUser)) {
-      Alert.alert('Lỗi Email','Hãy điền đầy đủ Email và theo đúng định dạng ');
-      setCheckEmail("red");
-      return false
-    } else if (!passwordRegex.test(password)) {
-      Alert.alert('Lỗi Password','Hãy điền đầy đủ Password và theo đúng định dạng');
-      setCheckPassword("red");
-      return false
-    }
-    setCheckEmail("white");
-    setCheckPassword("white");
+    // const emailRegex =
+    //   /^[a-zA-Z0-9._%+-]+[0-9._%+-]@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    // const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{11,}$/;
+    // if (emailUser === '' || password === '') {
+    //   Alert.alert('Lỗi chưa điền', 'Hãy điền đầy đủ');
+    //   setCheckEmail("red");
+    //   setCheckPassword("red");
+    //   return false;
+    // } else if (!emailRegex.test(emailUser)) {
+    //   Alert.alert('Lỗi Email','Hãy điền đầy đủ Email và theo đúng định dạng ');
+    //   setCheckEmail("red");
+    //   return false
+    // } else if (!passwordRegex.test(password)) {
+    //   Alert.alert('Lỗi Password','Hãy điền đầy đủ Password và theo đúng định dạng');
+    //   setCheckPassword("red");
+    //   return false
+    // }
+    // setCheckEmail("white");
+    // setCheckPassword("white");
     return true;
   };
 
@@ -112,7 +116,7 @@ const SignIn = () => {
           const _id = response.user._id;
           setuserInfo({...userInfo, ...response.user});
           setuserID(_id);
-
+          
           setisLogin(true);
           console.log('UserID ' + response.user); // log ra ID
 
@@ -133,11 +137,11 @@ const SignIn = () => {
       <Text style={StyleLogin.HeadingText}>Savvy</Text>
 
       {/* Text Welcome back! */}
-      <Text style={StyleLogin.extraText}>Welcome back!</Text>
+      <Text style={StyleLogin.extraText}>Chúc mừng trở lại!</Text>
 
       {/* TextInput Email */}
       <View>
-        {/* <Text style={StyleLogin.textHint}>Email</Text> */}
+        <Text style={StyleLogin.textHint}>Email</Text>
         <View style={[StyleLogin.input,{borderColor: checkEmail}]}>
           <TextInput
             style={StyleLogin.TextInputUP}
@@ -148,21 +152,19 @@ const SignIn = () => {
       </View>
       {/* TextInput Password */}
       <View>
-        <Text style={StyleLogin.textHintP}>Password</Text>
+        <Text style={StyleLogin.textHintP}>Mật khẩu</Text>
 
         <View style={[StyleLogin.inputP,{borderColor: checkPassword}]}>
           <TextInput
             style={StyleLogin.TextInputUP}
-            placeholder="Enter your password"
+            placeholder="Nhập mật khẩu của bạn"
             underlineColorAndroid="transparent"
             secureTextEntry={showPassword}
-
             onChangeText={setPassword}></TextInput>
 
           <TouchableOpacity
             onPress={() => {
               setShowPassword(!showPassword)
-
             }}
             style={StyleLogin.CTIcon}>
             <Image
@@ -176,7 +178,7 @@ const SignIn = () => {
           </TouchableOpacity>
         </View>
 
-        <Text style={StyleLogin.textHintP}>Password</Text>
+        {/* <Text style={StyleLogin.textHintP}>Password</Text> */}
 
 
 
@@ -185,15 +187,12 @@ const SignIn = () => {
         </TouchableOpacity>
 
 
-        <TouchableOpacity style={StyleLogin.buttonShape} onPress={SignIn}>
+        {/* <TouchableOpacity style={StyleLogin.buttonShape} onPress={SignIn}>
           <Text style={StyleLogin.TextButton}>Sign In</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={StyleLogin.FGcontainer}>
-          <TouchableOpacity style={StyleLogin.FButton}>
-            <Image
-              source={require('../images/icon/Facebook.png')}
-              style={{ width: 35, height: 35, tintColor: COLOR.title }}
-            />
+          <TouchableOpacity style={StyleLogin.FButton} onPress={SignIn}>
+              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold', marginTop: "2%"}}>Đăng nhập</Text>
           </TouchableOpacity>
           <TouchableOpacity style={StyleLogin.GButton} onPress={signIn}>
             <Image
@@ -204,10 +203,10 @@ const SignIn = () => {
         </View>
         <View style={StyleLogin.CSbuttomText}>
           <Text style={StyleLogin.ButtomText1}>
-            You don't have any account?
+            Bạn chưa có tài khoản?
           </Text>
           <TouchableOpacity onPress={moveToSignUp}>
-            <Text style={StyleLogin.ButtomText2}>SignUp</Text>
+            <Text style={StyleLogin.ButtomText2}> Đăng ký</Text>
           </TouchableOpacity>
         </View>
       </View>

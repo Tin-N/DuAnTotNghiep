@@ -92,19 +92,19 @@ const FilterScreen = (props) => {
       
       try {
         const response = await AxiosIntance().get("/productAPI/searchByName?"+createURLstring(valueFilter[0],valueFilter[1],valueFilter[2])+"&skipData="+page);
-        console.log(response +"   " + createURLstring(valueFilter[0],valueFilter[1],valueFilter[2]));
         if (response.result&&response.products.length>0) {
           console.log(response);
           if(page==1){
+            console.log(response +"   " + createURLstring(valueFilter[0],valueFilter[1],valueFilter[2]));
+
             setData(response.products);
             setcountData(response.count)
             console.log("Hellooo");
           }
           else if(page>1)
           {
-
+            setData([...data,...response.products]);
           }
-          setData([...data,...response.products]);
           
           setisLoading(false);
 
@@ -177,7 +177,13 @@ const FilterScreen = (props) => {
           <View style={{alignItems:'center'}}>
             {
               data.length>0?
-                <View >
+                <View
+                style={{
+                  alignItems:'center',
+                  marginLeft:30
+                }}
+                >
+
                   
                         <ProductList
                         count={countData}
