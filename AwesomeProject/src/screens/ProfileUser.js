@@ -66,21 +66,17 @@ const ProfileUser = () => {
   }, [ImgLink])
 
   const UpdateProfile = async () => {
-
-
-
     try {
       // http://localhost:3000/api/UserApi/changeUserInfo?id=654627d67137a3bf678fb544&address=Tran Phu&phoneNumber=0933067567&fullname=Nguyen Trung Thuan
       const response = await AxiosIntance().post("/UserApi/changeUserInfo?id=" + userInfo._id + "&address=" + address + "&phoneNumber=" + phoneNumber + "&fullname=" + fullname + "&avatar=" + ImgLink);
-
       console.log(userInfo._id, phoneNumber, fullname, address, ImgLink);
       if (response.user) {
         console.log("Sửa thành công");
         setImgLink("");
-        navigation.navigate('Home');
-
+        Alert.alert("Thông báo", "Sửa thành công");
+        navigation.navigate('UserScreen');
       } else {
-        // console.log("Sửa thất bại" );
+        console.log("Sửa thất bại" );
       }
 
     } catch (error) {
@@ -175,7 +171,7 @@ const ProfileUser = () => {
           <TouchableOpacity style={[StyleProfile.ButtonCP,{backgroundColor: 'white', borderWidth:0.5, borderColor: COLOR.background}]} onPress={() => Upload()}>
             <Text style={[StyleProfile.TextButton, {color: COLOR.background}]}>Đặt lại</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={StyleProfile.ButtonCP} onPress={() => Upload()}>
+          <TouchableOpacity style={StyleProfile.ButtonCP} onPress={() => UpdateProfile()}>
             <Text style={[StyleProfile.TextButton, {color: 'white'}]}>Cập nhật</Text>
           </TouchableOpacity>
         </View>

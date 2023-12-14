@@ -35,12 +35,14 @@ const ProfileSeller = () => {
     try {
       // http://localhost:3000/api/UserApi/changeUserInfo?id=654627d67137a3bf678fb544&address=Tran Phu&phoneNumber=0933067567&fullname=Nguyen Trung Thuan
       const response= await AxiosIntance().post("/UserApi/changeUserInfo?id="+userInfo._id+"&address="+address+"&phoneNumber="+phoneNumber+"&fullname="+fullname);
-      
+    
       console.log(userInfo._id, phoneNumber,fullname,address );
       if(response.user )
       {
-        console.log("Sửa thành công" );
-        
+        console.log("Sửa thành công");
+        setImgLink("");
+        Alert.alert("Thông báo", "Sửa thành công");
+        navigation.navigate('UserScreen');
       }else{
         console.log("Sửa thất bại" );
       }
@@ -122,7 +124,7 @@ const ProfileSeller = () => {
           </View>
           <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setFullName} placeholder={userInfo.fullname}  />
       </View>
-      <TouchableOpacity style={StyleProfile.ButtonCP}>
+      <TouchableOpacity style={StyleProfile.ButtonCP} onPress={UpdateProfile()}>
           <Text style={StyleProfile.TextButton}>Update</Text> 
       </TouchableOpacity>
     </View>
