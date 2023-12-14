@@ -570,7 +570,7 @@ export const StyleLogin = StyleSheet.create({
     },
     FGcontainer: {
       flexDirection: 'row',
-      width: '94%',
+      width: '100%',
       marginHorizontal: 10,
       marginTop: "4%",
       justifyContent: 'space-around',
@@ -580,7 +580,7 @@ export const StyleLogin = StyleSheet.create({
       backgroundColor: COLOR.background,
       padding: 10,
       height: 55,
-      width: '46%',
+      width: '80%',
       borderRadius: 10,
       marginHorizontal: 0,
     },
@@ -595,14 +595,14 @@ export const StyleLogin = StyleSheet.create({
     },
 
     CbuttomText: {
-      marginTop: '26%',
+      marginTop: '15%',
       flexDirection: 'row',
       justifyContent: 'center',
       width: '94%',
       marginHorizontal: 10,
     },
     CSbuttomText: {
-      marginTop: '40%',
+      marginTop: '30%',
       flexDirection: 'row',
       justifyContent: 'center',
       width: '94%',

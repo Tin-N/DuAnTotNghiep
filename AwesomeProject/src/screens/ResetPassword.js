@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TextInput,
+  Alert
 } from 'react-native';
 import React, {useState} from 'react';
 import {COLOR} from '../css/Theme';
@@ -33,12 +34,11 @@ const ResetPassword = () => {
       {
         console.log(email);
         navigation.navigate("ConfirmPhoneNum", {email: email});
-       
-
+        Alert.alert("Xác nhận email thành công");
       }else{
         // ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);
+        Alert.alert("Xác nhận email không thành công");
       }
-      
     } catch (error) {
       console.log(error);
     }

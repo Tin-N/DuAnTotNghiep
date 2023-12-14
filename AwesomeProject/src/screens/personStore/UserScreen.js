@@ -125,7 +125,10 @@ const UserScreen = () => {
  />
         </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity 
+           onPress={()=>{navigation.navigate("ProfileUser",{userID:userInfo._id,navigation:navigation}); 
+           console.log(userInfo._id)
+        }}>
         <View
           style={{
             flexDirection: 'row',

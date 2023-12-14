@@ -21,6 +21,7 @@ const AxiosIntance = (contentType = 'application/json') => {
 
         // baseURL: 'http://192.168.1.231:3000/Api'
 
+
     });
     axiosInstance.interceptors.request.use(
         async config => {

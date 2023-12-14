@@ -47,6 +47,7 @@ import StatisticSellerScreen from '../screens/personStore/StatisticSellerScreen'
 import ShipperScreen from '../screens/personStore/ShipperScreen';
 import FavoriteScreen from '../screens/FavoriteList';
 import Item from '../component/FavoriteList/Item';
+import UserScreen from '../screens/personStore/UserScreen';
 
 import DetailImage from '../screens/personStore/DetailImage';
 
@@ -84,6 +85,7 @@ const User = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='Splash'>
             <Stack.Screen name='Product' component={ProductHome}></Stack.Screen>
+            <Stack.Screen name='UserScreen' component={UserScreen}></Stack.Screen>
             <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
             <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
             <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
@@ -102,6 +104,7 @@ const Profile = () => {
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProfileScreen'>
             <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
             <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
+            <Stack.Screen name='UserScreen' component={UserScreen}></Stack.Screen>
             <Stack.Screen name='StatisticScreen' component={StatisticSellerScreen}></Stack.Screen>
             <Stack.Screen name='ShipperScreen' component={ShipperScreen}></Stack.Screen>
             <Stack.Screen name='Shipper' component={SProductProcess}></Stack.Screen>
@@ -134,6 +137,7 @@ const ProductHome = () => {
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
             <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
+            <Stack.Screen name='UserScreen' component={UserScreen}></Stack.Screen>
 
             <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
             <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
@@ -261,8 +265,8 @@ const AppNavigator = () => {
     return (
         <>
             {
-                // <Main />
-                <User />
+                <Main />
+                // <User />
                 // <Main/>
             }
         </>

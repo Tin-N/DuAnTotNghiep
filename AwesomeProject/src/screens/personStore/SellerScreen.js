@@ -103,7 +103,10 @@ const SellerScreen = () => {
           <Icon name="chevron-forward" size={30} color="#36abd9" />
         </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+       onPress={()=>{navigation.navigate("ProfileSeller",{userID:userInfo._id,navigation:navigation})}}
+     
+        >
         <View
           style={{
             marginVertical:20
