@@ -7,12 +7,12 @@ const SearchItem = props => {
   const limit = 27;
   const setTextSlice = (text) => {
     if (text.length > limit)
-      return text.slice(0,limit)+"...";
-    
+      return text.slice(0, limit) + "...";
+
     return text;
   }
-  
-  
+
+
 
   // const TextWithLimit = ({ text, limit }) => {
   //   // Kiểm tra xem văn bản có vượt quá giới hạn không
@@ -50,12 +50,13 @@ const SearchItem = props => {
           <Image source={source} style={StyleSearchSuggestions.image} />
           <Text
 
+
           style={{
             textAlignVertical:'center'
           }}
           >
             {setTextSlice(item.keyword)}
-            </Text>
+          </Text>
         </View>
       </TouchableOpacity>
       {enableDelete === true ? (
@@ -72,23 +73,23 @@ const SearchItem = props => {
   );
 }
 
-export const TextWithLimit = ({ text, limit,styleView }) => {
-    // Kiểm tra xem văn bản có vượt quá giới hạn không
-    if (text.length > limit) {
-      // Nếu vượt quá, cắt văn bản và thêm dấu ba chấm
-      const truncatedText = text.slice(0,limit)+"..."
-      return (
-        <TouchableOpacity onPress={()=>{handleTextClick(truncatedText);console.log(truncatedText);}}>
-          <Text style={[StyleSearchSuggestions.text,{fontSize:15}]} >
+export const TextWithLimit = ({ text, limit, styleView }) => {
+  // Kiểm tra xem văn bản có vượt quá giới hạn không
+  if (text.length > limit) {
+    // Nếu vượt quá, cắt văn bản và thêm dấu ba chấm
+    const truncatedText = text.slice(0, limit) + "..."
+    return (
 
-          {truncatedText}
-        </Text>
-        </TouchableOpacity>
-      );
-    }
+      <Text style={[StyleSearchSuggestions.text, { fontSize: 15, fontWeight: '400' }]} >
 
-    // Nếu không vượt quá, hiển thị văn bản gốc
-    return <Text style={StyleSearchSuggestions.text}>{text}</Text>;
-  };
+        {truncatedText}
+      </Text>
+
+    );
+  }
+
+  // Nếu không vượt quá, hiển thị văn bản gốc
+  return <Text style={[StyleSearchSuggestions.text, { fontSize: 15, fontWeight: '400' }]}>{text}</Text>;
+};
 export default SearchItem;
 

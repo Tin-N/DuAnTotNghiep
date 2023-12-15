@@ -22,6 +22,7 @@ const ConfirmPhoneNum = (props) => {
   const {email} = props.route.params;
   const maskedEmail = email.replace(/(?<=.{2}).(?=.*@)/g, '*');
   const navigation = useNavigation();
+
   const confirmSMS = async () => {
     //http://localhost:3000/api/UserApi/verify-email?emailToken=6589&email=thuannicky1606@gmail.com
     const response = await AxiosIntance().post("/UserApi/verify-email?emailToken="+SMS+"&email="+ email);
@@ -40,13 +41,14 @@ const ConfirmPhoneNum = (props) => {
       {/* Text Savvy */}
       <Text
         style={StyleLogin.HeadingTextCP}>
-        Verify your mobile phone
+        Xác nhận Email
       </Text>
 
      
       <Text
         style={StyleLogin.HintTextCP}>
-        Enter the 4-digit code sent to {"\n"} email({maskedEmail})
+        Nhập mã xác nhận vào email{"\n"} ******@gmail.com
+        ({maskedEmail})
 
       </Text>
 
@@ -61,13 +63,13 @@ const ConfirmPhoneNum = (props) => {
           style={StyleLogin.inputCP}
           onChangeText={setSMS}
           placeholder="X"
-          // keyboardType="numeric"
+          keyboardType="numeric"
         />
       </View>
-      <Text style={StyleLogin.Resent}>resent</Text>
+      <Text style={StyleLogin.Resent}>Gửi lại</Text>
 
       <View style={StyleLogin.ContainerSentCode}>
-        <Text style={StyleLogin.SCText1}>Sent reset code in </Text>
+        <Text style={StyleLogin.SCText1}>Mã hết hạn trong </Text>
         <Text style={StyleLogin.SCText2}>03:05 </Text>
 
       </View>
@@ -75,10 +77,12 @@ const ConfirmPhoneNum = (props) => {
     
       <View>
         <TouchableOpacity
-          style={style=StyleLogin.buttonShape} onPress={confirmSMS}> 
+          style={style=StyleLogin.buttonShape} 
+          onPress={() => confirmSMS()}
+          > 
           <Text
             style={style=StyleLogin.TextButton}>
-            Coutinue
+            Xác nhận
           </Text>
         </TouchableOpacity>
 

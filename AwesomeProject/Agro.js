@@ -78,7 +78,6 @@ export const formatDateFormSaleUsing = (startTimestamp, endTimestamp) => {
   const endHour = endTime.getHours().toString().padStart(2, '0');
   const endMinute = endTime.getMinutes().toString().padStart(2, '0');
   const endDateFormatted = `${endDay}/${endMonth} ${endHour}:${endMinute}`
-  console.log(">>>>endDateFormatted: " + endDateFormatted);
   return {
     startDate: startDateFormatted,
     endDate: endDateFormatted

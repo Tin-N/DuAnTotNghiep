@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TextInput,
+  Alert
 } from 'react-native';
 import React, {useState} from 'react';
 import {COLOR} from '../css/Theme';
@@ -33,12 +34,11 @@ const ResetPassword = () => {
       {
         console.log(email);
         navigation.navigate("ConfirmPhoneNum", {email: email});
-       
-
+        Alert.alert("Xác nhận email thành công");
       }else{
         // ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);
+        Alert.alert("Xác nhận email không thành công");
       }
-      
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +51,7 @@ const ResetPassword = () => {
       <Text style={(style = StyleLogin.HeadingText)}>Savvy</Text>
 
       {/* Text Welcome back! */}
-      <Text style={(style = StyleLogin.extraText)}>Reset Password</Text>
+      <Text style={(style = StyleLogin.extraText)}>Đặt lại mật khẩu</Text>
 
       {/* TextInput Email/Phone */}
       <View>
@@ -68,11 +68,11 @@ const ResetPassword = () => {
         <TouchableOpacity
           style={StyleLogin.SButtonShape}
           onPress={checkEmail}>
-          <Text style={StyleLogin.TextButton}>Coutinue</Text>
+          <Text style={StyleLogin.TextButton}>Tiếp tục</Text>
         </TouchableOpacity>
        
 
-        <TouchableOpacity onPress={GotoSignIn}>
+        <TouchableOpacity style={{marginTop:"55%"}} onPress={GotoSignIn}>
           <Text style={StyleLogin.RPBottomText}>
             Continute without signing in
           </Text>

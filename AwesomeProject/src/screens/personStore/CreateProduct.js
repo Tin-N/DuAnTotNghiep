@@ -20,10 +20,9 @@ const CreateProduct = (props) => {
     const { navigation } = props;
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
-    const [items, setItems] = useState([
-        { label: 'Snaker', value: 'Snaker' },
-        { label: 'Clothing', value: 'Clothing' },
-        { label: 'Shirt', value: 'Shirt' },
+
+    const [items2, setItems2] = useState([
+       
     ]);
     const [image, setimage] = useState([]);
     const [name, setName] = useState('');
@@ -41,11 +40,43 @@ const CreateProduct = (props) => {
     const [isDialogVisible2, setDialogVisible2] = useState(false);
     const [sizeModels, setSizeModels] = useState([]);
     const [colorModels, setColorModels] = useState([]);
+
+
+
+    useEffect(() => {
+        const getCategory = async () => {
+            const response = await AxiosIntance().get('/category/getCategoryNotDelete')
+            console.log(">>>>>>>>categories: " + response.categories[0].name);
+            if(response.result == true) {
+                ToastAndroid.show('Lấy category thành công', ToastAndroid.SHORT)
+                setItems2(prevItems => [
+                    ...prevItems,
+                    ...response.categories.map(category => ({
+                        label: category.name,
+                        value: category._id
+                    }))
+                ]);
+                
+                for (let i = 0; i < response.categories.length; i++) {
+                    console.log(">>>>item categories: " + response.categories[i].name);
+                }
+            }
+        }
+        getCategory();
+      return () => {
+        
+      }
+    }, [])
+    
+
+
     const opacityBackground = () => {
         if (isDialogVisible == true || isDialogVisible2 == true)
             return 0.4
         return 1
     }
+
+
     const MyDialog = ({ isVisible, onClose }) => {
         const [colorVariations, setColorVariations] = useState('');
         const [hexColor, setHexColor] = useState('');
@@ -89,16 +120,17 @@ const CreateProduct = (props) => {
                 <KeyboardAwareScrollView keyboardShouldPersistTaps='always'>
                     <View style={StyleDialogShopping.container}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
-                            <Text style={{ color: 'black' }}>Màu của biến thể sản phẩm</Text>
+                            <Text style={{ color: 'black', fontSize:18 }}>Màu biến thể</Text>
                             <TouchableOpacity onPress={onClose}>
                                 <Image style={{ width: 20, height: 20 }} source={require('../../images/deleteimg1.png')} />
                             </TouchableOpacity>
                         </View>
-                        <View style={{ padding: 5, borderWidth: 0.2, marginTop: 10 }}>
+                        <View style={{ padding: 5, marginTop: 10 }}>
                             <TextInput onChangeText={(text) => setColorVariations(text)}
                                 value={colorVariations} style={{ borderBottomWidth: 0.2 }} placeholder='Tên màu' />
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                <TextInput style={{
+                            <View style={{ flexDirection: 'row', alignItems:'center', 
+                            marginLeft:20, marginRight:20, justifyContent:'space-between' }}>
+                                <TextInput editable={false} style={{
                                     width: 150, borderWidth: 1,
                                     borderColor: 'black', marginTop: 5, height: 50, paddingLeft: 10, borderRadius: 5
                                 }} onChangeText={(text) => setHexColor(text)}
@@ -147,6 +179,8 @@ const CreateProduct = (props) => {
             </Modal>
         );
     };
+
+
     const MyDialog2 = ({ isVisible2, onClose2 }) => {
         const [sizeVariations, setSizeVariations] = useState('');
         const addVariations2 = () => {
@@ -169,11 +203,10 @@ const CreateProduct = (props) => {
                                 <Image style={{ width: 20, height: 20 }} source={require('../../images/deleteimg1.png')} />
                             </TouchableOpacity>
                         </View>
-                        <View style={{ padding: 5, borderWidth: 0.2, marginTop: 10 }}>
+                        <View style={{ marginTop: 10, 
+                            borderWidth:0.5, borderColor:'#9a9898', borderRadius:5 }}>
                             <TextInput onChangeText={(text) => setSizeVariations(text)}
                                 value={sizeVariations} />
-                        </View>
-                        <View style={StyleDialogShopping.line}>
                         </View>
                         <View style={{
                             flexDirection: 'row', position: 'absolute',
@@ -202,9 +235,13 @@ const CreateProduct = (props) => {
             </Modal>
         );
     };
+
+
     const goBack = () => {
         navigation.goBack();
     }
+
+
     const addVariationsToDb = async () => {
         // Thêm productID cho tung phan tu
         const updatedArray = colorModels.map(item => {
@@ -220,6 +257,8 @@ const CreateProduct = (props) => {
         setcheckimgLink2(false);
         setColorModels([]);
     }
+
+
     const addVariationsToDb2 = async () => {
         const updatedArray = sizeModels.map(item => {
             return { ...item, productID: productID };
@@ -232,6 +271,8 @@ const CreateProduct = (props) => {
         }
         setSizeModels([]);
     }
+
+
     const addProduct = async () => {
         try {
             const request = await AxiosIntance().post('/productAPI/addProduct',
@@ -250,6 +291,8 @@ const CreateProduct = (props) => {
         }
 
     }
+
+
     useEffect(() => {
         if (checkimgLink) {
             addProduct();
@@ -261,6 +304,7 @@ const CreateProduct = (props) => {
 
     }, [checkimgLink, checkimgLink2])
 
+
     const getImageFromLibrary = async () => {
         const result = await launchImageLibrary();
         if (!result.didCancel) {
@@ -270,6 +314,8 @@ const CreateProduct = (props) => {
             setimage([...image, selectedImage]);
         }
     }
+
+
     const Upload2 = async () => {
         const img = [];
         for (i = 0; i < colorModels.length; i++) {
@@ -285,6 +331,8 @@ const CreateProduct = (props) => {
         }
         setcheckimgLink2(true);
     }
+
+
     // Upload image to firebase
     const Upload = async () => {
         const img = [];
@@ -300,24 +348,34 @@ const CreateProduct = (props) => {
         setimageLink(img);
         setcheckimgLink(true);
     }
+
+
     const buttonImg = () => {
         if (image.length > 0)
             return 'none'
         return 'flex';
     }
+
+
     const buttonImg2 = () => {
         if (image.length > 0)
             return 'flex'
         return 'none';
     }
+
+
     const removeImageFromImageArray = (imageToRemove) => {
         const updatedImageArray = image.filter((image) => image !== imageToRemove);
         setimage(updatedImageArray);
     };
+
+
     const removeColorFromColorModels = (imageToRemove) => {
         const updatedImageArray = colorModels.filter((image) => image !== imageToRemove);
         setColorModels(updatedImageArray);
     }
+
+
     return (
         <View style={{
             opacity: opacityBackground(), backgroundColor: 'white',
@@ -408,10 +466,10 @@ const CreateProduct = (props) => {
                                 <DropDownPicker
                                     open={open}
                                     value={value}
-                                    items={items}
+                                    items={items2}
                                     setOpen={setOpen}
                                     setValue={setValue}
-                                    setItems={setItems}
+                                    setItems={setItems2}
                                     placeholder={'Chưa chọn'}
                                     props={{
                                         activeOpacity: 1

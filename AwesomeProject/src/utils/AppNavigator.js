@@ -41,11 +41,16 @@ import DetailProduct from '../screens/personStore/DetailProduct';
 import CreateProduct from '../screens/personStore/CreateProduct';
 import ManageProduct from '../screens/personStore/ManageProduct';
 import UpdateProduct from '../screens/personStore/UpdateProduct';
+import OrderHistory from '../screens/personStore/UserOrderHistory/OrderHistory'
+import OrderDetailHistory from '../screens/personStore/UserOrderHistory/OrderDetailHistory'
 import StatisticSellerScreen from '../screens/personStore/StatisticSellerScreen';
 import ShipperScreen from '../screens/personStore/ShipperScreen';
 import FavoriteScreen from '../screens/FavoriteList';
 import Item from '../component/FavoriteList/Item';
 import CategoryScreen from '../screens/CategoryFilterProduct';
+import UserScreen from '../screens/personStore/UserScreen';
+
+import DetailImage from '../screens/personStore/DetailImage';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -53,7 +58,7 @@ const Stack = createNativeStackNavigator();
 const ProductProcessStack = () => {
     return (
         <Stack.Navigator initialRouteName='ProductProcessOverview'>
-            <Stack.Screen name="ProductProcessOverview" component={ProductProcessOverview} />
+            <Stack.Screen options={{ headerShown: false }} name="ProductProcessOverview" component={ProductProcessOverview} />
             <Stack.Screen options={{ headerShown: false }} name="Product Process" component={ProductProcess} />
         </Stack.Navigator>
     );
@@ -62,16 +67,26 @@ const ProductProcessStack = () => {
 const ShipperStack = () => {
     return (
         <Stack.Navigator initialRouteName='SProductProcess'>
-            <Stack.Screen name="SProductProcess" component={SProductProcess} />
+            <Stack.Screen options={{ headerShown: false }} name="SProductProcess" component={SProductProcess} />
             <Stack.Screen options={{ headerShown: false }} name="AllProductDetails" component={AllProductDetails} />
         </Stack.Navigator>
     );
 };
 
+const OrderHistoryStack = () => {
+    return (
+        <Stack.Navigator initialRouteName='OrderHistory'>
+            <Stack.Screen options={{ headerShown: false }} name="OrderHistory" component={OrderHistory} />
+            <Stack.Screen options={{ headerShown: false }} name="OrderDetailHistory" component={OrderDetailHistory} />
+        </Stack.Navigator>
+    );
+}
+
 const User = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='Splash'>
             <Stack.Screen name='Product' component={ProductHome}></Stack.Screen>
+            <Stack.Screen name='UserScreen' component={UserScreen}></Stack.Screen>
             <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
             <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
             <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
@@ -90,6 +105,7 @@ const Profile = () => {
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProfileScreen'>
             <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
             <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
+            <Stack.Screen name='UserScreen' component={UserScreen}></Stack.Screen>
             <Stack.Screen name='StatisticScreen' component={StatisticSellerScreen}></Stack.Screen>
             <Stack.Screen name='ShipperScreen' component={ShipperScreen}></Stack.Screen>
             <Stack.Screen name='Shipper' component={SProductProcess}></Stack.Screen>
@@ -100,11 +116,13 @@ const Profile = () => {
             <Stack.Screen name='ResetPassword' component={ResetPassword}></Stack.Screen>
             <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
-            <Stack.Screen name='Prod Process' component={ProductProcessStack}/>
-            <Stack.Screen name='FavoriteScreen' component={FavoriteScreen}/>
+            <Stack.Screen name='Prod Process' component={ProductProcessStack} />
+
+            <Stack.Screen name='FavoriteScreen' component={FavoriteScreen} />
             <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
 
-<Stack.Screen name='DetailProduct' component={DetailProduct} />
+
+            <Stack.Screen name='DetailProduct' component={DetailProduct} />
             {/* FavoriteScreen */}
         </Stack.Navigator>
     )
@@ -120,6 +138,7 @@ const ProductHome = () => {
             <Stack.Screen name='DetailFeedback' component={DetailFeedback}></Stack.Screen>
             <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
+            <Stack.Screen name='UserScreen' component={UserScreen}></Stack.Screen>
 
             <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
             <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
@@ -131,6 +150,15 @@ const ProductHome = () => {
 
             </Stack.Screen>
             <Stack.Screen name='ManageProduct' component={ManageProduct} />
+
+            <Stack.Screen name='CreateProduct'
+                options={{
+                    presentation: 'modal',
+                    animationTypeForReplace: 'push',
+                    animation: 'slide_from_right'
+                }}
+                component={CreateProduct} />
+
             <Stack.Screen name='UpdateProduct'
                 options={{
                     presentation: 'modal',
@@ -138,6 +166,13 @@ const ProductHome = () => {
                     animation: 'slide_from_right'
                 }}
                 component={UpdateProduct} />
+
+            <Stack.Screen name='DetailImage' component={DetailImage}
+                options={{
+                    presentation: 'modal',
+                    animationTypeForReplace: 'push',
+                    animation: 'slide_from_right'
+                }} />
         </Stack.Navigator >
     )
 }
@@ -183,10 +218,20 @@ const Main = () => {
                     } else if (route.name === 'Cart') {
 
                         iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
-                    } else if (route.name === 'Profile') {
+                        // } else if (route.name === 'Profile') {
+
+
+                        //     iconName = focused ? 'people-sharp' : 'people-outline';
+                        // } else if (route.name === 'SignUp') {
+
+                        //     iconName = focused ? 'people-sharp' : 'people-outline';
+                        // } else if (route.name === 'Prod Process') {
+                        //     iconName = focused ? 'clipboard' : 'clipboard-outline';
+
+                    } else if (route.name === 'Login') {
 
                         iconName = focused ? 'people-sharp' : 'people-outline';
-                    } 
+                    }
                     return <Icon1 name={iconName} size={size} color={color} />
                 },
                 tabBarActiveTintColor: '#3669C9',
@@ -197,10 +242,22 @@ const Main = () => {
             })}
         >
             <Tab.Screen name="Home" component={ProductHome} />
+
+            <Tab.Screen name="Order" component={Order} />
+            {/* <Tab.Screen name="ProfileScreen" component={ProfileScreen} /> */}
+            {/* <Tab.Screen name="Prod Process" component={ProductProcessStack} /> */}
+            {/* <Tab.Screen name="Shipper" component={SProductProcess} />
+            <Tab.Screen name="Test" component={censorshipProduct} /> */}
+
+            <Tab.Screen name="Login" component={SignIn} />
+
+
+
+
             <Tab.Screen name="Cart" component={Order} />
             <Tab.Screen name="Profile" component={Profile} />
-            {userRole == 3 ? <Tab.Screen name="Shipper" component={ShipperStack}/> : null}
-            
+            {userRole == 3 ? <Tab.Screen name="Shipper" component={ShipperStack} /> : null}
+
         </Tab.Navigator>
     )
 }

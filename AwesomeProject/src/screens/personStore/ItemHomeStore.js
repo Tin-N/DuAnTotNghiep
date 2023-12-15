@@ -25,7 +25,7 @@ const ItemHomeStore = (props) => {
     }
   }, [dulieu]);
   const handleOnClick = () => {
-    navigation.navigate("DetailProduct", { itemId: dulieu._id });
+    navigation.navigate("DetailProduct", { itemId: dulieu._id, saleOffID: dulieu.saleOffID });
   }
   return (
     <View style={[StyleHomeStore.boxProduct]}>
@@ -44,7 +44,9 @@ const ItemHomeStore = (props) => {
         <View style={{padding:5}}>
           <TextWithLimit text={dulieu.name} limit={14} 
 
+
             styleView={{fontSize:25}}
+
           />
 
           <Text>
@@ -60,7 +62,7 @@ const ItemHomeStore = (props) => {
 
            
             fontSize: 15, color: 'black', marginLeft:5,
-            paddingVertical:1,paddingBottom:10
+            paddingVertical:1
 
 
          

@@ -23,7 +23,7 @@ import DialogFeedback from '../../component/DialogFeedback/DialogFeedback';
 import { AppContext } from '../../utils/AppContext';
 const ObjectID = require('bson-objectid');
 
-
+const imgAvatar = { uri: 'http://designercomvn.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2018/12/06090103/logo-shop-qu%E1%BA%A7n-%C3%A1o-8.png' }
 
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
@@ -37,10 +37,11 @@ const DetailProduct = (props) => {
 
 
     // Product
-
+    const [userIDStore, setuserIDStore] = useState('')
     const [productPrice, setProductPrice] = useState('');
     const [dataProduct, setDataProduct] = useState({});
     const [imageProduct, setImageProduct] = useState('');
+    const [arrayImageProduct, setarrayImageProduct] = useState([])
     const [modalVisible, setModalVisible] = useState(false);
     const [star, setStar] = useState(0);
 
@@ -95,6 +96,8 @@ const DetailProduct = (props) => {
             }
         ).start();
     }, [slideAnim]);
+
+
     const TextTime = (props) => {
         const { startDay, endDay } = props;
         const [Time, setTime] = useState("");
@@ -103,12 +106,11 @@ const DetailProduct = (props) => {
         const threeDaysFromNow = new Date(now);
         threeDaysFromNow.setDate(now.getDate() + 3); // Thêm 3 ngày
         useEffect(() => {
-            if (sales.length != 0 && sales.endDay > new Date().getTime()) {
-                console.log(">>>>sale: " + sales[0].endDay);
+            if (Object.keys(sales).length > 0 && sales.endDay > new Date().getTime()) {
                 let timer = setInterval(() => {
                     const onSaleTime = calculateTimeDifference(parseFloat(sales.startDay), new Date().getTime(), parseFloat(sales.endDay));
                     setTime(onSaleTime)
-                    console.log(">>>>>dawdawdaw " + sales[0].startDay + " " + new Date().getTime())
+                    console.log(">>>>>dawdawdaw " + sales.startDay + " " + new Date().getTime())
                     // if (sales[0].startDay > new Date().getTime()){
                     //     setonProductSaleOff(false)
                     //         setonProductSaleOff(true)
@@ -126,28 +128,39 @@ const DetailProduct = (props) => {
             </View>
         )
     }
+
+
     useEffect(() => {
         const getSalesCurrent = async () => {
-            const response = await AxiosIntance().get('/saleOffAPI/getSaleApplyBySaleID?saleID=' + saleOffID);
-            if (response.result == true && response.saleOff.length != 0) {
-                setSales(response.saleOff);
-                setendDate(response.saleOff.endDay);
-                setstartDate(response.saleOff.startDay);
-                setPercentSales(response.saleOff.saleOff);
-                setBannerSale("flex");
+            const response = await AxiosIntance().get('/saleOffAPI/getSaleApplyBySaleID?saleID=' + params.saleOffID);
+            console.log("sale detailProduct: " + params.sale);
+            if (typeof params.saleOffID != "undefined") {
+                if (response.result == true && response.saleOff != false && response.saleOff.endDay > new Date().getTime()) {
+                    setSales(response.saleOff);
+                    setendDate(response.saleOff.endDay);
+                    setstartDate(response.saleOff.startDay);
+                    setPercentSales(response.saleOff.saleOff);
+                    setBannerSale("flex");
+                } else {
+                    ToastAndroid.show("Không lấy được dũ liệu sale", ToastAndroid.SHORT)
+                }
             } else {
-
+                ToastAndroid.show("Không có dữ liệu sale để lấy", ToastAndroid.SHORT)
             }
         }
         getSalesCurrent();
         return () => {
         }
-    }, [])
+    }, [params.saleOffID])
+
+
     const opacityBackground = () => {
         if (isDialogVisible == true)
             return 0.5
         return 1
     }
+
+
     const heartHandler = async () => {
         console.log(favorite);
         if (!isLogin) {
@@ -191,18 +204,30 @@ const DetailProduct = (props) => {
         
     }
 
+
     const handlerDetail = () => {
         navigation.navigate("DetailFeedback", { itemId: params.itemId })
     }
+
+
     const back = () => {
         navigation.goBack();
     }
     const Separator = () => {
         return <View style={StyleDetailProduct.separator} />;
     };
+
+
     const homeStoreHandler = () => {
         navigation.navigate('HomeStore')
     }
+
+
+
+    const detailImageHandler = () => {
+        navigation.navigate('DetailImage', {dataImage: arrayImageProduct})
+    }
+
 
     useEffect(() => {
         navigation.getParent()?.setOptions({
@@ -228,7 +253,8 @@ const DetailProduct = (props) => {
                     setownerID(response.products.userID);
                     setproductQuantity(response.products.quantity);
                     setsaleOffID(response.products.saleOff);
-
+                    setuserIDStore(response.products.userID);
+                    setarrayImageProduct(response.products.image);
                 }
             } catch (error) {
                 console.log("Product Detail: lỗi lấy dữ liệu: " + error)
@@ -248,6 +274,7 @@ const DetailProduct = (props) => {
                 }
            }
         }
+
         // Get favorite 
         const getFavorite = async () => {
             const response = await AxiosIntance().get("/favoriteApi/getFavorite?userID=" + userInfo._id + "&productID=" + params.itemId);
@@ -435,6 +462,7 @@ const DetailProduct = (props) => {
                 if (orderDetailResponse.error == false) {
                     const orderResponse = await AxiosIntance().post('/order/add',
                         {
+                            userID,
                             orderDetailID: objectId,
                             orderDate: new Date(),
                             deliveryStatus: 'Pending',
@@ -606,41 +634,28 @@ const DetailProduct = (props) => {
                             }
                         </View>
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10, marginLeft: 250 }}>
-                            <TouchableOpacity onPress={() => quantityHandler("-")} style={{
-                                width: 35, height: 30,
-                                backgroundColor: '#EEEEEE', alignItems: 'center',
-                            }}>
-                                <Text style={{ fontSize: 20 }}>-</Text>
-                            </TouchableOpacity>
-                            <Text style={{ padding: 5, fontSize: 20 }}>{quantity}</Text>
-                            <TouchableOpacity onPress={() => quantityHandler("+")} style={{
-                                width: 35, height: 30,
-                                backgroundColor: '#EEEEEE', alignItems: 'center'
-                            }}>
-                                <Text style={{ fontSize: 20 }}>+</Text>
-                            </TouchableOpacity>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center', marginTop: 10, marginLeft: 10,
+                            marginRight: 10, justifyContent: 'space-between'
+                        }}>
 
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center', marginTop: 10,
-                                marginLeft: 10, width: 350, justifyContent: 'space-between'
-                            }}>
-                                <Text style={{ fontSize: 18, color: 'black' }}>Số lượng</Text>
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <TouchableOpacity onPress={() => quantityHandler("-")} style={{
-                                        backgroundColor: '#EEEEEE'
-                                    }}>
-                                        <Icon1 name='remove-outline' size={15} style={{ padding: 3 }} />
-                                    </TouchableOpacity>
-                                    <Text style={{ padding: 5, fontSize: 20 }}>{quantity}</Text>
-                                    <TouchableOpacity onPress={() => quantityHandler("+")} style={{
-                                        backgroundColor: '#EEEEEE'
-                                    }}>
-                                        <Icon1 name='add-outline' size={15} style={{ padding: 3 }} />
-                                    </TouchableOpacity>
-                                </View>
+
+                            <Text style={{ fontSize: 18 }}>Số lượng</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <TouchableOpacity onPress={() => quantityHandler("-")} style={{
+                                    backgroundColor: '#EEEEEE'
+                                }}>
+                                    <Icon1 name='remove-outline' size={15} style={{ padding: 3 }} />
+                                </TouchableOpacity>
+                                <Text style={{ padding: 5, fontSize: 20 }}>{quantity}</Text>
+                                <TouchableOpacity onPress={() => quantityHandler("+")} style={{
+                                    backgroundColor: '#EEEEEE'
+                                }}>
+                                    <Icon1 name='add-outline' size={15} style={{ padding: 3 }} />
+                                </TouchableOpacity>
                             </View>
+
                         </View>
                     </ScrollView>
 
@@ -666,19 +681,27 @@ const DetailProduct = (props) => {
     }
     return (
         <View style={{ flex: 1, backgroundColor: 'white', opacity: opacityBackground() }}>
-            <View style={StyleDetailProduct.menu}>
+            <View style={{ padding: 10, alignItems: 'center', flexDirection: 'row', elevation: 5 }}>
                 <TouchableOpacity onPress={back}>
-                    <Image source={require('../../images/backic.png')} />
+                    <Icon1 name="chevron-back-outline" size={20}></Icon1>
                 </TouchableOpacity>
-                <Text style={StyleDetailProduct.textTitle}>
+                <Text style={{ fontSize: 20, fontFamily: 'TiltNeon-Regular', color: 'black', marginLeft: 10 }}>
                     T. Tin Sản Phẩm
                 </Text>
             </View>
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 overScrollMode='never'>
-                <ImageBackground source={imageProduct ? { uri: imageProduct } : null} resizeMode='cover' style={{ width: width, height: 320 }}>
-                </ImageBackground>
+                <TouchableOpacity onPress={detailImageHandler} activeOpacity={1}>
+                    <ImageBackground source={imageProduct ? { uri: imageProduct } : null} resizeMode='cover' style={{ width: width, height: 320 }}>
+                        <Text style={{
+                            color: 'white', position: 'absolute',
+                            bottom: 0, left: 0, margin: 10, fontSize: 18,
+                            backgroundColor: '#999999', width: 65, textAlign: 'center', borderRadius: 15
+                        }}>1/{arrayImageProduct.length}</Text>
+                    </ImageBackground>
+                </TouchableOpacity>
+
                 <Animated.View
                     style={{
                         ...StyleDetailProduct.banner,
@@ -703,7 +726,7 @@ const DetailProduct = (props) => {
                 </Animated.View>
                 <View>
                     {
-                        sales.length > 0 ?
+                        Object.keys(sales).length > 0 && percentSales != 0 ?
                             <View style={{ flexDirection: 'row', padding: 10 }}>
                                 <Text style={StyleDetailProduct.textd}>
                                     đ
@@ -712,7 +735,7 @@ const DetailProduct = (props) => {
                                     {formatPrice(productPrice - (productPrice * percentSales).toFixed(0))}
                                 </Text>
                                 <Text style={StyleDetailProduct.textSalePrice}>
-                                    đ{productPrice}
+                                    đ{formatPrice(productPrice)}
                                 </Text>
                                 <Text style={StyleDetailProduct.textBoxSale}>
                                     {percentSales * 100}%
@@ -720,6 +743,9 @@ const DetailProduct = (props) => {
                             </View>
                             :
                             <View style={{ flexDirection: 'row', padding: 10 }}>
+                                <Text style={StyleDetailProduct.textd}>
+                                    đ
+                                </Text>
                                 <Text style={StyleDetailProduct.textPrice}>
                                     {formatPrice(productPrice)}
                                 </Text>
@@ -753,16 +779,30 @@ const DetailProduct = (props) => {
 
                     
                         </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image style={{ width: 25, height: 25, marginTop: 3 }} source={require('../../images/messenger.jpg')} />
-                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={StyleDetailProduct.line}></View>
-                            
-                            <View style={{}}>
 
-                            </View>
+                <View style={{ padding: 10, flexDirection: 'row' }}>
+                    <View style={{
+                        width: 60, height: 60, borderRadius: 10, overflow: 'hidden',
+                        borderWidth: 0.5, borderColor: '#cfcccc'
+                    }}>
+                        <Image style={{ width: 60, height: 60 }} source={imgAvatar} />
+                    </View>
+                    <View style={{ margin: 10 }}>
+                        <Text style={{ fontSize: 18, color: 'black' }}>
+                            BUMDES Desa Sidosari
+                        </Text>
+                        <Text>Đánh giá tích cực 94% | Active 7 sec...</Text>
+                    </View>
+                    <TouchableOpacity style={{
+                        backgroundColor: '#3669c9',
+                        position: 'absolute', top: 0, right: 0, margin: 10, padding: 8, borderRadius: 20
+                    }}>
+                        <Text style={{ color: 'white', fontWeight: 'bold' }}>Tới Shop</Text>
+                    </TouchableOpacity>
+                </View>
 
                 <View style={StyleDetailProduct.line}></View>
                  <View style={{ marginBottom: 20 }}>
@@ -803,7 +843,7 @@ const DetailProduct = (props) => {
                         ItemSeparatorComponent={Separator} />
                    </View>
                 <View style={StyleDetailProduct.line}></View>
-                <View style={{marginBottom:100}}>
+                <View style={{ marginBottom: 100 }}>
                     <View style={{
                         height: 50, alignItems: 'center',
                         backgroundColor: '#f5f5f5',
@@ -830,12 +870,12 @@ const DetailProduct = (props) => {
             <View style={StyleDetailProduct.bottom}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <TouchableOpacity onPress={homeStoreHandler} style={{ paddingLeft: 10, paddingRight: 10, }}>
-                        <Image style={StyleDetailProduct.image} source={require('../../images/avatarPersonStore.png')} />
+                        <Image style={StyleDetailProduct.image} source={imgAvatar} />
                         <Text style={{ fontSize: 12, textAlign: 'center' }}>Store</Text>
                     </TouchableOpacity>
                     <Image style={{ height: 45, marginTop: -4 }} source={require('../../images/lineheight.png')} />
-                    <View style={{ paddingLeft: 10, paddingRight: 10 }}>
-                        {/* <Image style={StyleDetailProduct.image} source={require('../../images/iconchat1.png')} /> */}
+                    <View style={{ paddingLeft: 10, paddingRight: 10, marginTop: 10, alignItems: 'center' }}>
+                        <Icon1 name="chatbubble-ellipses-outline" size={20}></Icon1>
                         <Text style={{ fontSize: 12, textAlign: 'center' }}>Chat</Text>
                     </View>
                 </View>

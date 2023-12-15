@@ -32,7 +32,6 @@ import UserScreen from './src/screens/personStore/UserScreen';
 import FavoriteScreen from './src/screens/FavoriteList';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 
-
 const Stack = createNativeStackNavigator()
 
 

@@ -21,11 +21,54 @@ import {useNavigation} from '@react-navigation/native'
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
-
   const [confirmPass,setConfirmPass]=React.useState("");
   const [emailUser,setEmailUser]=React.useState("");
   const [password,setPassword]=React.useState("");
   const navigation = useNavigation();
+
+  
+  const [isFocusedEmail, setIsFocusedEmail] = useState(false);
+  const [isFocusedPassword, setIsFocusedPassword] = useState(false);
+  const [isFocusedPasswordCF, setIsFocusedPasswordCF] = useState(false);
+
+  const handleFocusEmail = () => {
+    setIsFocusedEmail(true);
+  };
+
+  const handleBlurEmail = () => {
+    setIsFocusedEmail(false);
+  };
+  const handleFocusPassword = () => {
+    setIsFocusedPassword(true);
+  };
+
+  const handleBlurPassword = () => {
+    setIsFocusedPassword(false);
+  };
+  const handleFocusPasswordCF = () => {
+    setIsFocusedPasswordCF(true);
+  };
+
+  const handleBlurPasswordCF = () => {
+    setIsFocusedPasswordCF(false);
+  };
+  const signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const usrInfo = await GoogleSignin.signIn();
+      setuserInfo(usrInfo);
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
 
   
 //http://localhost:3000/api/UserApi/register?email=thuan1234@gmail.com&password=1234
@@ -34,51 +77,44 @@ const SignUp = () => {
   }
   const validation = () => {
     const emailRegex =
-    /^[a-zA-Z0-9._%+-]+[0-9._%+-]@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{11,}$/;
+    /^[a-zA-Z0-9._%+-]+[0-9._%+-]@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; //  gồm chữ, số @ gmail.com
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{11,}$/; // có trên 11 kí tự
   if (emailUser === '' || password === '') {
     Alert.alert('Lỗi chưa điền', 'Hãy điền đầy đủ');
-    setCheckEmail("yellow");
-    setCheckPassword("yellow");
     return false;
   } else if (!emailRegex.test(emailUser)) {
-    Alert.alert('Lỗi Email','Hãy điền đầy đủ Email và theo đúng định dạng ');
-    setCheckEmail("yellow");
+    Alert.alert('Email sai định dạng','Hãy điền theo đúng định dạng');
+   
     return false
   } else if (!passwordRegex.test(password)) {
-    Alert.alert('Lỗi Password','Hãy điền đầy đủ Password và theo đúng định dạng');
-    setCheckPassword("yellow");
+    Alert.alert('Lỗi mật khẩu',' mật khẩu quá ngắn, phải đủ 11 ký tự');
+   
+    return false
+  }else if (password!=confirmPass) {
+    Alert.alert('Lỗi mật khẩu',' mật khẩu không trùng khớp');
+ 
     return false
   }
-  setCheckEmail("white");
-  setCheckPassword("white");
+
+
   return true;
 };
 
-  const SignUpp= async()=>{
-  
-      
+  const SignUpp= async()=>{ 
       try {
-
-        const response= await AxiosIntance().post("/UserApi/register?email="+ emailUser + "&password="+ password);
-        // console.log(password);
-        // const _id = response.user._id;
-
-
-        if(response.result==true)
-        {
-          // ToastAndroid.show("Đăng ký thành công",ToastAndroid.SHORT);
-          Alert.alert("","Đăng ký thành công")
-          navigation.navigate("SignIn");
-          // console.log(response);
+        if(validation()==true){
+          const response= await AxiosIntance().post("/UserApi/register?email="+ emailUser + "&password="+ password);
+          if(response.result==true)
+          {
+            Alert.alert("","Đăng ký thành công")
+            navigation.navigate("SignIn");
+          }
+            else
+            ToastAndroid.show("Đăng ký thất bại",ToastAndroid.SHORT);
         }
-          else
-          ToastAndroid.show("Đăng ký thất bại",ToastAndroid.SHORT);
-
       } catch (error) {
         console.log(error);
       }
-   
   }
 
   return (
@@ -97,12 +133,14 @@ const SignUp = () => {
 
       {/* TextInput Email */}
       <View>
-        {/* <Text style={StyleLogin.textHint}>Email</Text> */}
+        <Text style={StyleLogin.textHint}>Email</Text>
 
-        <View style={StyleLogin.input}>
+        <View style={[StyleLogin.input,{borderColor: isFocusedEmail ? 'blue' : 'white', }]}>
           <TextInput
             style={StyleLogin.TextInputUP}
-            placeholder="Email"
+            onFocus={handleFocusEmail}
+            onBlur={handleBlurEmail}
+            placeholder="Clavi@gmail.com"
             keyboardType="default"
             onChangeText={setEmailUser}
           />
@@ -111,12 +149,14 @@ const SignUp = () => {
 
       {/* TextInput Password */}
       <View>
-        <Text style={StyleLogin.textHint}>Email Error Validation</Text>
+        <Text style={StyleLogin.textHint}>Mật khẩu</Text>
 
-        <View style={StyleLogin.input}>
+        <View style={[StyleLogin.input,{borderColor: isFocusedPassword ? 'blue' : 'white'}]}>
           <TextInput
             style={StyleLogin.TextInputUP}
-            placeholder="Enter your password"
+            onFocus={handleFocusPassword}
+            onBlur={handleBlurPassword}
+            placeholder="*************"
             underlineColorAndroid="transparent"
             secureTextEntry={showPassword}
             onChangeText={setPassword}
@@ -141,12 +181,14 @@ const SignUp = () => {
         
 
         {/* TextInput Confirm Password */}
-        <Text style={StyleLogin.textHint}>Password Error Validation</Text>
+        <Text style={StyleLogin.textHint}>Xác nhận mật khẩu</Text>
 
-        <View style={StyleLogin.input}>
+        <View style={[StyleLogin.input,{borderColor: isFocusedPasswordCF ? 'blue' : 'white'}]}>
           <TextInput
             style={StyleLogin.TextInputUP}
-            placeholder="Enter your password again"
+            placeholder="*************"
+            onFocus={handleFocusPasswordCF}
+            onBlur={handleBlurPasswordCF}
             underlineColorAndroid="transparent"
             secureTextEntry={showConfirmPassword}
             onChangeText={setConfirmPass}
@@ -169,7 +211,7 @@ const SignUp = () => {
           </TouchableOpacity>
           
         </View>
-        <Text style={StyleLogin.textHint}>Password Error Validation</Text>
+        {/* <Text style={StyleLogin.textHint}>Password Error Validation</Text> */}
 
          {/* TextInput Confirm Password */}
 
@@ -186,12 +228,12 @@ const SignUp = () => {
           style={StyleLogin.CbuttomText}>
           <Text
             style={StyleLogin.ButtomText1}>
-            Bạn mới biết tới SavvyShop?
+            Bạn đã có tài khoản SavvyShop?
           </Text>
           <TouchableOpacity onPress={moveToSignIn}>
             <Text
               style={StyleLogin.ButtomText2}>
-              Đăng ký
+              Đăng nhập
             </Text>
           </TouchableOpacity>
         </View>

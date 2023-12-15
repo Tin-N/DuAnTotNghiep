@@ -18,7 +18,7 @@ import { storage } from '../../utils/FirebaseConfig';
 import { formatDateFormSaleUsing } from '../../../Agro';
 import { ScrollView } from 'react-native';
 const TabSaleProduct = ({ route }) => {
-    const { saleOffID } = route.params;
+    const { saleOffID, productID } = route.params;
     const [titleSale, setTitleSale] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
@@ -59,6 +59,7 @@ const TabSaleProduct = ({ route }) => {
 
     const applyTicketSaleToProduct = async (saleOffID) => {
         const request = await AxiosIntance().post('/productAPI/updateProduct', { productID: productID, saleOffID: saleOffID })
+        console.log("result Apply sale: " + request);
         if (request.result == true) {
             ToastAndroid.show('Đã áp dụng ticket sale', ToastAndroid.SHORT);
         }
@@ -67,33 +68,40 @@ const TabSaleProduct = ({ route }) => {
     useEffect(() => {
         const getSalesCurrent = async () => {
             const response = await AxiosIntance().get('/saleOffAPI/getSaleApplyBySaleID?saleID=' + saleOffID);
+            console.log(saleOffID);
+            console.log(response);
             console.log(">>>>>this is startDate: " + response.saleOff.startDay);
-            if (response.result == true) {
-                setSales(response.saleOff);
-                let time = formatDateFormSaleUsing(response.saleOff.startDay, response.saleOff.endDay)
-                console.log(">>>>>time " + time.startDate);
-                setstartDaySaleUsing(time.startDate)
-                setendDaySaleUsing(time.endDate)
-                // // const startTime = new Date(response.saleOff[0].startDay)
-                // // const startDay = startTime.getDate().toString().padStart(2, '0');
-                // // const startMonth = (startTime.getMonth() + 1).toString().padStart(2, '0');
-                // // const startHour = startTime.getHours().toString().padStart(2, '0');
-                // // const startMinute = startTime.getMinutes().toString().padStart(2, '0');
-                // const itemStartDay = {
-                //     startDay, startMonth, startHour, startMinute
-                // }
-                // // const endTime = new Date(response.saleOff[0].endDay)
-                // // const endDay = endTime.getDate().toString().padStart(2, '0');
-                // // const endMonth = (endTime.getMonth() + 1).toString().padStart(2, '0');
-                // // const endHour = endTime.getHours().toString().padStart(2, '0');
-                // // const endMinute = endTime.getMinutes().toString().padStart(2, '0');
-                // const itemEndDay = {
-                //     endDay, endMonth, endHour, endMinute
-                // }
-                // setstartDaySaleUsing(itemStartDay)
-                // setendDaySaleUsing(itemEndDay)
-            } else {
+            if (typeof saleOffID != "undefined") {
+                if (response.result == true || response.saleOff != false) {
+                    setSales(response.saleOff);
+                    if (typeof saleOffID != "undefined") {
+                        let time = formatDateFormSaleUsing(response.saleOff.startDay, response.saleOff.endDay)
+                        console.log(">>>>>time " + time.startDate);
+                        setstartDaySaleUsing(time.startDate)
+                        setendDaySaleUsing(time.endDate)
+                    }
 
+                    // // const startTime = new Date(response.saleOff[0].startDay)
+                    // // const startDay = startTime.getDate().toString().padStart(2, '0');
+                    // // const startMonth = (startTime.getMonth() + 1).toString().padStart(2, '0');
+                    // // const startHour = startTime.getHours().toString().padStart(2, '0');
+                    // // const startMinute = startTime.getMinutes().toString().padStart(2, '0');
+                    // const itemStartDay = {
+                    //     startDay, startMonth, startHour, startMinute
+                    // }
+                    // // const endTime = new Date(response.saleOff[0].endDay)
+                    // // const endDay = endTime.getDate().toString().padStart(2, '0');
+                    // // const endMonth = (endTime.getMonth() + 1).toString().padStart(2, '0');
+                    // // const endHour = endTime.getHours().toString().padStart(2, '0');
+                    // // const endMinute = endTime.getMinutes().toString().padStart(2, '0');
+                    // const itemEndDay = {
+                    //     endDay, endMonth, endHour, endMinute
+                    // }
+                    // setstartDaySaleUsing(itemStartDay)
+                    // setendDaySaleUsing(itemEndDay)
+                } else {
+
+                }
             }
         }
         getSalesCurrent();

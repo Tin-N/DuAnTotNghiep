@@ -1,24 +1,25 @@
-import { View, Text, ScrollView,Image, TouchableOpacity,ToastAndroid, ActivityIndicator } from 'react-native'
-import React,{useState,useEffect} from 'react'
+import { View, Text, ScrollView, Image, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import ProductList from '../component/ProductList/ProductList'
 import SearchFilter from '../component/Filter/SearchFilter'
-import { styleHome,styleSearchScreen } from '../css/Styles'
+import { styleHome, styleSearchScreen } from '../css/Styles'
 import NoResult from '../component/SearchSuggestions/NoResult';
-import {useNavigation,useRoute} from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import Icon1 from 'react-native-vector-icons/Ionicons';
 import AxiosIntance from '../utils/AxiosIntance'
 const CategoryScreen = (props) => {
-  const route =useRoute();
-  const {params}=route;
-  const navigation= useNavigation();
+  const route = useRoute();
+  const { params } = route;
+  const navigation = useNavigation();
   const [page, setPage] = useState(1)
   const [columns, setcolumns] = useState(2);
   const [isLoading, setisLoading] = useState(true);
   const [data, setData] = useState([]);
-  const [valueFilter, setValueFilter] = useState([{},[0,10000000],""]);
+  const [valueFilter, setValueFilter] = useState([{}, [0, 10000000], ""]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [isLoadingmini,setisLoadingmini]=useState(false);
+  const [isLoadingmini, setisLoadingmini] = useState(false);
   const [countData, setcountData] = useState(0)
-  const handleClick=()=>{
+  const handleClick = () => {
     navigation.goBack();
   }
   useEffect(() => {
@@ -35,84 +36,84 @@ const CategoryScreen = (props) => {
     // if (typeof objValue !== 'object' || !Array.isArray(arrValue) || typeof stringValue !== 'string') {
     //   throw new Error('Giá trị không hợp lệ');
     // }
-    
-    let url="";
-      // name
-      // price
 
-      url=url+"lte="+arrValue[1]+"&";
+    let url = "";
+    // name
+    // price
 
-      url=url+"gte="+arrValue[0];
+    url = url + "lte=" + arrValue[1] + "&";
 
-  // Category
-      if(stringValue.length>0)
-      url=url+"&categoryID="+stringValue;
-  
-      // sort 
-      if (Object.keys(objValue).length === 0) {
-        console.log('Đối tượng rỗng');
-      } else {
-        if(objValue.name.includes("Tên"))
-          url=url+"&sortName="+objValue.value;
-        if(objValue.name.includes("Giá"))
-          url=url+"&sortPrice="+objValue.value;
-        // if(objValue.name.includes("Bán chạy"))
-        //   url=url+"sortPrice="+objValue.value;
-        if(objValue.name.includes("Đánh giá tốt nhất"))
-          url=url+"&sortRating="+objValue.value;
-        
-      }
-    
+    url = url + "gte=" + arrValue[0];
+
+    // Category
+    if (stringValue.length > 0)
+      url = url + "&categoryID=" + stringValue;
+
+    // sort 
+    if (Object.keys(objValue).length === 0) {
+      console.log('Đối tượng rỗng');
+    } else {
+      if (objValue.name.includes("Tên"))
+        url = url + "&sortName=" + objValue.value;
+      if (objValue.name.includes("Giá"))
+        url = url + "&sortPrice=" + objValue.value;
+      // if(objValue.name.includes("Bán chạy"))
+      //   url=url+"sortPrice="+objValue.value;
+      if (objValue.name.includes("Đánh giá tốt nhất"))
+        url = url + "&sortRating=" + objValue.value;
+
+    }
+
     return url;
   }
 
   useEffect(() => {
-    
+
     Load();
     console.log(page);
 
     return () => {
-      
+
     }
   }, [page])
-  
-  const loadMoreData = async ()=>{
-    setPage(page+1);
-    setisLoadingmini(!isLoadingmini)
-    }
-    const Load = async ()=>{
-      
-      if(isLoadingmini)
-        setisLoading(true);
-      
-      
-      try {
-        const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id="+params.categoryID+"&skipData="+page);
-        console.log(response +"   " + createURLstring(valueFilter[0],valueFilter[1],valueFilter[2]));
-        if (response.result&&response.products.length>0) {
-          console.log(response);
-          if(page==1){
-            setData(response.products);
-            setcountData(response.count)
-            console.log("Hellooo");
-          }
-          else if(page>1)
-          setData([...data,...response.products]);
-          
-          setisLoading(false);
 
-        } else {
-          setData([]);
-          setisLoading(false);
-          ToastAndroid.show("Đã hết sản phẩm ",ToastAndroid.SHORT);
+  const loadMoreData = async () => {
+    setPage(page + 1);
+    setisLoadingmini(!isLoadingmini)
+  }
+  const Load = async () => {
+
+    if (isLoadingmini)
+      setisLoading(true);
+
+
+    try {
+      const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id=" + params.categoryID + "&skipData=" + page);
+      console.log(response + "   " + createURLstring(valueFilter[0], valueFilter[1], valueFilter[2]));
+      if (response.result && response.products.length > 0) {
+        console.log(response);
+        if (page == 1) {
+          setData(response.products);
+          setcountData(response.count)
+          console.log("Hellooo");
         }
-        setisLoadingmini(!isLoadingmini);
-      } catch (error) {
-        console.error("Error:", error);
+        else if (page > 1)
+          setData([...data, ...response.products]);
+
         setisLoading(false);
+
+      } else {
+        setData([]);
+        setisLoading(false);
+        ToastAndroid.show("Đã hết sản phẩm ", ToastAndroid.SHORT);
       }
+      setisLoadingmini(!isLoadingmini);
+    } catch (error) {
+      console.error("Error:", error);
+      setisLoading(false);
     }
-  
+  }
+
   // useEffect(() => {
 
   //   if ((Object.keys(valueFilter[0]).length > 0)||valueFilter[1].length > 0||params.id>0) {
@@ -124,51 +125,51 @@ const CategoryScreen = (props) => {
   //     setPage(1);
   // }
   //   return () => {
-      
+
   //   }
   // }, [valueFilter]);
   return (
     <View>
-      <View style={[styleHome.topBarView,{justifyContent:'space-evenly', alignItems:'center',}]}>
-      <TouchableOpacity onPress={handleClick}>
-            <Image
-                style={[styleSearchScreen.icons,{marginLeft:10,marginRight:30}]}
-                source={require('../images/icon/previous-ic.png')}
-                />
-         </TouchableOpacity>
-         <Text style={[styleSearchScreen.title,{textAlign:'center',marginLeft:20,width:"75%",marginRight: 0}]}>Danh mục: {params.name}</Text>
-            <View style={styleHome.viewIcons}>
-            <TouchableOpacity  style={[styleHome.icons,{marginLeft:40}]} onPress={()=>setModalVisible((!modalVisible))}>
-              <Image
-                  style={styleHome.icons}
-                  source={require('../images/icon/filter.png')}
-                />
-            </TouchableOpacity>
-            </View>
-          </View>
-          <SearchFilter 
-            onSubmit={setValueFilter}
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-          />
+      <View style={[styleHome.topBarView, { justifyContent: 'space-evenly', alignItems: 'center', width: '100%' }]}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
+          <TouchableOpacity onPress={handleClick}>
+            <Icon1 name="chevron-back-outline" size={20} color='white'></Icon1>
+          </TouchableOpacity>
+          <Text style={[styleSearchScreen.title, {
+            textAlign: 'center', marginLeft: 20,
+            width: "75%", marginRight: 0, color: 'white'
+          }]}>Danh mục: {params.name}</Text>
 
-        <View>
+          <TouchableOpacity  onPress={() => setModalVisible((!modalVisible))}>
+            <Icon1 style={{marginLeft:20}} name="funnel-outline" size={20} color='white'></Icon1>
+          </TouchableOpacity>
+
+        </View>
+
+      </View>
+      <SearchFilter
+        onSubmit={setValueFilter}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
+
+      <View>
         {
-          isLoading == true?
-          <ActivityIndicator
-          color={"blue"}
-          size={'large'}/>
-          :
-          <View
-          style={{
-            alignItems:'center'
-          }}
-          >
-            {
-              data.length>0?
-                <View>
-                        <ProductList
-                        count={countData}
+          isLoading == true ?
+            <ActivityIndicator
+              color={"blue"}
+              size={'large'} />
+            :
+            <View
+              style={{
+                alignItems: 'center'
+              }}
+            >
+              {
+                data.length > 0 ?
+                  <View>
+                    <ProductList
+                      count={countData}
                       data={data}
                       isLoadingmini={isLoadingmini}
                       infinitiveScroll={true}
@@ -176,20 +177,20 @@ const CategoryScreen = (props) => {
                       styleView={{
                         width: '100%',
                         margin: 10,
-                        marginBottom:150,
+                        marginBottom: 150,
                       }}
                       numColumns={columns}
                       showsVerticalScrollIndicator={false}
                     />
-                </View>
-                :<View style={{justifyContent:'center',alignItems:'center',height:"100%"}}>
-                  <NoResult/>
                   </View>
-                
-            }
-          </View>
+                  : <View style={{ justifyContent: 'center', alignItems: 'center', height: "100%" }}>
+                    <NoResult />
+                  </View>
+
+              }
+            </View>
         }
-        </View>
+      </View>
     </View>
   )
 }
