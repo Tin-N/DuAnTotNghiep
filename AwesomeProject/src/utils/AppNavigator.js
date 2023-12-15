@@ -45,6 +45,7 @@ import StatisticSellerScreen from '../screens/personStore/StatisticSellerScreen'
 import ShipperScreen from '../screens/personStore/ShipperScreen';
 import FavoriteScreen from '../screens/FavoriteList';
 import Item from '../component/FavoriteList/Item';
+import CategoryScreen from '../screens/CategoryFilterProduct';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -124,6 +125,7 @@ const ProductHome = () => {
             <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
 
             <Stack.Screen name='DetailProduct' component={DetailProduct} />
+            <Stack.Screen name='CategoryDetailList' component={CategoryScreen} />
 
             <Stack.Screen name='DetailList' component={DetailList}>
 
