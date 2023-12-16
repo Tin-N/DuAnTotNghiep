@@ -233,7 +233,7 @@ const Main = () => {
                         // } else if (route.name === 'Prod Process') {
                         //     iconName = focused ? 'clipboard' : 'clipboard-outline';
 
-                    } else if (route.name === 'Login') {
+                    } else if (route.name === 'Profile') {
 
                         iconName = focused ? 'people-sharp' : 'people-outline';
                     }
@@ -248,18 +248,15 @@ const Main = () => {
         >
             <Tab.Screen name="Home" component={ProductHome} />
 
-            <Tab.Screen name="Order" component={Order} />
+            <Tab.Screen name="Cart" component={Order} />
             {/* <Tab.Screen name="ProfileScreen" component={ProfileScreen} /> */}
             {/* <Tab.Screen name="Prod Process" component={ProductProcessStack} /> */}
             {/* <Tab.Screen name="Shipper" component={SProductProcess} />
             <Tab.Screen name="Test" component={censorshipProduct} /> */}
 
-            <Tab.Screen name="Login" component={SignIn} />
 
 
 
-
-            <Tab.Screen name="Cart" component={Order} />
             <Tab.Screen name="Profile" component={Profile} />
             {userRole == 3 ? <Tab.Screen name="Shipper" component={ShipperStack} /> : null}
 

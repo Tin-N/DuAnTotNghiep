@@ -14,7 +14,7 @@ const Item = props => {
   // };
 
   const handleClick = ()=>{
-    navigation.navigate("CategoryDetailList",{categoryID:data._id,name:data.name});
+    navigation.navigate("CategoryScreen",{categoryID:data._id,name:data.name});
     console.log(data._id+data.name);
   }
   return (

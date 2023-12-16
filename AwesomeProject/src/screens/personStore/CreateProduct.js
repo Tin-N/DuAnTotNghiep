@@ -16,8 +16,11 @@ import { ColorPicker, TriangleColorPicker } from 'react-native-color-picker';
 import Icon1 from 'react-native-vector-icons/Ionicons';
 // import { ColorPicker, TriangleColorPicker } from 'react-native-color-picker'
 import { Axios } from 'axios';
+import { useContext } from 'react';
+import { AppContext } from '../../utils/AppContext';
 const CreateProduct = (props) => {
     const { navigation } = props;
+    const {userID} = useContext(AppContext)
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
 
@@ -276,7 +279,7 @@ const CreateProduct = (props) => {
     const addProduct = async () => {
         try {
             const request = await AxiosIntance().post('/productAPI/addProduct',
-                { name: name, price: price, quantity: quantity, categoryID: value, detail: detail, userID: '113', image: imageLink });
+                { name: name, price: price, quantity: quantity, categoryID: value, detail: detail, userID: userID, image: imageLink });
             if (request.result) {
                 ToastAndroid.show("Thêm thành công", ToastAndroid.SHORT);
                 Upload2();

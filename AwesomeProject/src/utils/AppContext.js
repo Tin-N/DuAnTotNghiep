@@ -13,9 +13,9 @@ export const AppContextProvider = (props) => {
     // const [userInfo, setuserInfo] = useState({}); 
     // const [userID, setuserID] = useState(""); 
     const [userInfo, setuserInfo] = useState({});
-    const [userID, setuserID] = useState('656efdabdd44641210bd9920');
-    const [userAddress, setuserAddress] = useState('Hoang Van Thu');
-    const [userRole, setuserRole] = useState(3)
+    const [userID, setuserID] = useState('');
+    const [userAddress, setuserAddress] = useState('');
+    const [userRole, setuserRole] = useState(0)
     return (
         <AppContext.Provider value={{ isLogin, setisLogin, isOrder, setisOrder, userInfo, setuserInfo, userID, setuserID, userAddress, setuserAddress, userRole, setuserRole}}>
             {children}
