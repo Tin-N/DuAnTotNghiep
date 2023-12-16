@@ -6,6 +6,7 @@ import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen');
 import AxiosIntance from '../../../utils/AxiosIntance'
 import { AppContext } from '../../../utils/AppContext';
+import ActionBar from '../../ActionBar';
 
 const SProductProcess = () => {
     const [orderDetail, setorderDetail] = useState([])
@@ -18,6 +19,7 @@ const SProductProcess = () => {
             try {
                 const response = await AxiosIntance().get(`/orderdetail/getAllForShipper`)
                 setorderDetail(response.data)
+                console.log("=>>>>>>>>>>>>> res: " + JSON.stringify(response))
             } catch (error) {
                 console.log("SProductProcess: lỗi lấy dữ liệu: " + error);
             }
@@ -34,6 +36,7 @@ const SProductProcess = () => {
 
     return (
         <View style={{}}>
+            <ActionBar title={"Shipper"}/>
             <FlatList
                 style={{ height: height }}
                 showsVerticalScrollIndicator={false}
