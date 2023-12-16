@@ -174,7 +174,7 @@ const FilterScreen = (props) => {
           color={"blue"}
           size={'large'}/>
           :
-          <View style={{alignItems:'center'}}>
+          <View style={{}}>
             {
               data.length>0?
                 <View

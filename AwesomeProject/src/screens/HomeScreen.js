@@ -34,7 +34,7 @@ const HomeScreen = props => {
         '&limitData=' +
         2 +
         '&skipData=' +
-        0,
+        1,
       );
       console.log(response);
 
@@ -49,7 +49,7 @@ const HomeScreen = props => {
         '&limitData=' +
         2 +
         '&skipData=' +
-        0,
+        1,
       );
       console.log(response + 'BBBBBBBBBBBBBBBBBBBBBBBBB');
 
@@ -64,7 +64,7 @@ const HomeScreen = props => {
         '&limitData=' +
         2 +
         '&skipData=' +
-        0,
+        1,
       );
       console.log(response + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
       if (response.result) {

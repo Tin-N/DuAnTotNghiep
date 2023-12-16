@@ -170,7 +170,9 @@ const DetailList = (props) => {
               {
                 data.length > 0 ?
                   <View
-                    style={{   }}
+                    style={{ 
+                      alignSelf:'center'
+                      }}
                   >
                     <ProductList
                       count={countData}

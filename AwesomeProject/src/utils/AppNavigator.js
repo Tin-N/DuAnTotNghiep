@@ -3,7 +3,6 @@ import React, { useContext } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon1 from 'react-native-vector-icons/Ionicons';
-import Home from '../screens/Home'
 import Order from '../screens/Order'
 import { AppContext } from './AppContext';
 import SignUp from '../screens/SignUp';
@@ -51,6 +50,7 @@ import CategoryScreen from '../screens/CategoryFilterProduct';
 import UserScreen from '../screens/personStore/UserScreen';
 
 import DetailImage from '../screens/personStore/DetailImage';
+import SellerRegistration from '../screens/RegisterSeller';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -117,7 +117,12 @@ const Profile = () => {
             <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
             <Stack.Screen name='Prod Process' component={ProductProcessStack} />
+            <Stack.Screen name='SellerRegistration' component={SellerRegistration} 
+            
+            options={{ title: 'My home' }}
+            />
 
+            {/* SellerRegistration */}
             <Stack.Screen name='FavoriteScreen' component={FavoriteScreen} />
             <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
 

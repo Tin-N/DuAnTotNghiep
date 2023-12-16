@@ -210,6 +210,51 @@ const UserScreen = () => {
  />
         </View>
         </TouchableOpacity>
+
+        <TouchableOpacity
+        onPress={()=>{navigation.navigate("SellerRegistration",{userID:userInfo._id,navigation:navigation}); console.log(userInfo._id)}}
+        >
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginTop:20
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '80%',
+            
+
+            }}>
+            <View
+              style={{
+                borderRadius: 10,
+                backgroundColor: '#b7e6f98a',
+                width: 50,
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Icon name="bookmark" size={30}          color={COLOR.background}
+ />
+            </View>
+            <Text
+              style={{
+                marginLeft: 10,
+                fontSize: 18,
+                fontWeight: 'bold',
+                color: 'black',
+              }}>
+             Đăng ký trở thành người bán
+            </Text>
+          </View>
+          <Icon name="chevron-forward" size={30}          color={COLOR.background}
+ />
+        </View>
+        </TouchableOpacity>
         <TouchableOpacity
         >
         <View
