@@ -1,14 +1,15 @@
 import React, { useState,useEffect } from 'react';
 import { styleHome,styleSearchScreen } from '../css/Styles';
-import { View, Text, TextInput,TouchableOpacity, Alert,ScrollView,Image } from 'react-native';
+import { View, Text, TextInput,TouchableOpacity, Alert,ScrollView,Image, ToastAndroid } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import AxiosIntance from '../utils/AxiosIntance';
 const SellerRegistration = (props) => {
     const {navigation,route}=props;
     const {params}=route;
     const {userID}=params;
     useEffect(() => {
       navigation.getParent()?.setOptions({
-        tabBarStyle: {
+        tabBarStyle: {  
           display: "none"
         }
       });
@@ -17,12 +18,27 @@ const SellerRegistration = (props) => {
       });
     }, [navigation]);
     useEffect(() => {
-      
-    
+      console.log(userID);
+      const checkUser= async ()=>{
+        const response = await AxiosIntance().get("/UserApi/get-by-id?id="+userID);
+        console.log(userID);
+        if(response.result==true)
+        {
+          if(response.user.roleID==2)
+          {
+            Alert.alert("Thông báo","Bạn đang chờ duyệt... ", [
+              {
+                text: 'Tôi đã hiểu',
+                onPress: () => handleClick(),
+              }]);
+          }
+        }
+      }
+      checkUser();
       return () => {
         
       }
-    }, [])
+    }, [navigation])
     
 
 
@@ -43,10 +59,15 @@ const SellerRegistration = (props) => {
     navigation.goBack();
   }
   const handleSubmit = async() => {
-    // Thực hiện xử lý đăng ký người bán tại đây (ví dụ: gửi dữ liệu lên server)
-
-    // Hiển thị thông báo hoặc chuyển hướng người dùng khi đăng ký thành công
-    Alert.alert('Success', 'Đăng ký người bán thành công!'+formData.agreeToTerms);
+    const response = await AxiosIntance().post("/UserApi/check-seller-by-id/"+userID);
+    console.log(response.user);
+    if(response.result==true)
+    {
+      Alert.alert('Thông báo', 'Đã đăng ký vào danh sách chờ duyệt!');
+      navigation.goBack();
+      
+    }
+    ToastAndroid.show("Lỗi gửi thông tin",ToastAndroid.SHORT)
   };
 
 
