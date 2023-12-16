@@ -29,7 +29,7 @@ const HomeScreen = props => {
   useEffect(() => {
     const getcategoryData1 = async () => {
       const response = await AxiosIntance().get(
-        '/productAPI/getProductByCategoryID?id=' +
+        '/productAPI/filterProductByName??sortPrice=' +
         'clothing' +
         '&limitData=' +
         2 +
@@ -44,8 +44,8 @@ const HomeScreen = props => {
     };
     const getcategoryData2 = async () => {
       const response = await AxiosIntance().get(
-        '/productAPI/getProductByCategoryID?id=' +
-        'hello' +
+        '/productAPI/filterProductByName?sortNew=' +
+        'true' +
         '&limitData=' +
         2 +
         '&skipData=' +
@@ -59,8 +59,8 @@ const HomeScreen = props => {
     };
     const getcategoryData3 = async () => {
       const response = await AxiosIntance().get(
-        '/productAPI/getProductByCategoryID?id=' +
-        'pants' +
+        '/productAPI/filterProductByName?sortRating=' +
+        'true' +
         '&limitData=' +
         2 +
         '&skipData=' +
