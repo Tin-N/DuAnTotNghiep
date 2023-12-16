@@ -19,11 +19,11 @@ const ProfileScreen = () => {
                     return (
                         <UserScreen/>
                     )
-                }else if (_role == 2){
+                }else if (_role == 3){
                     return (
                         <SellerScreen/>
                     )
-                }else if (_role == 3){
+                }else if (_role == 4){
                     return (
                         <ShipperScreen/>
                     )

@@ -185,7 +185,7 @@ const UserScreen = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginTop:20
+            marginBottom:20
           }}>
           <View
             style={{
@@ -204,7 +204,7 @@ const UserScreen = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Icon name="bookmark" size={30}          color={COLOR.background}
+              <Icon name="bag-add" size={30}          color={COLOR.background}
  />
             </View>
             <Text
