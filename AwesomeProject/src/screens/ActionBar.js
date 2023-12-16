@@ -8,7 +8,7 @@ const ActionBar = ({ title }) => {
   const handleBackPress = () => {
     navigation.goBack(); // Chuyển về màn hình trước đó
   };
-
+  
   return (
     <View style={styles.actionBar}>
       <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>

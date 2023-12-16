@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   TextInput,
   Alert,
-  StyleSheet,
+  StyleSheet, ToastAndroid
 } from 'react-native';
 
 import React, {useState, useContext, userEffect} from 'react';
@@ -88,11 +88,12 @@ const SignIn = () => {
           setuserInfo(response.user);
           navigation.navigate('ProfileScreen');
         } else {
-          // ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);
+          ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);
         }
       }
     } catch (error) {
       console.log('Đăng nhập thất bại: ' + error);
+      ToastAndroid.show("Sai tên tài khoản hoặc mật khẩu",ToastAndroid.SHORT);
     }
   };
 

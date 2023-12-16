@@ -210,7 +210,7 @@ const Order = () => {
         <ActionBar title={"Cart"} />
         {/* co san pham thi hien list san pham khong thi hien hinh anh */}
         {isLoading
-          ? <View style={{ height: 525, bo }}>
+          ? <View style={{ height: 525}}>
             {userCart.length != 0 ? <MyCart /> : <MyCartIsEmpty />}
           </View>
           : <View style={{ alignItems: 'center', marginTop: 220 }}>
