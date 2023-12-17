@@ -1657,6 +1657,7 @@ export const StyleProfile = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: '-3%',
     height: '100%',
+    borderRadius:50,
     width: '100%',
   },
   TextProfile: {

@@ -13,6 +13,7 @@ export const AppContextProvider = (props) => {
     // const [userInfo, setuserInfo] = useState({}); 
     // const [userID, setuserID] = useState(""); 
     const [userInfo, setuserInfo] = useState({});
+    
     const [userID, setuserID] = useState('');
     const [userAddress, setuserAddress] = useState('');
     const [userRole, setuserRole] = useState(3)

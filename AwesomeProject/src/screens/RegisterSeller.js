@@ -1,218 +1,193 @@
-import React, { useState,useEffect } from 'react';
-import { styleHome,styleSearchScreen } from '../css/Styles';
-import { View, Text, TextInput,TouchableOpacity, Alert,ScrollView,Image, ToastAndroid } from 'react-native';
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+import {
+  View,
+  Text,
+  Pressable,
+  Dimensions,
+  TouchableOpacity,
+  SafeAreaView,
+  TextInput,
+  ImageBackground,
+} from 'react-native';
+import React, { useState, useEffect, useContext, ToastAndroid } from 'react';
+import { COLOR } from '../css/Theme';
+import { Image } from 'react-native';
+const { width } = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
+import { StyleLogin } from '../css/Styles.js';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AxiosIntance from '../utils/AxiosIntance';
-const SellerRegistration = (props) => {
-    const {navigation,route}=props;
-    const {params}=route;
-    const {userID}=params;
-    useEffect(() => {
-      navigation.getParent()?.setOptions({
-        tabBarStyle: {  
-          display: "none"
-        }
-      });
-      return () => navigation.getParent()?.setOptions({
-        tabBarStyle: undefined
-      });
-    }, [navigation]);
-    useEffect(() => {
-      console.log(userID);
-      const checkUser= async ()=>{
-        const response = await AxiosIntance().get("/UserApi/get-by-id?id="+userID);
-        console.log(userID);
-        if(response.result==true)
-        {
-          if(response.user.roleID==2)
-          {
-            Alert.alert("Thông báo","Bạn đang chờ duyệt... ", [
-              {
-                text: 'Tôi đã hiểu',
-                onPress: () => handleClick(),
-              }]);
-          }
-        }
-      }
-      checkUser();
-      return () => {
-        
-      }
-    }, [navigation])
-    
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserContext } from '../utils/Context';
+import { useNavigation } from '@react-navigation/native';
+// import {AppContext} from '../utils/AppContext';thuan
+import SearchStore from './personStore/SearchStore.js';
+import { StyleProfile } from '../css/Styles.js';
+import { AppContext } from '../utils/AppContext';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { storage } from '../utils/FirebaseConfig.js';
+// import { useContext } from 'react';
+const ProfileUser = () => {
+  const [img, setImg] = useState("");
+  const [ImgLink, setImgLink] = useState("");
 
-
-
-  const [formData, setFormData] = useState({
-    description: '',
-    agreeToTerms: false,
-  });
-  const [isChecked, setisChecked] = useState(false)
-  const handleChange = (name, value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleClick =()=>{
-    navigation.goBack();
-  }
-  const handleSubmit = async() => {
-    const response = await AxiosIntance().post("/UserApi/check-seller-by-id/"+userID);
-    console.log(response.user);
-    if(response.result==true)
-    {
-      Alert.alert('Thông báo', 'Đã đăng ký vào danh sách chờ duyệt!');
-      navigation.goBack();
-      
+  const { userInfo } = useContext(AppContext);
+  // const [email, setEmai] = useState(userInfo.email);
+  const [address, setAddress] = useState(userInfo.address);
+  const [phoneNumber, setPhoneNumber] = useState(userInfo.phoneNumber);
+  const [fullname, setFullName] = useState(userInfo.fullname);
+  const getImageFromLibrary = async () => {
+    const result = await launchImageLibrary();
+    if (!result.didCancel) {
+      const selectedImage = result.assets[0].uri;
+      setImg(selectedImage);
     }
-    ToastAndroid.show("Lỗi gửi thông tin",ToastAndroid.SHORT)
-  };
+  }
 
+  const Upload = async () => {
 
-// Dieu khoan 
+    const response = await fetch(img);
+    const blob = await response.blob();
+    const filename = Date.now() + ".jpg";
+    const storageRef = ref(storage, filename);
+    const snapshot = await uploadBytes(storageRef, blob);
+    const url = await getDownloadURL(snapshot.ref);
+    setImgLink(url);
+  }
 
+  useEffect(() => {
 
+    if (ImgLink.length > 0)
+      UpdateProfile();
 
-const [isExpanded, setExpanded] = useState(false);
+    return () => {
 
-const termsText = `
-Chào mừng bạn đến với dịch vụ bán hàng của chúng tôi. Trước khi bạn bắt đầu bán hàng, hãy đọc kỹ các điều khoản dưới đây.
+    }
+  }, [ImgLink])
 
-1. Đăng Ký Người Bán:
-   1.1. Để trở thành người bán trên nền tảng của chúng tôi, bạn cần đăng ký và cung cấp thông tin đầy đủ, chính xác và hiện đại.
-   1.2. Chúng tôi có quyền từ chối đăng ký người bán mà không cần giải thích.
-
-2. Chất Lượng Sản Phẩm và Dịch Vụ:
-   2.1. Bạn cam kết rằng tất cả sản phẩm và dịch vụ bạn cung cấp đều tuân thủ các tiêu chuẩn chất lượng và an toàn.
-   2.2. Chúng tôi có quyền loại bỏ sản phẩm hoặc người bán vi phạm các tiêu chuẩn của chúng tôi mà không cần báo trước.
-
-3. Quảng Cáo và Tiếp Thị:
-   3.1. Bạn chịu trách nhiệm về nội dung và chất lượng của bất kỳ quảng cáo nào liên quan đến sản phẩm hoặc dịch vụ của bạn.
-   3.2. Chúng tôi có quyền yêu cầu bạn chỉnh sửa hoặc loại bỏ bất kỳ quảng cáo nào vi phạm chính sách của chúng tôi.
-
-4. Giao Dịch và Thanh Toán:
-   4.1. Chúng tôi sẽ xử lý thanh toán cho các giao dịch được thực hiện thông qua nền tảng của chúng tôi và chuyển khoản số tiền tương ứng cho bạn.
-   4.2. Chúng tôi sẽ giữ một phần trăm hoa hồng theo thỏa thuận cho mỗi giao dịch.
-
-5. Phí và Chi Phí:
-   5.1. Bạn sẽ chịu trách nhiệm về tất cả các phí và chi phí liên quan đến việc sử dụng dịch vụ của chúng tôi.
-   5.2. Chúng tôi có quyền điều chỉnh phí và chi phí và thông báo cho bạn trước bằng cách sử dụng thông báo trên nền tảng hoặc qua email.
-
-6. Chính Sách Hoàn Trả và Đổi Trả:
-   6.1. Bạn phải tuân thủ các chính sách hoàn trả và đổi trả của chúng tôi, như mô tả chi tiết trên trang web của chúng tôi.
-   6.2. Bạn chịu trách nhiệm xử lý mọi yêu cầu hoàn trả và đổi trả từ khách hàng của mình.
-
-7. Chấp Nhận Điều Khoản và Điều Kiện:
-   7.1. Bằng cách sử dụng dịch vụ của chúng tôi, bạn chấp nhận và tuân thủ mọi điều khoản và điều kiện được mô tả trong tài liệu này.
-   7.2. Chúng tôi có quyền thay đổi các điều khoản và điều kiện này và sẽ thông báo cho bạn trước về bất kỳ thay đổi nào.
-
-Hãy chắc chắn rằng bạn đã đọc và hiểu rõ các điều khoản trên trước khi xác nhận
-`
-
-  const previewLines = 5; // Số dòng được hiển thị trong chế độ xem trước
-
-
-  return (
-    <ScrollView>
-      <View style={[styleHome.topBarView,{}]}>
-      <TouchableOpacity
-      style={{marginLeft:-10}}
-      onPress={handleClick}>
-            <Image
-                style={styleSearchScreen.icons}
-                source={require('../images/icon/previous-ic.png')}
-                />
-         </TouchableOpacity>
-            <View style={{marginLeft:5,width:"90%"}}>
-            <Text style={[styleHome.title,{fontSize:20, textAlign:'center',color:'black'}]}>Đăng ký trở thành người bán</Text>
-            </View>
-            <View style={styleHome.viewIcons}>
-            <TouchableOpacity activeOpacity={1}/>
-              
-            </View>
-          </View>
-
-      {/* <Text style={{ fontSize: 24, marginBottom: 20 }}>Đăng ký trở thành người bán</Text> */}
-     
-     <View
-      style={{margin:20}}
-     >
-     <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 10 }}
-        placeholder="Mô tả mặt hàng của cửa hàng"
-        value={formData.description}
-        onChangeText={(text) => handleChange('description', text)}
-      />
-
-      <Text
-        style={{
-            fontSize:24,
-            color:'black',
-            fontWeight:'bold'
-        }}
-      >Điều Khoản Bán Hàng</Text>
-
-      <View style={{ paddingHorizontal: 20,paddingBottom:10 }}>
-
-      <Text numberOfLines={isExpanded ? undefined : previewLines} style={{ fontSize: 16 }}>
-        {termsText}
-      </Text>
-      {/* {!isExpanded&&(<TouchableOpacity onPress={() => setExpanded(!isExpanded)}>
-        <Text style={{ fontSize: 16, marginBottom: 10 }}>
-          Xem thêm
-        </Text>
-      </TouchableOpacity>)} */}
-
-      {isExpanded ? 
-        <TouchableOpacity onPress={() => setExpanded(false)}>
-          <Text style={{ color: 'blue',fontSize:16,marginBottom: 10  }}>Thu gọn</Text>
-        </TouchableOpacity>:<TouchableOpacity onPress={() => setExpanded(!isExpanded)}>
-        <Text style={{ fontSize: 16, marginBottom: 10 }}>
-          Xem thêm
-        </Text>
-      </TouchableOpacity>
+  const UpdateProfile = async () => {
+    try {
+      // http://localhost:3000/api/UserApi/changeUserInfo?id=654627d67137a3bf678fb544&address=Tran Phu&phoneNumber=0933067567&fullname=Nguyen Trung Thuan
+      const response = await AxiosIntance().post("/UserApi/changeUserInfo?id=" + userInfo._id + "&address=" + address + "&phoneNumber=" + phoneNumber + "&fullname=" + fullname + "&avatar=" + ImgLink);
+      console.log(userInfo._id, phoneNumber, fullname, address, ImgLink);
+      if (response.user) {
+        console.log("Sửa thành công");
+        setImgLink("");
+        Alert.alert("Thông báo", "Sửa thành công");
+        navigation.navigate('UserScreen');
+      } else {
+        console.log("Sửa thất bại" );
       }
-    </View>
 
+    } catch (error) {
+      console.log(error);
+    }
 
-
-
-
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-        {/* <CheckBox
-          value={formData.agreeToTerms}
-          onValueChange={() => handleChange('agreeToTerms', !formData.agreeToTerms)}
-        /> */}
-        <BouncyCheckbox
-        textStyle={{
-            textDecorationLine: "none",
-          }}
-        size={25}
-        fillColor="#3669c9"
-        unfillColor="#FFFFFF"
-        text="Tôi đồng ý với điều khoản của ứng dụng"
-        iconStyle={{ borderColor: "red" }}
-        onPress={(isChecked) => {setisChecked(!isChecked);handleChange('agreeToTerms', !formData.agreeToTerms)}}
-        isChecked={isChecked}
-        />
+  }
+  return (
+    <View style={StyleProfile.ProfileContainer}>
+      <View style={StyleProfile.NavTab}>
+        <TouchableOpacity style={StyleProfile.IconShapeStart}>
+          <Image
+            style={StyleProfile.Icon}
+            source={require('../images/icon/Search_icon.png')}
+          />
+        </TouchableOpacity>
+        <Text style={StyleProfile.TextIcon}>Thông tin người bán</Text>
+        <TouchableOpacity style={StyleProfile.IconShapeEnd} >
+          <Image
+            style={StyleProfile.IconSetting}
+            source={require('../images/icon/setting.png')}
+          />
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={{
-          backgroundColor: formData.agreeToTerms ? '#3669c9' : 'gray',
-          padding: 10,
-          borderRadius: 10,
-          alignItems: 'center',
-        }}
-        onPress={handleSubmit}
-        disabled={!formData.agreeToTerms}
-      >
-        <Text style={{ color: 'white',fontSize:15,fontWeight:'bold' }}>Đăng ký</Text>
-      </TouchableOpacity>
-     </View>
-    </ScrollView>
+
+      <View style={StyleProfile.Heading}>
+        <TouchableOpacity style={StyleProfile.Avatar} onPress={() => getImageFromLibrary()}>
+          <Image
+            style={StyleProfile.iconProfile}
+            source={img.length > 0 ? { uri: img } : require('../images/icon/user.png')}
+          />
+        </TouchableOpacity>
+        <View style={StyleProfile.TextProfile}>
+          <Text style={StyleProfile.Name}>Thuận Nguyễn</Text>
+          <Text style={StyleProfile.Email}>
+            {/* {userInfo.email} */} thuannt160603@gmail.com
+            </Text>
+          <TouchableOpacity style={StyleProfile.iconEditContainer}>
+            <Image
+              style={StyleProfile.iconEdit}
+              source={require('../images/icon/pencil.png')}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* <View style={StyleProfile.Line} /> */}
+      {/* <View style={StyleProfile.ListProduct}>
+        <TouchableOpacity style={StyleProfile.ListProductItem}>
+          <Image
+            style={StyleProfile.ListProductIcon}
+            source={require('../images/icon/heart.png')}
+          />
+          <Text style={StyleProfile.ListProductText}>Favorite</Text>
+        </TouchableOpacity>
+
+        <Image
+          style={StyleProfile.ListProductIconEnd}
+          source={require('../images/icon/right-arrow.png')}
+        />
+      </View> */}
+      <View style={StyleProfile.Line} />
+      <View style={StyleProfile.Form}>
+        <View style={StyleProfile.FormItem}>
+          <View style={StyleProfile.FormItemText}>
+            <Text style={StyleProfile.FormItemTextAddress}>Địa chỉ</Text><Text style={StyleProfile.FormItemStart}>*</Text>
+          </View>
+          <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setAddress} placeholder=
+          // {userInfo.address} 
+          {"số 69, Ql50, Quận 8, Tp.HCM"}
+          />
+        </View>
+        <View style={StyleProfile.FormItem}>
+          <View style={StyleProfile.FormItemText}>
+            <Text style={StyleProfile.FormItemTextAddress}>Số điện thoại</Text><Text style={StyleProfile.FormItemStart}>*</Text>
+          </View>
+          <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setPhoneNumber} placeholder=
+          // {userInfo.phoneNumber} 
+           {"0933067567"} 
+          />
+        </View>
+        <View style={StyleProfile.FormItem}>
+          <View style={StyleProfile.FormItemText}>
+            <Text style={StyleProfile.FormItemTextAddress}>Họ và tên</Text><Text style={StyleProfile.FormItemStart}>*</Text>
+          </View>
+          <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setFullName} placeholder=
+          // {userInfo.fullname} 
+          {"Nguyễn Trần Trung Quân"}
+          />
+        </View>
+        <View style={styles.btContainer} >
+          <TouchableOpacity style={[StyleProfile.ButtonCP,{backgroundColor: 'white', borderWidth:0.5, borderColor: COLOR.background}]} onPress={() => Upload()}>
+            <Text style={[StyleProfile.TextButton, {color: COLOR.background}]}>Đặt lại</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={StyleProfile.ButtonCP} onPress={() => UpdateProfile()}>
+            <Text style={[StyleProfile.TextButton, {color: 'white'}]}>Cập nhật</Text>
+          </TouchableOpacity>
+        </View>
+        
+      </View>
+    </View>
   );
 };
 
-export default SellerRegistration;
+const styles = StyleSheet.create({
+  btContainer:{
+    flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal:"10%"
+  },
+  
+});
+export default ProfileUser;

@@ -1,20 +1,24 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View,ScrollView,Dimensions} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native'
 import { useContext } from 'react';
 import { AppContext } from '../../utils/AppContext';
+const {height}=Dimensions.get("screen");
 
 const SellerScreen = () => {
   const navigation = useNavigation();
   const {userInfo}=useContext(AppContext)
   return (
-    <View style={{marginHorizontal: 15}}>
+    <ScrollView 
+    style={{marginHorizontal: 15,paddingBottom:"30%",height:"90.5%"}}
+    showsVerticalScrollIndicator={false}
+    >
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          marginVertical: 10,
+          marginVertical: 10
 
         }}>
         <Text
@@ -190,8 +194,7 @@ const SellerScreen = () => {
         >
         <View
           style={{
-            marginVertical:20
-,
+            marginTop:20,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -201,7 +204,6 @@ const SellerScreen = () => {
               flexDirection: 'row',
               alignItems: 'center',
               width: '80%',
-              marginVertical:5
             }}>
             <View
               style={{
@@ -234,8 +236,7 @@ const SellerScreen = () => {
         >
         <View
           style={{
-            marginVertical:20
-,
+            marginTop:10,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -245,7 +246,7 @@ const SellerScreen = () => {
               flexDirection: 'row',
               alignItems: 'center',
               width: '80%',
-              marginVertical:5
+              marginVertical:10
             }}>
             <View
               style={{
@@ -278,6 +279,7 @@ const SellerScreen = () => {
         >
         <View
           style={{
+            marginTop:10,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -353,7 +355,7 @@ const SellerScreen = () => {
         </View>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
