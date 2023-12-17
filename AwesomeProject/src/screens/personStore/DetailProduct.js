@@ -219,7 +219,7 @@ const DetailProduct = (props) => {
 
 
     const homeStoreHandler = () => {
-        navigation.navigate('HomeStore')
+        navigation.navigate('HomeStore', {userID: userIDStore})
     }
 
 

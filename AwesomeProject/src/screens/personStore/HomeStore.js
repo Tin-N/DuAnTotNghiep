@@ -9,11 +9,16 @@ import AxiosIntance from '../../utils/AxiosIntance';
 import { LogBox } from 'react-native';
 import Icon1 from 'react-native-vector-icons/Ionicons';
 import { TextInput } from 'react-native';
+import { useContext } from 'react';
+import { AppContext } from '../../utils/AppContext';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 
 const HomeStore = (props) => {
     const { navigation } = props;
+    const {userID} = useContext(AppContext);
+    const {route} = props;
+    const {params} = route;
     const [dataProduct, setDataProduct] = useState([]);
     const [productID, setProductID] = useState('');
     const [sold, setSold] = useState(0);
@@ -24,9 +29,17 @@ const HomeStore = (props) => {
         )
     }
     useEffect(() => {
-
+        console.log("ID user Store: " + params.userID);
         const getAllProductByUserID = async () => {
-            const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + '113' + '&isShow=true');
+            const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + params.userID + '&isShow=true');
+            if (response.result) {
+                setDataProduct(response.products);
+                setProductID(response.products._id);
+                setSold(response.products.sold)
+            }
+        }
+        const getUserByID = async () => {
+            const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + params.userID + '&isShow=true');
             if (response.result) {
                 setDataProduct(response.products);
                 setProductID(response.products._id);
