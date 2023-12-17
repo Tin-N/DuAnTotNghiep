@@ -9,6 +9,7 @@ import {
   ImageBackground,Alert,ToastAndroid
 } from 'react-native';
 import React, { useState, useEffect, useContext } from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR } from '../css/Theme';
 import { Image } from 'react-native';
 const { width } = Dimensions.get('window');
@@ -36,7 +37,7 @@ const ProfileUser = () => {
   const [address, setAddress] = useState(userInfo.address);
   const [phoneNumber, setPhoneNumber] = useState(userInfo.phoneNumber);
   const [fullname, setFullName] = useState(userInfo.fullname);
-  const [avatar, setAvatar] = useState(userInfo.avatar);
+  const [avatar, setAvatar] = useState( typeof userInfo.avatar !== "undefined" ? userInfo.avatar:"");
   const getImageFromLibrary = async () => {
     const result = await launchImageLibrary();
     if (!result.didCancel) {
@@ -118,7 +119,7 @@ const ProfileUser = () => {
         <View style={StyleProfile.TextProfile}>
           <Text style={StyleProfile.Name}>Thuận Nguyễn</Text>
           <Text style={StyleProfile.Email}>
-            {/* {userInfo.email} */} thuannt160603@gmail.com
+            {userInfo.email}
             </Text>
           <TouchableOpacity style={StyleProfile.iconEditContainer}>
             <Image

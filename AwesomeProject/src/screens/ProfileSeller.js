@@ -38,7 +38,7 @@ const ProfileSeller = () => {
   const [address, setAddress] = useState(userInfo.address);
   const [phoneNumber, setPhoneNumber] = useState(userInfo.phoneNumber);
   const [fullname, setFullName] = useState(userInfo.fullname);
-  const [avatar, setAvatar] = useState(userInfo.avatar);
+  const [avatar, setAvatar] = useState( typeof userInfo.avatar !=="undefined" ? userInfo.avatar:"");
   const getImageFromLibrary = async () => {
     const result = await launchImageLibrary();
     if (!result.didCancel) {
@@ -61,7 +61,7 @@ const ProfileSeller = () => {
 
     if (ImgLink.length > 0)
       UpdateProfile();
-
+      console.log(userInfo.avatar); 
     return () => {
 
     }
@@ -78,7 +78,7 @@ const ProfileSeller = () => {
     try {
       // http://localhost:3000/api/UserApi/changeUserInfo?id=654627d67137a3bf678fb544&address=Tran Phu&phoneNumber=0933067567&fullname=Nguyen Trung Thuan
       const response = await AxiosIntance().post("/UserApi/changeUserInfo?id=" + userInfo._id + "&address=" + address + "&phoneNumber=" + phoneNumber + "&fullname=" + fullname + "&avatar=" + ImgLink);
-      console.log(userInfo._id, phoneNumber, fullname, address, ImgLink,img);
+      console.log(userInfo._id)
 
       if (response.result) {
         console.log("Sửa thành công");
