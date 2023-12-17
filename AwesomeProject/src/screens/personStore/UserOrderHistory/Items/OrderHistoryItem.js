@@ -48,7 +48,7 @@ const OrderHistoryItem = (props) => {
         <View style={{ borderWidth: 1, margin: 5, borderRadius: 10 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
                 <Image
-                    source={{ uri: "http://nhatminhdecor.com/wp-content/uploads/2019/01/chup-anh-voi-phong-nen-vai-trang-1.jpg" }}
+                    source={{ uri: "https://banner2.cleanpng.com/20180425/iee/kisspng-computer-icons-5ae02032a20968.3568738115246377466637.jpg" }}
                     style={{ width: 80, height: 80, marginRight: 10 }}
                 />
                 <View style={{ flex: 1 }}>

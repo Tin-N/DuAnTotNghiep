@@ -236,7 +236,7 @@ const Order = () => {
 
           <View style={[StyleOrder.tillte]}>
             <Text style={[StyleOrder.textTillte, { marginTop: 10, marginLeft: 10 }]}>Tổng:</Text>
-            <Text style={[StyleOrder.textTillte, { marginTop: 10, color: '#EE2624' }]}>$ {totalCost}</Text>
+            <Text style={[StyleOrder.textTillte, { marginTop: 10, color: '#EE2624' }]}>{totalCost} VNĐ</Text>
             <Pressable onPress={OrderFunc} style={StyleOrder.pressableBuy}>
               <Text style={[{ color: 'white', fontSize: 18 }]}>Mua Hàng</Text>
             </Pressable>

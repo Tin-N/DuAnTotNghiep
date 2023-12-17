@@ -56,7 +56,7 @@ const AllProductDetailsItem = (props) => {
             <Text style={{ color: 'black', fontSize: 15, marginBottom: 5, marginTop: 5, fontWeight: '500' }} numberOfLines={1}>{productName}</Text>
             <Text>Số Lượng: {quantity}</Text>
 
-            <Text style={{ color: '#008000', marginBottom: 3, marginTop: 3, textAlign: 'right' }}>$ {productPrice}</Text>
+            <Text style={{ color: '#008000', marginBottom: 3, marginTop: 3, textAlign: 'right' }}>{productPrice} VNĐ</Text>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
             </View>
             <Pressable onPress={handleReturnProduct} style={{ alignItems: 'center', borderWidth: 0.5, borderRadius: 5, borderColor: '#3669C9', backgroundColor: '#8B0000', padding: 5 }}>
