@@ -11,6 +11,8 @@ import { ScrollView } from 'react-native'
 import { formatPrice } from '../../../Agro'
 import { TextWithLimit } from '../../component/SearchSuggestions/SearchItem'
 import Icon1 from 'react-native-vector-icons/Ionicons';
+import { useContext } from 'react'
+import { AppContext } from '../../utils/AppContext'
 const ManageProduct = (props) => {
   const { navigation } = props;
   const Tab = createMaterialTopTabNavigator();
@@ -59,6 +61,7 @@ const ManageProduct = (props) => {
   )
 }
 const ListProduct = (props) => {
+  const {userID} = useContext(AppContext)
   const [dataProduct, setDataProduct] = useState([])
   const [loadData, setLoadData] = useState(true)
   // const [page, setPage] = useState(0)
@@ -105,7 +108,7 @@ const ListProduct = (props) => {
       const getAllProductByUserID = async () => {
         isLoading(true)
         const response = await AxiosIntance().get(
-          "/productAPI/getListProductSelling?id=" + '113' + '&isShow=true&size=' + size);
+          "/productAPI/getListProductSelling?id=" + userID + '&isShow=true&size=' + size);
         if (response.result) {
           setDataProduct(response.products)
           setTimeout(() => {

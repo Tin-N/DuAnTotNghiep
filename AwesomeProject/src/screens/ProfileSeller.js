@@ -36,8 +36,8 @@ const ProfileSeller = () => {
       // http://localhost:3000/api/UserApi/changeUserInfo?id=654627d67137a3bf678fb544&address=Tran Phu&phoneNumber=0933067567&fullname=Nguyen Trung Thuan
       const response= await AxiosIntance().post("/UserApi/changeUserInfo?id="+userInfo._id+"&address="+address+"&phoneNumber="+phoneNumber+"&fullname="+fullname);
     
-      console.log(userInfo._id, phoneNumber,fullname,address );
-      if(response.user )
+      console.log(userInfo._id, phoneNumber,fullname,address, response.user );
+      if(response.user == true)
       {
         console.log("Sửa thành công");
         setImgLink("");

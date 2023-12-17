@@ -7,7 +7,14 @@ import { AppContext } from '../../utils/AppContext';
 
 const SellerScreen = () => {
   const navigation = useNavigation();
-  const {userInfo}=useContext(AppContext)
+  const { isLogin, setisLogin, isOrder, setisOrder, userInfo, setuserInfo, userID, setuserID, userAddress, setuserAddress, userRole, setuserRole } = useContext(AppContext);
+  const logOut = () => {
+    setisLogin(false)
+    setuserID('')
+    setuserAddress('')
+    setuserInfo('')
+    setuserRole(0)
+  }  
   return (
     <View style={{marginHorizontal: 15}}>
       <View
@@ -313,7 +320,7 @@ const SellerScreen = () => {
         </View>
         </TouchableOpacity>
         <TouchableOpacity
-        
+        onPress={()=>logOut()}
         >
         <View
           style={{

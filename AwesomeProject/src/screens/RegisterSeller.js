@@ -1,12 +1,22 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 import { styleHome,styleSearchScreen } from '../css/Styles';
 import { View, Text, TextInput,TouchableOpacity, Alert,ScrollView,Image, ToastAndroid } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import AxiosIntance from '../utils/AxiosIntance';
+import { AppContext } from '../utils/AppContext';
 const SellerRegistration = (props) => {
     const {navigation,route}=props;
     const {params}=route;
     const {userID}=params;
+    const { isLogin, setisLogin, isOrder, setisOrder, userInfo, setuserInfo, setuserID, userAddress, setuserAddress, userRole, setuserRole } = useContext(AppContext);
+    const logOut = () => {
+      setisLogin(false)
+      setuserID('')
+      setuserAddress('')
+      setuserInfo('')
+      setuserRole(0);
+      navigation.goBack();
+    }
     useEffect(() => {
       navigation.getParent()?.setOptions({
         tabBarStyle: {  
@@ -18,10 +28,9 @@ const SellerRegistration = (props) => {
       });
     }, [navigation]);
     useEffect(() => {
-      console.log(userID);
       const checkUser= async ()=>{
         const response = await AxiosIntance().get("/UserApi/get-by-id?id="+userID);
-        console.log(userID);
+        console.log(response.user.roleID);
         if(response.result==true)
         {
           if(response.user.roleID==2)
@@ -30,6 +39,14 @@ const SellerRegistration = (props) => {
               {
                 text: 'Tôi đã hiểu',
                 onPress: () => handleClick(),
+              }]);
+          }
+          if(response.user.roleID==3)
+          {
+            Alert.alert("Thông báo","Bạn đã trở thành người bán.\nVui lòng đăng nhập lại để sử dụng chức năng mới", [
+              {
+                text: 'Đăng xuất',
+                onPress: () => logOut(),
               }]);
           }
         }
@@ -58,16 +75,21 @@ const SellerRegistration = (props) => {
   const handleClick =()=>{
     navigation.goBack();
   }
+  const handleClick123 =()=>{
+    navigation.goBack();
+  }
   const handleSubmit = async() => {
-    const response = await AxiosIntance().post("/UserApi/check-seller-by-id/"+userID);
+    const response = await AxiosIntance().post("/UserApi/check-seller-wait-by-id/"+userID);
     console.log(response.user);
     if(response.result==true)
     {
       Alert.alert('Thông báo', 'Đã đăng ký vào danh sách chờ duyệt!');
       navigation.goBack();
       
+    }else{
+      ToastAndroid.show("Lỗi gửi thông tin",ToastAndroid.SHORT)
+
     }
-    ToastAndroid.show("Lỗi gửi thông tin",ToastAndroid.SHORT)
   };
 
 
