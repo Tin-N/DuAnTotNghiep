@@ -26,7 +26,7 @@ const Order = () => {
   const [productsSelected, setproductsSelected] = useState([])
   const [totalCost, settotalCost] = useState(0)
   const [isCartChanged, setisCartChanged] = useState(1)
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setisLoading] = useState(true)
   const navigation = useNavigation
 
   const appContextData = useContext(AppContext);
@@ -38,10 +38,11 @@ const Order = () => {
     (async () => {
       try {
         const response = await AxiosIntance().get(`/cart/getCartByUserID/${userID}`)
-          .then(setisLoading(true));
+          .then(setisLoading(false));
         setuserCart(response);
       } catch (error) {
         console.log("Order: lỗi lấy dữ liệu: " + error);
+        setisLoading(false)
       }
     })();
   }, [isCartChanged]);
@@ -210,12 +211,13 @@ const Order = () => {
         <ActionBar title={"Cart"} />
         {/* co san pham thi hien list san pham khong thi hien hinh anh */}
         {isLoading
-          ? <View style={{ height: 525}}>
-            {userCart.length != 0 ? <MyCart /> : <MyCartIsEmpty />}
-          </View>
-          : <View style={{ alignItems: 'center', marginTop: 220 }}>
+          ?
+          <View style={{ alignItems: 'center', marginTop: 220 }}>
             <ActivityIndicator size='large' color="#0000ff" />
             <Text>Loading...</Text>
+          </View>
+          : <View style={{ height: 525 }}>
+            {userCart.length != 0 ? <MyCart /> : <MyCartIsEmpty />}
           </View>
         }
 
