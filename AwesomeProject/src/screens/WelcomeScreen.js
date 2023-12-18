@@ -36,6 +36,7 @@ const WelcomeScreen = (props) => {
         paginationEnabled={true}
       />
       <TouchableOpacity
+      onPress={()=>navigation.navigate("Main")}
         // chổ này click không được này
         style={[styleWelcome.TextInput]}>
         <Text

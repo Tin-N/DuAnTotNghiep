@@ -22,7 +22,17 @@ const HomeScreen = props => {
   const [categoryData1, setcategoryData1] = useState([]);
   const [categoryData2, setcategoryData2] = useState([]);
   const [categoryData3, setcategoryData3] = useState([]);
-
+  useEffect(() => {
+    navigation.getParent()?.setOptions({
+      tabBarStyle: {
+        display: 'flex',
+      },
+    });
+    return () =>
+      navigation.getParent()?.setOptions({
+        tabBarStyle: "flex",
+      });
+  }, [navigation]);
   const handleClick = () => {
     navigation.navigate('SearchScreen');
   };
@@ -116,6 +126,8 @@ const HomeScreen = props => {
           flex={0.8}
           heightRate={0.25}
           widthRate={1}
+          widthR={200}
+          flexH={1}
         />
       </View>
       {/*category*/}
@@ -300,8 +312,11 @@ const styles = StyleSheet.create({
   }
 })
 export const images = [
-  { name: require('../images/Banner/Banner.png') },
-  { name: require('../images/Banner/Banner1.png') },
+  { name: require('../images/Banner/1.png') },
+  { name: require('../images/Banner/2.png') },
+  { name: require('../images/Banner/3.png') },
+  { name: require('../images/Banner/4.png') },
+  { name: require('../images/Banner/5.png') },
   // {name:require('../../images/Slideshow/male3.png')},
   // {name:require('../../images/Slideshow/female1.png')}
 ];

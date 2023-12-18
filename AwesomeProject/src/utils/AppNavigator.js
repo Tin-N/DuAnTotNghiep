@@ -155,6 +155,18 @@ const Profile = () => {
         </Stack.Navigator>
     )
 }
+const Home =()=>{
+    return(
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='Splash'> 
+            <Stack.Screen name='Main' component={Main}></Stack.Screen>
+            
+            <Stack.Screen name='Splash' component={Splash}></Stack.Screen>
+            <Stack.Screen name='WelcomeScreen' component={WelcomeScreen}></Stack.Screen>
+
+         
+        </Stack.Navigator >
+    )
+}
 const ProductHome = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProductList'> 
@@ -281,7 +293,7 @@ const AppNavigator = () => {
     return (
         <>
             {
-                <Main />
+                <Home />
                 // <User />
                 // <Main/>
             }
