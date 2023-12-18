@@ -24,21 +24,6 @@ const UserScreen = () => {
           marginVertical: 10,
 
         }}>
-        {/* <TouchableOpacity
-        style={{
-        }}>
-          <View
-            style={{
-              borderRadius: 10,
-              backgroundColor: '#b7e6f98a',
-              width: 40,
-              height: 40,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Icon name="chevron-back" size={30} color={COLOR.background} />
-          </View>
-        </TouchableOpacity> */}
         <Text
           style={{
             marginHorizontal: 10,
@@ -46,14 +31,11 @@ const UserScreen = () => {
             fontWeight: 'bold',
             color: 'black',
           }}>
-          Hi, {userInfo.fullname}
+          Xin chào {userInfo.fullname}
         </Text>
       </View>
       <View style={{ width: '100%' }}>
-
-        <TouchableOpacity
-        onPress={()=>{navigation.navigate("OrderHistoryStack")}}
-        >
+        <TouchableOpacity onPress={() => { navigation.navigate("OrderHistoryStack") }}>
           <View
             style={{
               flexDirection: 'row',
@@ -75,8 +57,7 @@ const UserScreen = () => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Icon name="wallet" size={30} color={COLOR.background}
-                />
+                <Icon name="wallet" size={30} color={COLOR.background} />
               </View>
               <Text
                 style={{
@@ -88,15 +69,10 @@ const UserScreen = () => {
                 Đơn hàng
               </Text>
             </View>
-            <Icon name="chevron-forward" size={30} color={COLOR.background}
-            />
+            <Icon name="chevron-forward" size={30} color={COLOR.background} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("ProfileUser", { userID: userInfo._id, navigation: navigation });
-            console.log(userInfo._id)
-          }}>
+        <TouchableOpacity onPress={() => { navigation.navigate("ProfileUser", { userID: userInfo._id, navigation: navigation }); console.log(userInfo._id) }}>
           <View
             style={{
               flexDirection: 'row',
@@ -120,8 +96,7 @@ const UserScreen = () => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Icon name="person" size={30} color={COLOR.background}
-                />
+                <Icon name="person" size={30} color={COLOR.background} />
               </View>
               <Text
                 style={{
@@ -133,58 +108,49 @@ const UserScreen = () => {
                 Chỉnh sửa thông tin người dùng
               </Text>
             </View>
-            <Icon name="chevron-forward" size={30} color={COLOR.background}
-            />
+            <Icon name="chevron-forward" size={30} color={COLOR.background} />
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity
-        onPress={()=>{navigation.navigate("SellerRegistration",{userID:userInfo._id,navigation:navigation}); console.log(userInfo._id)}}
-        >
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom:20
-          }}>
+        <TouchableOpacity onPress={() => { navigation.navigate("SellerRegistration", { userID: userInfo._id, navigation: navigation }); console.log(userInfo._id) }}>
           <View
             style={{
               flexDirection: 'row',
+              justifyContent: 'space-between',
               alignItems: 'center',
-              width: '80%',
-            
-
+              marginBottom: 20
             }}>
             <View
               style={{
-                borderRadius: 10,
-                backgroundColor: '#b7e6f98a',
-                width: 50,
-                height: 50,
-                justifyContent: 'center',
+                flexDirection: 'row',
                 alignItems: 'center',
+                width: '80%',
               }}>
-              <Icon name="bag-add" size={30}          color={COLOR.background}
- />
+              <View
+                style={{
+                  borderRadius: 10,
+                  backgroundColor: '#b7e6f98a',
+                  width: 50,
+                  height: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Icon name="bag-add" size={30} color={COLOR.background} />
+              </View>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  color: 'black',
+                }}>
+                Đăng ký trở thành người bán
+              </Text>
             </View>
-            <Text
-              style={{
-                marginLeft: 10,
-                fontSize: 18,
-                fontWeight: 'bold',
-                color: 'black',
-              }}>
-             Đăng ký trở thành người bán
-            </Text>
+            <Icon name="chevron-forward" size={30} color={COLOR.background} />
           </View>
-          <Icon name="chevron-forward" size={30}          color={COLOR.background}
- />
-        </View>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => { navigation.navigate("FavoriteScreen", { userID: userInfo._id, navigation: navigation }); console.log(userInfo._id) }}
-        >
+        <TouchableOpacity onPress={() => { navigation.navigate("FavoriteScreen", { userID: userInfo._id, navigation: navigation }); console.log(userInfo._id) }}>
           <View
             style={{
               flexDirection: 'row',
@@ -206,8 +172,7 @@ const UserScreen = () => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Icon name="bookmark" size={30} color={COLOR.background}
-                />
+                <Icon name="bookmark" size={30} color={COLOR.background} />
               </View>
               <Text
                 style={{
@@ -219,12 +184,10 @@ const UserScreen = () => {
                 Danh sách yêu thích
               </Text>
             </View>
-            <Icon name="chevron-forward" size={30} color={COLOR.background}
-            />
+            <Icon name="chevron-forward" size={30} color={COLOR.background} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={logOut}
-        >
+        <TouchableOpacity onPress={logOut}>
           <View
             style={{
               flexDirection: 'row',
@@ -248,8 +211,7 @@ const UserScreen = () => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Icon name="log-out" size={30} color={COLOR.background}
-                />
+                <Icon name="log-out" size={30} color={COLOR.background} />
               </View>
               <Text
                 style={{
@@ -261,8 +223,7 @@ const UserScreen = () => {
                 Đăng xuất
               </Text>
             </View>
-            <Icon name="chevron-forward" size={30} color={COLOR.background}
-            />
+            <Icon name="chevron-forward" size={30} color={COLOR.background} />
           </View>
         </TouchableOpacity>
       </View>

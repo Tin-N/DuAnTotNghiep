@@ -11,36 +11,32 @@ import ShipperScreen from './personStore/ShipperScreen'
 const ProfileScreen = () => {
     const { isLogin } = useContext(AppContext);
     const { userInfo } = useContext(AppContext);
-// const isLogin=true;
-    const ShowScreen  = () => {
+    // const isLogin=true;
+    const ShowScreen = () => {
         const _role = userInfo.roleID;
-        
-                if(_role == 1){
-                    return (
-                        <UserScreen/>
-                    )
-                }else if (_role == 3){
-                    return (
-                        <SellerScreen/>
-                    )
-                }else if (_role == 4){
-                    return (
-                        <ShipperScreen/>
-                    )
-                }
-   
-   
 
-}
+        if (_role == 1) {
+            return (
+                <UserScreen />
+            )
+        } else if (_role == 3) {
+            return (
+                <SellerScreen />
+            )
+        } else if (_role == 4) {
+            return (
+                <ShipperScreen />
+            )
+        }
+    }
     return (
-        isLogin? <View>
+        isLogin ? <View>
             {
                 ShowScreen()
             }
 
-        </View> : <WarningPorfile/>
+        </View> : <WarningPorfile />
     )
-
 }
 export default ProfileScreen
 const styles = StyleSheet.create({})
