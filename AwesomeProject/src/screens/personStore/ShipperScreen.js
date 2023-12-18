@@ -104,7 +104,7 @@ const ShipperScreen = () => {
                   fontWeight: 'bold',
                   color: 'black',
                 }}>
-                Chỉnh sửa thông tin người dùng
+                Chỉnh sửa thông tin
               </Text>
             </View>
             <Icon name="chevron-forward" size={30} color={COLOR.background} />

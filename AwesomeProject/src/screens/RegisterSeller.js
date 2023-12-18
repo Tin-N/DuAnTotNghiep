@@ -199,11 +199,6 @@ Hãy chắc chắn rằng bạn đã đọc và hiểu rõ các điều khoản 
       </TouchableOpacity>
       }
     </View>
-
-
-
-
-
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
         {/* <CheckBox
           value={formData.agreeToTerms}
@@ -240,3 +235,4 @@ Hãy chắc chắn rằng bạn đã đọc và hiểu rõ các điều khoản 
 };
 
 export default SellerRegistration;
+

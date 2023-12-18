@@ -1669,7 +1669,7 @@ export const StyleProfile = StyleSheet.create({
     height: '80%',
   },
   Name: {
-    fontSize: 25,
+    fontSize: 20,
     color: 'black',
     marginLeft: '15%',
   },
