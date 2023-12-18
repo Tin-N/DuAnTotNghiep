@@ -297,7 +297,7 @@ const DetailProduct = props => {
           setisLoading(false)
         }
       } catch (error) {
-        console.log('Product Detail: lỗi lấy dữ liệu: ' + error);
+        console.log('Product Detail - getDetails lỗi lấy dữ liệu: ' + error);
         setisLoading(false)
       }
     };
@@ -312,7 +312,7 @@ const DetailProduct = props => {
 
         }
       } catch (error) {
-        console.log('Product Detail: lỗi lấy dữ liệu: ' + error);
+        console.log('Product Detail - getShopInfo lỗi lấy dữ liệu: ' + error);
       }
     };
     const checkProductsInOrderdetail = async () => {
@@ -326,7 +326,7 @@ const DetailProduct = props => {
             setIsVisibleRating(response.result);
           }
         } catch (error) {
-          console.log('Product Detail: lỗi lấy dữ liệu: ' + error);
+          console.log('Product Detail - checkProductsInOrderdetail lỗi lấy dữ liệu: ' + error);
         }
       }
     };
