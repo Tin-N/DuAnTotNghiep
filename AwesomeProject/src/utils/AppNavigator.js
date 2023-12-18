@@ -25,7 +25,6 @@ import ProfileScreen from '../screens/ProfileScreen';
 import ResetPassword from '../screens/ResetPassword';
 import ConfirmPhoneNum from '../screens/ConfirmPhoneNum';
 import UpdatePassword from '../screens/UpdatePassword';
-
 import ProductProcess from '../screens/personStore/ProductProcess'
 import SProductProcess from '../screens/personStore/Shiper/SProductProcess';
 import ProductProcessOverview from '../screens/personStore/ProdsProcessOverview';
@@ -48,7 +47,6 @@ import FavoriteScreen from '../screens/FavoriteList';
 import Item from '../component/FavoriteList/Item';
 import CategoryScreen from '../screens/CategoryFilterProduct';
 import UserScreen from '../screens/personStore/UserScreen';
-
 import DetailImage from '../screens/personStore/DetailImage';
 import SellerRegistration from '../screens/RegisterSeller';
 import SellerScreen from '../screens/personStore/SellerScreen';
@@ -102,6 +100,7 @@ const User = () => {
         </Stack.Navigator>
     )
 }
+
 const Profile = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProfileScreen'>
@@ -114,7 +113,6 @@ const Profile = () => {
             <Stack.Screen name='Shipper' component={SProductProcess}></Stack.Screen>
             <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
             <Stack.Screen name='ManageProduct' component={ManageProduct}></Stack.Screen>
-
             {/* ManageProduct */}
             <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
             <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
@@ -123,13 +121,8 @@ const Profile = () => {
             <Stack.Screen name='ConfirmPhoneNum' component={ConfirmPhoneNum}></Stack.Screen>
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
             <Stack.Screen name='Prod Process' component={ProductProcessStack} />
-            <Stack.Screen name='SellerRegistration' component={SellerRegistration} 
-
-            // OrderHistoryStack
-            options={{ title: 'My home' }}
-            />
+            <Stack.Screen name='SellerRegistration' component={SellerRegistration} options={{ title: 'My home' }}/>
             <Stack.Screen name='OrderHistoryStack' options={{ headerShown: false }} component={OrderHistoryStack} />
-
             {/* SellerRegistration */}
             <Stack.Screen name='CreateProduct'
                 options={{
@@ -148,13 +141,12 @@ const Profile = () => {
                 component={UpdateProduct} />
             <Stack.Screen name='FavoriteScreen' component={FavoriteScreen} />
             <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
-
-
             <Stack.Screen name='DetailProduct' component={DetailProduct} />
             {/* FavoriteScreen */}
         </Stack.Navigator>
     )
 }
+
 const ProductHome = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProductList'> 
@@ -172,18 +164,12 @@ const ProductHome = () => {
             <Stack.Screen name='Splash' component={Splash}></Stack.Screen>
             <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
             <Stack.Screen name='WelcomeScreen' component={WelcomeScreen}></Stack.Screen>
-
-            
             <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
             <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
-
             <Stack.Screen name='DetailProduct' component={DetailProduct} />
             <Stack.Screen name='CategoryDetailList' component={CategoryScreen} />
-
             <Stack.Screen name='DetailList' component={DetailList}>
-
             </Stack.Screen>
-
             <Stack.Screen name='DetailImage' component={DetailImage}
                 options={{
                     presentation: 'modal',
@@ -202,7 +188,6 @@ const censorshipProduct = () => {
         </Stack.Navigator>
     )
 }
-
 
 const Main = () => {
     const appContextData = useContext(AppContext)
@@ -233,21 +218,18 @@ const Main = () => {
                     if (route.name === 'Home') {
                         iconName = focused ? 'home' : 'home-outline';
                     } else if (route.name === 'Cart') {
-
                         iconName = focused ? 'bag-handle-sharp' : 'bag-handle-outline';
                         // } else if (route.name === 'Profile') {
-
-
                         //     iconName = focused ? 'people-sharp' : 'people-outline';
                         // } else if (route.name === 'SignUp') {
 
                         //     iconName = focused ? 'people-sharp' : 'people-outline';
                         // } else if (route.name === 'Prod Process') {
                         //     iconName = focused ? 'clipboard' : 'clipboard-outline';
-
                     } else if (route.name === 'Profile') {
-
                         iconName = focused ? 'people-sharp' : 'people-outline';
+                    } else if (route.name === 'Shipper') {
+                        iconName = focused ? 'paper-plane-sharp' : 'paper-plane-outline';
                     }
                     return <Icon1 name={iconName} size={size} color={color} />
                 },
@@ -259,16 +241,11 @@ const Main = () => {
             })}
         >
             <Tab.Screen name="Home" component={ProductHome} />
-
             <Tab.Screen name="Cart" component={Order} />
             {/* <Tab.Screen name="ProfileScreen" component={ProfileScreen} /> */}
             {/* <Tab.Screen name="Prod Process" component={ProductProcessStack} /> */}
             {/* <Tab.Screen name="Shipper" component={SProductProcess} />
             <Tab.Screen name="Test" component={censorshipProduct} /> */}
-
-
-
-
             <Tab.Screen name="Profile" component={Profile} />
             {userRole == 4 ? <Tab.Screen name="Shipper" component={ShipperStack} /> : null}
 
@@ -282,8 +259,6 @@ const AppNavigator = () => {
         <>
             {
                 <Main />
-                // <User />
-                // <Main/>
             }
         </>
     )
