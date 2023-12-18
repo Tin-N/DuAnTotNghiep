@@ -35,7 +35,7 @@ const ProductList = (props) => {
                       color={"blue"}
                       size={'small'}
                       />
-                    <Text style={{marginLeft:5}}>Loading...</Text>
+                    <Text style={{marginLeft:5}}>Loading... </Text>
                     </View>
                     :
                 <View/>
