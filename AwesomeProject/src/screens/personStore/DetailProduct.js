@@ -43,7 +43,7 @@ const DetailProduct = props => {
   const {isLogin, userInfo} = useContext(AppContext);
   const {params} = route;
 
-  console.log(params);
+  // console.log(params);
 
   // Product
   const [userIDStore, setuserIDStore] = useState('');
@@ -122,9 +122,9 @@ const DetailProduct = props => {
             parseFloat(sales.endDay),
           );
           setTime(onSaleTime);
-          console.log(
-            '>>>>>dawdawdaw ' + sales.startDay + ' ' + new Date().getTime(),
-          );
+          // console.log(
+          //   '>>>>>dawdawdaw ' + sales.startDay + ' ' + new Date().getTime(),
+          // );
           // if (sales[0].startDay > new Date().getTime()){
           //     setonProductSaleOff(false)
           //         setonProductSaleOff(true)
@@ -161,7 +161,7 @@ const DetailProduct = props => {
       const response = await AxiosIntance().get(
         '/saleOffAPI/getSaleApplyBySaleID?saleID=' + params.saleOffID,
       );
-      console.log('sale detailProduct: ' + params.sale);
+      // console.log('sale detailProduct: ' + params.sale);
       if (typeof params.saleOffID != 'undefined') {
         if (
           response.result == true &&
@@ -190,7 +190,7 @@ const DetailProduct = props => {
   };
 
   const heartHandler = async () => {
-    console.log(favorite);
+    // console.log(favorite);
     if (!isLogin) {
       Alert.alert(
         'Thông báo',
@@ -281,7 +281,7 @@ const DetailProduct = props => {
         const response = await AxiosIntance().get(
           '/productAPI/getProductByID?id=' + params.itemId,
         );
-        console.log('>>>>>>productID for detail: ' + params.itemId);
+        // console.log('>>>>>>productID for detail: ' + params.itemId);
         if (response.result == true) {
           setDataProduct(response.products);
           setProductPrice(response.products.price);
@@ -303,7 +303,7 @@ const DetailProduct = props => {
           const response = await AxiosIntance().get(
             `/orderdetail/check-product-in-orderDetail/${userID}/${params.itemId}`,
           );
-          console.log('>>>>>>productID for detail: ' + params.itemId);
+          // console.log('>>>>>>productID for detail: ' + params.itemId);
           if (response.result == true) {
             setIsVisibleRating(response.result);
           }
@@ -480,7 +480,7 @@ const DetailProduct = props => {
             quantity,
           });
           if (response) {
-            console.log('Thêm vào giỏ hàng thành công');
+            // console.log('Thêm vào giỏ hàng thành công');
             setDialogVisible(false);
             ToastAndroid.show(
               'Thêm vào giỏ hàng thành công',
@@ -496,7 +496,7 @@ const DetailProduct = props => {
     const orderNow = async () => {
       const objectId = new ObjectID();
       console.log(objectId);
-      console.log('>>>>isLogin: ' + isLogin);
+      // console.log('>>>>isLogin: ' + isLogin);
       if (!isLogin) {
         Alert.alert(
           'Thông báo',
@@ -533,9 +533,9 @@ const DetailProduct = props => {
             totalCost: itemTotalCost,
           },
         );
-        console.log(
-          'Order Detail ID: ' + orderDetailResponse.data.orderDetailID,
-        );
+        // console.log(
+        //   'Order Detail ID: ' + orderDetailResponse.data.orderDetailID,
+        // );
 
         const OrderPost = async () => {
           if (orderDetailResponse.error == false) {
@@ -567,7 +567,7 @@ const DetailProduct = props => {
               text: 'Cancel', // Chữ hiển thị trên nút Cancel
               onPress: () => {
                 // Xử lý khi người dùng chọn "Cancel"
-                console.log('Bạn đã chọn Cancel');
+                // console.log('Bạn đã chọn Cancel');
               },
             },
             {
@@ -1121,7 +1121,7 @@ const DetailProduct = props => {
               <TouchableOpacity
                 onPress={() => {
                   setDialogVisible(true);
-                  console.log('Hello' + userID);
+                  // console.log('Hello' + userID);
                   setCheck(false);
                 }}>
                 <Text style={StyleDetailProduct.textButton}>Giỏ hàng</Text>

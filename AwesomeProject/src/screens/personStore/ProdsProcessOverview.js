@@ -7,14 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 import ActionBar from '../ActionBar';
 
 const ProdsProcessOverview = () => {
-    const [data, setdata] = useState([])
     const [orderData, setorderData] = useState([])
     const appContextData = useContext(AppContext);
     const userID = appContextData.userID;
     const navigation = useNavigation();
     const [ProdsProcessOverviewChanged, setProdsProcessOverviewChanged] = useState(true)
     const [isLoading, setisLoading] = useState(true)
-    console.log(">>>>>ProdsProcessOverviewChanged " + JSON.stringify(orderData))
+    // console.log(">>>>>ProdsProcessOverviewChanged " + JSON.stringify(orderData))
 
     useEffect(() => {
         (async () => {
@@ -22,7 +21,7 @@ const ProdsProcessOverview = () => {
                 const response = await AxiosIntance().get(`/order/getOrderForSeller/${userID}`)
 
                 setorderData(response);
-                console.log("ProdsProcessOverview - lấy dữ liệu: " + JSON.stringify(response));
+                // console.log("ProdsProcessOverview - lấy dữ liệu: " + JSON.stringify(response));
                 if (response) {
                     setisLoading(false)
                 }
@@ -32,7 +31,6 @@ const ProdsProcessOverview = () => {
             }
         })();
     }, [ProdsProcessOverviewChanged]);
-
 
     const handleNavigateToDetail = (orderDetailID) => {
         navigation.navigate("Product Process", { navigateData: orderDetailID })

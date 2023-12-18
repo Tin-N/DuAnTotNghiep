@@ -170,7 +170,7 @@ const Order = () => {
             text: 'Cancel', // Chữ hiển thị trên nút Cancel
             onPress: () => {
               // Xử lý khi người dùng chọn "Cancel"
-              console.log('Bạn đã chọn Cancel');
+              // console.log('Bạn đã chọn Cancel');
             }
           },
           {
@@ -178,7 +178,7 @@ const Order = () => {
             onPress: () => {
               // Xử lý khi người dùng chọn "OK"
               OrderPost().then(async () => {
-                console.log(productsSelected)
+                // console.log(productsSelected)
                 await AxiosIntance().delete(`cart/deleteProductsSelected/${userID}`)
               }).then(() => {
                 handleCartChanged()

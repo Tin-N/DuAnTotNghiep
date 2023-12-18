@@ -18,10 +18,9 @@ const ProdsProcessOverviewItem = (props) => {
         month: 'numeric',
         year: 'numeric',
     });
-
-    console.log(">>>>>>>>ProdsProcessOverviewItem: " + JSON.stringify(data))
+    // console.log(">>>>>>>>ProdsProcessOverviewItem: " + JSON.stringify(data))
     const [orderDetailProducts, setorderDetailProducts] = useState([])
-    console.log("orderDetailProducts: ", data.orderID)
+    // console.log("orderDetailProducts: ", data.orderID)
 
     useEffect(() => {
         (async () => {
@@ -44,7 +43,7 @@ const ProdsProcessOverviewItem = (props) => {
             }
         })();
     }, []);
-    console.log("data orderID: " + JSON.stringify(data.orderID));
+    // console.log("data orderID: " + JSON.stringify(data.orderID));
     const handlePushProduct = async () => {
         Alert.alert(
             'Thông báo',
@@ -53,7 +52,7 @@ const ProdsProcessOverviewItem = (props) => {
                 {
                     text: 'Cancel',
                     onPress: () => {
-                        console.log('Bạn đã chọn Cancel');
+                        // console.log('Bạn đã chọn Cancel');
                     }
                 },
                 {
@@ -69,11 +68,10 @@ const ProdsProcessOverviewItem = (props) => {
                 },
             ]
         );
-
     }
 
     const handleNavigateToDetail = () => {
-        console.log("handleNavigateToDetail: " + data.orderDetailID)
+        // console.log("handleNavigateToDetail: " + data.orderDetailID)
         navigateToDetail(data.orderDetailID)
     }
 
@@ -111,7 +109,6 @@ const ProdsProcessOverviewItem = (props) => {
                         <Text style={{ textAlign: 'center', color: 'white' }}>Vận chuyển ngay</Text>
                     </Pressable>
                 </View>
-
             </View>
         </View>
     )
