@@ -3,6 +3,7 @@ import React,{useContext} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from '../../css/Theme'
 import {useNavigation} from '@react-navigation/native'
+import { AppContext } from '../../utils/AppContext';
 const ShipperScreen = () => {
   const navigation = useNavigation();
   const { isLogin, setisLogin, isOrder, setisOrder, userInfo, setuserInfo, userID, setuserID, userAddress, setuserAddress, userRole, setuserRole } = useContext(AppContext);
