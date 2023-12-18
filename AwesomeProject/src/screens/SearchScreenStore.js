@@ -17,7 +17,7 @@ import ProductList from '../component/ProductList/ProductList';
 import {useNavigation,useRoute} from '@react-navigation/native';
 import { AppContext } from '../utils/AppContext';
 
-const SearchScreen = () => {
+const SearchScreenStore = () => {
   const {userInfo,isLogin}=useContext(AppContext)
   const navigation = useNavigation();
   const route= useRoute();
@@ -42,7 +42,7 @@ const SearchScreen = () => {
     if (userID) {
       const response2 = await AxiosIntance().post(
         '/historySearchAPI/addNewSearchCount?searchType=' +
-        "" +
+        userID +
           '&keyword=' +
           textSearch,
       );
@@ -66,6 +66,9 @@ const SearchScreen = () => {
     console.log(textSearch.length);
     if (textSearch.length > 0) {
       addHistorySearch();
+      if(typeof params.userID !=='undefined')
+      navigation.navigate('FilterScreen', {searchText: textSearch,userID:params.userID});
+      else
       navigation.navigate('FilterScreen', {searchText: textSearch});
 
     }
@@ -150,4 +153,4 @@ const SearchScreen = () => {
   );
 };
 
-export default SearchScreen;
+export default SearchScreenStore;

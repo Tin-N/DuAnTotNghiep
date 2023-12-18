@@ -13,11 +13,13 @@ const ProdsProcessOverview = () => {
     const userID = appContextData.userID;
     const navigation = useNavigation();
     const [ProdsProcessOverviewChanged, setProdsProcessOverviewChanged] = useState(true)
+    
     // console.log(">>>>>ProdsProcessOverviewChanged " + JSON.stringify(orderData))
     useEffect(() => {
         (async () => {
             try {
                 const response = await AxiosIntance().get(`/order/getOrderForSeller/${userID}`)
+                
                 setorderData(response);
                 // console.log("ProdsProcessOverview - lấy dữ liệu: " + JSON.stringify(response));
             } catch (error) {

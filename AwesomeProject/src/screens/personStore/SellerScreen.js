@@ -14,6 +14,7 @@ const SellerScreen = () => {
     setuserAddress('')
     setuserInfo('')
     setuserRole(0)
+  }
   return (
     <View style={{marginHorizontal: 15}}>
       <View
@@ -205,8 +206,7 @@ const SellerScreen = () => {
         >
         <View
           style={{
-            marginVertical:20
-,
+
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -216,7 +216,7 @@ const SellerScreen = () => {
               flexDirection: 'row',
               alignItems: 'center',
               width: '80%',
-              marginVertical:5
+              marginBottom:20
             }}>
             <View
               style={{
@@ -327,6 +327,6 @@ const SellerScreen = () => {
     </View>
   );
 };
-}
+
 export default SellerScreen;
 

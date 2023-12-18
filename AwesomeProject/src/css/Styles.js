@@ -311,6 +311,7 @@ export const StyleBanner = StyleSheet.create({
 export const styleWelcome = StyleSheet.create({
     view: {
         backgroundColor: '#3669C9',
+
         height: '100%',
         width: '100%',
     },
@@ -329,7 +330,7 @@ export const styleWelcome = StyleSheet.create({
         justifyContent: 'center',
         height: 50,
         marginBottom: 50,
-        borderRadius: 30
+        borderRadius: 30, zIndex:10
     },
     MiniTextInput: {
         // color : '#EE2624',
@@ -1653,6 +1654,7 @@ export const StyleProfile = StyleSheet.create({
     alignItems: 'center',
   },
   iconProfile: {
+    borderRadius: 70,
     // marginVertical: 0.1,
     justifyContent: 'center',
     marginHorizontal: '-3%',

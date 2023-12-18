@@ -174,10 +174,10 @@ const DetailProduct = props => {
           setPercentSales(response.saleOff.saleOff);
           setBannerSale('flex');
         } else {
-          ToastAndroid.show('Không lấy được dũ liệu sale', ToastAndroid.SHORT);
+          
         }
       } else {
-        ToastAndroid.show('Không có dữ liệu sale để lấy', ToastAndroid.SHORT);
+        
       }
     };
     getSalesCurrent();
@@ -215,7 +215,7 @@ const DetailProduct = props => {
         );
         if (response.result) {
           setFavorite({});
-          ToastAndroid.show('Gỡ khỏi ưu thích thành công', ToastAndroid.SHORT);
+          ToastAndroid.show('Đã xoá khỏi yêu thích', ToastAndroid.SHORT);
           setHeart(!heart);
         } else {
           ToastAndroid.show(
@@ -338,9 +338,9 @@ const DetailProduct = props => {
       if (response.result == true) {
         setDataFeedback(response.feedbacks);
         setFeedbackLenght(response.feedbacks.length);
-        ToastAndroid.show('getFeedback thanhf cong', ToastAndroid.SHORT);
+        
       } else {
-        ToastAndroid.show('getFeedback thất bại', ToastAndroid.SHORT);
+        
       }
       if (response.feedbacks.length > 0) {
         const countRating = () => {
@@ -548,6 +548,7 @@ const DetailProduct = props => {
               paymentMethods: 'COD',
               ownerID: ownerID,
               userAddress,
+              isConfirmed: false
             });
             setDialogVisible(false);
             // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);

@@ -21,6 +21,7 @@ const Welcome = () => {
       style={{
         backgroundColor: COLOR.background,
       }}>
+        <StatusBar backgroundColor='#3669c9'/>
       <Text
         style={StyleLogin.HeadingTextWelcome}>
         Buy everything what you want

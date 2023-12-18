@@ -35,7 +35,7 @@ import HomeScreen from '../screens/HomeScreen';
 import DetailList from '../screens/DetailList';
 import DetailPersonFedback from '../screens/personStore/DetailPersonFedback';
 import AllProductDetails from '../screens/personStore/Shiper/AllProductDetails'
-
+import WelcomeScreen from '../screens/WelcomeScreen';
 import DetailProduct from '../screens/personStore/DetailProduct';
 import CreateProduct from '../screens/personStore/CreateProduct';
 import ManageProduct from '../screens/personStore/ManageProduct';
@@ -51,7 +51,9 @@ import UserScreen from '../screens/personStore/UserScreen';
 
 import DetailImage from '../screens/personStore/DetailImage';
 import SellerRegistration from '../screens/RegisterSeller';
-
+import SellerScreen from '../screens/personStore/SellerScreen';
+import {FilterScreenStore} from '../screens/FilterScreenStore';
+import SearchScreenStore from '../screens/SearchScreenStore';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -106,10 +108,14 @@ const Profile = () => {
             <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
             <Stack.Screen name='SignUp' component={SignUp}></Stack.Screen>
             <Stack.Screen name='UserScreen' component={UserScreen}></Stack.Screen>
+            <Stack.Screen name='SellerScreen' component={SellerScreen}></Stack.Screen>
             <Stack.Screen name='StatisticScreen' component={StatisticSellerScreen}></Stack.Screen>
             <Stack.Screen name='ShipperScreen' component={ShipperScreen}></Stack.Screen>
             <Stack.Screen name='Shipper' component={SProductProcess}></Stack.Screen>
             <Stack.Screen name='ProfileUser' component={ProfileUser}></Stack.Screen>
+            <Stack.Screen name='ManageProduct' component={ManageProduct}></Stack.Screen>
+
+            {/* ManageProduct */}
             <Stack.Screen name='ProfileSeller' component={ProfileSeller}></Stack.Screen>
             <Stack.Screen name='ProfileScreen' component={ProfileScreen}></Stack.Screen>
             <Stack.Screen name='WarningProfile' component={WarningProfile}></Stack.Screen>
@@ -151,7 +157,7 @@ const Profile = () => {
 }
 const ProductHome = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProductList'>
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ProductList'> 
             <Stack.Screen name='ProductList' component={HomeScreen}></Stack.Screen>
             <Stack.Screen name='SearchScreen' component={SearchScreen}></Stack.Screen>
             <Stack.Screen name='FilterScreen' component={FilterScreen}></Stack.Screen>
@@ -161,7 +167,13 @@ const ProductHome = () => {
             <Stack.Screen name='HomeStore' component={HomeStore}></Stack.Screen>
             <Stack.Screen name='DetailPersonFedback' component={DetailPersonFedback}></Stack.Screen>
             <Stack.Screen name='UserScreen' component={UserScreen}></Stack.Screen>
+            {/* <Stack.Screen name='FilterScreenStore' component={FilterScreenStore}></Stack.Screen>
+            <Stack.Screen name='SearchScreenStore' component={SearchScreenStore}></Stack.Screen> */}
+            <Stack.Screen name='Splash' component={Splash}></Stack.Screen>
+            <Stack.Screen name='SignIn' component={SignIn}></Stack.Screen>
+            <Stack.Screen name='WelcomeScreen' component={WelcomeScreen}></Stack.Screen>
 
+            
             <Stack.Screen name='ItemHomeStore' component={ItemHomeStore}></Stack.Screen>
             <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
 

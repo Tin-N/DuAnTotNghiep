@@ -11,8 +11,8 @@ const FilterScreen = (props) => {
   const route =useRoute();
   const { searchText } = route.params;
   const navigation= useNavigation();
+
   const [page, setPage] = useState(1)
-  // const {params}=route;
   const [columns, setcolumns] = useState(2);
   const [isLoading, setisLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -49,7 +49,7 @@ const FilterScreen = (props) => {
       url=url+"lte="+arrValue[1]+"&";
 
       url=url+"gte="+arrValue[0];
-
+     
   // Category
       if(stringValue.length>0)
       url=url+"&categoryID="+stringValue;

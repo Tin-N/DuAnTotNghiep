@@ -51,7 +51,6 @@ const CreateProduct = (props) => {
             const response = await AxiosIntance().get('/category/getCategoryNotDelete')
             console.log(">>>>>>>>categories: " + response.categories[0].name);
             if(response.result == true) {
-                ToastAndroid.show('Lấy category thành công', ToastAndroid.SHORT)
                 setItems2(prevItems => [
                     ...prevItems,
                     ...response.categories.map(category => ({

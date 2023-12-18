@@ -52,11 +52,11 @@ const HomeStore = (props) => {
     }, [])
 
     const searchStoreHandler = () => {
-        navigation.navigate('SearchStore');
+        navigation.navigate('SearchScreen',{userID:params.userID});
     }
 
     const sellerManageHandler = () => {
-        navigation.navigate('ManageProduct');
+        navigation.goBack();
     }
     return (
         <View>

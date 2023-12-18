@@ -59,6 +59,7 @@ const ProdsProcessOverviewItem = (props) => {
                 {
                     text: 'OK',
                     onPress: async () => {
+                        const update = await AxiosIntance().post(`/order/updateisConfirmedisTrue/${data.oderID}`)
                         const res = await AxiosIntance()
                             .put(`/orderdetail/update/updateAllProductDeliveryStatus/${data.orderDetailID}/${userID}`
                                 , { deliveryStatus: 'Delivering' })

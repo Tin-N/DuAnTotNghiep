@@ -154,7 +154,8 @@ const Order = () => {
               paymentStatus: 'Unpaid',
               paymentMethods: 'COD',
               ownerID: [...new Set(productsSelected.map(product => product.ownerID))],
-              address: userAddress
+              address: userAddress,
+              isConfirmed: false
             });
           console.log("Đặt hàng thành công");
           ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);

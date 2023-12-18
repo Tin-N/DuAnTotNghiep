@@ -46,53 +46,14 @@ const UserScreen = () => {
             fontWeight: 'bold',
             color: 'black',
           }}>
-          Hi, User20321
+          Hi, {userInfo.fullname}
         </Text>
       </View>
       <View style={{ width: '100%' }}>
-        <TouchableOpacity>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginVertical: 20,
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: '80%',
-              }}>
-              <View
-                style={{
-                  borderRadius: 10,
-                  backgroundColor: '#b7e6f98a',
-                  width: 50,
-                  height: 50,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Icon name="cart" size={30} color={COLOR.background} />
-              </View>
-              <Text
-                style={{
-                  marginLeft: 10,
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                  color: 'black',
-                }}>
-                Giỏ hàng
-              </Text>
-            </View>
-            <Icon name="chevron-forward" size={30}
-              color={COLOR.background}
-            //   color="#36abd9" 
 
-            />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=>{navigation.navigate("OrderHistoryStack")}}
+        >
           <View
             style={{
               flexDirection: 'row',

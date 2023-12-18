@@ -31,6 +31,8 @@ import StatisticSellerScreen from './src/screens/personStore/StatisticSellerScre
 import UserScreen from './src/screens/personStore/UserScreen';
 import FavoriteScreen from './src/screens/FavoriteList';
 import WelcomeScreen from './src/screens/WelcomeScreen';
+import SearchScreenStore from './src/screens/SearchScreenStore';
+import { FilterScreenStore } from './src/screens/FilterScreenStore';
 
 const Stack = createNativeStackNavigator()
 
@@ -45,7 +47,6 @@ const App = () => {
         <AppNavigator/>
       </NavigationContainer>
     </AppContextProvider>
-    // <FavoriteScreen/>
     // <UserScreen/>
   //   <NavigationContainer>
   //  <StatisticSellerScreen/> 
