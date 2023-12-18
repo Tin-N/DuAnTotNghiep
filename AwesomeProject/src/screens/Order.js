@@ -27,7 +27,7 @@ const Order = () => {
   const [totalCost, settotalCost] = useState(0)
   const [isCartChanged, setisCartChanged] = useState(1)
   const [isLoading, setisLoading] = useState(false)
-  const navigation = useNavigation
+  const navigation = useNavigation();
 
   const appContextData = useContext(AppContext);
   const userID = appContextData.userID;
@@ -132,72 +132,85 @@ const Order = () => {
   const OrderFunc = async () => {
     console.log("-------------------------------------------------")
     try {
-      const objectId = new ObjectID();
-      console.log(objectId)
-
-      const orderDetailResponse = await AxiosIntance().post('/orderdetail/add',
-        {
-          orderDetailID: objectId,
-          products: productsSelected,
-          totalCost: totalCost
-        });
-      // console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
-
-      const OrderPost = async () => {
-        if (orderDetailResponse.error == false) {
-          const orderDate = new Date()
-          const orderResponse = await AxiosIntance().post('/order/add',
+      if (!userAddress) {
+        Alert.alert(
+          'Thông báo',
+          'Bạn chưa điền địa chỉ, có muốn chuyển đến điền thông tin?', // Nội dung thông báo
+          [
             {
-              userID,
-              orderDetailID: objectId,
-              orderDate: orderDate,
-              paymentStatus: 'Unpaid',
-              paymentMethods: 'COD',
-              ownerID: [...new Set(productsSelected.map(product => product.ownerID))],
-              address: userAddress,
-              isConfirmed: false
-            });
-          console.log("Đặt hàng thành công");
-          ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
-        }
-      }
-
-      Alert.alert(
-        'Thông báo',
-        'Bạn có muốn mua những sản phẩm này?', // Nội dung thông báo
-        [
-          {
-            text: 'Cancel', // Chữ hiển thị trên nút Cancel
-            onPress: () => {
-              // Xử lý khi người dùng chọn "Cancel"
-              // console.log('Bạn đã chọn Cancel');
-            }
-          },
-          {
-            text: 'OK', // Chữ hiển thị trên nút OK
-            onPress: () => {
-              // Xử lý khi người dùng chọn "OK"
-              OrderPost().then(async () => {
-                // console.log(productsSelected)
-                await AxiosIntance().delete(`cart/deleteProductsSelected/${userID}`)
-              }).then(() => {
-                handleCartChanged()
-              });
-
-              async () => {
-                try {
-                  await AxiosIntance().put(`productAPI/updateQuantityOrdered`, {
-                    productsToUpdate: productsSelected
-                  })
-                } catch (error) {
-
-                }
-              }
+              text: 'Cancel'
             },
-          },
-        ]
-      );
+            {
+              text: 'OK', // Chữ hiển thị trên nút OK
+              onPress: () => {
+                navigation.navigate("Profile", { screen: 'ProfileUser' })
+              },
+            },
+          ]
+        );
+      } else {
+        const objectId = new ObjectID();
+        console.log(objectId)
 
+        const orderDetailResponse = await AxiosIntance().post('/orderdetail/add',
+          {
+            orderDetailID: objectId,
+            products: productsSelected,
+            totalCost: totalCost
+          });
+        // console.log("Order Detail ID: " + orderDetailResponse.data.orderDetailID)
+
+        const OrderPost = async () => {
+          if (orderDetailResponse.error == false) {
+            const orderDate = new Date()
+            const orderResponse = await AxiosIntance().post('/order/add',
+              {
+                userID,
+                orderDetailID: objectId,
+                orderDate: orderDate,
+                paymentStatus: 'Unpaid',
+                paymentMethods: 'COD',
+                ownerID: [...new Set(productsSelected.map(product => product.ownerID))],
+                address: userAddress,
+                isConfirmed: false
+              });
+            console.log("Đặt hàng thành công");
+            ToastAndroid.show("Đơn hàng của bạn đang chờ xử lý", ToastAndroid.SHORT);
+          }
+        }
+
+        Alert.alert(
+          'Thông báo',
+          'Bạn có muốn mua những sản phẩm này?', // Nội dung thông báo
+          [
+            {
+              text: 'Cancel'
+            },
+            {
+              text: 'OK', // Chữ hiển thị trên nút OK
+              onPress: () => {
+                // Xử lý khi người dùng chọn "OK"
+                OrderPost().then(async () => {
+                  // console.log(productsSelected)
+                  await AxiosIntance().delete(`cart/deleteProductsSelected/${userID}`)
+                }).then(() => {
+                  handleCartChanged()
+                });
+
+                async () => {
+                  try {
+                    await AxiosIntance().put(`productAPI/updateQuantityOrdered`, {
+                      productsToUpdate: productsSelected
+                    })
+                  } catch (error) {
+
+                  }
+                }
+              },
+            },
+          ]
+        );
+      }
     } catch (error) {
       console.log("Đặt hàng không thành công --- " + error)
       throw error;
@@ -211,7 +224,7 @@ const Order = () => {
         <ActionBar title={"Cart"} />
         {/* co san pham thi hien list san pham khong thi hien hinh anh */}
         {isLoading
-          ? <View style={{ height: 525}}>
+          ? <View style={{ height: 525 }}>
             {userCart.length != 0 ? <MyCart /> : <MyCartIsEmpty />}
           </View>
           : <View style={{ alignItems: 'center', marginTop: 220 }}>

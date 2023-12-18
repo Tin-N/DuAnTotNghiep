@@ -515,81 +515,96 @@ const DetailProduct = props => {
           ],
         );
       } else {
-        const productToOrder = {
-          ownerID,
-          productID,
-          quantity,
-          optionsInCart,
-          itemTotalCost,
-          deliveryStatus: 'Pending',
-        };
+        if (!userAddress) {
+          Alert.alert(
+            'Thông báo',
+            'Bạn chưa điền địa chỉ, có muốn chuyển đến điền thông tin?', // Nội dung thông báo
+            [
+              {
+                text: 'Cancel'
+              },
+              {
+                text: 'OK', // Chữ hiển thị trên nút OK
+                onPress: () => {
+                  navigation.navigate("Profile", { screen: 'ProfileUser' })
+                },
+              },
+            ]
+          );
+        } else {
+          const productToOrder = {
+            ownerID,
+            productID,
+            quantity,
+            optionsInCart,
+            itemTotalCost,
+            deliveryStatus: 'Pending',
+          };
 
-        const orderDetailResponse = await AxiosIntance().post(
-          '/orderdetail/add',
-          {
-            userID,
-            orderDetailID: objectId,
-            products: productToOrder,
-            totalCost: itemTotalCost,
-          },
-        );
-        // console.log(
-        //   'Order Detail ID: ' + orderDetailResponse.data.orderDetailID,
-        // );
-
-        const OrderPost = async () => {
-          if (orderDetailResponse.error == false) {
-            const orderResponse = await AxiosIntance().post('/order/add', {
+          const orderDetailResponse = await AxiosIntance().post(
+            '/orderdetail/add',
+            {
               userID,
               orderDetailID: objectId,
-              orderDate: new Date(),
-              deliveryStatus: 'Pending',
-              paymentStatus: 'Unpaid',
-              paymentMethods: 'COD',
-              ownerID: ownerID,
-              address: userAddress,
-              isConfirmed: false
-            });
-            setDialogVisible(false);
-            // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
-            ToastAndroid.show(
-              'Đơn hàng của bạn đang chờ xử lý',
-              ToastAndroid.SHORT,
-            );
-          }
-        };
-
-        Alert.alert(
-          'Thông báo',
-          'Bạn có muốn mua sản phẩm này?', // Nội dung thông báo
-          [
-            {
-              text: 'Cancel', // Chữ hiển thị trên nút Cancel
-              onPress: () => {
-                // Xử lý khi người dùng chọn "Cancel"
-                // console.log('Bạn đã chọn Cancel');
-              },
+              products: productToOrder,
+              totalCost: itemTotalCost,
             },
-            {
-              text: 'OK', // Chữ hiển thị trên nút OK
-              onPress: () => {
-                // Xử lý khi người dùng chọn "OK"
-                OrderPost();
+          );
 
-                async () => {
-                  try {
-                    await AxiosIntance().put(
-                      `productAPI/updateQuantityOrdered`,
-                      {
-                        productsToUpdate: productsSelected,
-                      },
-                    );
-                  } catch (error) { }
-                };
+          const OrderPost = async () => {
+            if (orderDetailResponse.error == false) {
+              const orderResponse = await AxiosIntance().post('/order/add', {
+                userID,
+                orderDetailID: objectId,
+                orderDate: new Date(),
+                deliveryStatus: 'Pending',
+                paymentStatus: 'Unpaid',
+                paymentMethods: 'COD',
+                ownerID: ownerID,
+                address: userAddress,
+                isConfirmed: false
+              });
+              setDialogVisible(false);
+              // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
+              ToastAndroid.show(
+                'Đơn hàng của bạn đang chờ xử lý',
+                ToastAndroid.SHORT,
+              );
+            }
+          };
+
+          Alert.alert(
+            'Thông báo',
+            'Bạn có muốn mua sản phẩm này?', // Nội dung thông báo
+            [
+              {
+                text: 'Cancel', // Chữ hiển thị trên nút Cancel
+                onPress: () => {
+                  // Xử lý khi người dùng chọn "Cancel"
+                  // console.log('Bạn đã chọn Cancel');
+                },
               },
-            },
-          ],
-        );
+              {
+                text: 'OK', // Chữ hiển thị trên nút OK
+                onPress: () => {
+                  // Xử lý khi người dùng chọn "OK"
+                  OrderPost();
+
+                  async () => {
+                    try {
+                      await AxiosIntance().put(
+                        `productAPI/updateQuantityOrdered`,
+                        {
+                          productsToUpdate: productsSelected,
+                        },
+                      );
+                    } catch (error) { }
+                  };
+                },
+              },
+            ],
+          );
+        }
       }
     };
 
