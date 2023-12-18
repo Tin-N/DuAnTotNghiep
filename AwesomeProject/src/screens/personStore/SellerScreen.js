@@ -8,7 +8,14 @@ const {height}=Dimensions.get("screen");
 
 const SellerScreen = () => {
   const navigation = useNavigation();
-  const {userInfo}=useContext(AppContext)
+  const { isLogin, setisLogin, isOrder, setisOrder, userInfo, setuserInfo, userID, setuserID, userAddress, setuserAddress, userRole, setuserRole } = useContext(AppContext);
+  const logOut = () => {
+    setisLogin(false)
+    setuserID('')
+    setuserAddress('')
+    setuserInfo('')
+    setuserRole(0)
+  }
   return (
     <ScrollView 
     style={{marginHorizontal: 15,paddingBottom:"30%",height:"90.5%"}}
@@ -28,49 +35,14 @@ const SellerScreen = () => {
             fontWeight: 'bold',
             color: 'black',
           }}>
-          Hi, User20321
+          Xin chào {userInfo.fullname}
         </Text>
       </View>
       <View style={{width: '100%'}}>
-        <TouchableOpacity>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginVertical:20,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: '80%',
-            }}>
-            <View
-              style={{
-                borderRadius: 10,
-                backgroundColor: '#b7e6f98a',
-                width: 50,
-                height: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Icon name="cart" size={30} color="#36abd9" />
-            </View>
-            <Text
-              style={{
-                marginLeft: 10,
-                fontSize: 18,
-                fontWeight: 'bold',
-                color: 'black',
-              }}>
-              Giỏ hàng
-            </Text>
-          </View>
-          <Icon name="chevron-forward" size={30} color="#36abd9" />
-        </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={()=>{navigation.navigate("OrderHistoryStack")}}
+        >
         <View
           style={{
             flexDirection: 'row',
@@ -315,7 +287,7 @@ const SellerScreen = () => {
         </View>
         </TouchableOpacity>
         <TouchableOpacity
-        
+        onPress={()=>logOut()}
         >
         <View
           style={{

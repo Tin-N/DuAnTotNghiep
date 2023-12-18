@@ -118,9 +118,10 @@ const Profile = () => {
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
             <Stack.Screen name='Prod Process' component={ProductProcessStack} />
             <Stack.Screen name='SellerRegistration' component={SellerRegistration} 
-            
+            // OrderHistoryStack
             options={{ title: 'My home' }}
             />
+            <Stack.Screen name='OrderHistoryStack' options={{ headerShown: false }} component={OrderHistoryStack} />
 
             {/* SellerRegistration */}
             <Stack.Screen name='FavoriteScreen' component={FavoriteScreen} />
@@ -258,7 +259,7 @@ const Main = () => {
 
 
             <Tab.Screen name="Profile" component={Profile} />
-            {userRole == 3 ? <Tab.Screen name="Shipper" component={ShipperStack} /> : null}
+            {userRole == 4 ? <Tab.Screen name="Shipper" component={ShipperStack} /> : null}
 
         </Tab.Navigator>
     )

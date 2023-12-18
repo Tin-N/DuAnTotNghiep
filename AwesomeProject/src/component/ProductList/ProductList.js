@@ -15,10 +15,10 @@ const ProductList = (props) => {
       if(count>data.length){
         console.log("Aiyaaa1");
 
-        if (infinitiveScroll) {
+        if (infinitiveScroll&&loadMoreData()) {
           console.log("Aiyaaa2");
           
-          loadMoreData();
+          // loadMoreData();
       }
      }
     }   

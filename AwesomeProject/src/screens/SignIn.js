@@ -30,7 +30,7 @@ const SignIn = () => {
   const [emailUser, setEmailUser] = React.useState('');
   const [password, setPassword] = React.useState('');
   // Lấy thông tin user từ context
-  const {setuserInfo, userInfo, userID, setuserID, setisLogin, setuserAddress} =
+  const {setuserInfo, userInfo, userID, setuserID, setisLogin, setuserAddress,setuserRole} =
     useContext(AppContext);
   const navigation = useNavigation();
   const [isFocused, setIsFocused] = useState(false);
@@ -83,9 +83,10 @@ const SignIn = () => {
           setuserID(_id);
 
           setisLogin(true);
-          console.log('Đăng nhập thành công ' + response.user); // log ra ID
-
+          console.log('Đăng nhập thành công ' + JSON.stringify(response.user)); // log ra ID
+          setuserAddress(response.user.address)
           setuserInfo(response.user);
+          setuserRole(response.user.roleID)
           navigation.navigate('ProfileScreen');
         } else {
           ToastAndroid.show("Đăng nhập thất bại",ToastAndroid.SHORT);

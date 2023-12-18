@@ -754,7 +754,7 @@ const DetailProduct = (props) => {
                 </View>
                 <View style={{ padding: 10 }}>
                     <Text style={{ color: 'black', fontFamily: 'TiltNeon-Regular', fontSize: 20 }}>
-                        BUMDES Sasori - Giày thể thao Nam thời thượng siêu đẹp có 2 màu xanh và đen
+                       {dataProduct.name}
                     </Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingRight: 15 }}>

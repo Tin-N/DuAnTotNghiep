@@ -20,6 +20,8 @@ const FilterScreen = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoadingmini,setisLoadingmini]=useState(false);
   const [countData, setcountData] = useState(0)
+  const [totalPage, setTotalPage] = useState(1);
+
   const handleClick=()=>{
     navigation.goBack();
   }
@@ -80,10 +82,16 @@ const FilterScreen = (props) => {
     }
   }, [page])
   
-  const loadMoreData = async ()=>{
-    setPage(page+1);
-    setisLoadingmini(!isLoadingmini)
+  const loadMoreData = async () => {
+    if ((totalPage > page)) {
+      setPage(page + 1);
+      console.log("Hellooaaaa", page);
+      setisLoadingmini(true);
+      return true;
+
     }
+    return false
+  }
     const Load = async ()=>{
       
       if(!true)
@@ -96,7 +104,7 @@ const FilterScreen = (props) => {
           console.log(response);
           if(page==1){
             console.log(response +"   " + createURLstring(valueFilter[0],valueFilter[1],valueFilter[2]));
-
+            setTotalPage(response.totalPage)
             setData(response.products);
             setcountData(response.count)
             console.log("Hellooo");
@@ -117,6 +125,8 @@ const FilterScreen = (props) => {
       } catch (error) {
         console.error("Error:", error);
         setisLoading(false);
+        setisLoadingmini(false);
+
       }
     }
   

@@ -17,7 +17,7 @@ const AxiosIntance = (contentType = 'application/json') => {
         // //  'http://192.168.2.5:3000/Api' // Tin
         // //  'http://192.168.1.81:3000/Api'//Nhat
         //  'http://192.168.1.81:3000/api'//Thuan192.168.6.19
-         baseURL: 'http://192.168.1.9:3000/Api'
+         baseURL: 'http://192.168.1.5:3000/Api'
 
         // baseURL: 'http://192.168.1.231:3000/Api'
 

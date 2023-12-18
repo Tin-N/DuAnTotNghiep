@@ -8,10 +8,13 @@ import { SwipeItem, SwipeButtonsContainer, SwipeProvider } from 'react-native-sw
 
 import ImageViewer from '../../component/ImageView/ImageViewerDialog';
 import AxiosIntance from '../../utils/AxiosIntance';
+import { useContext } from 'react';
+import { AppContext } from '../../utils/AppContext';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 
 const ItemFeedBack = (props) => {
+    const {userInfo}=useContext(AppContext)
     const { dataFeedback, setCheck, check } = props;
     const [shopFeedBack, setShopFeedBack] = useState("wsdf")
     const [roleId, setRoleId] = useState(1);
@@ -97,7 +100,7 @@ const ItemFeedBack = (props) => {
 
                             <Image style={{ marginTop: 5 }} source={imageStar} />
                             {
-                                dataFeedback.userID == "113" ?
+                                dataFeedback.userID == userInfo._id ?
                                     <TouchableOpacity onPress={() => deleteImageArr()}>
                                         <Image source={require('../../images/bin.png')} style={{ width: 20, height: 20 }}></Image>
                                     </TouchableOpacity> : <View />
