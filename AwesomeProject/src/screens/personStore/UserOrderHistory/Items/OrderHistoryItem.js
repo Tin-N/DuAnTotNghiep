@@ -51,6 +51,7 @@ const OrderHistoryItem = (props) => {
                     source={{ uri: "https://banner2.cleanpng.com/20180425/iee/kisspng-computer-icons-5ae02032a20968.3568738115246377466637.jpg" }}
                     style={{ width: 80, height: 80, marginRight: 10 }}
                 />
+                
                 <View style={{ flex: 1 }}>
                     <Text style={{ color: 'black' }} numberOfLines={1} ellipsizeMode="tail">
                         OwnerID: <Text style={{ color: 'red' }}>{data.ownerID}</Text>
@@ -66,9 +67,12 @@ const OrderHistoryItem = (props) => {
                     </Text>
                 </View>
             </View>
-            <Pressable onPress={handleCancelOrder} style={{ padding: 5, backgroundColor: '#8B0000' }}>
-                <Text style={{ textAlign: 'center', color: 'white' }}>Huỷ Đơn Hàng</Text>
-            </Pressable>
+
+            {data.isConfirmed ? null
+                : <Pressable onPress={handleCancelOrder} style={{ padding: 5, backgroundColor: '#8B0000' }}>
+                    <Text style={{ textAlign: 'center', color: 'white' }}>Huỷ Đơn Hàng</Text>
+                </Pressable>}
+
             <Pressable onPress={navigateToOrderDetailHistory} style={{ borderBottomRightRadius: 10, borderBottomLeftRadius: 10, padding: 5, backgroundColor: '#87C4FF' }}>
                 <Text style={{ textAlign: 'center', color: 'white' }}>Xem chi tiết</Text>
             </Pressable>
