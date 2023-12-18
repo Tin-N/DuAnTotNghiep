@@ -118,7 +118,10 @@ const SellerScreen = () => {
           <Icon name="chevron-forward" size={30} color="#36abd9" />
         </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+                  onPress={() => { navigation.navigate("FavoriteScreen", { userID: userInfo._id, navigation: navigation }); console.log(userInfo._id) }}
+
+        >
         <View
           style={{
             flexDirection: 'row',

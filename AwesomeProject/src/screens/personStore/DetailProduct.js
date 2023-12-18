@@ -8,28 +8,27 @@ import {
   ToastAndroid,
   Easing,
   Alert,
-  ActivityIndicator,
 } from 'react-native';
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 
-import { StyleDetailProduct } from '../../css/Styles';
-import { Dimensions } from 'react-native';
-const { width } = Dimensions.get('screen');
+import {StyleDetailProduct} from '../../css/Styles';
+import {Dimensions} from 'react-native';
+const {width} = Dimensions.get('screen');
 import LinearGradient from 'react-native-linear-gradient';
 import AxiosIntance from '../../utils/AxiosIntance';
-import { formatPrice } from '../../../Agro';
+import {formatPrice} from '../../../Agro';
 
-import { ScrollView, FlatList } from 'react-native';
+import {ScrollView, FlatList} from 'react-native';
 import StarRating from 'react-native-star-rating-widget';
 import ItemFeedBack from './ItemFeedBack';
-import { StyleDialogShopping } from '../../css/Styles';
-import { Animated } from 'react-native';
-import { calculateTimeDifference } from '../../../Agro';
+import {StyleDialogShopping} from '../../css/Styles';
+import {Animated} from 'react-native';
+import {calculateTimeDifference} from '../../../Agro';
 import Icon1 from 'react-native-vector-icons/Ionicons';
-import { LogBox } from 'react-native';
+import {LogBox} from 'react-native';
 
 import DialogFeedback from '../../component/DialogFeedback/DialogFeedback';
-import { AppContext } from '../../utils/AppContext';
+import {AppContext} from '../../utils/AppContext';
 const ObjectID = require('bson-objectid');
 
 const imgAvatar = {
@@ -39,13 +38,12 @@ const imgAvatar = {
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const DetailProduct = props => {
-  const { navigation } = props;
-  const { route } = props;
-  const { isLogin, userInfo } = useContext(AppContext);
-  const { params } = route;
+  const {navigation} = props;
+  const {route} = props;
+  const {isLogin, userInfo} = useContext(AppContext);
+  const {params} = route;
 
-  // console.log(params);
-  const [isLoading, setisLoading] = useState(true)
+  console.log(params);
 
   // Product
   const [userIDStore, setuserIDStore] = useState('');
@@ -56,9 +54,10 @@ const DetailProduct = props => {
   const [modalVisible, setModalVisible] = useState(false);
   const [star, setStar] = useState(0);
 
-  const { userID } = useContext(AppContext);
-  const { userAddress } = useContext(AppContext);
+  const {userID} = useContext(AppContext);
+  const {userAddress} = useContext(AppContext);
   const [ownerID, setownerID] = useState();
+  const [shopOwnerInfo, setShopOwnerInfo] = useState({});
 
   const [dataFeedback, setDataFeedback] = useState([]);
   const [dataColor, setDataColor] = useState([]);
@@ -74,7 +73,7 @@ const DetailProduct = props => {
   const [isDialogVisible, setDialogVisible] = useState(false);
 
   const [productQuantity, setproductQuantity] = useState(0);
-
+  
   // favoriteID
   const [favorite, setFavorite] = useState({});
 
@@ -106,7 +105,7 @@ const DetailProduct = props => {
   }, [slideAnim]);
 
   const TextTime = props => {
-    const { startDay, endDay } = props;
+    const {startDay, endDay} = props;
     const [Time, setTime] = useState('');
     const [remainingTime] = useState('');
     const now = new Date(); // Lấy thời gian hiện tại
@@ -124,9 +123,9 @@ const DetailProduct = props => {
             parseFloat(sales.endDay),
           );
           setTime(onSaleTime);
-          // console.log(
-          //   '>>>>>dawdawdaw ' + sales.startDay + ' ' + new Date().getTime(),
-          // );
+          console.log(
+            '>>>>>dawdawdaw ' + sales.startDay + ' ' + new Date().getTime(),
+          );
           // if (sales[0].startDay > new Date().getTime()){
           //     setonProductSaleOff(false)
           //         setonProductSaleOff(true)
@@ -157,13 +156,34 @@ const DetailProduct = props => {
       </View>
     );
   };
+useEffect(() => {
+    const getShopInfo = async () => {
+        try {
+          const response = await AxiosIntance().get(
+            '/UserApi/get-by-id?id=' + ownerID,
+          );
+          console.log('>>>>>>productID for detail: ' + params.itemId);
+          if (response.result == true) {
+            setShopOwnerInfo(response.user);
+           
+          }
+        } catch (error) {
+          console.log('Product Detail: lỗi lấy dữ liệu: ' + error);
+        }
+      };
+      if(Object.keys(dataProduct).length>0)
+        getShopInfo();
+  return () => {
+    
+  }
+}, [ownerID])
 
   useEffect(() => {
     const getSalesCurrent = async () => {
       const response = await AxiosIntance().get(
         '/saleOffAPI/getSaleApplyBySaleID?saleID=' + params.saleOffID,
       );
-      // console.log('sale detailProduct: ' + params.sale);
+      console.log('sale detailProduct: ' + params.sale);
       if (typeof params.saleOffID != 'undefined') {
         if (
           response.result == true &&
@@ -176,14 +196,14 @@ const DetailProduct = props => {
           setPercentSales(response.saleOff.saleOff);
           setBannerSale('flex');
         } else {
-
+          
         }
       } else {
-
+        
       }
     };
     getSalesCurrent();
-    return () => { };
+    return () => {};
   }, [params.saleOffID]);
 
   const opacityBackground = () => {
@@ -228,9 +248,9 @@ const DetailProduct = props => {
       } else {
         const response = await AxiosIntance().post(
           '/favoriteApi/addFavorite?userID=' +
-          userInfo._id +
-          '&productID=' +
-          params.itemId,
+            userInfo._id +
+            '&productID=' +
+            params.itemId,
         );
         if (response.result) {
           ToastAndroid.show('Thích thành công', ToastAndroid.SHORT);
@@ -247,7 +267,7 @@ const DetailProduct = props => {
   };
 
   const handlerDetail = () => {
-    navigation.navigate('DetailFeedback', { itemId: params.itemId });
+    navigation.navigate('DetailFeedback', {itemId: params.itemId});
   };
 
   const back = () => {
@@ -258,7 +278,7 @@ const DetailProduct = props => {
   };
 
   const homeStoreHandler = () => {
-    navigation.navigate('HomeStore', { userID: userIDStore });
+    navigation.navigate('HomeStore', {userID: userIDStore});
   };
 
   const detailImageHandler = () => {
@@ -294,25 +314,23 @@ const DetailProduct = props => {
           setsaleOffID(response.products.saleOff);
           setuserIDStore(response.products.userID);
           setarrayImageProduct(response.products.image);
-          setisLoading(false)
         }
       } catch (error) {
-        console.log('Product Detail - getDetails lỗi lấy dữ liệu: ' + error);
-        setisLoading(false)
+        console.log('Product Detail: lỗi lấy dữ liệu: ' + error);
       }
     };
     const getShopInfo = async () => {
       try {
         const response = await AxiosIntance().get(
-          '/UserApi/get-by-id/' + ownerID,
+          '/UserApi/get-by-id?id=' + ownerID,
         );
-        // console.log('>>>>>>productID for detail: ' + params.itemId);
+        console.log('>>>>>>productID for detail: ' + params.itemId);
         if (response.result == true) {
-          setownerID(response.user);
+          setShopOwnerInfo(response.user);
 
         }
       } catch (error) {
-        console.log('Product Detail - getShopInfo lỗi lấy dữ liệu: ' + error);
+        console.log('Product Detail: lỗi lấy dữ liệu: ' + error);
       }
     };
     const checkProductsInOrderdetail = async () => {
@@ -321,12 +339,12 @@ const DetailProduct = props => {
           const response = await AxiosIntance().get(
             `/orderdetail/check-product-in-orderDetail/${userID}/${params.itemId}`,
           );
-          // console.log('>>>>>>productID for detail: ' + params.itemId);
+          console.log('>>>>>>productID for detail: ' + params.itemId);
           if (response.result == true) {
             setIsVisibleRating(response.result);
           }
         } catch (error) {
-          console.log('Product Detail - checkProductsInOrderdetail lỗi lấy dữ liệu: ' + error);
+          console.log('Product Detail: lỗi lấy dữ liệu: ' + error);
         }
       }
     };
@@ -335,9 +353,9 @@ const DetailProduct = props => {
     const getFavorite = async () => {
       const response = await AxiosIntance().get(
         '/favoriteApi/getFavorite?userID=' +
-        userInfo._id +
-        '&productID=' +
-        params.itemId,
+          userInfo._id +
+          '&productID=' +
+          params.itemId,
       );
       if (response.result) {
         if (Object.keys(response.favorite).length > 0) {
@@ -349,16 +367,16 @@ const DetailProduct = props => {
     const getFeedback = async () => {
       const response = await AxiosIntance().get(
         '/feedbackAPI/getFeedbackByProductID?id=' +
-        params.itemId +
-        '&size=' +
-        1,
+          params.itemId +
+          '&size=' +
+          1,
       );
       if (response.result == true) {
         setDataFeedback(response.feedbacks);
         setFeedbackLenght(response.feedbacks.length);
-
+        
       } else {
-
+        
       }
       if (response.feedbacks.length > 0) {
         const countRating = () => {
@@ -409,17 +427,17 @@ const DetailProduct = props => {
         setDataSize(response.size);
       }
     };
-    getShopInfo();
+   
     getColorByProductID();
     getDetails();
     getFeedback();
     getSizeByProductID();
     checkProductsInOrderdetail();
     getFavorite();
-    return () => { };
+    return () => {};
   }, [params.itemId]);
 
-  const MyDialog = ({ isVisible, onClose }) => {
+  const MyDialog = ({isVisible, onClose}) => {
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
     const [colorChoosen, setColorChoosen] = useState('');
@@ -582,7 +600,11 @@ const DetailProduct = props => {
           'Bạn có muốn mua sản phẩm này?',
           [
             {
-              text: 'Cancel',
+              text: 'Cancel', // Chữ hiển thị trên nút Cancel
+              onPress: () => {
+                // Xử lý khi người dùng chọn "Cancel"
+                console.log('Bạn đã chọn Cancel');
+              },
             },
             {
               text: 'OK',
@@ -911,7 +933,7 @@ const DetailProduct = props => {
               </Text>
 
               <Text style={StyleDetailProduct.textSalePrice}>
-                {formatPrice(productPrice)} VNĐ
+                đ{formatPrice(productPrice)}
               </Text>
               <Text style={StyleDetailProduct.textd}> VNĐ</Text>
               <Text style={StyleDetailProduct.textBoxSale}>
@@ -972,7 +994,7 @@ const DetailProduct = props => {
         </View>
         <View style={StyleDetailProduct.line}></View>
 
-        <View style={{ padding: 10, flexDirection: 'row' }}>
+        <View style={{padding: 10, flexDirection: 'row',alignItems:'center'}}>
           <View
             style={{
               width: 60,
@@ -986,15 +1008,14 @@ const DetailProduct = props => {
           </View>
           <View style={{ margin: 10 }}>
             <Text style={{ fontSize: 18, color: 'black' }}>
-              BUMDES Desa Sidosari
+              {shopOwnerInfo.fullname}
             </Text>
-            <Text>Đánh giá tích cực 94% | Active 7 sec...</Text>
           </View>
           <TouchableOpacity
+          onPress={()=>homeStoreHandler()}
             style={{
               backgroundColor: '#3669c9',
               position: 'absolute',
-              top: 0,
               right: 0,
               margin: 10,
               padding: 8,
@@ -1005,9 +1026,9 @@ const DetailProduct = props => {
         </View>
 
         <View style={StyleDetailProduct.line}></View>
-        <View style={{ marginBottom: 20 }}>
-          {isLogin ? (
-            <View style={{ alignItems: 'center' }}>
+        <View style={{marginBottom: 20}}>
+          {isLogin && isVisibleRating ? (
+            <View style={{alignItems: 'center'}}>
               <Text
                 style={{ fontSize: 16, marginVertical: 5, marginHorizontal: 10 }}>
                 Thêm đánh giá
