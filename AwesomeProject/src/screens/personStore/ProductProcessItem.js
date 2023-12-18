@@ -4,6 +4,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Dimensions } from 'react-native';
 import AxiosIntance from '../../utils/AxiosIntance'
 import { AppContext } from '../../utils/AppContext';
+import ActionBar from '../ActionBar';
 const { width, height } = Dimensions.get('screen');
 const ProductProcessItem = (props) => {
     const data = props.data;
@@ -70,6 +71,7 @@ const ProductProcessItem = (props) => {
 
     return (
         <View style={{ width: 45 * width / 100, borderWidth: 0.2, margin: 10, padding: 10, backgroundColor: '#F6F6F6', borderRadius: 3 }}>
+
             <Pressable onPress={handleProductRejection} style={{ position: 'absolute', zIndex: 5, right: 5, top: 5 }}>
                 <MaterialIcons name='cancel' size={28} />
             </Pressable>
