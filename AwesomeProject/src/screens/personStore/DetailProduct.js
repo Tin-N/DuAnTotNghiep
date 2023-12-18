@@ -124,9 +124,9 @@ const DetailProduct = props => {
             parseFloat(sales.endDay),
           );
           setTime(onSaleTime);
-          console.log(
-            '>>>>>dawdawdaw ' + sales.startDay + ' ' + new Date().getTime(),
-          );
+          // console.log(
+          //   '>>>>>dawdawdaw ' + sales.startDay + ' ' + new Date().getTime(),
+          // );
           // if (sales[0].startDay > new Date().getTime()){
           //     setonProductSaleOff(false)
           //         setonProductSaleOff(true)
@@ -163,7 +163,7 @@ const DetailProduct = props => {
       const response = await AxiosIntance().get(
         '/saleOffAPI/getSaleApplyBySaleID?saleID=' + params.saleOffID,
       );
-      console.log('sale detailProduct: ' + params.sale);
+      // console.log('sale detailProduct: ' + params.sale);
       if (typeof params.saleOffID != 'undefined') {
         if (
           response.result == true &&
@@ -192,7 +192,7 @@ const DetailProduct = props => {
   };
 
   const heartHandler = async () => {
-    console.log(favorite);
+    // console.log(favorite);
     if (!isLogin) {
       Alert.alert(
         'Thông báo',
@@ -283,7 +283,7 @@ const DetailProduct = props => {
         const response = await AxiosIntance().get(
           '/productAPI/getProductByID?id=' + params.itemId,
         );
-        console.log('>>>>>>productID for detail: ' + params.itemId);
+        // console.log('>>>>>>productID for detail: ' + params.itemId);
         if (response.result == true) {
           setDataProduct(response.products);
           setProductPrice(response.products.price);
@@ -306,7 +306,7 @@ const DetailProduct = props => {
         const response = await AxiosIntance().get(
           '/UserApi/get-by-id/' + ownerID,
         );
-        console.log('>>>>>>productID for detail: ' + params.itemId);
+        // console.log('>>>>>>productID for detail: ' + params.itemId);
         if (response.result == true) {
           setownerID(response.user);
 
@@ -321,7 +321,7 @@ const DetailProduct = props => {
           const response = await AxiosIntance().get(
             `/orderdetail/check-product-in-orderDetail/${userID}/${params.itemId}`,
           );
-          console.log('>>>>>>productID for detail: ' + params.itemId);
+          // console.log('>>>>>>productID for detail: ' + params.itemId);
           if (response.result == true) {
             setIsVisibleRating(response.result);
           }
@@ -514,7 +514,7 @@ const DetailProduct = props => {
     const orderNow = async () => {
       const objectId = new ObjectID();
       console.log(objectId);
-      console.log('>>>>isLogin: ' + isLogin);
+      // console.log('>>>>isLogin: ' + isLogin);
       if (!isLogin) {
         Alert.alert(
           'Thông báo',
@@ -551,9 +551,9 @@ const DetailProduct = props => {
             totalCost: itemTotalCost,
           },
         );
-        console.log(
-          'Order Detail ID: ' + orderDetailResponse.data.orderDetailID,
-        );
+        // console.log(
+        // 'Order Detail ID: ' + orderDetailResponse.data.orderDetailID,
+        // );
 
         const OrderPost = async () => {
           if (orderDetailResponse.error == false) {
@@ -579,19 +579,14 @@ const DetailProduct = props => {
 
         Alert.alert(
           'Thông báo',
-          'Bạn có muốn mua sản phẩm này?', // Nội dung thông báo
+          'Bạn có muốn mua sản phẩm này?',
           [
             {
-              text: 'Cancel', // Chữ hiển thị trên nút Cancel
-              onPress: () => {
-                // Xử lý khi người dùng chọn "Cancel"
-                console.log('Bạn đã chọn Cancel');
-              },
+              text: 'Cancel',
             },
             {
-              text: 'OK', // Chữ hiển thị trên nút OK
+              text: 'OK',
               onPress: () => {
-                // Xử lý khi người dùng chọn "OK"
                 OrderPost();
 
                 async () => {
@@ -914,7 +909,7 @@ const DetailProduct = props => {
                   productPrice - (productPrice * percentSales).toFixed(0),
                 )}
               </Text>
-              
+
               <Text style={StyleDetailProduct.textSalePrice}>
                 {formatPrice(productPrice)} VNĐ
               </Text>
@@ -1119,7 +1114,7 @@ const DetailProduct = props => {
           </View>
         </View>
         {isLoading ? (
-          <View style={{ alignItems: 'center', marginLeft: 115}}>
+          <View style={{ alignItems: 'center', marginLeft: 115 }}>
             <ActivityIndicator size='large' color="#0000ff" />
           </View>
         ) : (
@@ -1145,7 +1140,7 @@ const DetailProduct = props => {
                 <TouchableOpacity
                   onPress={() => {
                     setDialogVisible(true);
-                    console.log('Hello' + userID);
+                    // console.log('Hello' + userID);
                     setCheck(false);
                   }}>
                   <Text style={StyleDetailProduct.textButton}>Giỏ hàng</Text>
