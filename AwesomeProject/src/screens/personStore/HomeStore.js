@@ -21,6 +21,9 @@ const HomeStore = (props) => {
     const {params} = route;
     const [dataProduct, setDataProduct] = useState([]);
     const [productID, setProductID] = useState('');
+    const [nameSeller, setnameSeller] = useState('');
+    const [avatarSeller, setavatarSeller] = useState('');
+    const [address, setaddress] = useState('')
     const [sold, setSold] = useState(0);
     const [columns, setColumns] = useState(2);
     const ItemSeparatorComponent = () => {
@@ -29,7 +32,6 @@ const HomeStore = (props) => {
         )
     }
     useEffect(() => {
-        console.log("ID user Store: " + params.userID);
         const getAllProductByUserID = async () => {
             const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + params.userID + '&isShow=true');
             if (response.result) {
@@ -39,13 +41,15 @@ const HomeStore = (props) => {
             }
         }
         const getUserByID = async () => {
-            const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + params.userID + '&isShow=true');
+            const response = await AxiosIntance().get("/UserApi/get-by-id/?id=" + params.userID);
+            console.log("dataUser: " + response.user);
             if (response.result) {
-                setDataProduct(response.products);
-                setProductID(response.products._id);
-                setSold(response.products.sold)
+                setnameSeller(response.user.fullname);
+                setavatarSeller(response.user);
+                setaddress(response.user.address)
             }
         }
+        getUserByID();
         getAllProductByUserID();
         return () => {
         }
@@ -102,7 +106,7 @@ const HomeStore = (props) => {
                         </View>
                         <View style={StyleHomeStore.boxNameSeller}>
                             <Text style={{ color: 'black', fontSize: 15 }}>
-                                BUMDES Desa Sidosari
+                                {nameSeller}
                             </Text>
                             <View style={{ flexDirection: 'row', paddingTop: 5 }}>
                                 <Text style={{ color: 'black' }}>
@@ -121,35 +125,10 @@ const HomeStore = (props) => {
                     <View style={StyleHomeStore.boxLocate}>
                         <Image source={require('../../images/locate.png')} />
                         <Text style={{ marginLeft: 20, color: 'black' }}>
-                            Natar, Selatan (Jam Buka 08:00-21:00)
+                            {address}
                         </Text>
                     </View>
-                    <View style={StyleHomeStore.boxProductStore}>
-                        <View>
-                            <Text style={StyleHomeStore.textTitleProduct}>
-                                Pengikut
-                            </Text>
-                            <Text style={StyleHomeStore.textCountProduct}>
-                                23 Rb
-                            </Text>
-                        </View>
-                        <View>
-                            <Text style={StyleHomeStore.textTitleProduct}>
-                                Số lượng
-                            </Text>
-                            <Text style={StyleHomeStore.textCountProduct}>
-                                150 item
-                            </Text>
-                        </View>
-                        <View>
-                            <Text style={StyleHomeStore.textTitleProduct}>
-                                Ngày mở
-                            </Text>
-                            <Text style={StyleHomeStore.textCountProduct}>
-                                23/09/2023
-                            </Text>
-                        </View>
-                    </View>
+                   
                     <View style={[StyleHomeStore.line, { marginLeft: 30, marginRight: 30 }]}>
                     </View>
 

@@ -44,7 +44,7 @@ const ProdsProcessOverviewItem = (props) => {
             }
         })();
     }, []);
-
+    console.log("data orderID: " + JSON.stringify(data.orderID));
     const handlePushProduct = async () => {
         Alert.alert(
             'Thông báo',
@@ -59,7 +59,8 @@ const ProdsProcessOverviewItem = (props) => {
                 {
                     text: 'OK',
                     onPress: async () => {
-                        const update = await AxiosIntance().post(`/order/updateisConfirmedisTrue/${data.oderID}`)
+                        const update = await AxiosIntance().post(`/order/updateisConfirmedisTrue/${data.orderID}`)
+                        
                         const res = await AxiosIntance()
                             .put(`/orderdetail/update/updateAllProductDeliveryStatus/${data.orderDetailID}/${userID}`
                                 , { deliveryStatus: 'Delivering' })
