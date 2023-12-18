@@ -29,6 +29,8 @@ const StatisticSellerScreen = props => {
    const StatisticSellerByWeekScreen = (props) => {
     const [topRatedProducts, settopRatedProducts] = useState([])
     const [data, setData] = useState([])
+    const [total, setTotal] = useState({})
+
     useEffect(() => {
       const getStatisticRevenueByWeek = async ()=>{
         const response= await AxiosIntance().get("/statisticSeller/get-statistic-revenue-by-week?ownerID="+shopId);
@@ -37,22 +39,24 @@ const StatisticSellerScreen = props => {
         // console.log(response);
         if(response.result){
           setData(response.data);
-          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
+          // ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
         }else{
-          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+          // ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
         }
       }
+      getStatisticRevenueByWeek();
       const getTotalRevenueByWeek = async ()=>{
         const response= await AxiosIntance().get("/statisticSeller/get-total-revenue-by-week?ownerID="+shopId);
         // console.log(shopId);
         // console.log(response);
         if(response.result){
-          setData(response.data);
-          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
+          setTotal(response.data[0]);
+          // ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
         }else{
-          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+         console.log("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
         }
       }
+      getTotalRevenueByWeek();
       const getTopRatedProductByWeek = async ()=>{
         const response= await AxiosIntance().get("/statisticSeller/get-top-rated-products-week?ownerID="+shopId);
         //  const response= await AxiosIntance().get("/statisticAdmin/get-statistic-by-week");
@@ -174,7 +178,7 @@ const StatisticSellerScreen = props => {
                   color: 'black',
                 }}>
                 {' '}
-                200 sp
+                {total.totalProduct} sp
               </Text>
             </View>
             <View style={{width: '100%', borderWidth: 0.2}} />
@@ -196,7 +200,7 @@ const StatisticSellerScreen = props => {
                   color: 'black',
                 }}>
                 {' '}
-                10000000đ
+                {total.totalDeliveredCost} VND
               </Text>
             </View>
           </View>
@@ -224,198 +228,8 @@ const StatisticSellerScreen = props => {
             width={280}
             // formatXlabel={(text)=>{return text.slice(0,4)}}
           />
-          {/* <LineChart
-            areaChart
-            data={ptData}
-            width={280}
-            hideDataPoints
-            spacing={20}
-            color="#00d5ff"
-            thickness={1}
-            startFillColor="rgba(83, 185, 249, 0.397))"
-            endFillColor="rgba(255, 255, 255, 0.01)"
-            startOpacity={0.9}
-            endOpacity={0.1}
-            zIndex1={1}
-            initialSpacing={0}
-            noOfSections={10}
-            verticalLinesZIndex={2}
-            yAxisLabelWidth={70}
-            formatYLabel={convertToCurrencyString}
-            yAxisColor="white"
-            yAxisThickness={0}
-            rulesType="dashed"
-            height={300}
-            rulesColor="gray"
-            yAxisTextStyle={{color: 'black'}}
-            yAxisSide="right"
-            xAxisColor="lightgray"
-            pointerConfig={pointerConfig}
-            xAxisLabelTextStyle={{color: 'black'}}
-          /> */}
         </View>
-        <View style={[styles.view, {paddingHorizontal: 10, marginBottom: 20}]}>
-          {/* Table Head */}
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 20,
-              color: 'black',
-              fontWeight: '600',
-              marginBottom: 10,
-            }}>
-            TOP SẢN PHẨM BÁN CHẠY NHẤT
-          </Text>
-          <View style={styles.table_head}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_head_captions}>ID</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_head_captions}>Đã bán</Text>
-            </View>
-          </View>
-  
-          {/* Table Body - Single Row */}
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>01</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Áo thể thao</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>200</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>02</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Áo khoác jeans</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>100</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>03</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Quần jeans xanh đen</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>70</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>04</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Áo sơ mi trắng</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>05</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>06</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Quần thể thao xám </Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>20</Text>
-            </View>
-          </View>
-        </View>
-        <View style={[styles.view, {marginBottom: 20}]}>
-          {/* Table Head */}
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 20,
-              color: 'black',
-              fontWeight: '600',
-              marginBottom: 10,
-            }}>
-            TOP SẢN PHẨM ĐÁNH GIÁ CAO NHẤT
-          </Text>
-          <View style={styles.table_head}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_head_captions}>ID</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_head_captions}>Đánh giá</Text>
-            </View>
-          </View>
-  
-          {/* Table Body - Single Row */}
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>01</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Giày thể thao Adidas</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>5 </Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>02</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Giày adidas vàng</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>4.6</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>03</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Khăn tay trắng</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>3.7</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>04</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Áo khoác kaki vàng</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>3</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>05</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Mũ puma đen</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>3</Text>
-            </View>
-          </View>
-        </View>
+       
       </ScrollView>
     );
   };
@@ -424,30 +238,32 @@ const StatisticSellerScreen = props => {
 
     const [topRatedProducts, settopRatedProducts] = useState([])
     const [data, setData] = useState([])
+    const [total, setTotal] = useState({}) 
     useEffect(() => {
       const getStatisticRevenueByMonth = async ()=>{
         const response= await AxiosIntance().get("/statisticSeller/get-statistic-revenue-by-month?ownerID="+shopId);
         //  const response= await AxiosIntance().get("/statisticAdmin/get-statistic-by-week");
         // console.log(shopId);
-        // console.log(response);
+        console.log(response.data);
         if(response.result){
           setData(response.data);
-          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
         }else{
-          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+          console.log("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
         }
       }
+      getStatisticRevenueByMonth();
       const getTotalRevenueByMonth = async ()=>{
         const response= await AxiosIntance().get("/statisticSeller/get-total-revenue-by-month?ownerID="+shopId);
         // console.log(shopId);
         // console.log(response);
         if(response.result){
-          setData(response.data);
+          setTotal(response.data[0]);
           ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
         }else{
           ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
         }
       }
+      getTotalRevenueByMonth();
       const getTopRatedProductByMonth = async ()=>{
         const response= await AxiosIntance().get("/statisticSeller/get-top-rated-products-month?ownerID="+shopId);
         //  const response= await AxiosIntance().get("/statisticAdmin/get-statistic-by-week");
@@ -558,7 +374,7 @@ const StatisticSellerScreen = props => {
                 style={{
                   color: 'black',
                 }}>
-                Số lượng sản phẩm đã bán {'\n'} trong 1 năm
+                Số lượng sản phẩm đã bán {'\n'} trong 1 tháng
               </Text>
               <Text
                 style={{
@@ -567,7 +383,7 @@ const StatisticSellerScreen = props => {
                   color: 'black',
                 }}>
                 {' '}
-                200 sp
+                {total.totalProduct} sp
               </Text>
             </View>
             <View style={{width: '100%', borderWidth: 0.2}} />
@@ -589,7 +405,7 @@ const StatisticSellerScreen = props => {
                   color: 'black',
                 }}>
                 {' '}
-                10000000đ
+                {total.totalDeliveredCost} VND
               </Text>
             </View>
           </View>
@@ -603,12 +419,12 @@ const StatisticSellerScreen = props => {
                 color: 'black',
                 fontWeight: '600',
               }}>
-              DOANH THU THEO NĂM
+              DOANH THU THEO THÁNG
             </Text>
           </View>
-          {/* <LineChart
+          {data.length>0?(<BarChart
             areaChart
-            data={ptData}
+            data={data}
             width={280}
             hideDataPoints
             spacing={20}
@@ -627,177 +443,16 @@ const StatisticSellerScreen = props => {
             yAxisColor="white"
             yAxisThickness={0}
             rulesType="dashed"
-            height={300}
+            height={250}
             rulesColor="gray"
             yAxisTextStyle={{color: 'black'}}
             yAxisSide="right"
             xAxisColor="lightgray"
             pointerConfig={pointerConfig}
             xAxisLabelTextStyle={{color: 'black'}}
-          /> */}
+          />):(<View/>)}
         </View>
-        <View style={[styles.view, {paddingHorizontal: 10, marginBottom: 20}]}>
-          {/* Table Head */}
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 20,
-              color: 'black',
-              fontWeight: '600',
-              marginBottom: 10,
-            }}>
-            TOP SẢN PHẨM BÁN CHẠY NHẤT
-          </Text>
-          <View style={styles.table_head}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_head_captions}>ID</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_head_captions}>Đã bán</Text>
-            </View>
-          </View>
-  
-          {/* Table Body - Single Row */}
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>01</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Áo thể thao</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>200</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>02</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Áo khoác jeans</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>100</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>03</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Quần jeans xanh đen</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>70</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>04</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Áo sơ mi trắng</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>05</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>06</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Quần thể thao xám </Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>20</Text>
-            </View>
-          </View>
-        </View>
-        <View style={[styles.view, {marginBottom: 20}]}>
-          {/* Table Head */}
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 20,
-              color: 'black',
-              fontWeight: '600',
-              marginBottom: 10,
-            }}>
-            TOP SẢN PHẨM ĐÁNH GIÁ CAO NHẤT
-          </Text>
-          <View style={styles.table_head}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_head_captions}>ID</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_head_captions}>Đánh giá</Text>
-            </View>
-          </View>
-  
-          {/* Table Body - Single Row */}
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>01</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Giày thể thao Adidas</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>5 </Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>02</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Giày adidas vàng</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>4.6</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>03</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Khăn tay trắng</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>3.7</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>04</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Áo khoác kaki vàng</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>3</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>05</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Mũ puma đen</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>3</Text>
-            </View>
-          </View>
-        </View>
+      
       </ScrollView>
     );
   };
@@ -806,6 +461,7 @@ const StatisticSellerScreen = props => {
 
     const [topRatedProducts, settopRatedProducts] = useState([])
     const [data, setData] = useState([])
+    const [total, setTotal] = useState({}) 
     useEffect(() => {
       const getStatisticRevenueYear = async ()=>{
         const response= await AxiosIntance().get("/statisticSeller/get-statistic-revenue-by-year?ownerID="+shopId);
@@ -814,22 +470,24 @@ const StatisticSellerScreen = props => {
         // console.log(response);
         if(response.result){
           setData(response.data);
-          ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
+          // ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
         }else{
-          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+          console.log("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
         }
       }
+      getStatisticRevenueYear();
       const getTotalRevenueByYear = async ()=>{
         const response= await AxiosIntance().get("/statisticSeller/get-total-revenue-by-year?ownerID="+shopId);
         // console.log(shopId);
         // console.log(response);
         if(response.result){
-          setData(response.data);
+          setTotal(response.data[0]);
           ToastAndroid.show("Lấy dữ liệu thống kê thành công",ToastAndroid.SHORT);
         }else{
-          ToastAndroid.show("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
+          console.log("Có lỗi xảy ra! Vui lòng thử lại",ToastAndroid.SHORT);
         }
       }
+      getTotalRevenueByYear();
       const getTopRatedProductByYear = async ()=>{
         const response= await AxiosIntance().get("/statisticSeller/get-top-rated-products-year?ownerID="+shopId);
         //  const response= await AxiosIntance().get("/statisticAdmin/get-statistic-by-week");
@@ -941,7 +599,7 @@ const StatisticSellerScreen = props => {
                 style={{
                   color: 'black',
                 }}>
-                Số lượng sản phẩm đã bán {'\n'} trong 1 tuần
+                Số lượng sản phẩm đã bán {'\n'} trong 1 năm
               </Text>
               <Text
                 style={{
@@ -950,7 +608,7 @@ const StatisticSellerScreen = props => {
                   color: 'black',
                 }}>
                 {' '}
-                200 sp
+                {total.totalProduct} sp
               </Text>
             </View>
             <View style={{width: '100%', borderWidth: 0.2}} />
@@ -963,7 +621,7 @@ const StatisticSellerScreen = props => {
                 style={{
                   color: 'black',
                 }}>
-                Tổng doanh thu trong 1 tuần
+                Tổng doanh thu trong 1 năm
               </Text>
               <Text
                 style={{
@@ -972,7 +630,7 @@ const StatisticSellerScreen = props => {
                   color: 'black',
                 }}>
                 {' '}
-                10000000đ
+                {total.totalDeliveredCost} VND
               </Text>
             </View>
           </View>
@@ -986,7 +644,7 @@ const StatisticSellerScreen = props => {
                 color: 'black',
                 fontWeight: '600',
               }}>
-              DOANH THU THEO TUẦN
+              DOANH THU THEO NĂM
             </Text>
           </View>
           <BarChart
@@ -1000,168 +658,6 @@ const StatisticSellerScreen = props => {
             width={280}
             // formatXlabel={(text)=>{return text.slice(0,4)}}
           />
-        </View>
-        <View style={[styles.view, {paddingHorizontal: 10, marginBottom: 20}]}>
-          {/* Table Head */}
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 20,
-              color: 'black',
-              fontWeight: '600',
-              marginBottom: 10,
-            }}>
-            TOP SẢN PHẨM BÁN CHẠY NHẤT
-          </Text>
-          <View style={styles.table_head}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_head_captions}>ID</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_head_captions}>Đã bán</Text>
-            </View>
-          </View>
-  
-          {/* Table Body - Single Row */}
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>01</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Áo thể thao</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>200</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>02</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Áo khoác jeans</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>100</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>03</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Quần jeans xanh đen</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>70</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>04</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Áo sơ mi trắng</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>05</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>06</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Quần thể thao xám </Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>20</Text>
-            </View>
-          </View>
-        </View>
-        <View style={[styles.view, {marginBottom: 20}]}>
-          {/* Table Head */}
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 20,
-              color: 'black',
-              fontWeight: '600',
-              marginBottom: 10,
-            }}>
-            TOP SẢN PHẨM ĐÁNH GIÁ CAO NHẤT
-          </Text>
-          <View style={styles.table_head}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_head_captions}>ID</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_head_captions}>Tên sản phẩm</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_head_captions}>Đánh giá</Text>
-            </View>
-          </View>
-  
-          {/* Table Body - Single Row */}
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>01</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Giày thể thao Adidas</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>5 </Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>02</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Giày adidas vàng</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>4.6</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>03</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Khăn tay trắng</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>3.7</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>04</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Áo khoác kaki vàng</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>3</Text>
-            </View>
-          </View>
-          <View style={styles.table_body_single_row}>
-            <View style={{width: '15%'}}>
-              <Text style={styles.table_data}>05</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>Mũ puma đen</Text>
-            </View>
-            <View style={{width: '45%'}}>
-              <Text style={styles.table_data}>3</Text>
-            </View>
-          </View>
         </View>
       </ScrollView>
     );
@@ -1197,6 +693,7 @@ const StatisticSellerScreen = props => {
           tabBarActiveTintColor: '#3669c9',
           tabBarInactiveTintColor: '#a2a0a0',
           tabBarIndicatorStyle: {width: 70, marginLeft: 30},
+          lazy: true
           // tabBarActiveTintColor: paperTheme.colors.primary,
           // tabBarInactiveTintColor: paperTheme.colors.primary,
           // tabBarLabelStyle: { fontSize: 16, fontWeight: 'bold' },
@@ -1274,6 +771,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 10,
     margin: 10,
+    marginBottom:30,
     paddingHorizontal: 5,
     elevation: 2,
   },

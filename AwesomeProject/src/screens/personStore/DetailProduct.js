@@ -8,6 +8,7 @@ import {
   ToastAndroid,
   Easing,
   Alert,
+  ActivityIndicator
 } from 'react-native';
 import React, {useState, useEffect, useContext, useRef} from 'react';
 
@@ -43,7 +44,8 @@ const DetailProduct = props => {
   const {isLogin, userInfo} = useContext(AppContext);
   const {params} = route;
 
-  console.log(params);
+  // console.log(params);
+  const [isLoading, setisLoading] = useState(true)
 
   // Product
   const [userIDStore, setuserIDStore] = useState('');
@@ -314,25 +316,14 @@ useEffect(() => {
           setsaleOffID(response.products.saleOff);
           setuserIDStore(response.products.userID);
           setarrayImageProduct(response.products.image);
+          setisLoading(false)
         }
       } catch (error) {
+        setisLoading(false)
         console.log('Product Detail: lỗi lấy dữ liệu: ' + error);
       }
     };
-    const getShopInfo = async () => {
-      try {
-        const response = await AxiosIntance().get(
-          '/UserApi/get-by-id?id=' + ownerID,
-        );
-        console.log('>>>>>>productID for detail: ' + params.itemId);
-        if (response.result == true) {
-          setShopOwnerInfo(response.user);
-
-        }
-      } catch (error) {
-        console.log('Product Detail: lỗi lấy dữ liệu: ' + error);
-      }
-    };
+   
     const checkProductsInOrderdetail = async () => {
       if (isLogin) {
         try {

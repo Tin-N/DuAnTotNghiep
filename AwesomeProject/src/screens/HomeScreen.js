@@ -39,7 +39,7 @@ const HomeScreen = props => {
   useEffect(() => {
     const getcategoryData1 = async () => {
       const response = await AxiosIntance().get(
-        '/productAPI/filterProductByName??sortPrice=' +
+        '/productAPI/filterProductByName?sortPrice=' +
         'clothing' +
         '&limitData=' +
         2 +
@@ -217,7 +217,7 @@ const HomeScreen = props => {
           </View>
           <ProductList
             infinitiveScroll={false}
-            data={categoryData1}
+            data={categoryData2}
             styleView={{
               width: '90%',
               margin: 20,
@@ -255,7 +255,7 @@ const HomeScreen = props => {
           </View>
           <ProductList
             infinitiveScroll={false}
-            data={categoryData2}
+            data={categoryData3}
             styleView={{
               width: '90%',
               margin: 20,
