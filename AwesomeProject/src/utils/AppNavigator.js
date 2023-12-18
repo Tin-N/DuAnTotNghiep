@@ -118,11 +118,25 @@ const Profile = () => {
             <Stack.Screen name='UpdatePassword' component={UpdatePassword}></Stack.Screen>
             <Stack.Screen name='Prod Process' component={ProductProcessStack} />
             <Stack.Screen name='SellerRegistration' component={SellerRegistration} 
-            
             options={{ title: 'My home' }}
             />
-
+            <Stack.Screen name='ManageProduct' component={ManageProduct} />
             {/* SellerRegistration */}
+            <Stack.Screen name='CreateProduct'
+                options={{
+                    presentation: 'modal',
+                    animationTypeForReplace: 'push',
+                    animation: 'slide_from_right'
+                }}
+                component={CreateProduct} />
+
+            <Stack.Screen name='UpdateProduct'
+                options={{
+                    presentation: 'modal',
+                    animationTypeForReplace: 'push',
+                    animation: 'slide_from_right'
+                }}
+                component={UpdateProduct} />
             <Stack.Screen name='FavoriteScreen' component={FavoriteScreen} />
             <Stack.Screen name='ItemFavorite' component={Item}></Stack.Screen>
 
@@ -154,23 +168,6 @@ const ProductHome = () => {
             <Stack.Screen name='DetailList' component={DetailList}>
 
             </Stack.Screen>
-            <Stack.Screen name='ManageProduct' component={ManageProduct} />
-
-            <Stack.Screen name='CreateProduct'
-                options={{
-                    presentation: 'modal',
-                    animationTypeForReplace: 'push',
-                    animation: 'slide_from_right'
-                }}
-                component={CreateProduct} />
-
-            <Stack.Screen name='UpdateProduct'
-                options={{
-                    presentation: 'modal',
-                    animationTypeForReplace: 'push',
-                    animation: 'slide_from_right'
-                }}
-                component={UpdateProduct} />
 
             <Stack.Screen name='DetailImage' component={DetailImage}
                 options={{

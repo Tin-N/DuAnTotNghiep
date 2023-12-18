@@ -192,7 +192,7 @@ const SellerScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity
         onPress={
-          ()=>navigation.navigate("Prod Process")
+          ()=>navigation.navigate("ManageProduct")
         }
         >
         <View

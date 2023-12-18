@@ -81,6 +81,7 @@ const ListProduct = (props) => {
   }
 
   const deleteProduct = (productID) => {
+    console.log(productID);
     const selectProduct = async () => {
       const request = await AxiosIntance().post('/productAPI/deleteProduct', { productID: productID, isShow: false })
       if (request.result == true) {
@@ -183,8 +184,8 @@ const ListProduct = (props) => {
                       </TouchableOpacity> : <View />
                   }
                 </View>
-              </View> : <View>
-                <Text>Không có sản phẩm nào ^^</Text>
+              </View> : <View style={{alignItems:'center'}}>
+                <Text>Không có sản phẩm nào</Text>
               </View> : <ActivityIndicator size={40} color="#3669c9" style={{ marginTop: 200 }}>
 
             </ActivityIndicator>
@@ -194,6 +195,7 @@ const ListProduct = (props) => {
   )
 }
 const ListProductNoDisplay = (props) => {
+  const {userID} = useContext(AppContext)
   const { navigation } = props;
   const [dataProduct, setDataProduct] = useState([]);
   const [loadData, setLoadData] = useState();
@@ -230,7 +232,7 @@ const ListProductNoDisplay = (props) => {
     try {
       const getAllProductByUserID = async () => {
         isLoading(true);
-        const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + '113' + '&isShow=false&size=' + size);
+        const response = await AxiosIntance().get("/productAPI/getListProductSelling?id=" + userID + '&isShow=false&size=' + size);
         if (response.result) {
           setDataProduct(response.products);
           setTimeout(() => {
@@ -291,7 +293,9 @@ const ListProductNoDisplay = (props) => {
                       </TouchableOpacity> : <View />
                   }
                 </View>
-              </View> : <View />
+              </View> : <View style={{alignItems:'center'}}>
+                <Text>Không có sản phẩm nào</Text>
+              </View>
             : <ActivityIndicator size={40} color="#3669c9" style={{ marginTop: 200 }}>
 
             </ActivityIndicator>
@@ -301,6 +305,7 @@ const ListProductNoDisplay = (props) => {
   )
 }
 const ListProductSoldOut = (props) => {
+  const {userID} = useContext(AppContext)
   const [dataProduct, setDataProduct] = useState([])
   const [loadData, setLoadData] = useState(true)
   // const [page, setPage] = useState(0)
@@ -342,7 +347,7 @@ const ListProductSoldOut = (props) => {
       const getAllProductByUserID = async () => {
         isLoading(true)
         const response = await AxiosIntance().get(
-          "/productAPI/getAllProductByUserIDAndQuantity?id=" + '113');
+          "/productAPI/getAllProductByUserIDAndQuantity?id=" + userID);
         if (response.result) {
           setDataProduct(response.products)
           setTimeout(() => {
@@ -411,8 +416,8 @@ const ListProductSoldOut = (props) => {
                       </TouchableOpacity> : <View />
                   }
                 </View>
-              </View> : <View>
-                <Text>Không có sản phẩm nào ^^</Text>
+              </View> : <View style={{alignItems:'center'}}>
+                <Text>Không có sản phẩm nào</Text>
               </View> : <ActivityIndicator size={40} color="#3669c9" style={{ marginTop: 200 }}>
 
             </ActivityIndicator>
