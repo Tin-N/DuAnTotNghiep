@@ -51,7 +51,7 @@ const SProductProcess = () => {
             ) : (
                 orderDetail.length > 0 ? (
                     <FlatList
-                        style={{ height: height }}
+                        style={{ height: height - 170 }}
                         showsVerticalScrollIndicator={false}
                         overScrollMode='never'
                         data={orderDetail}

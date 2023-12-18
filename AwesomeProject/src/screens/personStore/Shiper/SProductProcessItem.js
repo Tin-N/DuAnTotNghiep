@@ -17,6 +17,7 @@ const SProductProcessItem = (props) => {
     const [paymentMethods, setpaymentMethods] = useState()
     const [paymentStatus, setpaymentStatus] = useState()
     const navigation = useNavigation();
+    const [orderData, setorderData] = useState([])
 
     const handleDeliverySuccess = () => {
         Alert.alert(
@@ -47,7 +48,19 @@ const SProductProcessItem = (props) => {
         );
     }
     
-    // console.log(">>>>>>>>>>>>>>>>>>" + JSON.stringify(data))
+    console.log(">>>>>>>>>>>>>>>>>>asdasd" + JSON.stringify(data.orderDetailID))
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await AxiosIntance().get(`/order/getOrderByOrderDetailID/${data.orderDetailID}`)
+                setorderData(response)
+                console.log("=>>>>>>>>>>>>> res: " + JSON.stringify(response))
+            } catch (error) {
+                console.log("SProductProcessItem: lỗi lấy dữ liệu: " + error);
+            }
+        })();
+    }, []);
 
     const navigateToAllProductDetails = () => {
         navigation.navigate("AllProductDetails", {navigateData: data})
@@ -57,22 +70,22 @@ const SProductProcessItem = (props) => {
         <View style={{ borderWidth: 2, borderRadius: 5, margin: 10, padding: 15, backgroundColor: '#ebf6fc' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignContent: 'center', marginBottom: 15 }}>
                 <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, padding: 5 }}>
-                    <Text style={{ textAlign: 'center' }}>Người Bán: {ownerID}</Text>
+                    <Text style={{ textAlign: 'center' }}>Người Bán: {orderData.ownerID}</Text>
                 </View>
                 <View style={{ borderBottomWidth: 0.5, width: 40 * width / 100, padding: 5 }}>
-                    <Text style={{ textAlign: 'center' }}> Order Detail ID: {data.orderDetailID}</Text>
+                    <Text style={{ textAlign: 'center' }}> Order Detail ID: {orderData.orderDetailID}</Text>
                 </View>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignContent: 'center' }}>
                 <View>
                     <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, marginBottom: 15, padding: 5 }}>
-                        <Text style={{ textAlign: 'center' }}>Người Mua: {customerID}</Text>
+                        <Text style={{ textAlign: 'center' }}>Người Mua: {orderData.userID}</Text>
                     </View>
                     <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, marginBottom: 15, padding: 5 }}>
-                        <Text style={{ textAlign: 'center' }}>Payment Methods: {paymentMethods}</Text>
+                        <Text style={{ textAlign: 'center' }}>Payment Methods: {orderData.paymentMethods}</Text>
                     </View>
                     <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, padding: 5 }}>
-                        <Text style={{ textAlign: 'center' }}>Payment Status: {paymentStatus}</Text>
+                        <Text style={{ textAlign: 'center' }}>Payment Status: {orderData.paymentStatus}</Text>
                     </View>
                 </View>
                 <View style={{ flexDirection: "column", justifyContent: 'space-between' }}>
@@ -80,7 +93,7 @@ const SProductProcessItem = (props) => {
                         <Text style={{ textAlign: 'center' }}>Số lượng: {data.products.length}</Text>
                     </View>
                     <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, padding: 5 }}>
-                        <Text style={{ textAlign: 'center' }}>Địa chỉ: </Text>
+                        <Text style={{ textAlign: 'center' }}>Địa chỉ: {orderData.address}</Text>
                     </View>
                     <Pressable onPress={navigateToAllProductDetails} style={{ borderWidth: 0.5, borderRadius: 5, padding: 5, backgroundColor: '#87C4FF' }}>
                         <Text style={{ textAlign: 'center', color: 'white' }}>Xem chi tiết</Text>
