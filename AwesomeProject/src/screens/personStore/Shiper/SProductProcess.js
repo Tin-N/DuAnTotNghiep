@@ -11,8 +11,10 @@ import ActionBar from '../../ActionBar';
 const SProductProcess = () => {
     const [orderDetail, setorderDetail] = useState([])
     // console.log('>>>> DATA: ' + JSON.stringify(orderDetail))
-    const [toReRender, settoReRender] = useState(1)
-    console.log("=>>>>>>>>>>>>> " + toReRender)
+
+    const [toReRender, settoReRender] = useState(false)
+    const [isLoading, setisLoading] = useState(true)
+    // console.log("=>>>>>>>>>>>>> " + toReRender)
 
     useEffect(() => {
         (async () => {

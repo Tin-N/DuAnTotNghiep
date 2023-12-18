@@ -74,9 +74,9 @@ const ProductProcessItem = (props) => {
                 <MaterialIcons name='cancel' size={28} />
             </Pressable>
 
-            <Image source={{ uri: "http://nhatminhdecor.com/wp-content/uploads/2019/01/chup-anh-voi-phong-nen-vai-trang-1.jpg" }} style={{ alignSelf: 'center', width: 130, height: 150, backgroundColor: 'red', zIndex: 4 }} />
+            <Image source={{ uri: imageUri }} style={{ alignSelf: 'center', width: 130, height: 150, backgroundColor: 'red', zIndex: 4 }} />
 
-            <Text style={{ color: 'black', fontSize: 15, marginBottom: 5, marginTop: 5, fontWeight:'500' }} numberOfLines={1}>{productName}</Text>
+            <Text style={{ color: 'black', fontSize: 15, marginBottom: 5, marginTop: 5, fontWeight: '500' }} numberOfLines={1}>{productName}</Text>
             <Text>Số Lượng: {quantity}</Text>
             <Text style={{ fontSize: 7 }}>orderDetailID: {orderDetailID}</Text>
 

@@ -179,7 +179,7 @@ const OrderItem = (props) => {
                         <View>
                             <Text numberOfLines={1} style={[StyleOrder.textNameFlatList, { fontSize: 15, fontWeight: 'bold' }]}>{productName}</Text>
                             <Text numberOfLines={1} style={StyleOrder.textInfoFlatList}>{categoryID}</Text>
-                            <Text numberOfLines={1} style={[StyleOrder.textInfoFlatList, { fontSize: 13, color: '#EE2624' }]}>$ {productPrice}</Text>
+                            <Text numberOfLines={1} style={[StyleOrder.textInfoFlatList, { fontSize: 13, color: '#EE2624' }]}>{productPrice} VNĐ</Text>
                         </View>
                     </View>
 
@@ -188,7 +188,7 @@ const OrderItem = (props) => {
                             {quantity === 1 ? (
                                 <Icon name='trash-outline' size={24} />
                             ) : (
-                                <Icon name='remove' size={24}/>
+                                <Icon name='remove' size={24} />
                             )}
                         </Pressable>
                         <Text>{quantity}</Text>
@@ -198,8 +198,9 @@ const OrderItem = (props) => {
                     </View>
 
                     <View style={[StyleOrder.header, StyleOrder.function, { marginLeft: 5, marginBottom: 5 }]}>
-                        <Text numberOfLines={1} style={{ fontSize: 15, color: '#008000' }}>$ {itemTotalCost}</Text>
+                        <Text numberOfLines={1} style={{ fontSize: 15, color: '#008000' }}>{itemTotalCost}</Text>
                     </View>
+
                 </View>
             </View>
         </View>

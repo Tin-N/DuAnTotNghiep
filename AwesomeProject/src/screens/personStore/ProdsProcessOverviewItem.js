@@ -11,6 +11,13 @@ const ProdsProcessOverviewItem = (props) => {
     const prodsProcessOverviewChange = props.prodsProcessOverviewChange;
     const appContextData = useContext(AppContext);
     const userID = appContextData.userID;
+    const formattedDate = new Date(data.orderDate).toLocaleDateString('vn-VN', {
+        hour: 'numeric',
+        minute: 'numeric',
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+    });
 
     // console.log(">>>>>>>>ProdsProcessOverviewItem: " + JSON.stringify(data))
     const [orderDetailProducts, setorderDetailProducts] = useState([])
@@ -82,7 +89,7 @@ const ProdsProcessOverviewItem = (props) => {
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignContent: 'center' }}>
                 <View>
                     <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, marginBottom: 15, padding: 5 }}>
-                        <Text style={{ textAlign: 'center' }}>Ngày đặt hàng:</Text>
+                        <Text style={{ textAlign: 'center' }}>Ngày đặt hàng: {formattedDate}</Text>
                     </View>
                     <View style={{ borderBottomWidth: 0.5, width: 35 * width / 100, marginBottom: 15, padding: 5 }}>
                         <Text style={{ textAlign: 'center' }}>Phương thanh toán: {data.paymentMethods}</Text>
