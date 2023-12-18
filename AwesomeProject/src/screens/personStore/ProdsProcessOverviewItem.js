@@ -19,7 +19,7 @@ const ProdsProcessOverviewItem = (props) => {
         year: 'numeric',
     });
 
-    // console.log(">>>>>>>>ProdsProcessOverviewItem: " + JSON.stringify(data))
+    console.log(">>>>>>>>ProdsProcessOverviewItem: " + JSON.stringify(data))
     const [orderDetailProducts, setorderDetailProducts] = useState([])
     console.log("orderDetailProducts: ", data.orderID)
 
@@ -59,8 +59,8 @@ const ProdsProcessOverviewItem = (props) => {
                 {
                     text: 'OK',
                     onPress: async () => {
-                        const update = await AxiosIntance().post(`/order/updateisConfirmedisTrue/${data.orderID}`)
-                        
+                        const update = await AxiosIntance().put(`/order/updateisConfirmedisTrue/${data.orderID}`)
+
                         const res = await AxiosIntance()
                             .put(`/orderdetail/update/updateAllProductDeliveryStatus/${data.orderDetailID}/${userID}`
                                 , { deliveryStatus: 'Delivering' })

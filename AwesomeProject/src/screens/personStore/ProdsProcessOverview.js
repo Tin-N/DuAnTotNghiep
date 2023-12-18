@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native'
-import Reactm, {useState, useContext, useEffect} from 'react'
+import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native'
+import React, { useState, useContext, useEffect } from 'react'
 import ProdsProcessOverviewItem from './ProdsProcessOverviewItem'
 import AxiosIntance from '../../utils/AxiosIntance'
 import { AppContext } from '../../utils/AppContext';
@@ -13,24 +13,29 @@ const ProdsProcessOverview = () => {
     const userID = appContextData.userID;
     const navigation = useNavigation();
     const [ProdsProcessOverviewChanged, setProdsProcessOverviewChanged] = useState(true)
-    
-    // console.log(">>>>>ProdsProcessOverviewChanged " + JSON.stringify(orderData))
+    const [isLoading, setisLoading] = useState(true)
+    console.log(">>>>>ProdsProcessOverviewChanged " + JSON.stringify(orderData))
+
     useEffect(() => {
         (async () => {
             try {
                 const response = await AxiosIntance().get(`/order/getOrderForSeller/${userID}`)
-                
+
                 setorderData(response);
-                // console.log("ProdsProcessOverview - lấy dữ liệu: " + JSON.stringify(response));
+                console.log("ProdsProcessOverview - lấy dữ liệu: " + JSON.stringify(response));
+                if (response) {
+                    setisLoading(false)
+                }
             } catch (error) {
                 console.log("ProdsProcessOverview: lỗi lấy dữ liệu: " + error);
+                setisLoading(false)
             }
         })();
     }, [ProdsProcessOverviewChanged]);
 
 
     const handleNavigateToDetail = (orderDetailID) => {
-        navigation.navigate("Product Process", {navigateData: orderDetailID})
+        navigation.navigate("Product Process", { navigateData: orderDetailID })
     }
 
     const handleProdsProcessOverviewChange = () => {
@@ -43,13 +48,28 @@ const ProdsProcessOverview = () => {
 
     return (
         <View>
+
             <ActionBar title={"Xử Lý Đơn Hàng"} />
-            <FlatList
-                showsVerticalScrollIndicator={false}
-                overScrollMode='never'
-                data={orderData}
-                renderItem={({ item }) => <ProdsProcessOverviewItem data={item} navigateToDetail={handleNavigateToDetail} prodsProcessOverviewChange={handleProdsProcessOverviewChange} />}
-                keyExtractor={item => item.orderID} />
+            {isLoading ? (
+                <View style={{ alignItems: 'center', marginTop: 220 }}>
+                    <ActivityIndicator size='large' color="#0000ff" />
+                    <Text>Loading...</Text>
+                </View>
+            ) : (
+                orderData.length > 0 ? (
+                    <FlatList
+                        showsVerticalScrollIndicator={false}
+                        overScrollMode='never'
+                        data={orderData}
+                        renderItem={({ item }) => <ProdsProcessOverviewItem data={item} navigateToDetail={handleNavigateToDetail} prodsProcessOverviewChange={handleProdsProcessOverviewChange} />}
+                        keyExtractor={item => item.orderID}
+                    />
+                ) : (
+                    <View style={{ alignItems: 'center', marginTop: 220 }}>
+                        <Text>Không có dữ liệu</Text>
+                    </View>
+                )
+            )}
         </View>
     )
 }
