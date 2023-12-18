@@ -83,9 +83,8 @@ const CategoryScreen = (props) => {
     if ((totalPage > page)) {
       setPage(page + 1);
       console.log("Hellooaaaa", page);
-      setisLoadingmini(!isLoadingmini);
+      setisLoadingmini(true);
       return true;
-
     }
     console.log(isLoadingmini,">>>>>>>>>>>>>>>fsdfasfasdsfwsd");
     return false
@@ -100,12 +99,10 @@ const CategoryScreen = (props) => {
       const response = await AxiosIntance().get("/productAPI/getProductByCategoryID?id=" + params.categoryID +createURLstring(valueFilter[0], valueFilter[1], valueFilter[2])+ "&skipData=" + page);
       console.log(response + "   " + createURLstring(valueFilter[0], valueFilter[1], valueFilter[2]));
       if (response.result && response.products.length > 0) {
-        console.log(response);
         if (page == 1) {
           setData(response.products);
           setcountData(response.count)
           setTotalPage(response.totalPage)
-          console.log("Hellooo");
         }
         else if (page > 1)
           setData([...data, ...response.products]);
@@ -117,7 +114,7 @@ const CategoryScreen = (props) => {
         setisLoading(false);
         ToastAndroid.show("Đã hết sản phẩm ", ToastAndroid.SHORT);
       }
-      setisLoadingmini(!isLoadingmini);
+      setisLoadingmini(false);
     } catch (error) {
       console.error("Error:", error);
       setisLoading(false);

@@ -31,7 +31,7 @@ const Item = props => {
           alignItems:'center',width:"100%"
         }}
         >
-        <Image source={{uri:data.icon}} style={{marginTop:10,width:40,height:40}}/>
+        <Image source={{uri:data.images}} style={{marginTop:10,width:40,height:40}}/>
 
         </View>
       </TouchableOpacity>
