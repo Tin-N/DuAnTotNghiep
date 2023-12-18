@@ -105,7 +105,7 @@ const UserScreen = () => {
                   fontWeight: 'bold',
                   color: 'black',
                 }}>
-                Chỉnh sửa thông tin người dùng
+                Chỉnh sửa thông tin
               </Text>
             </View>
             <Icon name="chevron-forward" size={30} color={COLOR.background} />
@@ -200,7 +200,6 @@ const UserScreen = () => {
                 alignItems: 'center',
                 width: '80%',
                 marginVertical: 20
-
               }}>
               <View
                 style={{

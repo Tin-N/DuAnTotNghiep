@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TextInput,
-  ImageBackground,Alert,ToastAndroid
+  ImageBackground, Alert, ToastAndroid
 } from 'react-native';
 import React, { useState, useEffect, useContext } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -32,12 +32,12 @@ const ProfileUser = () => {
   const [img, setImg] = useState("");
   const [ImgLink, setImgLink] = useState("");
   const navigation = useNavigation();
-    const {userInfo, setuserInfo}  = useContext(AppContext);
+  const { userInfo, setuserInfo } = useContext(AppContext);
   // const [email, setEmai] = useState(userInfo.email);
   const [address, setAddress] = useState(userInfo.address);
   const [phoneNumber, setPhoneNumber] = useState(userInfo.phoneNumber);
   const [fullname, setFullName] = useState(userInfo.fullname);
-  const [avatar, setAvatar] = useState( typeof userInfo.avatar !== "undefined" ? userInfo.avatar:"");
+  const [avatar, setAvatar] = useState(typeof userInfo.avatar !== "undefined" ? userInfo.avatar : "");
   const getImageFromLibrary = async () => {
     const result = await launchImageLibrary();
     if (!result.didCancel) {
@@ -68,18 +68,18 @@ const ProfileUser = () => {
     }
   }, [ImgLink])
 
-  const checkUpload=()=>{
-    if(img.length>0)
+  const checkUpload = () => {
+    if (img.length > 0)
       Upload();
     else
-      UpdateProfile();  
+      UpdateProfile();
 
   }
   const UpdateProfile = async () => {
     try {
       // http://localhost:3000/api/UserApi/changeUserInfo?id=654627d67137a3bf678fb544&address=Tran Phu&phoneNumber=0933067567&fullname=Nguyen Trung Thuan
       const response = await AxiosIntance().post("/UserApi/changeUserInfo?id=" + userInfo._id + "&address=" + address + "&phoneNumber=" + phoneNumber + "&fullname=" + fullname + "&avatar=" + ImgLink);
-      console.log(userInfo._id, phoneNumber, fullname, address, ImgLink,img);
+      console.log(userInfo._id, phoneNumber, fullname, address, ImgLink, img);
 
       if (response.result) {
         console.log("Sửa thành công");
@@ -88,7 +88,7 @@ const ProfileUser = () => {
         Alert.alert("Thông báo", "Sửa thành công");
         navigation.goBack();
       } else {
-        console.log("Sửa thất bại" );
+        console.log("Sửa thất bại");
       }
 
     } catch (error) {
@@ -99,17 +99,17 @@ const ProfileUser = () => {
   return (
     <View style={StyleProfile.ProfileContainer}>
       <View style={StyleProfile.NavTab}>
-        <TouchableOpacity style={StyleProfile.IconShapeStart } onPress={()=> navigation.goBack()}>
-        <Icon style={{alignSelf:"center",paddingTop:"10%"}} name="arrow-back" size={30} color="white" />
-         
+        <TouchableOpacity style={StyleProfile.IconShapeStart} onPress={() => navigation.goBack()}>
+          <Icon style={{ alignSelf: "center", paddingTop: "10%" }} name="arrow-back" size={30} color="white" />
+
         </TouchableOpacity>
         <Text style={StyleProfile.TextIcon}>Thông tin người mua</Text>
-        
+
       </View>
 
       <View style={StyleProfile.Heading}>
         <TouchableOpacity style={StyleProfile.Avatar} onPress={() => getImageFromLibrary()}>
-          
+
           <Image
             style={StyleProfile.iconProfile}
             source={img.length > 0 ? { uri: img } : (avatar.length > 0 ? { uri: avatar } : require('../images/icon/user.png'))}
@@ -117,10 +117,10 @@ const ProfileUser = () => {
           />
         </TouchableOpacity>
         <View style={StyleProfile.TextProfile}>
-          <Text style={StyleProfile.Name}>Thuận Nguyễn</Text>
+          {fullname ? <Text style={StyleProfile.Name}>{fullname}</Text> : <Text style={StyleProfile.Name}>Chưa có tên</Text>}
           <Text style={StyleProfile.Email}>
             {userInfo.email}
-            </Text>
+          </Text>
           <TouchableOpacity style={StyleProfile.iconEditContainer}>
             <Image
               style={StyleProfile.iconEdit}
@@ -137,7 +137,7 @@ const ProfileUser = () => {
             <Text style={StyleProfile.FormItemTextAddress}>Địa chỉ</Text><Text style={StyleProfile.FormItemStart}>*</Text>
           </View>
           <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setAddress} placeholder=
-          {userInfo.address} 
+            {userInfo.address}
           // {"số 69, Ql50, Quận 8, Tp.HCM"}
           />
         </View>
@@ -146,7 +146,7 @@ const ProfileUser = () => {
             <Text style={StyleProfile.FormItemTextAddress}>Số điện thoại</Text><Text style={StyleProfile.FormItemStart}>*</Text>
           </View>
           <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setPhoneNumber} placeholder=
-          {userInfo.phoneNumber} 
+            {userInfo.phoneNumber}
           //  {"0933067567"} 
           />
         </View>
@@ -155,31 +155,31 @@ const ProfileUser = () => {
             <Text style={StyleProfile.FormItemTextAddress}>Họ và tên</Text><Text style={StyleProfile.FormItemStart}>*</Text>
           </View>
           <TextInput style={StyleProfile.FormItemInputAddress} onChangeText={setFullName} placeholder=
-          {userInfo.fullname} 
+            {userInfo.fullname}
           // {"Nguyễn Trần Trung Quân"}
           />
         </View>
         <View style={styles.btContainer} >
-          <TouchableOpacity style={[StyleProfile.ButtonCP,{backgroundColor: 'white', borderWidth:0.5, borderColor: COLOR.background}]} onPress={() => Upload()}>
-            <Text style={[StyleProfile.TextButton, {color: COLOR.background}]}>Đặt lại</Text>
+          <TouchableOpacity style={[StyleProfile.ButtonCP, { backgroundColor: 'white', borderWidth: 0.5, borderColor: COLOR.background }]} onPress={() => Upload()}>
+            <Text style={[StyleProfile.TextButton, { color: COLOR.background }]}>Đặt lại</Text>
           </TouchableOpacity>
           <TouchableOpacity style={StyleProfile.ButtonCP} onPress={() => checkUpload()}>
-            <Text style={[StyleProfile.TextButton, {color: 'white'}]}>Cập nhật</Text>
+            <Text style={[StyleProfile.TextButton, { color: 'white' }]}>Cập nhật</Text>
           </TouchableOpacity>
         </View>
-        
+
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  btContainer:{
+  btContainer: {
     flexDirection: "row",
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal:"10%"
+    marginHorizontal: "10%"
   },
-  
+
 });
 export default ProfileUser;

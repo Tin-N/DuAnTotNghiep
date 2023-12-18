@@ -105,7 +105,7 @@ const SellerScreen = () => {
                   fontWeight: 'bold',
                   color: 'black',
                 }}>
-                Chỉnh sửa thông tin người dùng
+                Chỉnh sửa thông tin
               </Text>
             </View>
             <Icon name="chevron-forward" size={30} color="#36abd9" />
