@@ -9,26 +9,26 @@ import {
   Easing,
   Alert,
 } from 'react-native';
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 
-import { StyleDetailProduct } from '../../css/Styles';
-import { Dimensions } from 'react-native';
-const { width } = Dimensions.get('screen');
+import {StyleDetailProduct} from '../../css/Styles';
+import {Dimensions} from 'react-native';
+const {width} = Dimensions.get('screen');
 import LinearGradient from 'react-native-linear-gradient';
 import AxiosIntance from '../../utils/AxiosIntance';
-import { formatPrice } from '../../../Agro';
+import {formatPrice} from '../../../Agro';
 
-import { ScrollView, FlatList } from 'react-native';
+import {ScrollView, FlatList} from 'react-native';
 import StarRating from 'react-native-star-rating-widget';
 import ItemFeedBack from './ItemFeedBack';
-import { StyleDialogShopping } from '../../css/Styles';
-import { Animated } from 'react-native';
-import { calculateTimeDifference } from '../../../Agro';
+import {StyleDialogShopping} from '../../css/Styles';
+import {Animated} from 'react-native';
+import {calculateTimeDifference} from '../../../Agro';
 import Icon1 from 'react-native-vector-icons/Ionicons';
-import { LogBox } from 'react-native';
+import {LogBox} from 'react-native';
 
 import DialogFeedback from '../../component/DialogFeedback/DialogFeedback';
-import { AppContext } from '../../utils/AppContext';
+import {AppContext} from '../../utils/AppContext';
 const ObjectID = require('bson-objectid');
 
 const imgAvatar = {
@@ -38,12 +38,12 @@ const imgAvatar = {
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const DetailProduct = props => {
-  const { navigation } = props;
-  const { route } = props;
-  const { isLogin, userInfo } = useContext(AppContext);
-  const { params } = route;
+  const {navigation} = props;
+  const {route} = props;
+  const {isLogin, userInfo} = useContext(AppContext);
+  const {params} = route;
 
-  // console.log(params);
+  console.log(params);
 
   // Product
   const [userIDStore, setuserIDStore] = useState('');
@@ -54,8 +54,8 @@ const DetailProduct = props => {
   const [modalVisible, setModalVisible] = useState(false);
   const [star, setStar] = useState(0);
 
-  const { userID } = useContext(AppContext);
-  const { userAddress } = useContext(AppContext);
+  const {userID} = useContext(AppContext);
+  const {userAddress} = useContext(AppContext);
   const [ownerID, setownerID] = useState();
 
   const [dataFeedback, setDataFeedback] = useState([]);
@@ -72,7 +72,7 @@ const DetailProduct = props => {
   const [isDialogVisible, setDialogVisible] = useState(false);
 
   const [productQuantity, setproductQuantity] = useState(0);
-
+  
   // favoriteID
   const [favorite, setFavorite] = useState({});
 
@@ -104,7 +104,7 @@ const DetailProduct = props => {
   }, [slideAnim]);
 
   const TextTime = props => {
-    const { startDay, endDay } = props;
+    const {startDay, endDay} = props;
     const [Time, setTime] = useState('');
     const [remainingTime] = useState('');
     const now = new Date(); // Lấy thời gian hiện tại
@@ -122,9 +122,9 @@ const DetailProduct = props => {
             parseFloat(sales.endDay),
           );
           setTime(onSaleTime);
-          // console.log(
-          //   '>>>>>dawdawdaw ' + sales.startDay + ' ' + new Date().getTime(),
-          // );
+          console.log(
+            '>>>>>dawdawdaw ' + sales.startDay + ' ' + new Date().getTime(),
+          );
           // if (sales[0].startDay > new Date().getTime()){
           //     setonProductSaleOff(false)
           //         setonProductSaleOff(true)
@@ -161,7 +161,7 @@ const DetailProduct = props => {
       const response = await AxiosIntance().get(
         '/saleOffAPI/getSaleApplyBySaleID?saleID=' + params.saleOffID,
       );
-      // console.log('sale detailProduct: ' + params.sale);
+      console.log('sale detailProduct: ' + params.sale);
       if (typeof params.saleOffID != 'undefined') {
         if (
           response.result == true &&
@@ -174,14 +174,14 @@ const DetailProduct = props => {
           setPercentSales(response.saleOff.saleOff);
           setBannerSale('flex');
         } else {
-
+          
         }
       } else {
-
+        
       }
     };
     getSalesCurrent();
-    return () => { };
+    return () => {};
   }, [params.saleOffID]);
 
   const opacityBackground = () => {
@@ -190,7 +190,7 @@ const DetailProduct = props => {
   };
 
   const heartHandler = async () => {
-    // console.log(favorite);
+    console.log(favorite);
     if (!isLogin) {
       Alert.alert(
         'Thông báo',
@@ -226,9 +226,9 @@ const DetailProduct = props => {
       } else {
         const response = await AxiosIntance().post(
           '/favoriteApi/addFavorite?userID=' +
-          userInfo._id +
-          '&productID=' +
-          params.itemId,
+            userInfo._id +
+            '&productID=' +
+            params.itemId,
         );
         if (response.result) {
           ToastAndroid.show('Thích thành công', ToastAndroid.SHORT);
@@ -245,7 +245,7 @@ const DetailProduct = props => {
   };
 
   const handlerDetail = () => {
-    navigation.navigate('DetailFeedback', { itemId: params.itemId });
+    navigation.navigate('DetailFeedback', {itemId: params.itemId});
   };
 
   const back = () => {
@@ -256,11 +256,11 @@ const DetailProduct = props => {
   };
 
   const homeStoreHandler = () => {
-    navigation.navigate('HomeStore', { userID: userIDStore });
+    navigation.navigate('HomeStore', {userID: userIDStore});
   };
 
   const detailImageHandler = () => {
-    navigation.navigate('DetailImage', { dataImage: arrayImageProduct });
+    navigation.navigate('DetailImage', {dataImage: arrayImageProduct});
   };
 
   useEffect(() => {
@@ -281,7 +281,7 @@ const DetailProduct = props => {
         const response = await AxiosIntance().get(
           '/productAPI/getProductByID?id=' + params.itemId,
         );
-        // console.log('>>>>>>productID for detail: ' + params.itemId);
+        console.log('>>>>>>productID for detail: ' + params.itemId);
         if (response.result == true) {
           setDataProduct(response.products);
           setProductPrice(response.products.price);
@@ -297,13 +297,27 @@ const DetailProduct = props => {
         console.log('Product Detail: lỗi lấy dữ liệu: ' + error);
       }
     };
+    const getShopInfo = async () => {
+      try {
+        const response = await AxiosIntance().get(
+          '/UserApi/get-by-id/' + ownerID,
+        );
+        console.log('>>>>>>productID for detail: ' + params.itemId);
+        if (response.result == true) {
+          setownerID(response.user);
+         
+        }
+      } catch (error) {
+        console.log('Product Detail: lỗi lấy dữ liệu: ' + error);
+      }
+    };
     const checkProductsInOrderdetail = async () => {
       if (isLogin) {
         try {
           const response = await AxiosIntance().get(
             `/orderdetail/check-product-in-orderDetail/${userID}/${params.itemId}`,
           );
-          // console.log('>>>>>>productID for detail: ' + params.itemId);
+          console.log('>>>>>>productID for detail: ' + params.itemId);
           if (response.result == true) {
             setIsVisibleRating(response.result);
           }
@@ -317,9 +331,9 @@ const DetailProduct = props => {
     const getFavorite = async () => {
       const response = await AxiosIntance().get(
         '/favoriteApi/getFavorite?userID=' +
-        userInfo._id +
-        '&productID=' +
-        params.itemId,
+          userInfo._id +
+          '&productID=' +
+          params.itemId,
       );
       if (response.result) {
         if (Object.keys(response.favorite).length > 0) {
@@ -331,16 +345,16 @@ const DetailProduct = props => {
     const getFeedback = async () => {
       const response = await AxiosIntance().get(
         '/feedbackAPI/getFeedbackByProductID?id=' +
-        params.itemId +
-        '&size=' +
-        1,
+          params.itemId +
+          '&size=' +
+          1,
       );
       if (response.result == true) {
         setDataFeedback(response.feedbacks);
         setFeedbackLenght(response.feedbacks.length);
-
+        
       } else {
-
+        
       }
       if (response.feedbacks.length > 0) {
         const countRating = () => {
@@ -391,17 +405,17 @@ const DetailProduct = props => {
         setDataSize(response.size);
       }
     };
-
+    getShopInfo();
     getColorByProductID();
     getDetails();
     getFeedback();
     getSizeByProductID();
     checkProductsInOrderdetail();
     getFavorite();
-    return () => { };
+    return () => {};
   }, [params.itemId]);
 
-  const MyDialog = ({ isVisible, onClose }) => {
+  const MyDialog = ({isVisible, onClose}) => {
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
     const [colorChoosen, setColorChoosen] = useState('');
@@ -480,7 +494,7 @@ const DetailProduct = props => {
             quantity,
           });
           if (response) {
-            // console.log('Thêm vào giỏ hàng thành công');
+            console.log('Thêm vào giỏ hàng thành công');
             setDialogVisible(false);
             ToastAndroid.show(
               'Thêm vào giỏ hàng thành công',
@@ -496,7 +510,7 @@ const DetailProduct = props => {
     const orderNow = async () => {
       const objectId = new ObjectID();
       console.log(objectId);
-      // console.log('>>>>isLogin: ' + isLogin);
+      console.log('>>>>isLogin: ' + isLogin);
       if (!isLogin) {
         Alert.alert(
           'Thông báo',
@@ -515,96 +529,81 @@ const DetailProduct = props => {
           ],
         );
       } else {
-        if (!userAddress) {
-          Alert.alert(
-            'Thông báo',
-            'Bạn chưa điền địa chỉ, có muốn chuyển đến điền thông tin?', // Nội dung thông báo
-            [
-              {
-                text: 'Cancel'
-              },
-              {
-                text: 'OK', // Chữ hiển thị trên nút OK
-                onPress: () => {
-                  navigation.navigate("Profile", { screen: 'ProfileUser' })
-                },
-              },
-            ]
-          );
-        } else {
-          const productToOrder = {
-            ownerID,
-            productID,
-            quantity,
-            optionsInCart,
-            itemTotalCost,
-            deliveryStatus: 'Pending',
-          };
+        const productToOrder = {
+          ownerID,
+          productID,
+          quantity,
+          optionsInCart,
+          itemTotalCost,
+          deliveryStatus: 'Pending',
+        };
 
-          const orderDetailResponse = await AxiosIntance().post(
-            '/orderdetail/add',
-            {
+        const orderDetailResponse = await AxiosIntance().post(
+          '/orderdetail/add',
+          {
+            userID,
+            orderDetailID: objectId,
+            products: productToOrder,
+            totalCost: itemTotalCost,
+          },
+        );
+        console.log(
+          'Order Detail ID: ' + orderDetailResponse.data.orderDetailID,
+        );
+
+        const OrderPost = async () => {
+          if (orderDetailResponse.error == false) {
+            const orderResponse = await AxiosIntance().post('/order/add', {
               userID,
               orderDetailID: objectId,
-              products: productToOrder,
-              totalCost: itemTotalCost,
+              orderDate: new Date(),
+              deliveryStatus: 'Pending',
+              paymentStatus: 'Unpaid',
+              paymentMethods: 'COD',
+              ownerID: ownerID,
+              userAddress,
+              isConfirmed: false
+            });
+            setDialogVisible(false);
+            // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
+            ToastAndroid.show(
+              'Đơn hàng của bạn đang chờ xử lý',
+              ToastAndroid.SHORT,
+            );
+          }
+        };
+
+        Alert.alert(
+          'Thông báo',
+          'Bạn có muốn mua sản phẩm này?', // Nội dung thông báo
+          [
+            {
+              text: 'Cancel', // Chữ hiển thị trên nút Cancel
+              onPress: () => {
+                // Xử lý khi người dùng chọn "Cancel"
+                console.log('Bạn đã chọn Cancel');
+              },
             },
-          );
+            {
+              text: 'OK', // Chữ hiển thị trên nút OK
+              onPress: () => {
+                // Xử lý khi người dùng chọn "OK"
+                OrderPost();
 
-          const OrderPost = async () => {
-            if (orderDetailResponse.error == false) {
-              const orderResponse = await AxiosIntance().post('/order/add', {
-                userID,
-                orderDetailID: objectId,
-                orderDate: new Date(),
-                deliveryStatus: 'Pending',
-                paymentStatus: 'Unpaid',
-                paymentMethods: 'COD',
-                ownerID: ownerID,
-                address: userAddress,
-                isConfirmed: false
-              });
-              setDialogVisible(false);
-              // console.log("Đặt hàng thành công, Order Detail ID: " + orderResponse.orderDetailID + " Order ID: " + orderResponse.orderID);
-              ToastAndroid.show(
-                'Đơn hàng của bạn đang chờ xử lý',
-                ToastAndroid.SHORT,
-              );
-            }
-          };
-
-          Alert.alert(
-            'Thông báo',
-            'Bạn có muốn mua sản phẩm này?', // Nội dung thông báo
-            [
-              {
-                text: 'Cancel', // Chữ hiển thị trên nút Cancel
-                onPress: () => {
-                  // Xử lý khi người dùng chọn "Cancel"
-                  // console.log('Bạn đã chọn Cancel');
-                },
+                async () => {
+                  try {
+                    await AxiosIntance().put(
+                      `productAPI/updateQuantityOrdered`,
+                      {
+                        productsToUpdate: productsSelected,
+                      },
+                    );
+                  } catch (error) {}
+                };
               },
-              {
-                text: 'OK', // Chữ hiển thị trên nút OK
-                onPress: () => {
-                  // Xử lý khi người dùng chọn "OK"
-                  OrderPost();
-
-                  async () => {
-                    try {
-                      await AxiosIntance().put(
-                        `productAPI/updateQuantityOrdered`,
-                        {
-                          productsToUpdate: productsSelected,
-                        },
-                      );
-                    } catch (error) { }
-                  };
-                },
-              },
-            ],
-          );
-        }
+            },
+          ],
+        );
       }
     };
 
@@ -619,17 +618,17 @@ const DetailProduct = props => {
         <View style={StyleDialogShopping.containerShopping}>
           <TouchableOpacity
             onPress={onClose}
-            style={{ right: 0, margin: 10, position: 'absolute', top: 0 }}>
+            style={{right: 0, margin: 10, position: 'absolute', top: 0}}>
             <Image source={require('../../images/close.png')} />
           </TouchableOpacity>
-          <View style={{ flexDirection: 'row', padding: 10 }}>
+          <View style={{flexDirection: 'row', padding: 10}}>
             <Image
-              style={{ width: 100, height: 100, borderRadius: 5 }}
+              style={{width: 100, height: 100, borderRadius: 5}}
               source={
-                imageColor != '' ? { uri: imageColor } : { uri: imageProduct }
+                imageColor != '' ? {uri: imageColor} : {uri: imageProduct}
               }
             />
-            <View style={{ marginLeft: 10 }}>
+            <View style={{marginLeft: 10}}>
               <View>
                 <View>
                   {sales.length > 0 ? (
@@ -637,7 +636,7 @@ const DetailProduct = props => {
                       <Text style={StyleDetailProduct.textPrice}>
                         {formatPrice(
                           productPrice -
-                          (productPrice * percentSales).toFixed(0),
+                            (productPrice * percentSales).toFixed(0),
                         )}{' '}
                         đ
                       </Text>
@@ -678,8 +677,8 @@ const DetailProduct = props => {
             overScrollMode="never">
             <View>
               {dataColor.length > 0 ? (
-                <View style={{ padding: 10 }}>
-                  <Text style={{ fontSize: 21, color: 'black' }}>Nhóm màu</Text>
+                <View style={{padding: 10}}>
+                  <Text style={{fontSize: 21, color: 'black'}}>Nhóm màu</Text>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -712,8 +711,8 @@ const DetailProduct = props => {
                           },
                         ]}>
                         <Image
-                          style={{ width: 105, height: 100 }}
-                          source={item.image ? { uri: item.image } : null}
+                          style={{width: 105, height: 100}}
+                          source={item.image ? {uri: item.image} : null}
                         />
                         <Text
                           style={{
@@ -735,8 +734,8 @@ const DetailProduct = props => {
             </View>
             <View>
               {dataSize.length > 0 ? (
-                <View style={{ padding: 10 }}>
-                  <Text style={{ fontSize: 21, color: '#000000' }}>Kích cỡ</Text>
+                <View style={{padding: 10}}>
+                  <Text style={{fontSize: 21, color: '#000000'}}>Kích cỡ</Text>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -763,7 +762,7 @@ const DetailProduct = props => {
                             backgroundColor: '#f7f5f5',
                             borderColor: '#EEEEEE',
                           },
-                          selectedSize === item._id && { borderColor: '#4c4b4b' },
+                          selectedSize === item._id && {borderColor: '#4c4b4b'},
                         ]}>
                         <Text
                           style={{
@@ -795,28 +794,28 @@ const DetailProduct = props => {
                 marginRight: 10,
                 justifyContent: 'space-between',
               }}>
-              <Text style={{ fontSize: 18 }}>Số lượng</Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={{fontSize: 18}}>Số lượng</Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
                   onPress={() => quantityHandler('-')}
                   style={{
                     backgroundColor: '#EEEEEE',
                   }}>
-                  <Icon1 name="remove-outline" size={15} style={{ padding: 3 }} />
+                  <Icon1 name="remove-outline" size={15} style={{padding: 3}} />
                 </TouchableOpacity>
-                <Text style={{ padding: 5, fontSize: 20 }}>{quantity}</Text>
+                <Text style={{padding: 5, fontSize: 20}}>{quantity}</Text>
                 <TouchableOpacity
                   onPress={() => quantityHandler('+')}
                   style={{
                     backgroundColor: '#EEEEEE',
                   }}>
-                  <Icon1 name="add-outline" size={15} style={{ padding: 3 }} />
+                  <Icon1 name="add-outline" size={15} style={{padding: 3}} />
                 </TouchableOpacity>
               </View>
             </View>
           </ScrollView>
 
-          <View style={{ padding: 10, position: 'absolute', bottom: 0, flex: 1 }}>
+          <View style={{padding: 10, position: 'absolute', bottom: 0, flex: 1}}>
             {check == true ? (
               <TouchableOpacity
                 onPress={orderNow}
@@ -826,7 +825,7 @@ const DetailProduct = props => {
             ) : (
               <TouchableOpacity
                 onPress={addToCart}
-                style={[{ width: 355 }, StyleDetailProduct.touchOpa2]}>
+                style={[{width: 355}, StyleDetailProduct.touchOpa2]}>
                 <Text style={StyleDetailProduct.textButton}>
                   Thêm vào giỏ hàng
                 </Text>
@@ -839,7 +838,7 @@ const DetailProduct = props => {
   };
   return (
     <View
-      style={{ flex: 1, backgroundColor: 'white', opacity: opacityBackground() }}>
+      style={{flex: 1, backgroundColor: 'white', opacity: opacityBackground()}}>
       <View
         style={{
           padding: 10,
@@ -863,9 +862,9 @@ const DetailProduct = props => {
       <ScrollView showsVerticalScrollIndicator={false} overScrollMode="never">
         <TouchableOpacity onPress={detailImageHandler} activeOpacity={1}>
           <ImageBackground
-            source={imageProduct ? { uri: imageProduct } : null}
+            source={imageProduct ? {uri: imageProduct} : null}
             resizeMode="cover"
-            style={{ width: width, height: 320 }}>
+            style={{width: width, height: 320}}>
             <Text
               style={{
                 color: 'white',
@@ -888,14 +887,14 @@ const DetailProduct = props => {
           style={{
             ...StyleDetailProduct.banner,
             display: bannerSale,
-            transform: [{ translateY: slideAnim }], // Sử dụng giá trị Animated cho thuộc tính transform
+            transform: [{translateY: slideAnim}], // Sử dụng giá trị Animated cho thuộc tính transform
           }}>
           <LinearGradient
-            start={{ x: 0, y: 0.5 }}
-            end={{ x: 1.2, y: 0.5 }}
+            start={{x: 0, y: 0.5}}
+            end={{x: 1.2, y: 0.5}}
             colors={['#000033', '#3669C9']}
             style={[StyleDetailProduct.banner]}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Text style={[StyleDetailProduct.titleBanner]}>
                 Shopping Sale
               </Text>
@@ -905,7 +904,7 @@ const DetailProduct = props => {
         </Animated.View>
         <View>
           {Object.keys(sales).length > 0 && percentSales != 0 ? (
-            <View style={{ flexDirection: 'row', padding: 10 }}>
+            <View style={{flexDirection: 'row', padding: 10}}>
               <Text style={StyleDetailProduct.textd}>đ</Text>
               <Text style={StyleDetailProduct.textPrice}>
                 {formatPrice(
@@ -920,7 +919,7 @@ const DetailProduct = props => {
               </Text>
             </View>
           ) : (
-            <View style={{ flexDirection: 'row', padding: 10 }}>
+            <View style={{flexDirection: 'row', padding: 10}}>
               <Text style={StyleDetailProduct.textd}>đ</Text>
               <Text style={StyleDetailProduct.textPrice}>
                 {formatPrice(productPrice)}
@@ -928,7 +927,7 @@ const DetailProduct = props => {
             </View>
           )}
         </View>
-        <View style={{ padding: 10 }}>
+        <View style={{padding: 10}}>
           <Text
             style={{
               color: 'black',
@@ -947,21 +946,21 @@ const DetailProduct = props => {
           }}>
           <View
             pointerEvents="none"
-            style={{ flexDirection: 'row', alignItems: 'center', padding: 5 }}>
+            style={{flexDirection: 'row', alignItems: 'center', padding: 5}}>
             <StarRating
               rating={percentRating}
               starSize={16}
-              starStyle={{ width: 4 }}
+              starStyle={{width: 4}}
               enableSwiping={false}
             />
-            <Text style={{ marginLeft: 12 }}>
+            <Text style={{marginLeft: 12}}>
               {percentRating} ({feedbackLength})
             </Text>
           </View>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{flexDirection: 'row'}}>
             <TouchableOpacity onPress={heartHandler}>
               <Image
-                style={{ width: 30, height: 30, marginRight: 15 }}
+                style={{width: 30, height: 30, marginRight: 15}}
                 source={
                   heart == true
                     ? require('../../images/heart.jpg')
@@ -973,7 +972,7 @@ const DetailProduct = props => {
         </View>
         <View style={StyleDetailProduct.line}></View>
 
-        <View style={{ padding: 10, flexDirection: 'row' }}>
+        <View style={{padding: 10, flexDirection: 'row'}}>
           <View
             style={{
               width: 60,
@@ -983,10 +982,10 @@ const DetailProduct = props => {
               borderWidth: 0.5,
               borderColor: '#cfcccc',
             }}>
-            <Image style={{ width: 60, height: 60 }} source={imgAvatar} />
+            <Image style={{width: 60, height: 60}} source={imgAvatar} />
           </View>
-          <View style={{ margin: 10 }}>
-            <Text style={{ fontSize: 18, color: 'black' }}>
+          <View style={{margin: 10}}>
+            <Text style={{fontSize: 18, color: 'black'}}>
               BUMDES Desa Sidosari
             </Text>
             <Text>Đánh giá tích cực 94% | Active 7 sec...</Text>
@@ -1001,16 +1000,16 @@ const DetailProduct = props => {
               padding: 8,
               borderRadius: 20,
             }}>
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>Tới Shop</Text>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>Tới Shop</Text>
           </TouchableOpacity>
         </View>
 
         <View style={StyleDetailProduct.line}></View>
-        <View style={{ marginBottom: 20 }}>
+        <View style={{marginBottom: 20}}>
           {isLogin ? (
-            <View style={{ alignItems: 'center' }}>
+            <View style={{alignItems: 'center'}}>
               <Text
-                style={{ fontSize: 16, marginVertical: 5, marginHorizontal: 10 }}>
+                style={{fontSize: 16, marginVertical: 5, marginHorizontal: 10}}>
                 Thêm đánh giá
               </Text>
               <StarRating
@@ -1032,12 +1031,12 @@ const DetailProduct = props => {
             <View />
           )}
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={{ margin: 10, fontSize: 18 }}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{margin: 10, fontSize: 18}}>
               Đánh giá ({feedbackLength})
             </Text>
             <TouchableOpacity onPress={handlerDetail}>
-              <Text style={{ margin: 10, fontSize: 15 }}>Xem tất cả</Text>
+              <Text style={{margin: 10, fontSize: 15}}>Xem tất cả</Text>
             </TouchableOpacity>
           </View>
 
@@ -1045,13 +1044,13 @@ const DetailProduct = props => {
             data={dataFeedback.slice(0, 3)}
             showsHorzontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => <ItemFeedBack dataFeedback={item} />}
+            renderItem={({item}) => <ItemFeedBack dataFeedback={item} />}
             keyExtractor={item => item.feedbackID}
             ItemSeparatorComponent={Separator}
           />
         </View>
         <View style={StyleDetailProduct.line}></View>
-        <View style={{ marginBottom: 100 }}>
+        <View style={{marginBottom: 100}}>
           <View
             style={{
               height: 50,
@@ -1060,15 +1059,15 @@ const DetailProduct = props => {
               justifyContent: 'center',
               flexDirection: 'row',
             }}>
-            <View style={{ borderWidth: 0.2, width: 30 }}></View>
-            <Text style={{ textAlign: 'center', fontSize: 18 }}>
+            <View style={{borderWidth: 0.2, width: 30}}></View>
+            <Text style={{textAlign: 'center', fontSize: 18}}>
               {' '}
               Chi tiết sản phẩm{' '}
             </Text>
-            <View style={{ borderWidth: 0.2, width: 30 }}></View>
+            <View style={{borderWidth: 0.2, width: 30}}></View>
           </View>
           <Text
-            style={{ padding: 15, fontSize: 20, fontFamily: 'TiltNeon-Regular' }}>
+            style={{padding: 15, fontSize: 20, fontFamily: 'TiltNeon-Regular'}}>
             {detail}
           </Text>
         </View>
@@ -1092,15 +1091,15 @@ const DetailProduct = props => {
       </View>
 
       <View style={StyleDetailProduct.bottom}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TouchableOpacity
             onPress={homeStoreHandler}
-            style={{ paddingLeft: 10, paddingRight: 10 }}>
+            style={{paddingLeft: 10, paddingRight: 10}}>
             <Image style={StyleDetailProduct.image} source={imgAvatar} />
-            <Text style={{ fontSize: 12, textAlign: 'center' }}>Store</Text>
+            <Text style={{fontSize: 12, textAlign: 'center'}}>Store</Text>
           </TouchableOpacity>
           <Image
-            style={{ height: 45, marginTop: -4 }}
+            style={{height: 45, marginTop: -4}}
             source={require('../../images/lineheight.png')}
           />
           <View
@@ -1111,11 +1110,11 @@ const DetailProduct = props => {
               alignItems: 'center',
             }}>
             <Icon1 name="chatbubble-ellipses-outline" size={20}></Icon1>
-            <Text style={{ fontSize: 12, textAlign: 'center' }}>Chat</Text>
+            <Text style={{fontSize: 12, textAlign: 'center'}}>Chat</Text>
           </View>
         </View>
         {productQuantity != 0 ? (
-          <View style={{ flexDirection: 'row', marginLeft: 10 }}>
+          <View style={{flexDirection: 'row', marginLeft: 10}}>
             <TouchableOpacity
               onPress={() => {
                 setDialogVisible(true);
@@ -1129,14 +1128,14 @@ const DetailProduct = props => {
               />
             </TouchableOpacity>
             <LinearGradient
-              start={{ x: 0, y: 0.5 }} // Điểm bắt đầu của gradient (trái)
-              end={{ x: 0.8, y: 0.5 }} // Điểm kết thúc của gradient (phải)
+              start={{x: 0, y: 0.5}} // Điểm bắt đầu của gradient (trái)
+              end={{x: 0.8, y: 0.5}} // Điểm kết thúc của gradient (phải)
               colors={['#3669C9', '#070723']}
-              style={{ padding: 8, width: 130, borderRadius: 25, marginLeft: 5 }}>
+              style={{padding: 8, width: 130, borderRadius: 25, marginLeft: 5}}>
               <TouchableOpacity
                 onPress={() => {
                   setDialogVisible(true);
-                  // console.log('Hello' + userID);
+                  console.log('Hello' + userID);
                   setCheck(false);
                 }}>
                 <Text style={StyleDetailProduct.textButton}>Giỏ hàng</Text>

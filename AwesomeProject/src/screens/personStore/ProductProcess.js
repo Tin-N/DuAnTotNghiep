@@ -7,6 +7,7 @@ const { width, height } = Dimensions.get('screen');
 import AxiosIntance from '../../utils/AxiosIntance'
 import { AppContext } from '../../utils/AppContext';
 import { useRoute } from '@react-navigation/native';
+import ActionBar from '../ActionBar';
 
 const ProductProcess = () => {
     const appContextData = useContext(AppContext);
@@ -42,6 +43,8 @@ const ProductProcess = () => {
 
     return (
         <View style={{}}>
+            <ActionBar title={"Sản phẩm"}/>
+
             <FlatList
                 numColumns={2}
                 showsVerticalScrollIndicator={false}

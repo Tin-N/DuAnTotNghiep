@@ -163,6 +163,7 @@ const DetailList = (props) => {
 
           isLoading == true ?
             <ActivityIndicator
+              style={{marginTop:300}}
               color={"blue"}
               size={'large'} />
             :
